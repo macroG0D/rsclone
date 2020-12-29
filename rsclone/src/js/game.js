@@ -1,9 +1,9 @@
 import Phaser from 'phaser';
-import logoImg from '../assets/logo.png';
 
 export default class MyGame extends Phaser.Scene {
   preload() {
-    this.load.image('logo', logoImg);
+    this.load.crossOrigin = 'anonymous';
+    this.load.image('logo', '../assets/images/logo.png');
   }
 
   create() {
