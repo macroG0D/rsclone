@@ -54,3 +54,9 @@ ul, li {
   ul {
     list-style: none;
   }
+
+.game-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
