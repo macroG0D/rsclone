@@ -20,6 +20,13 @@ class Main {
       width: 1024,
       height: 768,
       scene: MyGame,
+      physics: {
+        default: 'arcade',
+        arcade: {
+          gravity: { y: 300 },
+          debug: false,
+        },
+      },
     };
     this.game = new Phaser.Game(this.gameConfig);
   }
