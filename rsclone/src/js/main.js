@@ -41,7 +41,8 @@ class Main {
           debug: false,
         },
       },
-      scene: [BootScene, PreloadScene, StartScene, Level1Scene],
+      scene: [Level1Scene],
+      // scene: [BootScene, PreloadScene, StartScene, Level1Scene],
     };
     this.game = new Phaser.Game(this.gameConfig);
   }

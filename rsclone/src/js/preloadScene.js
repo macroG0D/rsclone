@@ -10,9 +10,9 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('level1Bg', level1Bg);
-    this.load.image('level1', level1);
-    this.load.image('level1Env', level1Env);
+    // this.load.image('level1Bg', level1Bg);
+    // this.load.image('level1', level1);
+    // this.load.image('level1Env', level1Env);
   }
 
   create() {
