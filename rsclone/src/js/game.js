@@ -9,16 +9,21 @@ export default class MyGame extends Phaser.Scene {
   }
 
   create() {
+    this.physics.world.setBounds(0, 0, 6090, 890);
+    this.cameras.main.setBounds(0, 0, 6090, 890);
+    this.cameras.main.roundPixels = true;
     this.addControlKeys();
-    this.addPlayer('ibb', [0, 0], 'ibb-sprite');
-    this.addPlayer('obb', [100, 0], 'obb-sprite');
+    this.addPlayer('ibb', [300, 0], 'ibb-sprite');
+    this.addPlayer('obb', [600, 0], 'obb-sprite');
     this.addWall();
+    this.initCamera();
     this.addCollisions();
   }
 
   update() {
     this.bindPlayerControls('ibb', this.cursors);
     this.bindPlayerControls('obb', this.wasd);
+    this.centerCamera();
   }
 
   addWall() {
@@ -59,6 +64,10 @@ export default class MyGame extends Phaser.Scene {
     this.physics.add.collider(this.ibb, this.wall);
     this.physics.add.collider(this.obb, this.wall);
     this.physics.add.collider(this.ibb, this.obb);
+    this.cameraWalls.forEach((cameraWall) => {
+      this.physics.add.collider(this.ibb, cameraWall);
+      this.physics.add.collider(this.obb, cameraWall);
+    });
   }
 
   bindPlayerControls(characterKey, controls, playerSpeed = 200) {
@@ -96,6 +105,49 @@ export default class MyGame extends Phaser.Scene {
     }
     if ((controls.up.isDown || controls.down.isDown) && this[characterKey].body.touching.down) {
       this[characterKey].setVelocityY(-250);
+    }
+  }
+
+  createRectangle(x, y, width, height) {
+    const rect = this.add.rectangle(x, y, width, height);
+    rect.setOrigin(0, 0);
+    this.physics.add.existing(rect);
+    rect.body.setAllowGravity(false);
+    rect.body.setImmovable(true);
+    rect.setScrollFactor(0);
+    return rect;
+  }
+
+  initCamera() {
+    this.cameraWalls = [];
+    const wallThickness = 2;
+    const gameDimensions = { width: this.game.config.width, height: this.game.config.height };
+    const leftWall = this.createRectangle(0, 0, wallThickness, gameDimensions.width);
+    const rightWall = this.createRectangle(gameDimensions.width - wallThickness, 0, wallThickness, gameDimensions.width);
+    this.cameraWalls.push(leftWall);
+    this.cameraWalls.push(rightWall);
+  }
+
+  centerCamera() {
+    const cam = this.cameras.main;
+    const ibbCoord = { x: this.ibb.x, y: this.ibb.y };
+    const obbCoord = { x: this.obb.x, y: this.obb.y };
+    const charactersXDiff = Math.abs(obbCoord.x - ibbCoord.x);
+    const charactersYDiff = Math.abs(obbCoord.y - ibbCoord.y);
+    const zoomCoef = charactersXDiff / cam.width;
+    const camZoom = 1 - 0.2 * zoomCoef;
+    const cameraX = parseInt(charactersXDiff / 2 + (ibbCoord.x > obbCoord.x ? obbCoord.x : ibbCoord.x), 10);
+    const cameraY = parseInt(charactersYDiff / 2 + (ibbCoord.y > obbCoord.y ? obbCoord.y : ibbCoord.y), 10);
+    if (camZoom !== cam.zoom) {
+      cam.setZoom(camZoom);
+    }
+    if (cameraX !== this.cameras.main.midPoint.x) {
+      cam.centerOnX(cameraX);
+      this.cameraWalls[0].setX(cam.scrollX);
+      this.cameraWalls[1].setX(cam.scrollX + cam.width);
+    }
+    if (cameraY !== cam.midPoint.Y) {
+      cam.centerOnY(cameraY);
     }
   }
 }
