@@ -20,23 +20,20 @@ class Main {
   async init() {
     console.log('Main class loaded');
     this.gameContainer = new Create('div', document.body, 'game-container').node;
-    const ratio = Math.max(window.innerWidth / window.innerHeight, window.innerHeight / window.innerWidth);
-    const DEFAULT_HEIGHT = 1024;
-    const DEFAULT_WIDTH = ratio * DEFAULT_HEIGHT;
     this.gameConfig = {
       type: Phaser.AUTO,
       parent: this.gameContainer,
       scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
-        width: DEFAULT_WIDTH,
-        height: DEFAULT_HEIGHT,
+        width: 1280,
+        height: 720,
       },
       physics: {
         default: 'arcade',
         arcade: {
           gravity: {
-            y: 1000,
+            y: 300,
           },
           debug: false,
         },

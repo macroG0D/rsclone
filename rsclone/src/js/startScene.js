@@ -13,14 +13,16 @@ export default class StartScene extends Phaser.Scene {
   }
 
   addText() {
-    this.add.text(700, 700, 'click to start', {
+    this.add.text(this.game.config.width / 2 - 150, this.game.config.height / 2, 'click to start', {
       font: '40px',
       fill: '#ffffff',
     });
   }
 
   createBg() {
-    this.add.sprite(0, 0, 'bg').setOrigin(0);
+    const ratio = this.game.config.width / 1920;
+    console.log(ratio);
+    this.add.sprite(0, 0, 'bg').setScale(ratio).setOrigin(0);
   }
 
   setEvents() {
