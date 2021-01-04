@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
-import level1Bg from '../assets/img/level1Bg.svg';
-import level1 from '../assets/img/level1.png';
 import level1Env from '../assets/img/environment.svg';
+import floor from '../assets/img/floor.svg'
+import bubbles from '../assets/img/bubbles.png'
 
 
 export default class PreloadScene extends Phaser.Scene {
@@ -10,9 +10,9 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   preload() {
-    // this.load.image('level1Bg', level1Bg);
-    // this.load.image('level1', level1);
-    // this.load.image('level1Env', level1Env);
+    this.load.image('level1Env', level1Env);
+    this.load.image('floor', floor);
+    this.load.image('bubbles', bubbles);
   }
 
   create() {

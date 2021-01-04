@@ -21,7 +21,7 @@ class Main {
     console.log('Main class loaded');
     this.gameContainer = new Create('div', document.body, 'game-container').node;
     const ratio = Math.max(window.innerWidth / window.innerHeight, window.innerHeight / window.innerWidth);
-    const DEFAULT_HEIGHT = 1700;
+    const DEFAULT_HEIGHT = 1024;
     const DEFAULT_WIDTH = ratio * DEFAULT_HEIGHT;
     this.gameConfig = {
       type: Phaser.AUTO,
@@ -41,8 +41,8 @@ class Main {
           debug: false,
         },
       },
-      scene: [Level1Scene],
-      // scene: [BootScene, PreloadScene, StartScene, Level1Scene],
+      // scene: [Level1Scene],
+      scene: [BootScene, PreloadScene, StartScene, Level1Scene],
     };
     this.game = new Phaser.Game(this.gameConfig);
   }
