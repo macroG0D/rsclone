@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import level1Env from '../assets/img/environment.svg';
+import level1Env from '../assets/img/level1.svg';
 import floor from '../assets/img/floor.svg'
 import bubbles from '../assets/img/bubbles.png'
 

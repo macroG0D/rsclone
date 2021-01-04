@@ -41,7 +41,6 @@ class Main {
           debug: false,
         },
       },
-      // scene: [Level1Scene],
       scene: [BootScene, PreloadScene, StartScene, Level1Scene],
     };
     this.game = new Phaser.Game(this.gameConfig);
