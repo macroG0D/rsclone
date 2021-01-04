@@ -21,7 +21,6 @@ export default class StartScene extends Phaser.Scene {
 
   createBg() {
     const ratio = this.game.config.width / 1920;
-    console.log(ratio);
     this.add.sprite(0, 0, 'bg').setScale(ratio).setOrigin(0);
   }
 
