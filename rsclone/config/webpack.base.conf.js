@@ -1,20 +1,20 @@
 const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const PATHS = {
-  src: path.join(__dirname, '../src'),
-  dist: path.join(__dirname, '../dist'),
+  src: path.resolve(__dirname, '../src'),
+  dist: path.resolve(__dirname, '../dist'),
   assets: 'assets',
+  static: 'static',
 };
 
 module.exports = {
   externals: {
     paths: PATHS,
   },
-  entry: {
-    app: PATHS.src,
-  },
+  entry: [`${PATHS.src}/index.js`],
   output: {
     filename: './js/[name].[hash].js',
     path: PATHS.dist,
@@ -31,28 +31,27 @@ module.exports = {
       },
     },
   },
+
   module: {
     rules: [{
       test: /\.js$/,
       loader: 'babel-loader',
       exclude: /node_modules/,
-    },
-    {
+    }, {
       test: /\.(woff|woff2|ttf|otf|eot)$/,
       loader: 'file-loader',
       options: {
         outputPath: 'assets/fonts',
         name: '[name].[ext]',
-        publicPath: '../assets/fonts',
+        publicPath: './assets/fonts',
       },
-    },
-    {
-      test: /\.(png|jpg|gif|svg)$/,
+    }, {
+      test: /\.(ico|png|jpg|gif|svg)$/,
       loader: 'file-loader',
       options: {
         outputPath: 'assets/images',
         name: '[name].[ext]',
-        publicPath: '../assets/images',
+        publicPath: './assets/images',
       },
     }, {
       test: /\.(wav|mp3|midi)$/,
@@ -60,27 +59,22 @@ module.exports = {
       options: {
         outputPath: 'assets/sounds',
         name: '[name].[ext]',
-        publicPath: '../assets/sounds',
+        publicPath: './assets/sounds',
       },
     }, {
-      test: /\.(css|scss)$/,
+      test: /\.?scss$/,
       use: [
         'style-loader',
-        {
-          loader: 'css-loader',
-          options: { sourceMap: true },
-        }, {
-          loader: 'postcss-loader',
-          options: { sourceMap: true, config: { path: './postcss.config.js' } },
-        }, {
-          loader: 'sass-loader',
-          options: { sourceMap: true },
-        },
+        { loader: 'css-loader', options: { sourceMap: true, importLoaders: 2 } },
+        { loader: 'sass-loader', options: { sourceMap: true } },
+        { loader: 'postcss-loader', options: { sourceMap: true, config: { path: './postcss.config.js' } } },
       ],
     }],
   },
 
   plugins: [
+    new CleanWebpackPlugin(),
+
     new HtmlWebpackPlugin({
       inject: true,
       template: `${PATHS.src}/index.html`,
@@ -89,8 +83,8 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       {
-        from: `${PATHS.src}/static`,
-        to: 'static',
+        from: `${PATHS.src}/${PATHS.static}`,
+        to: `${PATHS.static}`,
         noErrorOnMissing: true,
       },
     ]),

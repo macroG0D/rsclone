@@ -7,22 +7,23 @@ module.exports = merge(baseWebpackConfig, {
   devtool: false,
   module: {
     rules: [{
-      test: /\.(css|scss)$/,
+      test: /\.?scss$/,
       use: [
         MiniCssExtractPlugin.loader,
         {
           loader: 'css-loader',
-          options: { sourceMap: true },
-        }, {
-          loader: 'postcss-loader',
-          options: { sourceMap: true, config: { path: './postcss.config.js' } },
+          options: { sourceMap: false, importLoaders: 2 },
         }, {
           loader: 'sass-loader',
-          options: { sourceMap: true },
+          options: { sourceMap: false },
+        }, {
+          loader: 'postcss-loader',
+          options: { sourceMap: false, config: { path: './postcss.config.js' } },
         },
       ],
     }],
   },
+
   plugins: [
     new MiniCssExtractPlugin({
       filename: `${baseWebpackConfig.externals.paths.assets}/[name].[hash].css`,
