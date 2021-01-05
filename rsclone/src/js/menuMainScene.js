@@ -18,11 +18,69 @@ export default class MenuMainScene extends Phaser.Scene {
       fixedWidth: 200,
     };
 
-    this.menu1 = this.add.text(this.cameras.main.centerX - 100, this.game.config.height / 2 - 100, 'play', style);
-    this.add.text(this.cameras.main.centerX - 100, this.game.config.height / 2 - 50, 'leaderboard', style);
-    this.add.text(this.cameras.main.centerX - 100, this.game.config.height / 2, 'settings', style);
-    this.add.text(this.cameras.main.centerX - 100, this.game.config.height / 2 + 50, 'developers', style);
-    this.add.text(this.cameras.main.centerX - 100, this.game.config.height / 2 + 100, 'about', style);
+    const styleOver = {
+      fill: '#D22D61',
+    };
+
+    const menu1 = this.add.text(this.cameras.main.centerX - 100, this.game.config.height / 2 - 100, 'play', style)
+      .setInteractive()
+      .on('pointerover', () => {
+        menu1.setStyle(styleOver);
+      })
+      .on('pointerout', () => {
+        menu1.setStyle(style);
+      })
+      .on('pointerdown', () => {
+        this.scene.start('Start');
+      });
+
+    const menu2 = this.add.text(this.cameras.main.centerX - 100, this.game.config.height / 2 - 50, 'leaderboard', style)
+      .setInteractive()
+      .on('pointerover', () => {
+        menu2.setStyle(styleOver);
+      })
+      .on('pointerout', () => {
+        menu2.setStyle(style);
+      })
+      .on('pointerdown', () => {
+        console.log('сделай что-то');
+      });
+
+    const menu3 = this.add.text(this.cameras.main.centerX - 100, this.game.config.height / 2, 'settings', style)
+      .setInteractive()
+      .on('pointerover', () => {
+        menu3.setStyle(styleOver);
+      })
+      .on('pointerout', () => {
+        menu3.setStyle(style);
+      })
+      .on('pointerdown', () => {
+        console.log('сделай что-то');
+      });
+
+    const menu4 = this.add.text(this.cameras.main.centerX - 100, this.game.config.height / 2 + 50, 'developers', style)
+      .setInteractive()
+      .on('pointerover', () => {
+        menu4.setStyle(styleOver);
+      })
+      .on('pointerout', () => {
+        menu4.setStyle(style);
+      })
+      .on('pointerdown', () => {
+        console.log('сделай что-то');
+      });
+
+    const menu5 = this.add.text(this.cameras.main.centerX - 100, this.game.config.height / 2 + 100, 'about', style)
+      .setInteractive()
+      .on('pointerover', () => {
+        menu5.setStyle(styleOver);
+      })
+      .on('pointerout', () => {
+        menu5.setStyle(style);
+      })
+      .on('pointerdown', () => {
+        window.open('https://github.com/macroG0D/rsclone');
+      });
   }
 
   createBg() {
