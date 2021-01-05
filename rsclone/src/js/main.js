@@ -1,11 +1,17 @@
 import Phaser from 'phaser';
-import MyGame from './game';
+// import MyGame from './game';
 import Create from './component';
+import StartScene from './startScene';
+import BootScene from './bootScene';
+import PreloadScene from './preloadScene';
+import Level1Scene from './level1Scene';
 
 class Main {
   constructor() {
     const cookieVersion = 0;
-    const settings = JSON.parse(localStorage.getItem('rsc-game-settings')) || { cookieVersion };
+    const settings = JSON.parse(localStorage.getItem('rsc-game-settings')) || {
+      cookieVersion
+    };
     const savedVersion = settings.cookieVersion;
     if (savedVersion !== cookieVersion) localStorage.clear();
     this.init();
@@ -17,9 +23,12 @@ class Main {
     this.gameConfig = {
       type: Phaser.AUTO,
       parent: this.gameContainer,
-      width: 1024,
-      height: 768,
-      scene: MyGame,
+      scale: {
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+        width: 1280,
+        height: 720,
+      },
       physics: {
         default: 'arcade',
         arcade: {
@@ -27,6 +36,7 @@ class Main {
           debug: true,
         },
       },
+      scene: [BootScene, PreloadScene, StartScene, Level1Scene],
     };
     this.game = new Phaser.Game(this.gameConfig);
   }
