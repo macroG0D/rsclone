@@ -11,7 +11,7 @@ class Main {
     this.init();
   }
 
-  async init() {
+  init() {
     console.log('Main class loaded');
     this.gameContainer = new Create('div', document.body, 'game-container').node;
     this.gameConfig = {
