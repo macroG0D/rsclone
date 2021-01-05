@@ -1,7 +1,10 @@
 import Phaser from 'phaser';
 import ibbSprite from '../assets/ibb/ibb-sprite.png';
 import obbSprite from '../assets/obb/obb-sprite.png';
+import { gradientSquares, gradientColors, walls } from './backgroundStructureLevel1';
 
+const levelWidth = 5369;
+const levelHeight = 890;
 export default class MyGame extends Phaser.Scene {
   preload() {
     this.load.spritesheet('ibb-sprite', ibbSprite, { frameWidth: 47, frameHeight: 53 });
@@ -9,9 +12,10 @@ export default class MyGame extends Phaser.Scene {
   }
 
   create() {
-    this.physics.world.setBounds(0, 0, 6090, 890);
-    this.cameras.main.setBounds(0, 0, 6090, 890);
+    this.physics.world.setBounds(0, 0, levelWidth, levelHeight);
+    this.cameras.main.setBounds(0, 0, levelWidth, levelHeight);
     this.cameras.main.roundPixels = true;
+    this.addBackgrounds();
     this.addControlKeys();
     this.addPlayer('ibb', [300, 0], 'ibb-sprite');
     this.addPlayer('obb', [600, 0], 'obb-sprite');
@@ -26,12 +30,55 @@ export default class MyGame extends Phaser.Scene {
     this.centerCamera();
   }
 
+  addBackgrounds() {
+    // main background
+    this.background = this.add.graphics();
+    this.background.fillGradientStyle(0x3C6771, 0xB3B061, 0x3C6771, 0xB3B061, 1);
+    this.background.fillRect(0, 0, levelWidth, levelHeight);
+    // underworld backgrounds
+    gradientSquares.forEach((item, index) => {
+      const { width, height } = item;
+      const top = levelHeight - height;
+      let left = 0;
+      let i = index;
+      while (i > 0) {
+        i -= 1;
+        left += gradientSquares[i].width;
+      }
+      const startColor = gradientColors[index];
+      const endColor = gradientColors[index + 1];
+      const bg = this.add.graphics();
+      bg.fillGradientStyle(startColor, endColor, startColor, endColor, 1);
+      bg.fillRect(left, top, width, height);
+    });
+  }
+
   addWall() {
-    this.wall = this.add.rectangle(0, 600, 1700, 20, 0xffffff);
-    this.wall.setOrigin(0, 0);
-    this.physics.add.existing(this.wall);
-    this.wall.body.setAllowGravity(false);
-    this.wall.body.setImmovable(true);
+    this.walls = [];
+    const wallDefaultColor = 0x082228;
+    const portalColor = 0xffffff;
+    const wallDefaultHeight = 16;
+    walls.forEach((item) => {
+      const {
+        width,
+        y,
+        x,
+        isPortal,
+        isVertical,
+      } = item;
+      const top = y - wallDefaultHeight;
+      const wallHeight = isVertical ? width : wallDefaultHeight;
+      const wallWidth = isVertical ? wallDefaultHeight : width;
+      const wallColor = isPortal ? portalColor : wallDefaultColor;
+      const wall = this.add.rectangle(x, top, wallWidth, wallHeight, wallColor);
+      wall.setOrigin(0, 0);
+      this.physics.add.existing(wall);
+      wall.body.setAllowGravity(false);
+      wall.body.setImmovable(true);
+      if (!isPortal) {
+        this.walls.push(wall);
+      }
+    });
   }
 
   addPlayer(characterKey, position, spriteName) {
@@ -61,16 +108,18 @@ export default class MyGame extends Phaser.Scene {
   }
 
   addCollisions() {
-    this.physics.add.collider(this.ibb, this.wall);
-    this.physics.add.collider(this.obb, this.wall);
     this.physics.add.collider(this.ibb, this.obb);
+    this.walls.forEach((wall) => {
+      this.physics.add.collider(this.ibb, wall);
+      this.physics.add.collider(this.obb, wall);
+    });
     this.cameraWalls.forEach((cameraWall) => {
       this.physics.add.collider(this.ibb, cameraWall);
       this.physics.add.collider(this.obb, cameraWall);
     });
   }
 
-  bindPlayerControls(characterKey, controls, playerSpeed = 200) {
+  bindPlayerControls(characterKey, controls, playerSpeed = 500) {
     if (controls.left.isDown) {
       this[characterKey].setVelocityX(-playerSpeed);
       this[characterKey].anims.play(`move-${characterKey}`, true);
@@ -85,6 +134,7 @@ export default class MyGame extends Phaser.Scene {
       if (this[characterKey].anims.currentAnim) {
         this[characterKey].anims.setCurrentFrame(this[characterKey].anims.currentAnim.frames[0]);
       }
+      // theoretical approach to finish animation after player stops
       /*
       if (this.player.anims.currentAnim && !this.player.anims.currentAnim.paused && this.player.anims.currentAnim.key === 'move') {
         this.player.anims.currentAnim.pause();
@@ -123,7 +173,8 @@ export default class MyGame extends Phaser.Scene {
     const wallThickness = 2;
     const gameDimensions = { width: this.game.config.width, height: this.game.config.height };
     const leftWall = this.createRectangle(0, 0, wallThickness, gameDimensions.width);
-    const rightWall = this.createRectangle(gameDimensions.width - wallThickness, 0, wallThickness, gameDimensions.width);
+    const rightWallPosX = gameDimensions.width - wallThickness;
+    const rightWall = this.createRectangle(rightWallPosX, 0, wallThickness, gameDimensions.width);
     this.cameraWalls.push(leftWall);
     this.cameraWalls.push(rightWall);
   }
@@ -136,8 +187,10 @@ export default class MyGame extends Phaser.Scene {
     const charactersYDiff = Math.abs(obbCoord.y - ibbCoord.y);
     const zoomCoef = charactersXDiff / cam.width;
     const camZoom = 1 - 0.2 * zoomCoef;
-    const cameraX = parseInt(charactersXDiff / 2 + (ibbCoord.x > obbCoord.x ? obbCoord.x : ibbCoord.x), 10);
-    const cameraY = parseInt(charactersYDiff / 2 + (ibbCoord.y > obbCoord.y ? obbCoord.y : ibbCoord.y), 10);
+    const closestToLeftCharacterX = ibbCoord.x > obbCoord.x ? obbCoord.x : ibbCoord.x;
+    const closestToTopCharacterY = ibbCoord.y > obbCoord.y ? obbCoord.y : ibbCoord.y;
+    const cameraX = parseInt(charactersXDiff / 2 + closestToLeftCharacterX, 10);
+    const cameraY = parseInt(charactersYDiff / 2 + closestToTopCharacterY, 10);
     if (camZoom !== cam.zoom) {
       cam.setZoom(camZoom);
     }
