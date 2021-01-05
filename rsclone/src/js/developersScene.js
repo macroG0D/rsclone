@@ -58,13 +58,13 @@ export default class DevelopersScene extends Phaser.Scene {
         window.open('https://github.com/macroG0D');
       });
 
-    const i3_code = this.add.text(this.cameras.main.centerX - 65, this.game.config.height / 2, 'i3-code', style)
+    const i3Code = this.add.text(this.cameras.main.centerX - 65, this.game.config.height / 2, 'i3-code', style)
       .setInteractive()
       .on('pointerover', () => {
-        i3_code.setStyle(styleOver);
+        i3Code.setStyle(styleOver);
       })
       .on('pointerout', () => {
-        i3_code.setStyle(style);
+        i3Code.setStyle(style);
       })
       .on('pointerdown', () => {
         window.open('https://github.com/i3-code');

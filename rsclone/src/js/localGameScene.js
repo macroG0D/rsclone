@@ -8,6 +8,14 @@ export default class LocalGameScene extends Phaser.Scene {
   create() {
     this.createBg();
     this.createMenu();
+    this.createImg();
+  }
+
+  createImg() {
+    this.add.image(314, 215, 'ibbImg');
+    this.add.image(967, 215, 'obbImg');
+    this.add.image(314, 437, 'ibbKeys');
+    this.add.image(967, 437, 'obbKeys');
   }
 
   createMenu() {
@@ -31,7 +39,7 @@ export default class LocalGameScene extends Phaser.Scene {
       fixedWidth: 220,
     };
 
-    const menu1 = this.add.text(this.cameras.main.centerX - 110, this.game.config.height / 2, 'local game', style)
+    const menu1 = this.add.text(this.cameras.main.centerX - 110, 442, 'start game', style)
       .setInteractive()
       .on('pointerover', () => {
         menu1.setStyle(styleOver);
@@ -40,7 +48,7 @@ export default class LocalGameScene extends Phaser.Scene {
         menu1.setStyle(style);
       })
       .on('pointerdown', () => {
-        this.scene.start('Start');
+        this.scene.start('Level1');
       });
 
     const back = this.add.text(this.cameras.main.centerX - 110, this.game.config.height / 2 + 250, 'back', styleBack)
