@@ -4,6 +4,9 @@ import StartScene from './startScene';
 import BootScene from './bootScene';
 import PreloadScene from './preloadScene';
 import MenuMainScene from './menuMainScene';
+import MenuPlayScene from './menuPlayScene';
+import LocalGameScene from './localGameScene';
+import OnlineGameScene from './onlineGameScene';
 import Level1Scene from './level1Scene';
 
 class Main {
@@ -32,11 +35,15 @@ class Main {
       physics: {
         default: 'arcade',
         arcade: {
-          gravity: { y: 300 },
+          gravity: {
+            y: 300
+          },
           debug: true,
         },
       },
-      scene: [BootScene, PreloadScene, MenuMainScene, StartScene, Level1Scene],
+      scene: [BootScene, PreloadScene, MenuMainScene, MenuPlayScene, StartScene,
+        LocalGameScene, OnlineGameScene, Level1Scene,
+      ],
     };
     this.game = new Phaser.Game(this.gameConfig);
   }

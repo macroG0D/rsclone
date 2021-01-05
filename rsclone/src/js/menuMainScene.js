@@ -12,9 +12,10 @@ export default class MenuMainScene extends Phaser.Scene {
 
   createMenu() {
     const style = {
-      font: '30px bold',
+      font: '30px Montserrat',
       fill: '#000000',
       align: 'center',
+      fontStyle: 'strong',
       fixedWidth: 200,
     };
 
@@ -31,7 +32,7 @@ export default class MenuMainScene extends Phaser.Scene {
         menu1.setStyle(style);
       })
       .on('pointerdown', () => {
-        this.scene.start('Start');
+        this.scene.start('menuPlay');
       });
 
     const menu2 = this.add.text(this.cameras.main.centerX - 100, this.game.config.height / 2 - 50, 'leaderboard', style)
