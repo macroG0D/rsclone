@@ -62,7 +62,7 @@ module.exports = {
         publicPath: './assets/sounds',
       },
     }, {
-      test: /\.?scss$/,
+      test: /\.(scss|css)$/,
       use: [
         'style-loader',
         { loader: 'css-loader', options: { sourceMap: true, importLoaders: 2 } },
