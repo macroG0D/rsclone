@@ -1,25 +1,25 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
+const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
 const baseWebpackConfig = require('./webpack.base.conf');
 
 module.exports = merge(baseWebpackConfig, {
   mode: 'development',
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'cheap-module-source-map',
   devServer: {
     contentBase: baseWebpackConfig.externals.paths.dist,
+    watchContentBase: true,
+    open: true,
     port: 3000,
+    hot: true,
     overlay: {
       warnings: true,
       errors: true,
     },
   },
+
   plugins: [
-    new webpack.DefinePlugin({
-      APP_ENV: JSON.stringify(process.env.APP_ENV),
-      API_KEY: JSON.stringify(process.env.API_KEY),
-    }),
-    new webpack.SourceMapDevToolPlugin({
-      filename: '[file].map',
-    }),
+    new ErrorOverlayPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
   ],
 });

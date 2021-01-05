@@ -17,7 +17,7 @@ class Main {
     this.init();
   }
 
-  async init() {
+  init() {
     console.log('Main class loaded');
     this.gameContainer = new Create('div', document.body, 'game-container').node;
     this.gameConfig = {
@@ -32,10 +32,8 @@ class Main {
       physics: {
         default: 'arcade',
         arcade: {
-          gravity: {
-            y: 300,
-          },
-          debug: false,
+          gravity: { y: 300 },
+          debug: true,
         },
       },
       scene: [BootScene, PreloadScene, StartScene, Level1Scene],
