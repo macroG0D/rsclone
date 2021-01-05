@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+
 import ibbSprite from '../assets/ibb/ibb-sprite.png';
 import obbSprite from '../assets/obb/obb-sprite.png';
 import { gradientSquares, gradientColors, walls } from './backgroundStructureLevel1';
