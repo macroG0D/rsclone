@@ -1,9 +1,6 @@
 import Phaser from 'phaser';
-import level1Env from '../assets/img/level1.svg';
-import floor from '../assets/img/floor.svg';
-import bubbles from '../assets/img/bubbles.png';
-import obb from '../assets/img/Obb_stay.svg';
-
+import ibbSprite from '../assets/ibb/ibb-sprite.png';
+import obbSprite from '../assets/obb/obb-sprite.png';
 
 export default class PreloadScene extends Phaser.Scene {
   constructor() {
@@ -11,10 +8,8 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('level1Env', level1Env);
-    this.load.image('floor', floor);
-    this.load.image('bubbles', bubbles);
-    this.load.image('obb', obb);
+    this.load.spritesheet('ibb-sprite', ibbSprite, { frameWidth: 47, frameHeight: 53 });
+    this.load.spritesheet('obb-sprite', obbSprite, { frameWidth: 47, frameHeight: 64 });
   }
 
   create() {
