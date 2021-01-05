@@ -44,7 +44,7 @@ export default class MenuMainScene extends Phaser.Scene {
         menu2.setStyle(style);
       })
       .on('pointerdown', () => {
-        console.log('сделай что-то');
+        this.scene.start('leader');
       });
 
     const menu3 = this.add.text(this.cameras.main.centerX - 100, this.game.config.height / 2, 'settings', style)
@@ -56,7 +56,7 @@ export default class MenuMainScene extends Phaser.Scene {
         menu3.setStyle(style);
       })
       .on('pointerdown', () => {
-        console.log('сделай что-то');
+        this.scene.start('settings');
       });
 
     const menu4 = this.add.text(this.cameras.main.centerX - 100, this.game.config.height / 2 + 50, 'developers', style)
@@ -68,7 +68,7 @@ export default class MenuMainScene extends Phaser.Scene {
         menu4.setStyle(style);
       })
       .on('pointerdown', () => {
-        console.log('сделай что-то');
+        this.scene.start('developers');
       });
 
     const menu5 = this.add.text(this.cameras.main.centerX - 100, this.game.config.height / 2 + 100, 'about', style)

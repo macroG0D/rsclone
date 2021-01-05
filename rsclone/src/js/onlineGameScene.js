@@ -8,7 +8,6 @@ export default class OnlineGameScene extends Phaser.Scene {
   create() {
     this.createBg();
     this.createMenu();
-    this.add.text(this.cameras.main.centerX - 110, this.game.config.height / 2 - 25, 'online game');
   }
 
   createMenu() {
@@ -44,15 +43,13 @@ export default class OnlineGameScene extends Phaser.Scene {
         this.scene.start('Start');
       });
 
-
-
-    const menu3 = this.add.text(this.cameras.main.centerX - 110, this.game.config.height / 2 + 250, 'back', styleBack)
+    const back = this.add.text(this.cameras.main.centerX - 110, this.game.config.height / 2 + 250, 'back', styleBack)
       .setInteractive()
       .on('pointerover', () => {
-        menu3.setStyle(styleOver);
+        back.setStyle(styleOver);
       })
       .on('pointerout', () => {
-        menu3.setStyle(styleBack);
+        back.setStyle(styleBack);
       })
       .on('pointerdown', () => {
         this.scene.start('menuPlay');

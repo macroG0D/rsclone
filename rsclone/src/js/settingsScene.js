@@ -1,8 +1,8 @@
 import Phaser from 'phaser';
 
-export default class LocalGameScene extends Phaser.Scene {
+export default class SettingsScene extends Phaser.Scene {
   constructor() {
-    super('localGame');
+    super('settings');
   }
 
   create() {
@@ -16,7 +16,7 @@ export default class LocalGameScene extends Phaser.Scene {
       fill: '#000000',
       align: 'center',
       fontStyle: 'strong',
-      fixedWidth: 220,
+      fixedWidth: 200,
     };
 
     const styleOver = {
@@ -31,7 +31,7 @@ export default class LocalGameScene extends Phaser.Scene {
       fixedWidth: 220,
     };
 
-    const menu1 = this.add.text(this.cameras.main.centerX - 110, this.game.config.height / 2, 'local game', style)
+    const menu1 = this.add.text(this.cameras.main.centerX - 100, this.game.config.height / 2, 'settings', style)
       .setInteractive()
       .on('pointerover', () => {
         menu1.setStyle(styleOver);
@@ -40,7 +40,7 @@ export default class LocalGameScene extends Phaser.Scene {
         menu1.setStyle(style);
       })
       .on('pointerdown', () => {
-        this.scene.start('Start');
+        this.scene.start('menuPlay');
       });
 
     const back = this.add.text(this.cameras.main.centerX - 110, this.game.config.height / 2 + 250, 'back', styleBack)
@@ -52,7 +52,7 @@ export default class LocalGameScene extends Phaser.Scene {
         back.setStyle(styleBack);
       })
       .on('pointerdown', () => {
-        this.scene.start('menuPlay');
+        this.scene.start('menuMain');
       });
   }
 

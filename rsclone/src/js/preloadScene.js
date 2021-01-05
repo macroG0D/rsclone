@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import ibbSprite from '../assets/ibb/ibb-sprite.png';
 import obbSprite from '../assets/obb/obb-sprite.png';
+import githubIcon from '../assets/images/github-logo-face.svg';
 
 export default class PreloadScene extends Phaser.Scene {
   constructor() {
@@ -8,7 +9,7 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   preload() {
-    console.log('PreloadScene.preload');
+    this.load.image('githubIcon', githubIcon);
     this.createBg();
     this.load.spritesheet('ibb-sprite', ibbSprite, {
       frameWidth: 47,
@@ -22,6 +23,7 @@ export default class PreloadScene extends Phaser.Scene {
 
   create() {
     this.scene.start('menuMain');
+    // this.scene.start('Level1');
   }
 
   createBg() {

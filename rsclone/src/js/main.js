@@ -7,6 +7,9 @@ import MenuMainScene from './menuMainScene';
 import MenuPlayScene from './menuPlayScene';
 import LocalGameScene from './localGameScene';
 import OnlineGameScene from './onlineGameScene';
+import DevelopersScene from './developersScene';
+import SettingsScene from './settingsScene';
+import LeaderScene from './leaderScene';
 import Level1Scene from './level1Scene';
 
 class Main {
@@ -42,7 +45,8 @@ class Main {
         },
       },
       scene: [BootScene, PreloadScene, MenuMainScene, MenuPlayScene, StartScene,
-        LocalGameScene, OnlineGameScene, Level1Scene,
+        LocalGameScene, OnlineGameScene, Level1Scene, DevelopersScene, SettingsScene,
+        LeaderScene,
       ],
     };
     this.game = new Phaser.Game(this.gameConfig);
