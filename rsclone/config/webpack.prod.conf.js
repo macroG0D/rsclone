@@ -7,7 +7,7 @@ module.exports = merge(baseWebpackConfig, {
   devtool: false,
   module: {
     rules: [{
-      test: /\.?scss$/,
+      test: /\.(scss|css)$/,
       use: [
         MiniCssExtractPlugin.loader,
         {
