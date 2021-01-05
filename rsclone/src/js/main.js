@@ -1,9 +1,9 @@
 import Phaser from 'phaser';
-// import MyGame from './game';
 import Create from './component';
 import StartScene from './startScene';
 import BootScene from './bootScene';
 import PreloadScene from './preloadScene';
+import MenuMainScene from './menuMainScene';
 import Level1Scene from './level1Scene';
 
 class Main {
@@ -36,7 +36,7 @@ class Main {
           debug: true,
         },
       },
-      scene: [BootScene, PreloadScene, StartScene, Level1Scene],
+      scene: [BootScene, PreloadScene, MenuMainScene, StartScene, Level1Scene],
     };
     this.game = new Phaser.Game(this.gameConfig);
   }
