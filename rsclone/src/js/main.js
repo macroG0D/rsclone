@@ -1,16 +1,9 @@
 import Phaser from 'phaser';
-import Create from './component';
-import StartScene from './startScene';
-import BootScene from './bootScene';
-import PreloadScene from './preloadScene';
-import MenuMainScene from './menuMainScene';
-import MenuPlayScene from './menuPlayScene';
-import LocalGameScene from './localGameScene';
-import OnlineGameScene from './onlineGameScene';
-import DevelopersScene from './developersScene';
-import SettingsScene from './settingsScene';
-import LeaderScene from './leaderScene';
-import Level1Scene from './level1Scene';
+import Create from './components/dom-create';
+
+import { SCENE_LIST } from './scenes/_scenesList';
+
+import { GAME_WIDTH, GAME_HEIGHT } from './constants';
 
 class Main {
   constructor() {
@@ -32,22 +25,19 @@ class Main {
       scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
-        width: 1280,
-        height: 720,
+        width: GAME_WIDTH,
+        height: GAME_HEIGHT,
       },
       physics: {
         default: 'arcade',
         arcade: {
           gravity: {
-            y: 300
+            y: 300,
           },
           debug: true,
         },
       },
-      scene: [BootScene, PreloadScene, MenuMainScene, MenuPlayScene, StartScene,
-        LocalGameScene, OnlineGameScene, Level1Scene, DevelopersScene, SettingsScene,
-        LeaderScene,
-      ],
+      scene: SCENE_LIST,
     };
     this.game = new Phaser.Game(this.gameConfig);
   }
