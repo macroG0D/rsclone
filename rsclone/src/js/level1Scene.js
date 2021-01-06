@@ -9,16 +9,17 @@ export default class Level1Scene extends Phaser.Scene {
   }
 
   create() {
-    this.physics.world.setBounds(0, 0, levelWidth, levelHeight);
+    this.matter.world.setBounds(0, 0, levelWidth, levelHeight, 32, true, true, false, true);
     this.cameras.main.setBounds(0, 0, levelWidth, levelHeight);
     this.cameras.main.roundPixels = true;
     this.addBackgrounds();
-    this.addControlKeys();
-    this.addPlayer('ibb', [300, 0], 'ibb-sprite');
-    this.addPlayer('obb', [600, 0], 'obb-sprite');
     this.addWalls();
-    this.initCamera();
+    this.addControlKeys();
+    this.addPlayer('ibb', [200, 200], 'ibb-sprite');
+    this.addPlayer('obb', [300, 300], 'obb-sprite');
+    //this.initCamera();
     this.addCollisions();
+    this.cameras.main.startFollow(this.ibb);
   }
 
   addBackgrounds() {
@@ -50,6 +51,7 @@ export default class Level1Scene extends Phaser.Scene {
     const wallDefaultColor = 0x082228;
     const portalColor = 0xffffff;
     const wallDefaultHeight = 16;
+
     walls.forEach((item) => {
       const {
         width,
@@ -62,32 +64,22 @@ export default class Level1Scene extends Phaser.Scene {
       const wallHeight = isVertical ? width : wallDefaultHeight;
       const wallWidth = isVertical ? wallDefaultHeight : width;
       const wallColor = isPortal ? portalColor : wallDefaultColor;
-      const wall = this.add.rectangle(x, top, wallWidth, wallHeight, wallColor);
-      wall.setOrigin(0, 0);
-      this.physics.add.existing(wall);
-      wall.body.setAllowGravity(false);
-      wall.body.setImmovable(true);
+      const wallX = x + wallWidth / 2;
+      const wallY = top + wallHeight / 2;
+      const wall = this.add.rectangle(wallX, wallY, wallWidth, wallHeight, wallColor);
+      // these and other options should be configured for proper physic behaviour, commented for now
+      const objSettings = {
+        isSensor: isPortal,
+        isStatic: true,
+        // frictionStatic: 0,
+        // friction: 0,
+      };
+      this.matter.add.gameObject(wall, objSettings);
       if (isPortal) {
         this.portals.push(wall);
       } else {
         this.walls.push(wall);
       }
-    });
-  }
-
-  addPlayer(characterKey, position, spriteName) {
-    const [x, y] = position;
-    this[characterKey] = this.physics.add.sprite(x, y, spriteName);
-    this[characterKey].setCollideWorldBounds(true);
-    this.createPlayerAnimations(characterKey, spriteName);
-  }
-
-  createPlayerAnimations(characterKey, spriteName) {
-    this.anims.create({
-      key: `move-${characterKey}`,
-      frames: this.game.anims.generateFrameNumbers(spriteName),
-      frameRate: 31,
-      repeat: -1,
     });
   }
 
@@ -101,33 +93,74 @@ export default class Level1Scene extends Phaser.Scene {
     };
   }
 
-  addCollisions() {
-    this.physics.add.collider(this.ibb, this.obb);
-    this.walls.forEach((wall) => {
-      this.physics.add.collider(this.ibb, wall);
-      this.physics.add.collider(this.obb, wall);
-    });
-    this.cameraWalls.forEach((cameraWall) => {
-      this.physics.add.collider(this.ibb, cameraWall);
-      this.physics.add.collider(this.obb, cameraWall);
+  addPlayer(characterKey, position, spriteName) {
+    const DEFAULT_MASS = 1; // number is random right now, can(should?) be changed later
+    // these and other options should be configured for proper physic behaviour, commented for now
+    const options = {
+      // frictionStatic: 0.1,
+      // frictionAir: 0.0,
+      // friction: 0.1,
+    };
+    const [x, y] = position;
+    this[characterKey] = this.matter.add.sprite(x, y, spriteName, null, options);
+    this[characterKey].setFixedRotation(); // disable spin around its mass center point
+    /* setting equal mass to different size sprites, so
+    that characters will jump same height and run with the same speed */
+    this[characterKey].setMass(DEFAULT_MASS);
+    this.createPlayerAnimations(characterKey, spriteName);
+  }
+
+  createPlayerAnimations(characterKey, spriteName) {
+    this.anims.create({
+      key: `move-${characterKey}`,
+      frames: this.game.anims.generateFrameNumbers(spriteName),
+      frameRate: 31,
+      repeat: -1,
     });
   }
 
-  bindPlayerControls(characterKey, controls, playerSpeed = 300) {
+  addCollisions() {
+    /* collision event between two objects */
+    this.matter.world.on('collisionstart', (event) => {
+      event.pairs.forEach((pair) => {
+        /* bodyB - body that touches bodyA, meaning that bodyB should character,
+        because wall is static and cant touch anything */
+        const { bodyB } = pair;
+        const gameObjectB = bodyB.gameObject;
+        if (gameObjectB instanceof Phaser.Physics.Matter.Sprite) {
+          /* storing boolean that will show us if player sprite is on ground,
+          so we can apply jump velocity to it */
+          gameObjectB.isOnGround = true;
+        }
+      });
+    });
+  }
+
+  bindPlayerControls(characterKey, controls) {
+    const character = this[characterKey];
+    const currentVelocity = character.body.velocity;
+    const maxVelocity = 2;
+    const moveForce = 0.01;
+    const { isOnGround } = character;
+    const jumpVelocity = 9;
+    /* left/right move */
+    function moveCharacter(direction) {
+      const force = direction === 'right' ? moveForce : -moveForce;
+      const shouldFlip = direction !== 'right';
+      character.setFlipX(shouldFlip); // flipping character sprite
+      character.applyForce({ x: force, y: 0 }); // applying force to character
+      character.anims.play(`move-${characterKey}`, true); // playing move animation
+    }
     if (controls.left.isDown) {
-      this[characterKey].setVelocityX(-playerSpeed);
-      this[characterKey].anims.play(`move-${characterKey}`, true);
-      this[characterKey].flipX = true;
+      moveCharacter('left');
     } else if (controls.right.isDown) {
-      this[characterKey].setVelocityX(playerSpeed);
-      this[characterKey].anims.play(`move-${characterKey}`, true);
-      this[characterKey].flipX = false;
+      moveCharacter('right');
     } else {
-      this[characterKey].setVelocityX(0);
-      this[characterKey].anims.stop();
-      if (this[characterKey].anims.currentAnim) {
-        this[characterKey].anims.setCurrentFrame(this[characterKey].anims.currentAnim.frames[0]);
+      character.anims.stop();
+      if (character.anims.currentAnim) {
+        character.anims.setCurrentFrame(character.anims.currentAnim.frames[0]);
       }
+
       // theoretical approach to finish animation after player stops
       /*
       const currAnim = this.player.anims.currentAnim;
@@ -148,8 +181,16 @@ export default class Level1Scene extends Phaser.Scene {
       }
       */
     }
-    if ((controls.up.isDown || controls.down.isDown) && this[characterKey].body.touching.down) {
-      this[characterKey].setVelocityY(-250);
+    /* limit velocity after applying force, so that the characters wont speed up infinitely */
+    if (currentVelocity.x > maxVelocity) {
+      character.setVelocityX(maxVelocity);
+    } else if (currentVelocity.x < -maxVelocity) {
+      character.setVelocityX(-maxVelocity);
+    }
+    /* jump */
+    if ((controls.up.isDown || controls.down.isDown) && isOnGround) {
+      character.isOnGround = false;
+      character.setVelocityY(-jumpVelocity);
     }
   }
 
@@ -202,6 +243,6 @@ export default class Level1Scene extends Phaser.Scene {
   update() {
     this.bindPlayerControls('ibb', this.cursors);
     this.bindPlayerControls('obb', this.wasd);
-    this.centerCamera();
+    //this.centerCamera();
   }
 }

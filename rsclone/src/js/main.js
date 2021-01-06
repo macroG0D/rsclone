@@ -30,10 +30,16 @@ class Main {
         height: 720,
       },
       physics: {
-        default: 'arcade',
-        arcade: {
-          gravity: { y: 300 },
-          debug: true,
+        default: 'matter',
+        matter: {
+          enableSleeping: true,
+          gravity: {
+            y: 1,
+          },
+          debug: {
+            showBody: true,
+            showStaticBody: true,
+          },
         },
       },
       scene: [BootScene, PreloadScene, StartScene, Level1Scene],
