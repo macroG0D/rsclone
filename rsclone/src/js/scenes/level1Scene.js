@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { gradientSquares, gradientColors, walls } from '../levels/level1/backgroundStructure';
+import Player from '../sprites/player';
 
 const levelWidth = 5369;
 const levelHeight = 890;
@@ -14,8 +15,8 @@ export default class Level1Scene extends Phaser.Scene {
     this.cameras.main.roundPixels = true;
     this.addBackgrounds();
     this.addControlKeys();
-    this.addPlayer('ibb', [300, 0], 'ibb-sprite');
-    this.addPlayer('obb', [600, 0], 'obb-sprite');
+    this.ibb = new Player(this, 'ibb', 300, 0, 'ibb-sprite');
+    this.obb = new Player(this, 'obb', 600, 0, 'obb-sprite');
     this.addWalls();
     this.initCamera();
     this.addCollisions();
@@ -74,22 +75,6 @@ export default class Level1Scene extends Phaser.Scene {
       } else {
         this.walls.push(wall);
       }
-    });
-  }
-
-  addPlayer(characterKey, position, spriteName) {
-    const [x, y] = position;
-    this[characterKey] = this.physics.add.sprite(x, y, spriteName);
-    this[characterKey].setCollideWorldBounds(true);
-    this.createPlayerAnimations(characterKey, spriteName);
-  }
-
-  createPlayerAnimations(characterKey, spriteName) {
-    this.anims.create({
-      key: `move-${characterKey}`,
-      frames: this.game.anims.generateFrameNumbers(spriteName),
-      frameRate: 31,
-      repeat: -1,
     });
   }
 
