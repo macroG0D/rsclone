@@ -6,7 +6,6 @@ export default class StartScene extends Phaser.Scene {
   }
 
   create() {
-    this.add.sprite(0, 0, 'bg').setOrigin(0);
     this.createBg();
     this.addText();
     this.setEvents();

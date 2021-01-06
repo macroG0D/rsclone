@@ -1,11 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RS-Clone</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono&display=swap" rel="stylesheet">
+  <title>RS-Clone</title>
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+    }
+
+    canvas {
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      height: auto;
+    }
+
+
+    .game-container {
+      width: 100%;
+    }
+
+
+    @font-face {
+      font-family: 'Montserrat';
+      src:
+      url('./assets/fonts/montserrat_semibold.eot?#iefix') format('embedded-opentype'),
+      url('./assets/fonts/montserrat_semibold.woff2') format('woff2'),
+      url('./assets/fonts/montserrat_semibold.woff') format('woff'),
+      url('./assets/fonts/montserrat_semibold.ttf') format('truetype'),
+    }
+
+    .fontPreload {
+      font-family: 'Montserrat';
+      position: absolute;
+      left: -100px;
+    }
+
+  </style>
+
 </head>
+
 <body>
+  <div class="fontPreload">.</div>
 </body>
+
 </html>
