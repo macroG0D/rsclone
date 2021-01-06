@@ -1,10 +1,9 @@
 import Phaser from 'phaser';
-// import MyGame from './game';
-import Create from './component';
-import StartScene from './startScene';
-import BootScene from './bootScene';
-import PreloadScene from './preloadScene';
-import Level1Scene from './level1Scene';
+import Create from './components/dom-create';
+import BootScene from './scenes/bootScene';
+import PreloadScene from './scenes/preloadScene';
+import StartScene from './scenes/startScene';
+import Level1Scene from './scenes/level1Scene';
 
 class Main {
   constructor() {
@@ -36,7 +35,12 @@ class Main {
           debug: true,
         },
       },
-      scene: [BootScene, PreloadScene, StartScene, Level1Scene],
+      scene: [
+        BootScene,
+        PreloadScene,
+        StartScene,
+        Level1Scene,
+      ],
     };
     this.game = new Phaser.Game(this.gameConfig);
   }
