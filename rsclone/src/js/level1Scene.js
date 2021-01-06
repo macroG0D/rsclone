@@ -17,9 +17,8 @@ export default class Level1Scene extends Phaser.Scene {
     this.addControlKeys();
     this.addPlayer('ibb', [200, 200], 'ibb-sprite');
     this.addPlayer('obb', [300, 300], 'obb-sprite');
-    //this.initCamera();
+    this.initCamera();
     this.addCollisions();
-    this.cameras.main.startFollow(this.ibb);
   }
 
   addBackgrounds() {
@@ -123,14 +122,18 @@ export default class Level1Scene extends Phaser.Scene {
     /* collision event between two objects */
     this.matter.world.on('collisionstart', (event) => {
       event.pairs.forEach((pair) => {
-        /* bodyB - body that touches bodyA, meaning that bodyB should character,
-        because wall is static and cant touch anything */
-        const { bodyB } = pair;
+        const { bodyA, bodyB } = pair;
         const gameObjectB = bodyB.gameObject;
+        const gameObjectA = bodyA.gameObject;
         if (gameObjectB instanceof Phaser.Physics.Matter.Sprite) {
           /* storing boolean that will show us if player sprite is on ground,
           so we can apply jump velocity to it */
           gameObjectB.isOnGround = true;
+        }
+        if (gameObjectA instanceof Phaser.Physics.Matter.Sprite) {
+          /* storing boolean that will show us if player sprite is on ground,
+          so we can apply jump velocity to it */
+          gameObjectA.isOnGround = true;
         }
       });
     });
@@ -194,13 +197,14 @@ export default class Level1Scene extends Phaser.Scene {
     }
   }
 
-  createRectangle(x, y, width, height) {
+  createCameraWall(x, y, width, height) {
+    // these and other options should be configured for proper physic behaviour, commented for now
+    const objSettings = {
+      isStatic: true,
+    };
     const rect = this.add.rectangle(x, y, width, height);
-    rect.setOrigin(0, 0);
-    this.physics.add.existing(rect);
-    rect.body.setAllowGravity(false);
-    rect.body.setImmovable(true);
-    rect.setScrollFactor(0);
+    const matterRect = this.matter.add.gameObject(rect, objSettings);
+    matterRect.setMass(0.0001);
     return rect;
   }
 
@@ -208,9 +212,10 @@ export default class Level1Scene extends Phaser.Scene {
     this.cameraWalls = [];
     const wallThickness = 2;
     const gameDimensions = { width: this.game.config.width, height: this.game.config.height };
-    const leftWall = this.createRectangle(0, 0, wallThickness, gameDimensions.width);
+    const y = gameDimensions.height / 2;
+    const leftWall = this.createCameraWall(0, y, wallThickness, gameDimensions.height);
     const rightWallPosX = gameDimensions.width - wallThickness;
-    const rightWall = this.createRectangle(rightWallPosX, 0, wallThickness, gameDimensions.width);
+    const rightWall = this.createCameraWall(rightWallPosX, y, wallThickness, gameDimensions.height);
     this.cameraWalls.push(leftWall);
     this.cameraWalls.push(rightWall);
   }
@@ -243,6 +248,6 @@ export default class Level1Scene extends Phaser.Scene {
   update() {
     this.bindPlayerControls('ibb', this.cursors);
     this.bindPlayerControls('obb', this.wasd);
-    //this.centerCamera();
+    this.centerCamera();
   }
 }
