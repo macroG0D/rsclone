@@ -10,7 +10,9 @@ html {
 
 body {
 	min-width: 320px;
-	min-height: 320px;
+    min-height: 320px;
+    padding: 0;
+    margin: 0;
 	color: $mainFontColor;
     background: linear-gradient(to top, #ece9e6, $default-color);
 }
@@ -19,44 +21,16 @@ img {
     width: 100%;
 }
 
-a {
-	color: $mainFontColor;
-}
-
-.text-normal {
-    color: $mainFontColor;
-}
-
-.text-inverted {
-    color: $default-color;
-}
-
-.text-hidden {
-    color: transparent;
-}
-
-.interactive {
-	&:hover {
-        transform: scale(1.05);
-    }
-    &:active {
-        transform: scale(1);
-    }
-}
-
-ul, li {
-    margin: 0;
+canvas {
     padding: 0;
-    border: 0;
-    vertical-align: baseline;
-  }
-  
-  ul {
-    list-style: none;
-  }
+    margin: 0;
+    width: 100%;
+    height: auto;
+}
 
 .game-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
