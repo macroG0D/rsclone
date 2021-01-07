@@ -11,18 +11,18 @@ export default class Level1Scene extends Phaser.Scene {
   }
 
   create() {
-    this.matter.world.setBounds(0, 0, levelWidth, levelHeight, 32, true, true, false, true);
+    this.physics.world.setBounds(0, 0, levelWidth, levelHeight);
     this.cameras.main.setBounds(0, 0, levelWidth, levelHeight);
     this.cameras.main.roundPixels = true;
     this.addBackgrounds();
-    this.addWalls();
     this.addControlKeys();
-    this.ibb = new Player(this, 'ibb', 200, 200, 'ibb-sprite');
-    this.obb = new Player(this, 'obb', 300, 300, 'obb-sprite');
+    this.ibb = new Player(this, 'ibb', 300, 0, 'ibb-sprite');
+    this.obb = new Player(this, 'obb', 600, 0, 'obb-sprite');
+    this.addWalls();
     this.initCamera();
     this.addCollisions();
     this.music = this.sound.add('level1_music');
-    this.music.play({ loop: true });
+    // this.music.play({ loop: true });
   }
 
   addBackgrounds() {
@@ -54,7 +54,6 @@ export default class Level1Scene extends Phaser.Scene {
     const wallDefaultColor = 0x082228;
     const portalColor = 0xffffff;
     const wallDefaultHeight = 16;
-
     walls.forEach((item) => {
       const {
         width,
@@ -67,17 +66,11 @@ export default class Level1Scene extends Phaser.Scene {
       const wallHeight = isVertical ? width : wallDefaultHeight;
       const wallWidth = isVertical ? wallDefaultHeight : width;
       const wallColor = isPortal ? portalColor : wallDefaultColor;
-      const wallX = x + wallWidth / 2;
-      const wallY = top + wallHeight / 2;
-      const wall = this.add.rectangle(wallX, wallY, wallWidth, wallHeight, wallColor);
-      // these and other options should be configured for proper physic behaviour, commented for now
-      const objSettings = {
-        isSensor: isPortal,
-        isStatic: true,
-        // frictionStatic: 0,
-        // friction: 0,
-      };
-      this.matter.add.gameObject(wall, objSettings);
+      const wall = this.add.rectangle(x, top, wallWidth, wallHeight, wallColor);
+      wall.setOrigin(0, 0);
+      this.physics.add.existing(wall);
+      wall.body.setAllowGravity(false);
+      wall.body.setImmovable(true);
       if (isPortal) {
         this.portals.push(wall);
       } else {
@@ -96,79 +89,33 @@ export default class Level1Scene extends Phaser.Scene {
     };
   }
 
-  addPlayer(characterKey, position, spriteName) {
-    const DEFAULT_MASS = 1; // number is random right now, can(should?) be changed later
-    // these and other options should be configured for proper physic behaviour, commented for now
-    const options = {
-      // frictionStatic: 0.1,
-      // frictionAir: 0.0,
-      // friction: 0.1,
-    };
-    const [x, y] = position;
-    this[characterKey] = this.matter.add.sprite(x, y, spriteName, null, options);
-    this[characterKey].setFixedRotation(); // disable spin around its mass center point
-    /* setting equal mass to different size sprites, so
-    that characters will jump same height and run with the same speed */
-    this[characterKey].setMass(DEFAULT_MASS);
-    this.createPlayerAnimations(characterKey, spriteName);
-    console.log(this.obb);
-  }
-
-  createPlayerAnimations(characterKey, spriteName) {
-    this.anims.create({
-      key: `move-${characterKey}`,
-      frames: this.game.anims.generateFrameNumbers(spriteName),
-      frameRate: 31,
-      repeat: -1,
-    });
-  }
-
   addCollisions() {
-    /* collision event between two objects */
-    this.matter.world.on('collisionstart', (event) => {
-      event.pairs.forEach((pair) => {
-        const { bodyA, bodyB } = pair;
-        const gameObjectB = bodyB.gameObject;
-        const gameObjectA = bodyA.gameObject;
-        if (gameObjectB instanceof Phaser.Physics.Matter.Sprite) {
-          /* storing boolean that will show us if player sprite is on ground,
-          so we can apply jump velocity to it */
-          gameObjectB.isOnGround = true;
-        }
-        if (gameObjectA instanceof Phaser.Physics.Matter.Sprite) {
-          /* storing boolean that will show us if player sprite is on ground,
-          so we can apply jump velocity to it */
-          gameObjectA.isOnGround = true;
-        }
-      });
+    this.physics.add.collider(this.ibb, this.obb);
+    this.walls.forEach((wall) => {
+      this.physics.add.collider(this.ibb, wall);
+      this.physics.add.collider(this.obb, wall);
+    });
+    this.cameraWalls.forEach((cameraWall) => {
+      this.physics.add.collider(this.ibb, cameraWall);
+      this.physics.add.collider(this.obb, cameraWall);
     });
   }
 
-  bindPlayerControls(characterKey, controls) {
-    const character = this[characterKey];
-    const currentVelocity = character.body.velocity;
-    const maxVelocity = 2;
-    const moveForce = 0.01;
-    const { isOnGround } = character;
-    const jumpVelocity = 9;
-    /* left/right move */
-    function moveCharacter(direction) {
-      const force = direction === 'right' ? moveForce : -moveForce;
-      const shouldFlip = direction !== 'right';
-      character.setFlipX(shouldFlip); // flipping character sprite
-      character.applyForce({ x: force, y: 0 }); // applying force to character
-      character.anims.play(`move-${characterKey}`, true); // playing move animation
-    }
+  bindPlayerControls(characterKey, controls, playerSpeed = 300) {
     if (controls.left.isDown) {
-      moveCharacter('left');
+      this[characterKey].setVelocityX(-playerSpeed);
+      this[characterKey].anims.play(`move-${characterKey}`, true);
+      this[characterKey].flipX = true;
     } else if (controls.right.isDown) {
-      moveCharacter('right');
+      this[characterKey].setVelocityX(playerSpeed);
+      this[characterKey].anims.play(`move-${characterKey}`, true);
+      this[characterKey].flipX = false;
     } else {
-      character.anims.stop();
-      if (character.anims.currentAnim) {
-        character.anims.setCurrentFrame(character.anims.currentAnim.frames[0]);
+      this[characterKey].setVelocityX(0);
+      this[characterKey].anims.stop();
+      if (this[characterKey].anims.currentAnim) {
+        this[characterKey].anims.setCurrentFrame(this[characterKey].anims.currentAnim.frames[0]);
       }
-
       // theoretical approach to finish animation after player stops
       /*
       const currAnim = this.player.anims.currentAnim;
@@ -189,27 +136,18 @@ export default class Level1Scene extends Phaser.Scene {
       }
       */
     }
-    /* limit velocity after applying force, so that the characters wont speed up infinitely */
-    if (currentVelocity.x > maxVelocity) {
-      character.setVelocityX(maxVelocity);
-    } else if (currentVelocity.x < -maxVelocity) {
-      character.setVelocityX(-maxVelocity);
-    }
-    /* jump */
-    if ((controls.up.isDown || controls.down.isDown) && isOnGround) {
-      character.isOnGround = false;
-      character.setVelocityY(-jumpVelocity);
+    if ((controls.up.isDown || controls.down.isDown) && this[characterKey].body.touching.down) {
+      this[characterKey].setVelocityY(-250);
     }
   }
 
-  createCameraWall(x, y, width, height) {
-    // these and other options should be configured for proper physic behaviour, commented for now
-    const objSettings = {
-      isStatic: true,
-    };
+  createRectangle(x, y, width, height) {
     const rect = this.add.rectangle(x, y, width, height);
-    const matterRect = this.matter.add.gameObject(rect, objSettings);
-    matterRect.setMass(0.0001);
+    rect.setOrigin(0, 0);
+    this.physics.add.existing(rect);
+    rect.body.setAllowGravity(false);
+    rect.body.setImmovable(true);
+    rect.setScrollFactor(0);
     return rect;
   }
 
@@ -217,10 +155,9 @@ export default class Level1Scene extends Phaser.Scene {
     this.cameraWalls = [];
     const wallThickness = 2;
     const gameDimensions = { width: this.game.config.width, height: this.game.config.height };
-    const y = gameDimensions.height / 2;
-    const leftWall = this.createCameraWall(0, y, wallThickness, gameDimensions.height);
+    const leftWall = this.createRectangle(0, 0, wallThickness, gameDimensions.width);
     const rightWallPosX = gameDimensions.width - wallThickness;
-    const rightWall = this.createCameraWall(rightWallPosX, y, wallThickness, gameDimensions.height);
+    const rightWall = this.createRectangle(rightWallPosX, 0, wallThickness, gameDimensions.width);
     this.cameraWalls.push(leftWall);
     this.cameraWalls.push(rightWall);
   }

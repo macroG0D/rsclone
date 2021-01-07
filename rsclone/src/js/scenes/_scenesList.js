@@ -1,27 +1,25 @@
-import StartScene from './startScene';
-import BootScene from './bootScene';
-import PreloadScene from './preloadScene';
-import MenuMainScene from './menuMainScene';
-import MenuPlayScene from './menuPlayScene';
-import LocalGameScene from './localGameScene';
-import OnlineGameScene from './onlineGameScene';
-import DevelopersScene from './developersScene';
-import SettingsScene from './settingsScene';
-import LeaderScene from './leaderScene';
-import Level1Scene from './level1Scene';
+import Boot from './boot';
+import Preload from './preload';
+import MainMenu from './mainMenu';
+import MainMenuPlay from './MainMenu/play';
+import MainMenuLocalGame from './MainMenu/localGame';
+import MainMenuOnlineGame from './MainMenu/onlineGame';
+import MainMenuLeaderBoard from './MainMenu/leaderBoard';
+import MainMenuSettings from './MainMenu/settings';
+import MainMenuDevelopers from './MainMenu/developers';
+import Level1 from './level1';
 
 export const SCENE_LIST = [
-  BootScene,
-  PreloadScene,
-  MenuMainScene,
-  MenuPlayScene,
-  StartScene,
-  LocalGameScene,
-  OnlineGameScene,
-  Level1Scene,
-  DevelopersScene,
-  SettingsScene,
-  LeaderScene,
+  Boot,
+  Preload,
+  MainMenu,
+  MainMenuPlay,
+  MainMenuLocalGame,
+  MainMenuOnlineGame,
+  MainMenuLeaderBoard,
+  MainMenuSettings,
+  MainMenuDevelopers,
+  Level1,
 ];
 
 export default SCENE_LIST;

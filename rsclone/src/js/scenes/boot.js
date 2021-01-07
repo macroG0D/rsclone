@@ -1,13 +1,13 @@
 import Phaser from 'phaser';
 import bootBg from '../../assets/images/boot.jpg';
 
-export default class BootScene extends Phaser.Scene {
+export default class Boot extends Phaser.Scene {
   constructor() {
     super('Boot');
   }
 
   preload() {
-    this.load.image('bg', bootBg);
+    this.load.image('bootBg', bootBg);
   }
 
   create() {
