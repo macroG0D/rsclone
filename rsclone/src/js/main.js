@@ -1,10 +1,9 @@
 import Phaser from 'phaser';
-// import MyGame from './game';
-import Create from './component';
-import StartScene from './startScene';
-import BootScene from './bootScene';
-import PreloadScene from './preloadScene';
-import Level1Scene from './level1Scene';
+import Create from './components/dom-create';
+
+import { SCENE_LIST } from './scenes/_scenesList';
+
+import { GAME_WIDTH, GAME_HEIGHT } from './constants';
 
 class Main {
   constructor() {
@@ -26,8 +25,8 @@ class Main {
       scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
-        width: 1280,
-        height: 720,
+        width: GAME_WIDTH,
+        height: GAME_HEIGHT,
       },
       physics: {
         default: 'matter',
@@ -42,7 +41,7 @@ class Main {
           },
         },
       },
-      scene: [BootScene, PreloadScene, StartScene, Level1Scene],
+      scene: SCENE_LIST,
     };
     this.game = new Phaser.Game(this.gameConfig);
   }

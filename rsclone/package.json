@@ -32,7 +32,6 @@
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
     "babel-loader": "^8.0.6",
-    "core-js": "^3.6.5",
     "css-loader": "^3.4.0",
     "cssnano-preset-advanced": "^4.0.7",
     "eslint": "^7.17.0",
