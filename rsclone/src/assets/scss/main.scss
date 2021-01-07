@@ -3,34 +3,31 @@
 @import "utils/vars";
 
 html {
-	font-family: $mainFont;
-	font-size: $mainFontSize;
-	overflow: hidden;
+  font-family: $mainFont;
+  font-size: $mainFontSize;
+  overflow: hidden;
 }
 
 body {
-	min-width: 320px;
-    min-height: 320px;
-    padding: 0;
-    margin: 0;
-	color: $mainFontColor;
-    background: linear-gradient(to top, #ece9e6, $default-color);
+  min-width: 320px;
+  min-height: 320px;
+  padding: 0;
+  margin: 0;
+  color: $mainFontColor;
+  background: linear-gradient(to top, #ece9e6, $default-color);
 }
 
 img {
-    width: 100%;
+  width: 100%;
 }
 
 canvas {
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    height: auto;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: auto;
 }
 
 .game-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: block;
 }
