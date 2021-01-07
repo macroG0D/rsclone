@@ -1,8 +1,8 @@
 import Phaser from 'phaser';
 
-export default class MenuPLayScene extends Phaser.Scene {
+export default class OnlineGameScene extends Phaser.Scene {
   constructor() {
-    super('menuPlay');
+    super('MainMenuOnlineGame');
   }
 
   create() {
@@ -31,7 +31,7 @@ export default class MenuPLayScene extends Phaser.Scene {
       fixedWidth: 220,
     };
 
-    const menu1 = this.add.text(this.cameras.main.centerX - 110, this.game.config.height / 2 - 25, 'local game', style)
+    const menu1 = this.add.text(this.cameras.main.centerX - 110, this.game.config.height / 2, 'online game', style)
       .setInteractive()
       .on('pointerover', () => {
         menu1.setStyle(styleOver);
@@ -40,31 +40,19 @@ export default class MenuPLayScene extends Phaser.Scene {
         menu1.setStyle(style);
       })
       .on('pointerdown', () => {
-        this.scene.start('localGame');
+        this.scene.start('Start');
       });
 
-    const menu2 = this.add.text(this.cameras.main.centerX - 110, this.game.config.height / 2 + 25, 'invite a friend', style)
+    const back = this.add.text(this.cameras.main.centerX - 110, this.game.config.height / 2 + 250, 'back', styleBack)
       .setInteractive()
       .on('pointerover', () => {
-        menu2.setStyle(styleOver);
+        back.setStyle(styleOver);
       })
       .on('pointerout', () => {
-        menu2.setStyle(style);
+        back.setStyle(styleBack);
       })
       .on('pointerdown', () => {
-        this.scene.start('onlineGame');
-      });
-
-    const menu3 = this.add.text(this.cameras.main.centerX - 110, this.game.config.height / 2 + 250, 'back', styleBack)
-      .setInteractive()
-      .on('pointerover', () => {
-        menu3.setStyle(styleOver);
-      })
-      .on('pointerout', () => {
-        menu3.setStyle(styleBack);
-      })
-      .on('pointerdown', () => {
-        this.scene.start('menuMain');
+        this.scene.start('menuPlay');
       });
   }
 

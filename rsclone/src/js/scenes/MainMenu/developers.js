@@ -11,7 +11,7 @@ export default class DevelopersScene extends Phaser.Scene {
   }
 
   createMenu() {
-    const styleTitle = {
+    const menuCaptionStyle = {
       font: '32px Montserrat',
       fill: '#000000',
       align: 'center',
@@ -19,10 +19,9 @@ export default class DevelopersScene extends Phaser.Scene {
       fixedWidth: 200,
     };
 
-    const style = {
+    const menuItemStyle = {
       font: '30px Montserrat',
       fill: '#000000',
-      // align: 'center',
       fontStyle: 'strong',
       fixedWidth: 200,
     };
@@ -31,7 +30,7 @@ export default class DevelopersScene extends Phaser.Scene {
       fill: '#D22D61',
     };
 
-    const styleBack = {
+    const menuBackStyle = {
       font: '20px Montserrat',
       fill: '#979797',
       align: 'center',
@@ -39,68 +38,67 @@ export default class DevelopersScene extends Phaser.Scene {
       fixedWidth: 200,
     };
 
-    this.add.text(this.cameras.main.centerX - 110, this.game.config.height / 2 - 120, 'developers', styleTitle);
-
+    this.add.text(this.cameras.main.centerX, this.game.config.height / 2 - 120, 'developers', menuCaptionStyle).setOrigin(0.5);
     this.add.image(this.cameras.main.centerX - 85, this.game.config.height / 2 - 32, 'githubIcon');
     this.add.image(this.cameras.main.centerX - 85, this.game.config.height / 2 + 18, 'githubIcon');
     this.add.image(this.cameras.main.centerX - 85, this.game.config.height / 2 + 68, 'githubIcon');
     this.add.image(this.cameras.main.centerX - 85, this.game.config.height / 2 + 118, 'githubIcon');
 
-    const macroG0D = this.add.text(this.cameras.main.centerX - 65, this.game.config.height / 2 - 50, 'macroG0D', style)
+    const macroG0D = this.add.text(this.cameras.main.centerX - 65, this.game.config.height / 2 - 50, 'macroG0D', menuItemStyle)
       .setInteractive()
       .on('pointerover', () => {
         macroG0D.setStyle(styleOver);
       })
       .on('pointerout', () => {
-        macroG0D.setStyle(style);
+        macroG0D.setStyle(menuItemStyle);
       })
       .on('pointerdown', () => {
         window.open('https://github.com/macroG0D');
       });
 
-    const i3Code = this.add.text(this.cameras.main.centerX - 65, this.game.config.height / 2, 'i3-code', style)
+    const i3Code = this.add.text(this.cameras.main.centerX - 65, this.game.config.height / 2, 'i3-code', menuItemStyle)
       .setInteractive()
       .on('pointerover', () => {
         i3Code.setStyle(styleOver);
       })
       .on('pointerout', () => {
-        i3Code.setStyle(style);
+        i3Code.setStyle(menuItemStyle);
       })
       .on('pointerdown', () => {
         window.open('https://github.com/i3-code');
       });
 
-    const heliken = this.add.text(this.cameras.main.centerX - 65, this.game.config.height / 2 + 50, 'heliken', style)
+    const heliken = this.add.text(this.cameras.main.centerX - 65, this.game.config.height / 2 + 50, 'heliken', menuItemStyle)
       .setInteractive()
       .on('pointerover', () => {
         heliken.setStyle(styleOver);
       })
       .on('pointerout', () => {
-        heliken.setStyle(style);
+        heliken.setStyle(menuItemStyle);
       })
       .on('pointerdown', () => {
         window.open('https://github.com/Heliken');
       });
 
-    const mauta = this.add.text(this.cameras.main.centerX - 65, this.game.config.height / 2 + 100, 'mauta', style)
+    const mauta = this.add.text(this.cameras.main.centerX - 65, this.game.config.height / 2 + 100, 'mauta', menuItemStyle)
       .setInteractive()
       .on('pointerover', () => {
         mauta.setStyle(styleOver);
       })
       .on('pointerout', () => {
-        mauta.setStyle(style);
+        mauta.setStyle(menuItemStyle);
       })
       .on('pointerdown', () => {
         window.open('https://github.com/mauta');
       });
 
-    const back = this.add.text(this.cameras.main.centerX - 120, this.game.config.height / 2 + 250, 'back', styleBack)
+    const back = this.add.text(this.cameras.main.centerX - 120, this.game.config.height / 2 + 250, 'back', menuBackStyle)
       .setInteractive()
       .on('pointerover', () => {
         back.setStyle(styleOver);
       })
       .on('pointerout', () => {
-        back.setStyle(styleBack);
+        back.setStyle(menuBackStyle);
       })
       .on('pointerdown', () => {
         this.scene.start('menuMain');

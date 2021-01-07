@@ -22,7 +22,7 @@ export default class Level1Scene extends Phaser.Scene {
     this.initCamera();
     this.addCollisions();
     this.music = this.sound.add('level1_music');
-    this.music.play({ loop: true });
+    // this.music.play({ loop: true });
   }
 
   addBackgrounds() {
