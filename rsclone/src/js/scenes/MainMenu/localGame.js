@@ -1,10 +1,10 @@
 import Phaser from 'phaser';
 
 import {
-  createMenu
+  createMenu,
 } from '../../utils/createMenu';
 import {
-  createBg
+  createBg,
 } from '../../utils/createBg';
 
 export default class MainMenuLocalGame extends Phaser.Scene {
@@ -25,34 +25,23 @@ export default class MainMenuLocalGame extends Phaser.Scene {
   createImg() {
     this.add.image(314, 215, 'ibbBg');
     this.ibb = this.add.image(314, 215, 'ibbImg');
-    this.animBig(this.ibb);
+    this.anim(this.ibb, 0);
     this.add.image(967, 215, 'obbBg');
     this.obb = this.add.image(967, 215, 'obbImg');
-    this.animSmall(this.obb);
+    this.anim(this.obb, 1000);
     this.add.image(314, 437, 'ibbKeys');
     this.add.image(967, 437, 'obbKeys');
   }
 
-  animBig(person) {
+  anim(person, delayTime) {
     this.tweens.add({
       targets: person,
       scale: 1.1,
       ease: 'Linear',
       duration: 1000,
-      onComplete: () => {
-        this.animSmall(person);
-      }
-    })
-  }
-  animSmall(person) {
-    this.tweens.add({
-      targets: person,
-      scale: 1,
-      ease: 'Linear',
-      duration: 1000,
-      onComplete: () => {
-        this.animBig(person);
-      }
-    })
+      delay: delayTime,
+      yoyo: true,
+      repeat: -1,
+    });
   }
 }
