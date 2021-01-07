@@ -1,7 +1,11 @@
 import Phaser from 'phaser';
 
-import { createMenu } from '../../utils/createMenu';
-import { createBg } from '../../utils/createBg';
+import {
+  createMenu
+} from '../../utils/createMenu';
+import {
+  createBg
+} from '../../utils/createBg';
 
 export default class MainMenuDevelopers extends Phaser.Scene {
   constructor() {
@@ -21,7 +25,7 @@ export default class MainMenuDevelopers extends Phaser.Scene {
   }
   createGithubIcons() {
     const menuItemsCount = Object.keys(this.menuItems).length;
-    for(let menuIndex = 0; menuIndex < menuItemsCount; menuIndex += 1) {
+    for (let menuIndex = 0; menuIndex < menuItemsCount; menuIndex += 1) {
       this.add.image(this.cameras.main.centerX - 140,
         (this.game.config.height / 2 + (menuItemsCount * 30)) - (60 * menuIndex),
         'githubIcon');
