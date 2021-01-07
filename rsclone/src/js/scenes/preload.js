@@ -2,8 +2,10 @@ import Phaser from 'phaser';
 import ibbSprite from '../../assets/sprites/ibb/ibb-sprite.png';
 import obbSprite from '../../assets/sprites/obb/obb-sprite.png';
 import githubIcon from '../../assets/images/github-logo-face.svg';
-import ibbImg from '../../assets/images/ibb.png';
-import obbImg from '../../assets/images/obb.png';
+import ibbImg from '../../assets/images/ibb_stay.png';
+import obbImg from '../../assets/images/obb_stay.png';
+import ibbBg from '../../assets/images/ibbbg.png';
+import obbBg from '../../assets/images/obbbg.png';
 import ibbKeys from '../../assets/images/ibbKeys.svg';
 import obbKeys from '../../assets/images/obbKeys.svg';
 import mainMenuMusic from '../../assets/music/main_menu.mp3';
@@ -20,6 +22,8 @@ export default class Preload extends Phaser.Scene {
     this.load.image('githubIcon', githubIcon);
     this.load.image('obbImg', obbImg);
     this.load.image('ibbImg', ibbImg);
+    this.load.image('obbBg', obbBg);
+    this.load.image('ibbBg', ibbBg);
     this.load.image('obbKeys', obbKeys);
     this.load.image('ibbKeys', ibbKeys);
 
