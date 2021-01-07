@@ -253,6 +253,6 @@ export default class Level1Scene extends Phaser.Scene {
   update() {
     this.bindPlayerControls('ibb', this.cursors);
     this.bindPlayerControls('obb', this.wasd);
-    //this.centerCamera();
+    this.centerCamera();
   }
 }
