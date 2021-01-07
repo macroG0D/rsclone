@@ -3,7 +3,7 @@ import Phaser from 'phaser';
 import { createMenu } from '../../utils/createMenu';
 import { createBg } from '../../utils/createBg';
 
-export default class LocalGameScene extends Phaser.Scene {
+export default class MainMenuLocalGame extends Phaser.Scene {
   constructor() {
     super('MainMenuLocalGame');
   }
