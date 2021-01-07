@@ -1,10 +1,8 @@
 import Phaser from 'phaser';
-import Player from '../sprites/player';
-import { gradientSquares, gradientColors, walls } from '../levels/level1/backgroundStructure';
+import { gradientSquares, gradientColors, walls } from './backgroundStructureLevel1';
 
 const levelWidth = 5369;
 const levelHeight = 890;
-
 export default class Level1Scene extends Phaser.Scene {
   constructor() {
     super('Level1');
@@ -17,12 +15,10 @@ export default class Level1Scene extends Phaser.Scene {
     this.addBackgrounds();
     this.addWalls();
     this.addControlKeys();
-    this.ibb = new Player(this, 'ibb', 200, 200, 'ibb-sprite');
-    this.obb = new Player(this, 'obb', 300, 300, 'obb-sprite');
+    this.addPlayer('ibb', [200, 200], 'ibb-sprite');
+    this.addPlayer('obb', [300, 300], 'obb-sprite');
     this.initCamera();
     this.addCollisions();
-    this.music = this.sound.add('level1_music');
-    this.music.play({ loop: true });
   }
 
   addBackgrounds() {
@@ -111,7 +107,6 @@ export default class Level1Scene extends Phaser.Scene {
     that characters will jump same height and run with the same speed */
     this[characterKey].setMass(DEFAULT_MASS);
     this.createPlayerAnimations(characterKey, spriteName);
-    console.log(this.obb);
   }
 
   createPlayerAnimations(characterKey, spriteName) {
