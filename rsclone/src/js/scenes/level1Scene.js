@@ -18,10 +18,9 @@ export default class Level1Scene extends Phaser.Scene {
     this.addWalls();
     this.addControlKeys();
     this.ibb = new Player(this, 'ibb', 200, 200, 'ibb-sprite');
-    this.obb = this.addPlayer('obb', [300, 300], 'obb-sprite');
-    //this.obb = new Player(this, 'obb', 300, 300, 'obb-sprite');
-    //this.initCamera();
-    //this.addCollisions();
+    this.obb = new Player(this, 'obb', 300, 300, 'obb-sprite');
+    this.initCamera();
+    this.addCollisions();
     this.music = this.sound.add('level1_music');
     this.music.play({ loop: true });
   }
@@ -252,8 +251,8 @@ export default class Level1Scene extends Phaser.Scene {
   }
 
   update() {
-    //this.bindPlayerControls('ibb', this.cursors);
-    //this.bindPlayerControls('obb', this.wasd);
+    this.bindPlayerControls('ibb', this.cursors);
+    this.bindPlayerControls('obb', this.wasd);
     //this.centerCamera();
   }
 }
