@@ -96,33 +96,6 @@ export default class Level1Scene extends Phaser.Scene {
     };
   }
 
-  addPlayer(characterKey, position, spriteName) {
-    const DEFAULT_MASS = 1; // number is random right now, can(should?) be changed later
-    // these and other options should be configured for proper physic behaviour, commented for now
-    const options = {
-      // frictionStatic: 0.1,
-      // frictionAir: 0.0,
-      // friction: 0.1,
-    };
-    const [x, y] = position;
-    this[characterKey] = this.matter.add.sprite(x, y, spriteName, null, options);
-    this[characterKey].setFixedRotation(); // disable spin around its mass center point
-    /* setting equal mass to different size sprites, so
-    that characters will jump same height and run with the same speed */
-    this[characterKey].setMass(DEFAULT_MASS);
-    this.createPlayerAnimations(characterKey, spriteName);
-    console.log(this.obb);
-  }
-
-  createPlayerAnimations(characterKey, spriteName) {
-    this.anims.create({
-      key: `move-${characterKey}`,
-      frames: this.game.anims.generateFrameNumbers(spriteName),
-      frameRate: 31,
-      repeat: -1,
-    });
-  }
-
   addCollisions() {
     /* collision event between two objects */
     this.matter.world.on('collisionstart', (event) => {
