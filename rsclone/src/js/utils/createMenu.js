@@ -24,13 +24,15 @@ export function createMenu(scene, menuItems, back = false, backCallback = () => 
 
   Object.entries(menuItems).forEach(([itemName, itemLink], itemIndex) => {
     const menuItem = scene.add.text(
-      menuX,
-      menuY + (itemIndex * MENU_ITEM_HEIGHT),
-      itemName,
-      menuItemStyle,
-    )
+        menuX,
+        menuY + (itemIndex * MENU_ITEM_HEIGHT),
+        itemName,
+        menuItemStyle,
+      )
       .setOrigin(0.5)
-      .setInteractive()
+      .setInteractive({
+        useHandCursor: true,
+      })
       .on('pointerover', () => menuItem.setStyle(menuItemOverStyle))
       .on('pointerout', () => menuItem.setStyle(menuItemStyle))
       .on('pointerdown', () => itemLink());
@@ -39,7 +41,9 @@ export function createMenu(scene, menuItems, back = false, backCallback = () => 
   if (back) {
     const menuItemBack = scene.add.text(menuX, menuY + 250, 'back', menuItemBackStyle)
       .setOrigin(0.5)
-      .setInteractive()
+      .setInteractive({
+        useHandCursor: true,
+      })
       .on('pointerover', () => menuItemBack.setStyle(menuItemOverStyle))
       .on('pointerout', () => menuItemBack.setStyle(menuItemBackStyle))
       .on('pointerdown', backCallback);
