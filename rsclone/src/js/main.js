@@ -29,12 +29,16 @@ class Main {
         height: GAME_HEIGHT,
       },
       physics: {
-        default: 'arcade',
-        arcade: {
+        default: 'matter',
+        matter: {
+          enableSleeping: true,
           gravity: {
-            y: 300,
+            y: 1,
           },
-          debug: true,
+          debug: {
+            showBody: true,
+            showStaticBody: true,
+          },
         },
       },
       scene: SCENE_LIST,
