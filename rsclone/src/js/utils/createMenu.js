@@ -21,6 +21,8 @@ const MENU_ITEM_HEIGHT = 60;
 export function createMenu(scene, menuItems, back = false, backCallback = () => scene.scene.start('MainMenu')) {
   const menuX = scene.cameras.main.centerX;
   const menuY = scene.cameras.main.centerY - MENU_ITEM_HEIGHT;
+  scene.cursors = scene.input.keyboard.createCursorKeys();
+  scene.esc = scene.input.keyboard.addKey('ESC');
 
   Object.entries(menuItems).forEach(([itemName, itemLink], itemIndex) => {
     const menuItem = scene.add.text(
@@ -47,6 +49,7 @@ export function createMenu(scene, menuItems, back = false, backCallback = () => 
       .on('pointerover', () => menuItemBack.setStyle(menuItemOverStyle))
       .on('pointerout', () => menuItemBack.setStyle(menuItemBackStyle))
       .on('pointerdown', backCallback);
+    scene.esc.on('down', backCallback);
   }
 }
 
