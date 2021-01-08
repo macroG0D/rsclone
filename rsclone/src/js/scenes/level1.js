@@ -4,6 +4,9 @@ import { gradientSquares, gradientColors, walls } from '../levels/level1/backgro
 
 import { BORDER_THICKNESS } from '../constants';
 
+const player1Controls = ['LEFT', 'RIGHT', 'UP', 'DOWN'];
+const player2Controls = ['A', 'D', 'W', 'S'];
+
 const levelWidth = 5369;
 const levelHeight = 890;
 
@@ -14,20 +17,13 @@ export default class Level1 extends Phaser.Scene {
 
   create() {
     this.matter.world.setBounds(0, 0, levelWidth, levelHeight, BORDER_THICKNESS);
-    /*
-    this.cameras.main.setBounds(
-      BORDER_THICKNESS,
-      BORDER_THICKNESS,
-      levelWidth - (BORDER_THICKNESS * 2),
-      levelHeight - (BORDER_THICKNESS * 2),
-    );
-    // this.cameras.main.roundPixels = true;
-    */
+    this.cameras.main.setBounds(0, 0, levelWidth, levelHeight);
+    this.cameras.main.roundPixels = true;
     this.addBackgrounds();
     this.addWalls();
     this.addControlKeys();
-    this.ibb = new Player(this, 'ibb', 200, 200, 'ibb-sprite');
-    this.obb = new Player(this, 'obb', 300, 300, 'obb-sprite');
+    this.ibb = new Player(this, 'ibb', 200, 200, 'ibb-sprite', player1Controls);
+    this.obb = new Player(this, 'obb', 300, 300, 'obb-sprite', player2Controls);
     // this.initCamera();
     this.addCollisions();
     this.music = this.sound.add('level1_music');
@@ -219,22 +215,14 @@ export default class Level1 extends Phaser.Scene {
     const closestToTopCharacterY = ibbCoord.y > obbCoord.y ? obbCoord.y : ibbCoord.y;
     const cameraX = parseInt(charactersXDiff / 2 + closestToLeftCharacterX, 10);
     const cameraY = parseInt(charactersYDiff / 2 + closestToTopCharacterY, 10);
-    if (camZoom !== cam.zoom) {
-      cam.setZoom(camZoom);
-    }
-    if (cameraX !== this.cameras.main.midPoint.x) {
-      cam.centerOnX(cameraX);
-      this.cameraWalls[0].setX(cam.scrollX);
-      this.cameraWalls[1].setX(cam.scrollX + cam.width);
-    }
-    if (cameraY !== cam.midPoint.Y) {
-      cam.centerOnY(cameraY);
-    }
+    if (camZoom !== cam.zoom) cam.setZoom(camZoom);
+    if (cameraX !== cam.midPoint.x) cam.centerOnX(cameraX);
+    if (cameraY !== cam.midPoint.Y) cam.centerOnY(cameraY);
   }
 
   update() {
-    this.bindPlayerControls('ibb', this.cursors);
-    this.bindPlayerControls('obb', this.wasd);
+    // this.bindPlayerControls('ibb', this.cursors);
+    // this.bindPlayerControls('obb', this.wasd);
     // this.centerCamera();
   }
 }

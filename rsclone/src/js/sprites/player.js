@@ -10,22 +10,89 @@ function createPlayerAnimations(scene, key, sprite) {
 }
 
 export default class Player extends Phaser.Physics.Matter.Sprite {
-  constructor(scene, key, x, y, sprite) {
+  constructor(scene, key, x, y, sprite, controls) {
     const DEFAULT_MASS = 1; // number is random right now, can(should?) be changed later
-
-    /*
-    // these and other options should be configured for proper physic behaviour, commented for now
-    const options = {
-      frictionStatic: 0.1,
-      frictionAir: 0.0,
-      friction: 0.1,
-    };
-    */
-
     super(scene.matter.world, x, y, sprite);
+    this.scene = scene;
+    this.key = key;
+    this.sprite = sprite;
+    this.controls = [];
+    [this.controls.left, this.controls.right, this.controls.up] = controls;
+    createPlayerAnimations(this.scene, this.key, this.sprite);
     this.setFixedRotation(); // disable spin around its mass center point
     this.setMass(DEFAULT_MASS);
-    scene.add.existing(this);
-    createPlayerAnimations(scene, key, sprite);
+    this.scene.add.existing(this);
+
+    const controlKeysSequence = ['left', 'right', 'up', 'down'];
+    this.controls = {};
+    controls.forEach((controlKey, controlIndex) => {
+      const direction = controlKeysSequence[controlIndex];
+      this.controls[direction] = this.scene
+        .input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes[controlKey]);
+    });
+    this.scene.events.on('update', this.update, this);
+    console.log(this);
+  }
+
+  update() {
+    this.movePlayer();
+  }
+
+  movePlayer() {
+    const character = this.scene[this.key];
+    const currentVelocity = character.body.velocity;
+    const maxVelocity = 2;
+    const moveForce = 0.01;
+    const { isOnGround } = character;
+    const jumpVelocity = 9;
+    /* left/right move */
+    function moveCharacter(direction) {
+      const force = direction === 'right' ? moveForce : -moveForce;
+      const shouldFlip = direction !== 'right';
+      character.setFlipX(shouldFlip); // flipping character sprite
+      character.applyForce({ x: force, y: 0 }); // applying force to character
+      // character.anims.play(`move-${this.key}`, true); // playing move animation
+    }
+    if (this.controls.left.isDown) {
+      moveCharacter('left');
+    } else if (this.controls.right.isDown) {
+      moveCharacter('right');
+    } else {
+      character.anims.stop();
+      if (character.anims.currentAnim) {
+        character.anims.setCurrentFrame(character.anims.currentAnim.frames[0]);
+      }
+
+      // theoretical approach to finish animation after player stops
+      /*
+      const currAnim = this.player.anims.currentAnim;
+      if (currAnim && !currAnim.paused && currAnim.key === 'move') {
+        currAnim.pause();
+        const stopFrame = this.player.anims.currentFrame.index;
+        const totalFrames = currAnim.frameRate;
+        this.anims.create({
+          key: 'stop',
+          frames: this.anims.generateFrameNumbers('ibb-sprite', { start: 0, end: 15 }),
+          frameRate: totalFrames - stopFrame,
+          repeat: 1,
+        });
+        this.player.anims.play('stop');
+        this.player.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+          console.log('complete');
+        }, this);
+      }
+      */
+    }
+    /* limit velocity after applying force, so that the characters wont speed up infinitely */
+    if (currentVelocity.x > maxVelocity) {
+      character.setVelocityX(maxVelocity);
+    } else if (currentVelocity.x < -maxVelocity) {
+      character.setVelocityX(-maxVelocity);
+    }
+    /* jump */
+    if ((this.controls.up.isDown || this.controls.down.isDown) && isOnGround) {
+      character.isOnGround = false;
+      character.setVelocityY(-jumpVelocity);
+    }
   }
 }
