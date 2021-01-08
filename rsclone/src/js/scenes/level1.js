@@ -21,10 +21,8 @@ export default class Level1 extends Phaser.Scene {
     this.cameras.main.roundPixels = true;
     this.addBackgrounds();
     this.addWalls();
-    this.addControlKeys();
     this.ibb = new Player(this, 'ibb', 200, 200, 'ibb-sprite', player1Controls);
     this.obb = new Player(this, 'obb', 300, 300, 'obb-sprite', player2Controls);
-    // this.initCamera();
     this.addCollisions();
     this.music = this.sound.add('level1_music');
     // this.music.play({ loop: true });
@@ -91,16 +89,6 @@ export default class Level1 extends Phaser.Scene {
     });
   }
 
-  addControlKeys() {
-    this.cursors = this.input.keyboard.createCursorKeys();
-    this.wasd = {
-      up: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
-      down: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S),
-      left: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
-      right: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
-    };
-  }
-
   addCollisions() {
     /* collision event between two objects */
     this.matter.world.on('collisionstart', (event) => {
@@ -120,87 +108,6 @@ export default class Level1 extends Phaser.Scene {
         }
       });
     });
-  }
-
-  bindPlayerControls(characterKey, controls) {
-    const character = this[characterKey];
-    const currentVelocity = character.body.velocity;
-    const maxVelocity = 2;
-    const moveForce = 0.01;
-    const { isOnGround } = character;
-    const jumpVelocity = 9;
-    /* left/right move */
-    function moveCharacter(direction) {
-      const force = direction === 'right' ? moveForce : -moveForce;
-      const shouldFlip = direction !== 'right';
-      character.setFlipX(shouldFlip); // flipping character sprite
-      character.applyForce({ x: force, y: 0 }); // applying force to character
-      character.anims.play(`move-${characterKey}`, true); // playing move animation
-    }
-    if (controls.left.isDown) {
-      moveCharacter('left');
-    } else if (controls.right.isDown) {
-      moveCharacter('right');
-    } else {
-      character.anims.stop();
-      if (character.anims.currentAnim) {
-        character.anims.setCurrentFrame(character.anims.currentAnim.frames[0]);
-      }
-
-      // theoretical approach to finish animation after player stops
-      /*
-      const currAnim = this.player.anims.currentAnim;
-      if (currAnim && !currAnim.paused && currAnim.key === 'move') {
-        currAnim.pause();
-        const stopFrame = this.player.anims.currentFrame.index;
-        const totalFrames = currAnim.frameRate;
-        this.anims.create({
-          key: 'stop',
-          frames: this.anims.generateFrameNumbers('ibb-sprite', { start: 0, end: 15 }),
-          frameRate: totalFrames - stopFrame,
-          repeat: 1,
-        });
-        this.player.anims.play('stop');
-        this.player.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
-          console.log('complete');
-        }, this);
-      }
-      */
-    }
-    /* limit velocity after applying force, so that the characters wont speed up infinitely */
-    if (currentVelocity.x > maxVelocity) {
-      character.setVelocityX(maxVelocity);
-    } else if (currentVelocity.x < -maxVelocity) {
-      character.setVelocityX(-maxVelocity);
-    }
-    /* jump */
-    if ((controls.up.isDown || controls.down.isDown) && isOnGround) {
-      character.isOnGround = false;
-      character.setVelocityY(-jumpVelocity);
-    }
-  }
-
-  createCameraWall(x, y, width, height) {
-    // these and other options should be configured for proper physic behaviour, commented for now
-    const objSettings = {
-      isStatic: true,
-    };
-    const rect = this.add.rectangle(x, y, width, height);
-    const matterRect = this.matter.add.gameObject(rect, objSettings);
-    matterRect.setMass(0.0001);
-    return rect;
-  }
-
-  initCamera() {
-    this.cameraWalls = [];
-    const wallThickness = 2;
-    const gameDimensions = { width: this.game.config.width, height: this.game.config.height };
-    const y = gameDimensions.height / 2;
-    const leftWall = this.createCameraWall(0, y, wallThickness, gameDimensions.height);
-    const rightWallPosX = gameDimensions.width - wallThickness;
-    const rightWall = this.createCameraWall(rightWallPosX, y, wallThickness, gameDimensions.height);
-    this.cameraWalls.push(leftWall);
-    this.cameraWalls.push(rightWall);
   }
 
   centerCamera() {
@@ -223,6 +130,6 @@ export default class Level1 extends Phaser.Scene {
   update() {
     // this.bindPlayerControls('ibb', this.cursors);
     // this.bindPlayerControls('obb', this.wasd);
-    // this.centerCamera();
+    this.centerCamera();
   }
 }

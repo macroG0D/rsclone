@@ -35,10 +35,10 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
   }
 
   update() {
-    this.movePlayer();
+    this.movePlayer(this.key);
   }
 
-  movePlayer() {
+  movePlayer(characterKey) {
     const character = this.scene[this.key];
     const currentVelocity = character.body.velocity;
     const maxVelocity = 2;
@@ -51,7 +51,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       const shouldFlip = direction !== 'right';
       character.setFlipX(shouldFlip); // flipping character sprite
       character.applyForce({ x: force, y: 0 }); // applying force to character
-      // character.anims.play(`move-${this.key}`, true); // playing move animation
+      character.anims.play(`move-${characterKey}`, true); // playing move animation
     }
     if (this.controls.left.isDown) {
       moveCharacter('left');
@@ -62,26 +62,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       if (character.anims.currentAnim) {
         character.anims.setCurrentFrame(character.anims.currentAnim.frames[0]);
       }
-
-      // theoretical approach to finish animation after player stops
-      /*
-      const currAnim = this.player.anims.currentAnim;
-      if (currAnim && !currAnim.paused && currAnim.key === 'move') {
-        currAnim.pause();
-        const stopFrame = this.player.anims.currentFrame.index;
-        const totalFrames = currAnim.frameRate;
-        this.anims.create({
-          key: 'stop',
-          frames: this.anims.generateFrameNumbers('ibb-sprite', { start: 0, end: 15 }),
-          frameRate: totalFrames - stopFrame,
-          repeat: 1,
-        });
-        this.player.anims.play('stop');
-        this.player.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
-          console.log('complete');
-        }, this);
-      }
-      */
     }
     /* limit velocity after applying force, so that the characters wont speed up infinitely */
     if (currentVelocity.x > maxVelocity) {
