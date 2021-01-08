@@ -2,24 +2,33 @@ import Phaser from 'phaser';
 import Player from '../sprites/player';
 import { gradientSquares, gradientColors, walls } from '../levels/level1/backgroundStructure';
 
+import { BORDER_THICKNESS } from '../constants';
+
 const levelWidth = 5369;
 const levelHeight = 890;
 
-export default class Level1Scene extends Phaser.Scene {
+export default class Level1 extends Phaser.Scene {
   constructor() {
     super('Level1');
   }
 
   create() {
-    this.matter.world.setBounds(0, 0, levelWidth, levelHeight, 32, true, true, false, true);
-    this.cameras.main.setBounds(0, 0, levelWidth, levelHeight);
-    this.cameras.main.roundPixels = true;
+    this.matter.world.setBounds(0, 0, levelWidth, levelHeight, BORDER_THICKNESS);
+    /*
+    this.cameras.main.setBounds(
+      BORDER_THICKNESS,
+      BORDER_THICKNESS,
+      levelWidth - (BORDER_THICKNESS * 2),
+      levelHeight - (BORDER_THICKNESS * 2),
+    );
+    // this.cameras.main.roundPixels = true;
+    */
     this.addBackgrounds();
     this.addWalls();
     this.addControlKeys();
     this.ibb = new Player(this, 'ibb', 200, 200, 'ibb-sprite');
     this.obb = new Player(this, 'obb', 300, 300, 'obb-sprite');
-    this.initCamera();
+    // this.initCamera();
     this.addCollisions();
     this.music = this.sound.add('level1_music');
     // this.music.play({ loop: true });
@@ -226,6 +235,6 @@ export default class Level1Scene extends Phaser.Scene {
   update() {
     this.bindPlayerControls('ibb', this.cursors);
     this.bindPlayerControls('obb', this.wasd);
-    this.centerCamera();
+    // this.centerCamera();
   }
 }
