@@ -3,24 +3,27 @@ import Player from '../sprites/player';
 import Portal from '../sprites/portal';
 import { gradientSquares, gradientColors, walls } from '../levels/level1/backgroundStructure';
 
+import { BORDER_THICKNESS } from '../constants';
+
+const player1Controls = ['LEFT', 'RIGHT', 'UP', 'DOWN'];
+const player2Controls = ['A', 'D', 'W', 'S'];
+
 const levelWidth = 5369;
 const levelHeight = 890;
 
-export default class Level1Scene extends Phaser.Scene {
+export default class Level1 extends Phaser.Scene {
   constructor() {
     super('Level1');
   }
 
   create() {
-    this.matter.world.setBounds(0, 0, levelWidth, levelHeight, 32, true, true, false, true);
+    this.matter.world.setBounds(0, 0, levelWidth, levelHeight, BORDER_THICKNESS);
     this.cameras.main.setBounds(0, 0, levelWidth, levelHeight);
     this.cameras.main.roundPixels = true;
     this.addBackgrounds();
     this.addWalls();
-    this.addControlKeys();
-    this.ibb = new Player(this, 'ibb', 200, 200, 'ibb-sprite');
-    this.obb = new Player(this, 'obb', 300, 300, 'obb-sprite');
-    this.initCamera();
+    this.ibb = new Player(this, 'ibb', 200, 200, 'ibb-sprite', player1Controls);
+    this.obb = new Player(this, 'obb', 300, 300, 'obb-sprite', player2Controls);
     this.addCollisions();
     this.music = this.sound.add('level1_music');
     // this.music.play({ loop: true });
@@ -88,16 +91,6 @@ export default class Level1Scene extends Phaser.Scene {
     });
   }
 
-  addControlKeys() {
-    this.cursors = this.input.keyboard.createCursorKeys();
-    this.wasd = {
-      up: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
-      down: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S),
-      left: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
-      right: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
-    };
-  }
-
   addCollisions() {
     /* collision event between two objects */
     this.matter.world.on('collisionstart', (event) => {
@@ -142,87 +135,6 @@ export default class Level1Scene extends Phaser.Scene {
     });
   }
 
-  bindPlayerControls(characterKey, controls) {
-    const character = this[characterKey];
-    const currentVelocity = character.body.velocity;
-    const maxVelocityX = 2;
-    const moveForce = 0.01;
-    const { isOnGround, jumpVelocity } = character;
-    /* left/right move */
-    function moveCharacter(direction) {
-      const force = direction === 'right' ? moveForce : -moveForce;
-      const shouldFlip = direction !== 'right';
-      character.setFlipX(shouldFlip); // flipping character sprite
-      character.applyForce({ x: force, y: 0 }); // applying force to character
-      character.anims.play(`move-${characterKey}`, true); // playing move animation
-    }
-    if (controls.left.isDown) {
-      moveCharacter('left');
-    } else if (controls.right.isDown) {
-      moveCharacter('right');
-    } else {
-      character.anims.stop();
-      if (character.anims.currentAnim) {
-        character.anims.setCurrentFrame(character.anims.currentAnim.frames[0]);
-      }
-
-      // theoretical approach to finish animation after player stops
-      /*
-      const currAnim = this.player.anims.currentAnim;
-      if (currAnim && !currAnim.paused && currAnim.key === 'move') {
-        currAnim.pause();
-        const stopFrame = this.player.anims.currentFrame.index;
-        const totalFrames = currAnim.frameRate;
-        this.anims.create({
-          key: 'stop',
-          frames: this.anims.generateFrameNumbers('ibb-sprite', { start: 0, end: 15 }),
-          frameRate: totalFrames - stopFrame,
-          repeat: 1,
-        });
-        this.player.anims.play('stop');
-        this.player.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
-          console.log('complete');
-        }, this);
-      }
-      */
-    }
-    /* limit velocity after applying force, so that the characters wont speed up infinitely */
-    if (currentVelocity.x > maxVelocityX) {
-      character.setVelocityX(maxVelocityX);
-    } else if (currentVelocity.x < -maxVelocityX) {
-      character.setVelocityX(-maxVelocityX);
-    }
-    /* jump */
-    if ((controls.up.isDown || controls.down.isDown) && isOnGround) {
-      character.isOnGround = false;
-      // change jump velocity direction if player is flipped = undergroud
-      character.setVelocityY(character.flipY ? jumpVelocity : -jumpVelocity);
-    }
-  }
-
-  createCameraWall(x, y, width, height) {
-    // these and other options should be configured for proper physic behaviour, commented for now
-    const objSettings = {
-      isStatic: true,
-    };
-    const rect = this.add.rectangle(x, y, width, height);
-    const matterRect = this.matter.add.gameObject(rect, objSettings);
-    matterRect.setMass(0.0001);
-    return rect;
-  }
-
-  initCamera() {
-    this.cameraWalls = [];
-    const wallThickness = 2;
-    const gameDimensions = { width: this.game.config.width, height: this.game.config.height };
-    const y = gameDimensions.height / 2;
-    const leftWall = this.createCameraWall(0, y, wallThickness, gameDimensions.height);
-    const rightWallPosX = gameDimensions.width - wallThickness;
-    const rightWall = this.createCameraWall(rightWallPosX, y, wallThickness, gameDimensions.height);
-    this.cameraWalls.push(leftWall);
-    this.cameraWalls.push(rightWall);
-  }
-
   centerCamera() {
     const cam = this.cameras.main;
     const ibbCoord = { x: this.ibb.x, y: this.ibb.y };
@@ -235,22 +147,14 @@ export default class Level1Scene extends Phaser.Scene {
     const closestToTopCharacterY = ibbCoord.y > obbCoord.y ? obbCoord.y : ibbCoord.y;
     const cameraX = parseInt(charactersXDiff / 2 + closestToLeftCharacterX, 10);
     const cameraY = parseInt(charactersYDiff / 2 + closestToTopCharacterY, 10);
-    if (camZoom !== cam.zoom) {
-      cam.setZoom(camZoom);
-    }
-    if (cameraX !== this.cameras.main.midPoint.x) {
-      cam.centerOnX(cameraX);
-      this.cameraWalls[0].setX(cam.scrollX);
-      this.cameraWalls[1].setX(cam.scrollX + cam.width);
-    }
-    if (cameraY !== cam.midPoint.Y) {
-      cam.centerOnY(cameraY);
-    }
+    if (camZoom !== cam.zoom) cam.setZoom(camZoom);
+    if (cameraX !== cam.midPoint.x) cam.centerOnX(cameraX);
+    if (cameraY !== cam.midPoint.Y) cam.centerOnY(cameraY);
   }
 
   update() {
-    this.bindPlayerControls('ibb', this.cursors);
-    this.bindPlayerControls('obb', this.wasd);
+    // this.bindPlayerControls('ibb', this.cursors);
+    // this.bindPlayerControls('obb', this.wasd);
     this.centerCamera();
   }
 }

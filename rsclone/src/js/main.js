@@ -5,6 +5,8 @@ import { SCENE_LIST } from './scenes/_scenesList';
 
 import { GAME_WIDTH, GAME_HEIGHT } from './constants';
 
+const WebFont = require('webfontloader');
+
 class Main {
   constructor() {
     const cookieVersion = 0;
@@ -41,11 +43,21 @@ class Main {
           },
         },
       },
+      fps: {
+        target: 60,
+        forceSetTimeOut: true,
+      },
       scene: SCENE_LIST,
     };
     this.game = new Phaser.Game(this.gameConfig);
   }
 }
+
+WebFont.load({
+  google: {
+    families: ['Montserrat'],
+  },
+});
 
 const main = new Main();
 window.main = main;
