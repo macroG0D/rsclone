@@ -54,6 +54,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       setTimeout(() => {
         this.disableGravitySwitch = false;
       }, 100);
+    }
   }
 
   update() {
