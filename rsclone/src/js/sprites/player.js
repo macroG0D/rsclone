@@ -21,6 +21,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     createPlayerAnimations(this.scene, this.key, this.sprite);
     this.setFixedRotation(); // disable spin around its mass center point
     this.setMass(DEFAULT_MASS);
+    this.jumpVelocity = 9; // jump velocity moved to player class
+    this.disableGravitySwitch = false; // additional flag
     this.scene.add.existing(this);
 
     const controlKeysSequence = ['left', 'right', 'up', 'down'];
@@ -31,7 +33,27 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         .input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes[controlKey]);
     });
     this.scene.events.on('update', this.update, this);
-    console.log(this);
+  }
+
+  switchGravity() {
+    if (!this.disableGravitySwitch) {
+      const minVelocity = this.jumpVelocity;
+      const currVelocity = Math.abs(this.body.velocity.y);
+      /* adding additional velocity to players body so that player velocity wont fade out if he will
+      be constantly jumping through portal
+      */
+      if (currVelocity < minVelocity) {
+        this.setVelocityY(this.flipY ? -minVelocity : minVelocity);
+      }
+      this.disableGravitySwitch = true; // toggle flag
+      this.body.gravityScale.y *= -1; // flip gravity
+      this.setFlipY(!this.flipY); // flip character sprite
+      /* because we are triggering switch gravity in interval(read comment in collision event
+      description), this event can be triggered multiple times in a row. To avoid it we added
+      flag that disables multiple gravitySwitch calls for 100ms */
+      setTimeout(() => {
+        this.disableGravitySwitch = false;
+      }, 100);
   }
 
   update() {
