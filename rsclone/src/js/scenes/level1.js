@@ -137,8 +137,12 @@ export default class Level1 extends Phaser.Scene {
 
   centerCamera() {
     const cam = this.cameras.main;
-    const ibbCoord = { x: this.ibb.x, y: this.ibb.y };
-    const obbCoord = { x: this.obb.x, y: this.obb.y };
+    const ibbCoord = {
+      x: this.ibb.sensors.bottom.position.x, y: this.ibb.sensors.bottom.position.y,
+    };
+    const obbCoord = {
+      x: this.obb.sensors.bottom.position.x, y: this.obb.sensors.bottom.position.y,
+    };
     const charactersXDiff = Math.abs(obbCoord.x - ibbCoord.x);
     const charactersYDiff = Math.abs(obbCoord.y - ibbCoord.y);
     const zoomCoef = charactersXDiff / cam.width;
@@ -153,8 +157,6 @@ export default class Level1 extends Phaser.Scene {
   }
 
   update() {
-    // this.bindPlayerControls('ibb', this.cursors);
-    // this.bindPlayerControls('obb', this.wasd);
     this.centerCamera();
   }
 }

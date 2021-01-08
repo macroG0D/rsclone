@@ -19,7 +19,6 @@ class Main {
   }
 
   init() {
-    console.log('Main class loaded');
     this.gameContainer = new Create('div', document.body, 'game-container').node;
     this.gameConfig = {
       type: Phaser.AUTO,
