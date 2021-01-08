@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import Player from '../sprites/player';
+import Portal from '../sprites/portal';
 import { gradientSquares, gradientColors, walls } from '../levels/level1/backgroundStructure';
 
 const levelWidth = 5369;
@@ -69,19 +70,20 @@ export default class Level1Scene extends Phaser.Scene {
       const wallColor = isPortal ? portalColor : wallDefaultColor;
       const wallX = x + wallWidth / 2;
       const wallY = top + wallHeight / 2;
-      const wall = this.add.rectangle(wallX, wallY, wallWidth, wallHeight, wallColor);
-      // these and other options should be configured for proper physic behaviour, commented for now
+      // these and other options should be configured for proper physic behaviour
       const objSettings = {
         isSensor: isPortal,
         isStatic: true,
         // frictionStatic: 0,
         // friction: 0,
       };
-      this.matter.add.gameObject(wall, objSettings);
       if (isPortal) {
-        this.portals.push(wall);
+        // moved portal to separate class for better detection in collision event with instanceof
+        // eslint-disable-next-line no-new
+        new Portal(this, wallX, wallY, wallWidth, wallHeight, wallColor, objSettings);
       } else {
-        this.walls.push(wall);
+        const wall = this.add.rectangle(wallX, wallY, wallWidth, wallHeight, wallColor);
+        this.matter.add.gameObject(wall, objSettings);
       }
     });
   }
@@ -115,15 +117,37 @@ export default class Level1Scene extends Phaser.Scene {
         }
       });
     });
+    /* using collision active event to trigger flip when player body centers with portal body */
+    this.matter.world.on('collisionactive', (event) => {
+      event.pairs.forEach((pair) => {
+        const { bodyA, bodyB } = pair;
+        const gameObjectB = bodyB.gameObject;
+        const gameObjectA = bodyA.gameObject;
+        // checking for portal and player collision
+        if (gameObjectA instanceof Portal && gameObjectB instanceof Player) {
+          const portal = gameObjectA;
+          const player = gameObjectB;
+          const pixelsInterval = 5;
+          const playerCenterY = Math.round(player.y + player.height / 2);
+          const portalCenterY = Math.round(portal.y + portal.height / 2);
+          /* because collision event triggers with time interval we cant strictly compare two values
+          so we are comparing player center position in small range around portal center */
+          const playerLowerRangePos = playerCenterY < portalCenterY + pixelsInterval;
+          const playerUpperRangePos = playerCenterY > portalCenterY - pixelsInterval;
+          if (playerLowerRangePos && playerUpperRangePos) {
+            player.switchGravity();
+          }
+        }
+      });
+    });
   }
 
   bindPlayerControls(characterKey, controls) {
     const character = this[characterKey];
     const currentVelocity = character.body.velocity;
-    const maxVelocity = 2;
+    const maxVelocityX = 2;
     const moveForce = 0.01;
-    const { isOnGround } = character;
-    const jumpVelocity = 9;
+    const { isOnGround, jumpVelocity } = character;
     /* left/right move */
     function moveCharacter(direction) {
       const force = direction === 'right' ? moveForce : -moveForce;
@@ -163,15 +187,16 @@ export default class Level1Scene extends Phaser.Scene {
       */
     }
     /* limit velocity after applying force, so that the characters wont speed up infinitely */
-    if (currentVelocity.x > maxVelocity) {
-      character.setVelocityX(maxVelocity);
-    } else if (currentVelocity.x < -maxVelocity) {
-      character.setVelocityX(-maxVelocity);
+    if (currentVelocity.x > maxVelocityX) {
+      character.setVelocityX(maxVelocityX);
+    } else if (currentVelocity.x < -maxVelocityX) {
+      character.setVelocityX(-maxVelocityX);
     }
     /* jump */
     if ((controls.up.isDown || controls.down.isDown) && isOnGround) {
       character.isOnGround = false;
-      character.setVelocityY(-jumpVelocity);
+      // change jump velocity direction if player is flipped = undergroud
+      character.setVelocityY(character.flipY ? jumpVelocity : -jumpVelocity);
     }
   }
 
