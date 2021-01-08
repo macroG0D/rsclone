@@ -43,6 +43,10 @@ class Main {
           },
         },
       },
+      fps: {
+        target: 60,
+        forceSetTimeOut: true,
+      },
       scene: SCENE_LIST,
     };
     this.game = new Phaser.Game(this.gameConfig);
