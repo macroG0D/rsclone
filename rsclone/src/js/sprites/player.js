@@ -4,28 +4,47 @@ function createPlayerAnimations(scene, key, sprite) {
   scene.anims.create({
     key: `move-${key}`,
     frames: scene.game.anims.generateFrameNumbers(sprite),
-    frameRate: 31,
+    frameRate: 62,
     repeat: -1,
   });
 }
 
-export default class Player extends Phaser.Physics.Matter.Sprite {
-  constructor(scene, key, x, y, sprite) {
-    const DEFAULT_MASS = 1; // number is random right now, can(should?) be changed later
+export default class Player {
+  constructor(scene, key, x, y, image) {
+    const DEFAULT_MASS = 1;
 
-    /*
-    // these and other options should be configured for proper physic behaviour, commented for now
-    const options = {
-      frictionStatic: 0.1,
-      frictionAir: 0.0,
-      friction: 0.1,
+    this.sprite = scene.matter.add.sprite(x, y, image);
+    const { Body, Bodies } = Phaser.Physics.Matter.Matter;
+    const { width: w, height: h } = this.sprite;
+    const mainBody = Bodies.rectangle(0, 0, w * 0.75, h, {
+      chamfer: { radius: 10 },
+    });
+
+    this.sensors = {
+      top: Bodies.rectangle(0, h - h * 1.5, w * 0.6, 2, { isSensor: true }),
+      bottom: Bodies.rectangle(0, h * 0.5, w * 0.6, 2, { isSensor: true }),
+      left: Bodies.rectangle(-w * 0.45, 0, 2, h * 0.7, { isSensor: true }),
+      right: Bodies.rectangle(w * 0.45, 0, 2, h * 0.7, { isSensor: true }),
     };
-    */
 
-    super(scene.matter.world, x, y, sprite);
-    this.setFixedRotation(); // disable spin around its mass center point
-    this.setMass(DEFAULT_MASS);
-    scene.add.existing(this);
-    createPlayerAnimations(scene, key, sprite);
+    const compoundBody = Body.create({
+      parts: [
+        mainBody,
+        this.sensors.top,
+        this.sensors.bottom,
+        this.sensors.left,
+        this.sensors.right,
+      ],
+      frictionStatic: 0,
+      frictionAir: 0.01,
+      friction: 0.1,
+      mass: DEFAULT_MASS,
+    });
+    this.sprite
+      .setExistingBody(compoundBody)
+      .setFixedRotation() // Sets inertia to infinity so the player can't rotate
+      .setPosition(x, y);
+
+    createPlayerAnimations(scene, key, image);
   }
 }

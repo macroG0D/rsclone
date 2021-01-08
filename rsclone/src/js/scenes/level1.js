@@ -17,12 +17,12 @@ export default class Level1Scene extends Phaser.Scene {
     this.addBackgrounds();
     this.addWalls();
     this.addControlKeys();
-    this.ibb = new Player(this, 'ibb', 200, 200, 'ibb-sprite');
-    this.obb = new Player(this, 'obb', 300, 300, 'obb-sprite');
+    this.obb = new Player(this, 'obb', 200, 300, 'obb-sprite');
+    this.ibb = new Player(this, 'ibb', 300, 300, 'ibb-sprite');
     this.initCamera();
     this.addCollisions();
     this.music = this.sound.add('level1_music');
-    // this.music.play({ loop: true });
+    this.music.play({ loop: true });
   }
 
   addBackgrounds() {
@@ -54,7 +54,6 @@ export default class Level1Scene extends Phaser.Scene {
     const wallDefaultColor = 0x082228;
     const portalColor = 0xffffff;
     const wallDefaultHeight = 16;
-
     walls.forEach((item) => {
       const {
         width,
@@ -74,8 +73,6 @@ export default class Level1Scene extends Phaser.Scene {
       const objSettings = {
         isSensor: isPortal,
         isStatic: true,
-        // frictionStatic: 0,
-        // friction: 0,
       };
       this.matter.add.gameObject(wall, objSettings);
       if (isPortal) {
@@ -118,7 +115,7 @@ export default class Level1Scene extends Phaser.Scene {
   }
 
   bindPlayerControls(characterKey, controls) {
-    const character = this[characterKey];
+    const character = this[characterKey].sprite;
     const currentVelocity = character.body.velocity;
     const maxVelocity = 2;
     const moveForce = 0.01;
@@ -141,26 +138,6 @@ export default class Level1Scene extends Phaser.Scene {
       if (character.anims.currentAnim) {
         character.anims.setCurrentFrame(character.anims.currentAnim.frames[0]);
       }
-
-      // theoretical approach to finish animation after player stops
-      /*
-      const currAnim = this.player.anims.currentAnim;
-      if (currAnim && !currAnim.paused && currAnim.key === 'move') {
-        currAnim.pause();
-        const stopFrame = this.player.anims.currentFrame.index;
-        const totalFrames = currAnim.frameRate;
-        this.anims.create({
-          key: 'stop',
-          frames: this.anims.generateFrameNumbers('ibb-sprite', { start: 0, end: 15 }),
-          frameRate: totalFrames - stopFrame,
-          repeat: 1,
-        });
-        this.player.anims.play('stop');
-        this.player.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
-          console.log('complete');
-        }, this);
-      }
-      */
     }
     /* limit velocity after applying force, so that the characters wont speed up infinitely */
     if (currentVelocity.x > maxVelocity) {
@@ -200,8 +177,12 @@ export default class Level1Scene extends Phaser.Scene {
 
   centerCamera() {
     const cam = this.cameras.main;
-    const ibbCoord = { x: this.ibb.x, y: this.ibb.y };
-    const obbCoord = { x: this.obb.x, y: this.obb.y };
+    const ibbCoord = {
+      x: this.ibb.sensors.bottom.position.x, y: this.ibb.sensors.bottom.position.y,
+    };
+    const obbCoord = {
+      x: this.obb.sensors.bottom.position.x, y: this.obb.sensors.bottom.position.y,
+    };
     const charactersXDiff = Math.abs(obbCoord.x - ibbCoord.x);
     const charactersYDiff = Math.abs(obbCoord.y - ibbCoord.y);
     const zoomCoef = charactersXDiff / cam.width;
@@ -224,8 +205,8 @@ export default class Level1Scene extends Phaser.Scene {
   }
 
   update() {
-    this.bindPlayerControls('ibb', this.cursors);
-    this.bindPlayerControls('obb', this.wasd);
+    this.bindPlayerControls('obb', this.cursors);
+    this.bindPlayerControls('ibb', this.wasd);
     this.centerCamera();
   }
 }
