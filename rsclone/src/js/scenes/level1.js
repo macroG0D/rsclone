@@ -149,6 +149,7 @@ export default class Level1 extends Phaser.Scene {
     if (camZoom !== cam.zoom) cam.setZoom(camZoom);
     if (cameraX !== cam.midPoint.x) cam.centerOnX(cameraX);
     if (cameraY !== cam.midPoint.Y) cam.centerOnY(cameraY);
+    this.charactersDistance = charactersXDiff;
   }
 
   update() {

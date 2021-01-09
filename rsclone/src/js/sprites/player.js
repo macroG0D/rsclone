@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-import { CONTROL_KEYS_SEQUENCE } from '../constants';
+import { CONTROL_KEYS_SEQUENCE, CHARACTERS_DISTANCE_MAX } from '../constants';
 
 function createPlayerAnimations(scene, key, sprite) {
   scene.anims.create({
@@ -54,40 +54,44 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
   }
 
   update() {
-    this.movePlayer(this.key);
+    this.movePlayer();
   }
 
-  movePlayer(characterKey) {
-    const character = this.scene[this.key];
-    const currentVelocity = character.body.velocity;
+  movePlayer() {
+    const currentVelocity = this.body.velocity;
     const maxVelocity = 2;
-    const moveForce = 0.01;
-    const { isOnGround } = character;
     /* left/right move */
-    function moveCharacter(direction) {
-      const force = direction === 'right' ? moveForce : -moveForce;
-      const shouldFlip = direction !== 'right';
-      character.setFlipX(shouldFlip); // flipping character sprite
-      character.applyForce({ x: force, y: 0 }); // applying force to character
-      character.anims.play(`move-${characterKey}`, true); // playing move animation
-    }
-    if (this.controls.left.isDown) {
-      moveCharacter('left');
-    } else if (this.controls.right.isDown) {
-      moveCharacter('right');
-    } else {
-      character.anims.stop();
-      if (character.anims.currentAnim) {
-        character.anims.setCurrentFrame(character.anims.currentAnim.frames[0]);
-      }
+    if (this.controls.left.isDown) this.moveCharacter('left');
+    if (this.controls.right.isDown) this.moveCharacter('right');
+    if (!this.controls.left.isDown && !this.controls.right.isDown) {
+      this.anims.stop();
+      if (this.anims.currentAnim) this.anims.setCurrentFrame(this.anims.currentAnim.frames[0]);
     }
     /* limit velocity after applying force, so that the characters wont speed up infinitely */
-    if (currentVelocity.x > maxVelocity) character.setVelocityX(maxVelocity);
-    if (currentVelocity.x < -maxVelocity) character.setVelocityX(-maxVelocity);
+    if (currentVelocity.x > maxVelocity) this.setVelocityX(maxVelocity);
+    if (currentVelocity.x < -maxVelocity) this.setVelocityX(-maxVelocity);
     /* jump */
-    if ((this.controls.up.isDown || this.controls.down.isDown) && isOnGround) {
-      character.isOnGround = false;
-      character.setVelocityY(-this.jumpVelocity);
+    if ((this.controls.up.isDown || this.controls.down.isDown) && this.isOnGround) {
+      this.isOnGround = false;
+      this.setVelocityY(-this.jumpVelocity);
     }
+  }
+
+  moveCharacter(direction) {
+    const moveForce = 0.01;
+    const force = direction === 'right' ? moveForce : -moveForce;
+    const shouldFlip = direction !== 'right';
+    this.setFlipX(shouldFlip); // flipping character sprite
+    if (this.canMove(direction)) this.applyForce({ x: force, y: 0 });
+    this.anims.play(`move-${this.key}`, true); // playing move animation
+  }
+
+  canMove(direction) {
+    const thisPlayer = (this.key === 'ibb') ? this.scene.ibb : this.scene.obb;
+    const anotherPlayer = (this.key === 'ibb') ? this.scene.obb : this.scene.ibb;
+    const charactersDistance = Math.abs(thisPlayer.x - anotherPlayer.x);
+    if (direction === 'left' && thisPlayer.x <= anotherPlayer.x) return (charactersDistance < CHARACTERS_DISTANCE_MAX);
+    if (direction === 'right' && thisPlayer.x >= anotherPlayer.x) return (charactersDistance < CHARACTERS_DISTANCE_MAX);
+    return true;
   }
 }
