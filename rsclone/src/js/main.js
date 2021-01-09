@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
 import Create from './components/dom-create';
 
 import { SCENE_LIST } from './scenes/_scenesList';
@@ -32,15 +33,24 @@ class Main {
       physics: {
         default: 'matter',
         matter: {
-          enableSleeping: true,
+          enableSleeping: false,
           gravity: {
-            y: 1,
+            y: 2,
           },
           debug: {
-            showBody: true,
+            showBody: false,
             showStaticBody: true,
           },
         },
+      },
+      plugins: {
+        scene: [
+          {
+            plugin: PhaserMatterCollisionPlugin, // The plugin class
+            key: 'matterCollision', // Where to store in Scene.Systems, e.g. scene.sys.matterCollision
+            mapping: 'matterCollision', // Where to store in the Scene, e.g. scene.matterCollision
+          },
+        ],
       },
       fps: {
         target: 60,
