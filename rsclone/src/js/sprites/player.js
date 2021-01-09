@@ -1,5 +1,7 @@
 import Phaser from 'phaser';
 
+import { CONTROL_KEYS_SEQUENCE } from '../constants';
+
 function createPlayerAnimations(scene, key, sprite) {
   scene.anims.create({
     key: `move-${key}`,
@@ -8,7 +10,6 @@ function createPlayerAnimations(scene, key, sprite) {
     repeat: -1,
   });
 }
-
 export default class Player extends Phaser.Physics.Matter.Sprite {
   constructor(scene, key, x, y, sprite, controls) {
     const DEFAULT_MASS = 1; // number is random right now, can(should?) be changed later
@@ -16,8 +17,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     this.scene = scene;
     this.key = key;
     this.sprite = sprite;
-    this.controls = [];
-    [this.controls.left, this.controls.right, this.controls.up] = controls;
     createPlayerAnimations(this.scene, this.key, this.sprite);
     this.setFixedRotation(); // disable spin around its mass center point
     this.setMass(DEFAULT_MASS);
@@ -25,10 +24,9 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     this.disableGravitySwitch = false; // additional flag
     this.scene.add.existing(this);
 
-    const controlKeysSequence = ['left', 'right', 'up', 'down'];
     this.controls = {};
     controls.forEach((controlKey, controlIndex) => {
-      const direction = controlKeysSequence[controlIndex];
+      const direction = CONTROL_KEYS_SEQUENCE[controlIndex];
       this.controls[direction] = this.scene
         .input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes[controlKey]);
     });
@@ -42,9 +40,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       /* adding additional velocity to players body so that player velocity wont fade out if he will
       be constantly jumping through portal
       */
-      if (currVelocity < minVelocity) {
-        this.setVelocityY(this.flipY ? -minVelocity : minVelocity);
-      }
+      if (currVelocity < minVelocity) this.setVelocityY(this.flipY ? -minVelocity : minVelocity);
       this.disableGravitySwitch = true; // toggle flag
       this.body.gravityScale.y *= -1; // flip gravity
       this.setFlipY(!this.flipY); // flip character sprite
@@ -67,7 +63,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     const maxVelocity = 2;
     const moveForce = 0.01;
     const { isOnGround } = character;
-    const jumpVelocity = 9;
     /* left/right move */
     function moveCharacter(direction) {
       const force = direction === 'right' ? moveForce : -moveForce;
@@ -87,15 +82,12 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       }
     }
     /* limit velocity after applying force, so that the characters wont speed up infinitely */
-    if (currentVelocity.x > maxVelocity) {
-      character.setVelocityX(maxVelocity);
-    } else if (currentVelocity.x < -maxVelocity) {
-      character.setVelocityX(-maxVelocity);
-    }
+    if (currentVelocity.x > maxVelocity) character.setVelocityX(maxVelocity);
+    if (currentVelocity.x < -maxVelocity) character.setVelocityX(-maxVelocity);
     /* jump */
     if ((this.controls.up.isDown || this.controls.down.isDown) && isOnGround) {
       character.isOnGround = false;
-      character.setVelocityY(-jumpVelocity);
+      character.setVelocityY(-this.jumpVelocity);
     }
   }
 }

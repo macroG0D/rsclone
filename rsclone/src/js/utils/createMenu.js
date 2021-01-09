@@ -31,9 +31,7 @@ export function createMenu(scene, menuItems, back = false, backCallback = () => 
       menuItemStyle,
     )
       .setOrigin(0.5)
-      .setInteractive({
-        useHandCursor: true,
-      })
+      .setInteractive({ useHandCursor: true })
       .on('pointerover', () => menuItem.setStyle(menuItemOverStyle))
       .on('pointerout', () => menuItem.setStyle(menuItemStyle))
       .on('pointerdown', () => itemLink());
