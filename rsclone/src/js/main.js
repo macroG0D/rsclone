@@ -34,9 +34,7 @@ class Main {
         default: 'matter',
         matter: {
           enableSleeping: true,
-          gravity: {
-            y: 1,
-          },
+          gravity: { y: 1 },
           debug: {
             showBody: true,
             showStaticBody: true,
@@ -54,9 +52,7 @@ class Main {
 }
 
 WebFont.load({
-  google: {
-    families: ['Montserrat'],
-  },
+  google: { families: ['Montserrat'] },
 });
 
 const main = new Main();
