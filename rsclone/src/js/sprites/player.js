@@ -11,14 +11,14 @@ function createPlayerAnimations(scene, key, sprite) {
 }
 
 export default class Player {
-  constructor(scene, key, x, y, sprite, controls) {
+  constructor(scene, key, x, y, sprite, controls, portals) {
+    this.portals = portals;
     this.scene = scene;
     this.key = key;
     this.sprite = scene.matter.add.sprite(x, y, sprite);
     this.isGrounded = false;
     this.isCarrying = false;
     this.isHeadStanding = false;
-
     // Jumping is going to have a cooldown
     this.canJump = true;
     this.jumpCooldownTimer = null;
@@ -30,8 +30,9 @@ export default class Player {
     });
 
     this.sensors = {
-      top: Bodies.rectangle(0, h - h * 1.5, w * 0.5, 5, { isSensor: true }),
-      bottom: Bodies.rectangle(0, h * 0.5, w * 0.5, 5, { isSensor: true }),
+      center: Bodies.rectangle(0, 0, 10, 10, { isSensor: true }),
+      top: Bodies.rectangle(0, h - h * 1.48, w * 0.5, 5, { isSensor: true }),
+      bottom: Bodies.rectangle(0, h * 0.48, w * 0.5, 5, { isSensor: true }),
       left: Bodies.rectangle(-w * 0.45, 0, 5, h * 0.4, { isSensor: true }),
       right: Bodies.rectangle(w * 0.45, 0, 5, h * 0.4, { isSensor: true }),
     };
@@ -39,6 +40,7 @@ export default class Player {
     const compoundBody = Body.create({
       parts: [
         mainBody,
+        this.sensors.center,
         this.sensors.top,
         this.sensors.bottom,
         this.sensors.left,
@@ -71,10 +73,14 @@ export default class Player {
 
     // Track which sensors are touching something
     this.isTouching = {
-      left: false, right: false, top: false, bottom: false,
+      left: false,
+      right: false,
+      top: false,
+      bottom: false,
+      center: false,
     };
 
-    // Before matter's update, reset our record of what surfaces the player is touching.
+    // Before matter's update, reset record of what surfaces the player is touching.
     scene.matter.world.on('beforeupdate', this.resetTouching, this);
 
     // If a sensor just started colliding with something, or it continues to collide with something,
@@ -89,6 +95,10 @@ export default class Player {
       callback: this.onSensorCollide,
       context: this,
     });
+
+    this.portals.forEach((portal) => {
+      this.portalsListeners(scene, portal);
+    });
   }
 
   fixedPositionOnHead() {
@@ -96,12 +106,21 @@ export default class Player {
     const secondCharacterKey = this.getSecondCharacterKey();
     if (this.scene[currentCharacterKey].isHeadStanding) {
       this.scene[currentCharacterKey].sprite.x = this.scene[secondCharacterKey].sprite.x;
+      // this.scene[currentCharacterKey].sprite.y = this.scene[secondCharacterKey]
+      //   .sensors.top.position.y - (this.scene[currentCharacterKey].sprite.height / 2);
     }
   }
 
   detachPositionOnHead(currentCharacterKey) {
     if (this.scene[currentCharacterKey].isHeadStanding) {
+      const bottomChar = this.getSecondCharacterKey();
+      this.scene[bottomChar].canJump = false;
       this.scene[currentCharacterKey].isHeadStanding = false;
+      this.jumpCooldownTimer = this.scene.time.addEvent({
+        delay: 150,
+        // eslint-disable-next-line no-return-assign
+        callback: () => (this.scene[bottomChar].canJump = true),
+      });
     }
   }
 
@@ -135,36 +154,16 @@ export default class Player {
     });
   }
 
-  // may be used when one player stands on the other's head insted of fixedPositionOnHead()
-  // createConstraint(currentCharacterKey, secondCharacterKey) {
-  //   const constraintOptions = {
-  //     bodyA: this.scene[currentCharacterKey].sprite.body,
-  //     bodyB: this.scene[secondCharacterKey].sprite.body,
-  //     pointA: {
-  //       x: this.scene[currentCharacterKey].sensors.bottom.position.x,
-  //       y: this.scene[currentCharacterKey].sensors.bottom.position.y,
-  //     },
-  //     pointB: {
-  //       x: this.scene[secondCharacterKey].sensors.top.position.x,
-  //       y: this.scene[secondCharacterKey].sensors.top.position.y,
-  //     },
-  //     length: 50,
-  //     stiffness: 0.4,
-  //   };
-  //   const constraints = this.scene.matter.constraint.create(constraintOptions);
-  //   this.scene.matter.add.gameObject(constraints);
-  // }
-
-  onSensorCollide({ bodyA, bodyB }) { // may use pair as third argument
+  onSensorCollide({ bodyA, bodyB, pair }) { // may use pair as third argument
     if (bodyB.isSensor) return; // We only care about collisions with physical objects
     if (bodyA === this.sensors.left) {
       this.isTouching.left = true;
       // optional solution for wall friction
-      // if (pair.separation > 0.5) this.sprite.x += pair.separation - 0.5;
+      if (pair.separation > 0.5) this.sprite.x += pair.separation - 0.5;
     } else if (bodyA === this.sensors.right) {
       this.isTouching.right = true;
       // optional solution for wall friction
-      // if (pair.separation > 0.5) this.sprite.x -= pair.separation - 0.5;
+      if (pair.separation > 0.5) this.sprite.x -= pair.separation - 0.5;
     } else if (bodyA === this.sensors.top) {
       this.isTouching.top = true;
     } else if (bodyA === this.sensors.bottom) {
@@ -177,6 +176,7 @@ export default class Player {
     this.isTouching.right = false;
     this.isTouching.top = false;
     this.isTouching.bottom = false;
+    this.isTouching.center = false;
   }
 
   noWallsFriction() {
@@ -190,14 +190,43 @@ export default class Player {
   update() {
     this.isGrounded = this.isTouching.bottom;
     this.headStandingCheck();
-    this.noWallsFriction();
     this.fixedPositionOnHead();
+    this.noWallsFriction();
     this.movePlayer(this.key);
+  }
+
+  portalsListeners(scene, portal) {
+    scene.matterCollision.addOnCollideActive({
+      objectA: [this.sensors.center],
+      objectB: portal,
+      callback: () => (this.portalDive(portal)),
+      context: this,
+    });
+  }
+
+  portalDive(portal) {
+    console.log(portal);
+    setTimeout(() => {
+      this.switchGravity();
+    }, 50);
+
+    // commented the code below becouse it may be still needed
+    // const pixelsInterval = 5;
+    // const playerCenterY = Math.round(this.y + this.height / 2);
+    // const portalCenterY = Math.round(portal.y + portal.height / 2);
+    /* because collision event triggers with time
+     interval we cant strictly compare two values
+    so we are comparing player center position in small range around portal center */
+    // const playerLowerRangePos = playerCenterY < portalCenterY + pixelsInterval;
+    // const playerUpperRangePos = playerCenterY > portalCenterY - pixelsInterval;
+    // if (playerLowerRangePos && playerUpperRangePos) {
+    //   this.switchGravity();
+    // }
   }
 
   switchGravity() {
     if (!this.disableGravitySwitch) {
-      const minVelocity = this.jumpVelocity;
+      const minVelocity = this.jumpVelocity * 1;
       const currVelocity = Math.abs(this.sprite.body.velocity.y);
       /* adding additional velocity to players body so that player velocity wont fade out if he will
       be constantly jumping through portal
@@ -207,13 +236,13 @@ export default class Player {
       }
       this.disableGravitySwitch = true; // toggle flag
       this.sprite.body.gravityScale.y *= -1; // flip gravity
-      this.sprite.setFlipY(!this.flipY); // flip character sprite
+      this.sprite.setFlipY(!this.sprite.flipY); // flip character sprite
       /* because we are triggering switch gravity in interval(read comment in collision event
       description), this event can be triggered multiple times in a row. To avoid it we added
       flag that disables multiple gravitySwitch calls for 100ms */
       setTimeout(() => {
         this.disableGravitySwitch = false;
-      }, 100);
+      }, 50);
     }
   }
 
@@ -232,11 +261,11 @@ export default class Player {
       character.anims.play(`move-${characterKey}`, true); // playing move animation
     }
     if (this.controls.left.isDown) {
-      this.detachPositionOnHead(this.key);
       moveCharacter('left');
-    } else if (this.controls.right.isDown) {
       this.detachPositionOnHead(this.key);
+    } else if (this.controls.right.isDown) {
       moveCharacter('right');
+      this.detachPositionOnHead(this.key);
     } else {
       character.anims.stop();
       if (character.anims.currentAnim) {
@@ -259,7 +288,7 @@ export default class Player {
       }
       this.canJump = false;
       this.jumpCooldownTimer = this.scene.time.addEvent({
-        delay: 800,
+        delay: 200,
         // eslint-disable-next-line no-return-assign
         callback: () => (this.canJump = true),
       });

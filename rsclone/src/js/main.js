@@ -38,7 +38,7 @@ class Main {
             y: 2,
           },
           debug: {
-            showBody: false,
+            showBody: true,
             showStaticBody: true,
           },
         },
