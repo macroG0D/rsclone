@@ -27,6 +27,7 @@ export default class Level1 extends Phaser.Scene {
     this.addCollisions();
     this.music = this.sound.add('level1_music');
     // this.music.play({ loop: true });
+    this.cursors = this.input.keyboard.createCursorKeys();
   }
 
   addBackgrounds() {
@@ -154,5 +155,8 @@ export default class Level1 extends Phaser.Scene {
 
   update() {
     this.centerCamera();
+    this.cursors.space.on('down', () => {
+      this.scene.start('GameMenu');
+    });
   }
 }

@@ -8,6 +8,7 @@ import MainMenuLeaderBoard from './MainMenu/leaderBoard';
 import MainMenuSettings from './MainMenu/settings';
 import MainMenuDevelopers from './MainMenu/developers';
 import Level1 from './level1';
+import GameMenu from './MainMenu/gameMenu';
 
 export const SCENE_LIST = [
   Boot,
@@ -20,6 +21,7 @@ export const SCENE_LIST = [
   MainMenuSettings,
   MainMenuDevelopers,
   Level1,
+  GameMenu,
 ];
 
 export default SCENE_LIST;
