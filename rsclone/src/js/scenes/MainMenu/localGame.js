@@ -14,7 +14,10 @@ export default class MainMenuLocalGame extends Phaser.Scene {
 
   create() {
     this.menuItems = {
-      'Start Game': () => this.scene.start('Level1'),
+      // 'Start Game': () => this.scene.start('Level1'),
+      'Start Game': () => {
+        this.scene.start('Level1');
+      },
     };
     this.menuCallBack = () => this.scene.start('MainMenuPlay');
     createBg(this);

@@ -156,7 +156,8 @@ export default class Level1 extends Phaser.Scene {
   update() {
     this.centerCamera();
     this.cursors.space.on('down', () => {
-      this.scene.start('GameMenu');
+      this.scene.pause();
+      this.scene.run('GameMenu');
     });
   }
 }

@@ -9,8 +9,14 @@ export default class GameMenu extends Phaser.Scene {
 
   create() {
     this.menuItems = {
-      Continue: () => console.log('здесь будет колбек'),
-      'New game': () => this.scene.start('MainMenuPlay'),
+      Continue: () => {
+        this.scene.resume('Level1');
+        this.scene.stop('GameMenu');
+      },
+      'New game': () => {
+        this.scene.remove('Level1');
+        this.scene.start('MainMenuPlay');
+      },
       // Leaderboard: () => this.scene.start('MainMenuLeaderBoard'),
       Settings: () => this.scene.start('MainMenuSettings'),
       'Main menu': () => this.scene.start('MainMenu'),
