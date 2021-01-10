@@ -87,7 +87,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     };
 
     // Before matter's update, reset record of what surfaces the player is touching.
-    // scene.matter.world.on('beforeupdate', this.resetTouching, this);
+    scene.matter.world.on('beforeupdate', this.resetTouching, this);
 
     // If a sensor just started colliding with something, or it continues to collide with something,
     // call onSensorCollide
@@ -132,7 +132,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
   // check if one player is standing on the second's head and update their statuses
   headStandingCheck() {
-    const currentCharacterKey = this.key;
     const secondCharacterKey = this.getSecondCharacterKey();
     function isOnHead() {
       this.isHeadStanding = true;
@@ -269,51 +268,13 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     if ((this.controls.up.isDown || this.controls.down.isDown) && this.isGrounded && this.canJump) {
       this.setVelocityY((this.isCarrying) ? -this.jumpVelocity * 2 : -this.jumpVelocity);
       this.canJump = false;
-      this.jumpCooldownTimer = this.scene.time.addEvent({
-        delay: 200,
+      this.scene.time.addEvent({
+        delay: 800,
         // eslint-disable-next-line no-return-assign
         callback: () => (this.canJump = true),
       });
     }
   }
-
-  /*
-  movePlayer(characterKey) {
-
-    if (this.controls.left.isDown) {
-      moveCharacter('left');
-      this.detachPositionOnHead(this.key);
-    } else if (this.controls.right.isDown) {
-      moveCharacter('right');
-      this.detachPositionOnHead(this.key);
-    } else {
-      character.anims.stop();
-      if (character.anims.currentAnim) {
-        character.anims.setCurrentFrame(character.anims.currentAnim.frames[0]);
-      }
-    }
-    if (currentVelocity.x > maxVelocity) {
-      character.setVelocityX(maxVelocity);
-    } else if (currentVelocity.x < -maxVelocity) {
-      character.setVelocityX(-maxVelocity);
-    }
-
-    if ((this.controls.up.isDown || this.controls.down.isDown) && this.isGrounded && this.canJump) {
-      if (this.isCarrying) {
-        character.setVelocityY(-jumpVelocity * 2);
-      } else {
-        character.setVelocityY(-jumpVelocity);
-      }
-      this.canJump = false;
-      this.jumpCooldownTimer = this.scene.time.addEvent({
-        delay: 200,
-        // eslint-disable-next-line no-return-assign
-        callback: () => (this.canJump = true),
-      });
-    }
-  }
-
-  */
 
   moveCharacter(direction) {
     const moveForce = 0.015;
