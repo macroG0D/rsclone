@@ -7,3 +7,4 @@ export const DEFAULT_FRICTION_AIR = 0.02;
 export const CONTROL_KEYS_SEQUENCE = ['left', 'right', 'up', 'down'];
 export const CHARACTERS_DISTANCE_MAX = 1000;
 export const MUSIC_VOLUME = 0.005;
+export const SOUND_VOLUME = 0.01;

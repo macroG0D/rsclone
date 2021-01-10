@@ -11,6 +11,7 @@ import obbKeys from '../../assets/images/obbKeys.svg';
 import mainMenuMusic from '../../assets/music/main_menu.mp3';
 import level1Music from '../../assets/music/level1.mp3';
 import level2Music from '../../assets/music/level2.mp3';
+import warpCross01Sound from '../../assets/sounds/warp_cross_a_01.mp3';
 
 export default class Preload extends Phaser.Scene {
   constructor() {
@@ -30,6 +31,8 @@ export default class Preload extends Phaser.Scene {
     this.load.audio('main_menu_music', mainMenuMusic);
     this.load.audio('level1_music', level1Music);
     this.load.audio('level2_music', level2Music);
+
+    this.load.audio('warp_cross_01', warpCross01Sound);
 
     this.load.spritesheet('ibb-sprite', ibbSprite, {
       frameWidth: 47,
