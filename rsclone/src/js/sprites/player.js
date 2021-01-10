@@ -58,6 +58,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
   }
 
   movePlayer() {
+    console.log(this);
+    console.log(this.body);
     const currentVelocity = this.body.velocity;
     const maxVelocity = 2;
     /* left/right move */

@@ -14,7 +14,7 @@ export default class GameMenu extends Phaser.Scene {
         this.scene.stop('GameMenu');
       },
       'New game': () => {
-        this.scene.remove('Level1');
+        this.scene.stop('Level1');
         this.scene.start('MainMenuPlay');
       },
       // Leaderboard: () => this.scene.start('MainMenuLeaderBoard'),
