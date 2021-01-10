@@ -92,25 +92,25 @@ export default class Level1 extends Phaser.Scene {
 
   centerCamera() {
     const cam = this.cameras.main;
-    const ibbCoord = {
+    const ibbCoords = {
       x: this.ibb.sensors.bottom.position.x,
       y: this.ibb.sensors.bottom.position.y,
     };
-    const obbCoord = {
+    const obbCoords = {
       x: this.obb.sensors.bottom.position.x,
       y: this.obb.sensors.bottom.position.y,
     };
-    const charactersXDiff = Math.abs(obbCoord.x - ibbCoord.x);
-    const charactersYDiff = Math.abs(obbCoord.y - ibbCoord.y);
-    const zoomCoef = charactersXDiff / cam.width;
-    const camZoom = 1 - 0.2 * zoomCoef;
-    const closestToLeftCharacterX = ibbCoord.x > obbCoord.x ? obbCoord.x : ibbCoord.x;
-    const closestToTopCharacterY = ibbCoord.y > obbCoord.y ? obbCoord.y : ibbCoord.y;
+    const charactersXDiff = Math.abs(obbCoords.x - ibbCoords.x);
+    const charactersYDiff = Math.abs(obbCoords.y - ibbCoords.y);
+    const camZoom = 1 - 0.2 * (charactersXDiff / cam.width);
+    const closestToLeftCharacterX = ibbCoords.x > obbCoords.x ? obbCoords.x : ibbCoords.x;
+    const closestToTopCharacterY = ibbCoords.y > obbCoords.y ? obbCoords.y : ibbCoords.y;
     const cameraX = parseInt(charactersXDiff / 2 + closestToLeftCharacterX, 10);
     const cameraY = parseInt(charactersYDiff / 2 + closestToTopCharacterY, 10);
     if (camZoom !== cam.zoom) cam.setZoom(camZoom);
     if (cameraX !== cam.midPoint.x) cam.centerOnX(cameraX);
     if (cameraY !== cam.midPoint.Y) cam.centerOnY(cameraY);
+    this.charactersDistance = charactersXDiff;
   }
 
   update() {
