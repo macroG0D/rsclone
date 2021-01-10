@@ -11,9 +11,9 @@ function createPlayerAnimations(scene, key, sprite) {
 }
 
 export default class Player {
-  constructor(scene, key, x, y, sprite, controls, portals) {
-    this.portals = portals;
+  constructor(scene, key, x, y, sprite, controls) {
     this.scene = scene;
+    this.portals = this.scene.portals;
     this.key = key;
     this.sprite = scene.matter.add.sprite(x, y, sprite);
     this.isGrounded = false;
@@ -22,7 +22,6 @@ export default class Player {
     // Jumping is going to have a cooldown
     this.canJump = true;
     this.jumpCooldownTimer = null;
-
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
     const { width: w, height: h } = this.sprite;
     const mainBody = Bodies.rectangle(0, 0, w * 0.75, h, {

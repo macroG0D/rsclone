@@ -24,8 +24,8 @@ export default class Level1 extends Phaser.Scene {
     this.cameras.main.roundPixels = true;
     this.addBackgrounds();
     this.addWalls();
-    this.ibb = new Player(this, 'ibb', 3350, 400, 'ibb-sprite', player1Controls, this.portals); // 200 200
-    this.obb = new Player(this, 'obb', 3300, 400, 'obb-sprite', player2Controls, this.portals); // 300 300
+    this.ibb = new Player(this, 'ibb', 3350, 400, 'ibb-sprite', player1Controls); // 200 200
+    this.obb = new Player(this, 'obb', 3300, 400, 'obb-sprite', player2Controls); // 300 300
     this.music = this.sound.add('level1_music');
     // this.music.play({ loop: true });
   }
