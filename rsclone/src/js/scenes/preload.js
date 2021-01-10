@@ -33,16 +33,17 @@ export default class Preload extends Phaser.Scene {
 
     this.load.spritesheet('ibb-sprite', ibbSprite, {
       frameWidth: 47,
-      frameHeight: 53,
+      frameHeight: 52,
     });
     this.load.spritesheet('obb-sprite', obbSprite, {
       frameWidth: 47,
-      frameHeight: 64,
+      frameHeight: 62,
     });
   }
 
   create() {
-    this.scene.start('MainMenu');
+    // this.scene.start('MainMenu');
+    this.scene.start('Level1');
   }
 
   showBootBg() {

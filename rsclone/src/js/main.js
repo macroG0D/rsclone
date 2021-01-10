@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
 import Create from './components/dom-create';
 
 import { SCENE_LIST } from './scenes/_scenesList';
@@ -19,7 +20,6 @@ class Main {
   }
 
   init() {
-    console.log('Main class loaded');
     this.gameContainer = new Create('div', document.body, 'game-container').node;
     this.gameConfig = {
       type: Phaser.AUTO,
@@ -33,13 +33,22 @@ class Main {
       physics: {
         default: 'matter',
         matter: {
-          enableSleeping: true,
-          gravity: { y: 1 },
+          enableSleeping: false,
+          gravity: { y: 2 },
           debug: {
             showBody: true,
             showStaticBody: true,
           },
         },
+      },
+      plugins: {
+        scene: [
+          {
+            plugin: PhaserMatterCollisionPlugin, // The plugin class
+            key: 'matterCollision', // Where to store in Scene.Systems, e.g. scene.sys.matterCollision
+            mapping: 'matterCollision', // Where to store in the Scene, e.g. scene.matterCollision
+          },
+        ],
       },
       fps: {
         target: 60,

@@ -14,6 +14,8 @@ const levelHeight = 890;
 export default class Level1 extends Phaser.Scene {
   constructor() {
     super('Level1');
+    this.walls = [];
+    this.portals = [];
   }
 
   create() {
@@ -22,9 +24,8 @@ export default class Level1 extends Phaser.Scene {
     this.cameras.main.roundPixels = true;
     this.addBackgrounds();
     this.addWalls();
-    this.ibb = new Player(this, 'ibb', 200, 200, 'ibb-sprite', player1Controls);
-    this.obb = new Player(this, 'obb', 300, 300, 'obb-sprite', player2Controls);
-    this.addCollisions();
+    this.ibb = new Player(this, 'ibb', 3350, 400, 'ibb-sprite', player1Controls); // 200 200
+    this.obb = new Player(this, 'obb', 3300, 400, 'obb-sprite', player2Controls); // 300 300
     this.music = this.sound.add('level1_music');
     // this.music.play({ loop: true });
   }
@@ -53,8 +54,6 @@ export default class Level1 extends Phaser.Scene {
   }
 
   addWalls() {
-    this.walls = [];
-    this.portals = [];
     const wallDefaultColor = 0x082228;
     const portalColor = 0xffffff;
     const wallDefaultHeight = 16;
@@ -77,13 +76,13 @@ export default class Level1 extends Phaser.Scene {
       const objSettings = {
         isSensor: isPortal,
         isStatic: true,
-        // frictionStatic: 0,
-        // friction: 0,
       };
       if (isPortal) {
         // moved portal to separate class for better detection in collision event with instanceof
-        // eslint-disable-next-line no-new
-        new Portal(this, wallX, wallY, wallWidth, wallHeight, wallColor, objSettings);
+        const portal = new Portal(
+          this, wallX, wallY, wallWidth, wallHeight, wallColor, objSettings,
+        );
+        this.portals.push(portal);
       } else {
         const wall = this.add.rectangle(wallX, wallY, wallWidth, wallHeight, wallColor);
         this.matter.add.gameObject(wall, objSettings);
@@ -91,54 +90,16 @@ export default class Level1 extends Phaser.Scene {
     });
   }
 
-  addCollisions() {
-    /* collision event between two objects */
-    this.matter.world.on('collisionstart', (event) => {
-      event.pairs.forEach((pair) => {
-        const { bodyA, bodyB } = pair;
-        const gameObjectB = bodyB.gameObject;
-        const gameObjectA = bodyA.gameObject;
-        if (gameObjectB instanceof Phaser.Physics.Matter.Sprite) {
-          /* storing boolean that will show us if player sprite is on ground,
-          so we can apply jump velocity to it */
-          gameObjectB.isOnGround = true;
-        }
-        if (gameObjectA instanceof Phaser.Physics.Matter.Sprite) {
-          /* storing boolean that will show us if player sprite is on ground,
-          so we can apply jump velocity to it */
-          gameObjectA.isOnGround = true;
-        }
-      });
-    });
-    /* using collision active event to trigger flip when player body centers with portal body */
-    this.matter.world.on('collisionactive', (event) => {
-      event.pairs.forEach((pair) => {
-        const { bodyA, bodyB } = pair;
-        const gameObjectB = bodyB.gameObject;
-        const gameObjectA = bodyA.gameObject;
-        // checking for portal and player collision
-        if (gameObjectA instanceof Portal && gameObjectB instanceof Player) {
-          const portal = gameObjectA;
-          const player = gameObjectB;
-          const pixelsInterval = 5;
-          const playerCenterY = Math.round(player.y + player.height / 2);
-          const portalCenterY = Math.round(portal.y + portal.height / 2);
-          /* because collision event triggers with time interval we cant strictly compare two values
-          so we are comparing player center position in small range around portal center */
-          const playerLowerRangePos = playerCenterY < portalCenterY + pixelsInterval;
-          const playerUpperRangePos = playerCenterY > portalCenterY - pixelsInterval;
-          if (playerLowerRangePos && playerUpperRangePos) {
-            player.switchGravity();
-          }
-        }
-      });
-    });
-  }
-
   centerCamera() {
     const cam = this.cameras.main;
-    const ibbCoords = { x: this.ibb.x, y: this.ibb.y };
-    const obbCoords = { x: this.obb.x, y: this.obb.y };
+    const ibbCoords = {
+      x: this.ibb.sensors.bottom.position.x,
+      y: this.ibb.sensors.bottom.position.y,
+    };
+    const obbCoords = {
+      x: this.obb.sensors.bottom.position.x,
+      y: this.obb.sensors.bottom.position.y,
+    };
     const charactersXDiff = Math.abs(obbCoords.x - ibbCoords.x);
     const charactersYDiff = Math.abs(obbCoords.y - ibbCoords.y);
     const camZoom = 1 - 0.2 * (charactersXDiff / cam.width);
