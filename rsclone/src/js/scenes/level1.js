@@ -4,6 +4,7 @@ import Portal from '../sprites/portal';
 import { gradientSquares, gradientColors, walls } from '../levels/level1/backgroundStructure';
 
 import { BORDER_THICKNESS } from '../constants';
+import { playMusic } from '../utils/music';
 
 const player1Controls = ['LEFT', 'RIGHT', 'UP', 'DOWN'];
 const player2Controls = ['A', 'D', 'W', 'S'];
@@ -26,9 +27,8 @@ export default class Level1 extends Phaser.Scene {
     this.addWalls();
     this.ibb = new Player(this, 'ibb', 3350, 400, 'ibb-sprite', player1Controls); // 200 200
     this.obb = new Player(this, 'obb', 3300, 400, 'obb-sprite', player2Controls); // 300 300
-    this.music = this.sound.add('level1_music');
-    // this.music.play({ loop: true });
     this.cursors = this.input.keyboard.createCursorKeys();
+    playMusic(this, 'level1_music');
   }
 
   addBackgrounds() {

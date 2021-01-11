@@ -7,6 +7,8 @@ import {
   CHARACTERS_DISTANCE_MAX,
 } from '../constants';
 
+import { playSound } from '../utils/sound';
+
 function createPlayerAnimations(scene, key, sprite) {
   scene.anims.create({
     key: `move-${key}`,
@@ -205,10 +207,10 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     });
   }
 
-  portalDive(portal) {
-    console.log(portal);
+  portalDive() {
     setTimeout(() => {
       this.switchGravity();
+      playSound(this.scene, 'warp_cross_01');
     }, 50);
 
     // commented the code below becouse it may be still needed
@@ -246,8 +248,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
   }
 
   movePlayer() {
-    console.log(this);
-    console.log(this.body);
     const currentVelocity = this.body.velocity;
     const maxVelocity = 2;
     /* left/right move */

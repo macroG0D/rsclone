@@ -57,6 +57,10 @@ class Main {
       scene: SCENE_LIST,
     };
     this.game = new Phaser.Game(this.gameConfig);
+    this.game.music = {
+      key: undefined,
+      track: undefined,
+    };
   }
 }
 
