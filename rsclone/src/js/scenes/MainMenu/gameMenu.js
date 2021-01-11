@@ -28,5 +28,6 @@ export default class GameMenu extends Phaser.Scene {
     createMenu(this, this.menuItems);
     this.music = this.sound.add('main_menu_music');
     // this.music.play({ loop: true });
+    window.location.hash = this.scene.key;
   }
 }

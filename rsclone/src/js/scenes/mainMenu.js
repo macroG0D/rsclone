@@ -1,7 +1,13 @@
 import Phaser from 'phaser';
-import { createMenu } from '../utils/createMenu';
-import { createBg } from '../utils/createBg';
-import { playMusic } from '../utils/music';
+import {
+  createMenu
+} from '../utils/createMenu';
+import {
+  createBg
+} from '../utils/createBg';
+import {
+  playMusic
+} from '../utils/music';
 
 export default class MainMenu extends Phaser.Scene {
   constructor() {
@@ -19,5 +25,12 @@ export default class MainMenu extends Phaser.Scene {
     createBg(this);
     createMenu(this, this.menuItems);
     playMusic(this, 'main_menu_music');
+    window.location.hash = this.scene.key;
+
+    window.onpopstate = () => {
+      const hashKey = window.location.hash.slice(1);
+      this.game.scene.bringToTop(hashKey);
+      this.game.scene.start(hashKey);
+    };
   }
 }
