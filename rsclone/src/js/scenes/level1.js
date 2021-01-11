@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import Player from '../sprites/player';
+import Enemy from '../sprites/enemy';
 import Portal from '../sprites/portal';
 import { gradientSquares, gradientColors, walls } from '../levels/level1/backgroundStructure';
 
@@ -25,8 +26,12 @@ export default class Level1 extends Phaser.Scene {
     this.cameras.main.roundPixels = true;
     this.addBackgrounds();
     this.addWalls();
-    this.ibb = new Player(this, 'ibb', 3350, 400, 'ibb-sprite', player1Controls); // 200 200
-    this.obb = new Player(this, 'obb', 3300, 400, 'obb-sprite', player2Controls); // 300 300
+    this.ibb = new Player(this, 'ibb', 3000, 400, 'ibb-sprite', player1Controls); // 200 200
+    this.obb = new Player(this, 'obb', 3020, 400, 'obb-sprite', player2Controls); // 300 300
+    this.hedgehog = new Enemy(this, 3400, 560, 'hedgehog-head', 'hedgehog-butt');
+    this.hedgehog2 = new Enemy(this, 2800, 560, 'hedgehog-head', 'hedgehog-butt');
+    this.hedgehog2.moveVertically();
+    this.hedgehog.moveHorizontally(300, 'left', 2500);
     this.cursors = this.input.keyboard.createCursorKeys();
     playMusic(this, 'level1_music');
   }
@@ -92,26 +97,28 @@ export default class Level1 extends Phaser.Scene {
   }
 
   centerCamera() {
-    const cam = this.cameras.main;
-    const ibbCoords = {
-      x: this.ibb.sensors.bottom.position.x,
-      y: this.ibb.sensors.bottom.position.y,
-    };
-    const obbCoords = {
-      x: this.obb.sensors.bottom.position.x,
-      y: this.obb.sensors.bottom.position.y,
-    };
-    const charactersXDiff = Math.abs(obbCoords.x - ibbCoords.x);
-    const charactersYDiff = Math.abs(obbCoords.y - ibbCoords.y);
-    const camZoom = 1 - 0.2 * (charactersXDiff / cam.width);
-    const closestToLeftCharacterX = ibbCoords.x > obbCoords.x ? obbCoords.x : ibbCoords.x;
-    const closestToTopCharacterY = ibbCoords.y > obbCoords.y ? obbCoords.y : ibbCoords.y;
-    const cameraX = parseInt(charactersXDiff / 2 + closestToLeftCharacterX, 10);
-    const cameraY = parseInt(charactersYDiff / 2 + closestToTopCharacterY, 10);
-    if (camZoom !== cam.zoom) cam.setZoom(camZoom);
-    if (cameraX !== cam.midPoint.x) cam.centerOnX(cameraX);
-    if (cameraY !== cam.midPoint.Y) cam.centerOnY(cameraY);
-    this.charactersDistance = charactersXDiff;
+    if (this.ibb.isAlive && this.obb.isAlive) {
+      const cam = this.cameras.main;
+      const ibbCoords = {
+        x: this.ibb.sensors.bottom.position.x,
+        y: this.ibb.sensors.bottom.position.y,
+      };
+      const obbCoords = {
+        x: this.obb.sensors.bottom.position.x,
+        y: this.obb.sensors.bottom.position.y,
+      };
+      const charactersXDiff = Math.abs(obbCoords.x - ibbCoords.x);
+      const charactersYDiff = Math.abs(obbCoords.y - ibbCoords.y);
+      const camZoom = 1 - 0.2 * (charactersXDiff / cam.width);
+      const closestToLeftCharacterX = ibbCoords.x > obbCoords.x ? obbCoords.x : ibbCoords.x;
+      const closestToTopCharacterY = ibbCoords.y > obbCoords.y ? obbCoords.y : ibbCoords.y;
+      const cameraX = parseInt(charactersXDiff / 2 + closestToLeftCharacterX, 10);
+      const cameraY = parseInt(charactersYDiff / 2 + closestToTopCharacterY, 10);
+      if (camZoom !== cam.zoom) cam.setZoom(camZoom);
+      if (cameraX !== cam.midPoint.x) cam.centerOnX(cameraX);
+      if (cameraY !== cam.midPoint.Y) cam.centerOnY(cameraY);
+      this.charactersDistance = charactersXDiff;
+    }
   }
 
   update() {
