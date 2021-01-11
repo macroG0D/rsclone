@@ -12,6 +12,15 @@ const player2Controls = ['A', 'D', 'W', 'S'];
 const levelWidth = 5369;
 const levelHeight = 890;
 
+const parallaxImages = {
+  sky: 0,
+  clouds_1: 0.3,
+  clouds_2: 0.6,
+  clouds_3: 0.9,
+  clouds_4: 0.12,
+  rocks_1: 0.3,
+  rocks_2: 0.6,
+};
 export default class Level1 extends Phaser.Scene {
   constructor() {
     super('Level1');
@@ -23,12 +32,38 @@ export default class Level1 extends Phaser.Scene {
     this.matter.world.setBounds(0, 0, levelWidth, levelHeight, BORDER_THICKNESS);
     this.cameras.main.setBounds(0, 0, levelWidth, levelHeight);
     this.cameras.main.roundPixels = true;
-    this.addBackgrounds();
+    // this.addBackgrounds();
+    this.addParallax();
     this.addWalls();
     this.ibb = new Player(this, 'ibb', 3350, 400, 'ibb-sprite', player1Controls); // 200 200
     this.obb = new Player(this, 'obb', 3300, 400, 'obb-sprite', player2Controls); // 300 300
     this.cursors = this.input.keyboard.createCursorKeys();
     playMusic(this, 'level1_music');
+  }
+
+  addParallax() {
+    this.parallax = {};
+    Object.entries(parallaxImages).forEach(([key, speed]) => {
+      const sprite = this.add.tileSprite(
+        0,
+        0,
+        this.game.config.width,
+        this.game.config.height,
+        key,
+      )
+        .setOrigin(0, 0)
+        .setScrollFactor(0);
+
+      this.parallax[key] = { key, sprite, speed };
+    });
+  }
+
+  scrollParallax() {
+    this.myCam = this.cameras.main;
+    Object.values(this.parallax).forEach((item) => {
+      const { sprite, speed } = item;
+      if (speed) sprite.tilePositionX = this.cameras.main.scrollX * speed;
+    });
   }
 
   addBackgrounds() {
@@ -103,7 +138,7 @@ export default class Level1 extends Phaser.Scene {
     };
     const charactersXDiff = Math.abs(obbCoords.x - ibbCoords.x);
     const charactersYDiff = Math.abs(obbCoords.y - ibbCoords.y);
-    const camZoom = 1 - 0.2 * (charactersXDiff / cam.width);
+    const camZoom = 1 - 0.05 * (charactersXDiff / cam.width);
     const closestToLeftCharacterX = ibbCoords.x > obbCoords.x ? obbCoords.x : ibbCoords.x;
     const closestToTopCharacterY = ibbCoords.y > obbCoords.y ? obbCoords.y : ibbCoords.y;
     const cameraX = parseInt(charactersXDiff / 2 + closestToLeftCharacterX, 10);
@@ -116,6 +151,7 @@ export default class Level1 extends Phaser.Scene {
 
   update() {
     this.centerCamera();
+    this.scrollParallax();
     this.cursors.space.on('down', () => {
       this.scene.pause();
       this.scene.run('GameMenu');

@@ -13,6 +13,14 @@ import level1Music from '../../assets/music/level1.mp3';
 import level2Music from '../../assets/music/level2.mp3';
 import warpCross01Sound from '../../assets/sounds/warp_cross_a_01.mp3';
 
+import sky from '../../assets/images/background/sky.png';
+import clouds1 from '../../assets/images/background/clouds_1.png';
+import clouds2 from '../../assets/images/background/clouds_2.png';
+import clouds3 from '../../assets/images/background/clouds_3.png';
+import clouds4 from '../../assets/images/background/clouds_4.png';
+import rocks1 from '../../assets/images/background/rocks_1.png';
+import rocks2 from '../../assets/images/background/rocks_2.png';
+
 export default class Preload extends Phaser.Scene {
   constructor() {
     super('Preload');
@@ -28,16 +36,28 @@ export default class Preload extends Phaser.Scene {
     this.load.image('obbKeys', obbKeys);
     this.load.image('ibbKeys', ibbKeys);
 
+    // Loading parallax's images
+    this.load.image('sky', sky);
+    this.load.image('clouds_1', clouds1);
+    this.load.image('clouds_2', clouds2);
+    this.load.image('clouds_3', clouds3);
+    this.load.image('clouds_4', clouds4);
+    this.load.image('rocks_1', rocks1);
+    this.load.image('rocks_2', rocks2);
+
+    // Loading music
     this.load.audio('main_menu_music', mainMenuMusic);
     this.load.audio('level1_music', level1Music);
     this.load.audio('level2_music', level2Music);
 
+    // Loading Sounds
     this.load.audio('warp_cross_01', warpCross01Sound);
 
     this.load.spritesheet('ibb-sprite', ibbSprite, {
       frameWidth: 47,
       frameHeight: 52,
     });
+
     this.load.spritesheet('obb-sprite', obbSprite, {
       frameWidth: 47,
       frameHeight: 62,
