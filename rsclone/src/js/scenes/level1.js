@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import Player from '../sprites/player';
-import Enemy from '../sprites/enemy';
+import StandartHedgehog from '../sprites/enemies/StandartHedgehog';
+import JumpingHedgehog from '../sprites/enemies/JumpingHedgehog';
 import Portal from '../sprites/portal';
 import { gradientSquares, gradientColors, walls } from '../levels/level1/backgroundStructure';
 
@@ -28,10 +29,10 @@ export default class Level1 extends Phaser.Scene {
     this.addWalls();
     this.ibb = new Player(this, 'ibb', 3000, 400, 'ibb-sprite', player1Controls); // 200 200
     this.obb = new Player(this, 'obb', 3020, 400, 'obb-sprite', player2Controls); // 300 300
-    this.hedgehog = new Enemy(this, 3400, 560, 'hedgehog-head', 'hedgehog-butt');
-    this.hedgehog2 = new Enemy(this, 2800, 560, 'hedgehog-head', 'hedgehog-butt');
-    this.hedgehog2.moveVertically();
+    this.hedgehog = new StandartHedgehog(this, 3400, 558, 'hedgehog-head', 'hedgehog-halfbutt', 58);
     this.hedgehog.moveHorizontally(300, 'left', 2500);
+    this.hedgehog2 = new JumpingHedgehog(this, 2800, 558, 'hedgehog-jumper', 'hedgehog-fullbutt', 200);
+    // this.hedgehog2.jump(200, 800);
     this.cursors = this.input.keyboard.createCursorKeys();
     playMusic(this, 'level1_music');
   }

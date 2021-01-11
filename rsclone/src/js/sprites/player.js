@@ -160,7 +160,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     });
   }
 
-  onSensorCollide({ bodyA, bodyB, pair }) { // may use pair as third argument
+  onSensorCollide({ bodyA, bodyB }) { // may use pair as third argument
     if (bodyB.isSensor) return; // We only care about collisions with physical objects
     if (bodyA === this.sensors.left) {
       this.isTouching.left = true;
@@ -199,7 +199,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     this.fixedPositionOnHead();
     this.noWallsFriction();
     this.movePlayer(this.key);
-    Death.deathAnimation(this.scene, this);
   }
 
   portalsListeners(scene, portal) {

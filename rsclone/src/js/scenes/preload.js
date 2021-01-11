@@ -7,7 +7,9 @@ import obbImg from '../../assets/images/obb_stay.png';
 import ibbBg from '../../assets/images/ibb_bg.png';
 import obbBg from '../../assets/images/obb_bg.png';
 import hedgehogHead from '../../assets/sprites/hedgehog/hedgehog_head.svg';
-import hedgehogButt from '../../assets/sprites/hedgehog/hedgehog_butt.svg';
+import hedgehogJumper from '../../assets/sprites/hedgehog/hedgehog_jumper.svg';
+import hedgehogHalfButt from '../../assets/sprites/hedgehog/hedgehog_halfButt.svg';
+import hedgehogFullButt from '../../assets/sprites/hedgehog/hedgehog_fullButt.svg';
 import ibbKeys from '../../assets/images/ibbKeys.svg';
 import obbKeys from '../../assets/images/obbKeys.svg';
 import mainMenuMusic from '../../assets/music/main_menu.mp3';
@@ -30,7 +32,9 @@ export default class Preload extends Phaser.Scene {
     this.load.image('obbKeys', obbKeys);
     this.load.image('ibbKeys', ibbKeys);
     this.load.image('hedgehog-head', hedgehogHead);
-    this.load.image('hedgehog-butt', hedgehogButt);
+    this.load.image('hedgehog-halfbutt', hedgehogHalfButt);
+    this.load.image('hedgehog-jumper', hedgehogJumper);
+    this.load.image('hedgehog-fullbutt', hedgehogFullButt);
 
     this.load.audio('main_menu_music', mainMenuMusic);
     this.load.audio('level1_music', level1Music);
