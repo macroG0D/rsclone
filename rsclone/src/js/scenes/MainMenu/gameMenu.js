@@ -11,6 +11,7 @@ export default class GameMenu extends Phaser.Scene {
     this.menuItems = {
       Continue: () => {
         this.scene.resume('Level1');
+        this.scene.resume('Score');
         this.scene.stop('GameMenu');
       },
       'New game': () => {

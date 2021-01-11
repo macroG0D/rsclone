@@ -29,6 +29,7 @@ export default class Level1 extends Phaser.Scene {
     this.obb = new Player(this, 'obb', 3300, 400, 'obb-sprite', player2Controls); // 300 300
     this.cursors = this.input.keyboard.createCursorKeys();
     playMusic(this, 'level1_music');
+    this.scene.run('Score');
   }
 
   addBackgrounds() {
@@ -117,7 +118,8 @@ export default class Level1 extends Phaser.Scene {
   update() {
     this.centerCamera();
     this.cursors.space.on('down', () => {
-      this.scene.pause();
+      this.scene.pause('Score');
+      this.scene.pause('Level1');
       this.scene.run('GameMenu');
     });
   }
