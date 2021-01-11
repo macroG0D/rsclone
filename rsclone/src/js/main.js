@@ -37,7 +37,7 @@ class Main {
           gravity: { y: 2 },
           debug: {
             showBody: true,
-            showStaticBody: true,
+            showStaticBody: false,
           },
         },
       },
