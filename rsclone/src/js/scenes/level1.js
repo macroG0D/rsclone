@@ -103,7 +103,7 @@ export default class Level1 extends Phaser.Scene {
     };
     const charactersXDiff = Math.abs(obbCoords.x - ibbCoords.x);
     const charactersYDiff = Math.abs(obbCoords.y - ibbCoords.y);
-    const camZoom = 1 - 0.2 * (charactersXDiff / cam.width);
+    const camZoom = 1 - 0.05 * (charactersXDiff / cam.width);
     const closestToLeftCharacterX = ibbCoords.x > obbCoords.x ? obbCoords.x : ibbCoords.x;
     const closestToTopCharacterY = ibbCoords.y > obbCoords.y ? obbCoords.y : ibbCoords.y;
     const cameraX = parseInt(charactersXDiff / 2 + closestToLeftCharacterX, 10);
