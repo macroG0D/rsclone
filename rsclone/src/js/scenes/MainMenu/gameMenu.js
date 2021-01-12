@@ -18,11 +18,11 @@ export default class GameMenu extends Phaser.Scene {
         this.scene.stop('Level1');
         this.scene.start('MainMenuPlay');
       },
-      // Leaderboard: () => this.scene.start('MainMenuLeaderBoard'),
       Settings: () => this.scene.switch('MainMenuSettings'),
-      'Main menu': () => this.scene.start('MainMenu'),
-      // Developers: () => this.scene.start('MainMenuDevelopers'),
-      // About: () => window.open('https://github.com/macroG0D/rsclone'),
+      'Main menu': () => {
+        this.scene.stop('Level1');
+        this.scene.start('MainMenu');
+      },
     };
     createBg(this);
     createMenu(this, this.menuItems);
