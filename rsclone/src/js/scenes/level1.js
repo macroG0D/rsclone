@@ -1,10 +1,20 @@
 import Phaser from 'phaser';
 import Player from '../sprites/player';
 import Portal from '../sprites/portal';
-import { gradientSquares, gradientColors, walls } from '../levels/level1/backgroundStructure';
+import {
+  gradientSquares,
+  gradientColors,
+  walls
+} from '../levels/level1/backgroundStructure';
 
-import { BORDER_THICKNESS } from '../constants';
-import { playMusic } from '../utils/music';
+import {
+  BORDER_THICKNESS
+} from '../constants';
+import {
+  playMusic
+} from '../utils/music';
+
+import eventsCenter from '../utils/EventsCenter';
 
 const player1Controls = ['LEFT', 'RIGHT', 'UP', 'DOWN'];
 const player2Controls = ['A', 'D', 'W', 'S'];
@@ -17,6 +27,7 @@ export default class Level1 extends Phaser.Scene {
     super('Level1');
     this.walls = [];
     this.portals = [];
+    this.score = 0;
   }
 
   create() {
@@ -30,6 +41,8 @@ export default class Level1 extends Phaser.Scene {
     this.cursors = this.input.keyboard.createCursorKeys();
     playMusic(this, 'level1_music');
     this.scene.run('Score');
+    this.scoreChange();
+    this.gameMenu();
   }
 
   addBackgrounds() {
@@ -39,7 +52,10 @@ export default class Level1 extends Phaser.Scene {
     this.background.fillRect(0, 0, levelWidth, levelHeight);
     // underworld backgrounds
     gradientSquares.forEach((item, index) => {
-      const { width, height } = item;
+      const {
+        width,
+        height
+      } = item;
       const top = levelHeight - height;
       let left = 0;
       let i = index;
@@ -117,6 +133,21 @@ export default class Level1 extends Phaser.Scene {
 
   update() {
     this.centerCamera();
+  }
+
+  scoreChange() {
+    this.cursors.shift.on('down', () => {
+      console.log('yf;fkb');
+      this.score += 1;
+      eventsCenter.emit('update-score', this.score);
+    });
+
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      this.cursors.shift.on('down');
+    });
+  }
+
+  gameMenu() {
     this.cursors.space.on('down', () => {
       this.scene.pause('Score');
       this.scene.pause('Level1');

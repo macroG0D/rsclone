@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import eventsCenter from '../utils/EventsCenter';
 
 export default class Score extends Phaser.Scene {
   constructor() {
@@ -10,6 +11,13 @@ export default class Score extends Phaser.Scene {
     this.currentTime = 0;
     this.addScore();
     this.addTimer();
+
+    eventsCenter.on('update-score', this.updateScore, this);
+
+    // clean up when Scene is shutdown
+    // this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
+    //   eventsCenter.off('update-score', this.updateScore, this)
+    // })
   }
 
   addTimer() {
@@ -48,6 +56,11 @@ export default class Score extends Phaser.Scene {
       fill: '#E5E5E5',
     }).setScrollFactor(0, 0).setOrigin(0);
 
+    this.scoreText.setText(`score:  ${this.currentScore}`);
+  }
+
+  updateScore(score) {
+    this.currentScore = score;
     this.scoreText.setText(`score:  ${this.currentScore}`);
   }
 }
