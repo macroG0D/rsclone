@@ -48,40 +48,4 @@ export default class StandartHedgehog extends Enemy {
       context: this,
     });
   }
-
-  moveHorizontally(length, direction, speedMS) {
-    let destination = length;
-    if (direction === 'right') {
-      destination = Math.abs(destination);
-    } else {
-      destination *= -1;
-    }
-    this.scene.tweens.addCounter({
-      from: 0,
-      to: destination,
-      duration: speedMS,
-      ease: Phaser.Math.Easing.Sine.InOut,
-      repeat: -1,
-      yoyo: true,
-      onUpdate: (tween, target) => {
-        if (!this.isAlive) {
-          this.body.destroy();
-          this.butt.destroy();
-          return;
-        }
-        const x = this.startX + target.value;
-        const dx = x - this.x;
-        this.x = x;
-        this.butt.x = this.x;
-        this.butt.y = this.y + this.offsetBetweenHeadAndButt;
-        this.setVelocityX(dx);
-        if (this.x === this.startX) {
-          this.setFlipX(false);
-        }
-      },
-      onYoyo: () => {
-        this.setFlipX(true);
-      },
-    });
-  }
 }

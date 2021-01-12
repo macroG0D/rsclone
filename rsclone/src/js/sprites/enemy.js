@@ -42,14 +42,14 @@ export default class Enemy extends Phaser.Physics.Matter.Sprite {
       onUpdate: (tween, target) => {
         if (!this.isAlive) {
           this.body.destroy();
-          // this.butt.destroy();
+          this.butt.destroy();
           return;
         }
         const x = this.startX + target.value;
         const dx = x - this.x;
         this.x = x;
-        // this.butt.x = this.x;
-        // this.butt.y = this.y + 55;
+        this.butt.x = this.x;
+        this.butt.y = this.y + this.offsetBetweenHeadAndButt;
         this.setVelocityX(dx);
         if (this.x === this.startX) {
           this.setFlipX(false);
