@@ -86,7 +86,8 @@ export default class Level1 extends Phaser.Scene {
         this.portals.push(portal);
       } else {
         const wall = this.add.rectangle(wallX, wallY, wallWidth, wallHeight, wallColor);
-        this.matter.add.gameObject(wall, objSettings);
+        const wallGameObject = this.matter.add.gameObject(wall, objSettings);
+        wallGameObject.setCollisionGroup(2); // we have to add collision groups to make emitter work
       }
     });
   }

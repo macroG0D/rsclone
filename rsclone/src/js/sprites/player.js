@@ -1,4 +1,6 @@
 import Phaser from 'phaser';
+import Emitter from '../utils/emitter';
+
 import {
   DEFAULT_MASS,
   DEFAULT_FRICTION,
@@ -34,7 +36,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     const mainBody = Bodies.rectangle(0, 0, w * 0.75, h, {
       chamfer: { radius: 1 },
     });
-
     this.sensors = {
       center: Bodies.rectangle(0, 0, 10, 10, { isSensor: true }),
       top: Bodies.rectangle(0, h - h * 1.48, w * 0.5, 5, { isSensor: true }),
@@ -60,7 +61,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       .setExistingBody(compoundBody)
       .setFixedRotation() // disable spin around its mass center point
       .setPosition(x, y);
-
     this.sprite = sprite;
     createPlayerAnimations(this.scene, this.key, this.sprite);
 
@@ -107,6 +107,11 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
     this.portals.forEach((portal) => {
       this.portalsListeners(scene, portal);
+    });
+    this.emitter = new Emitter(scene, this, 'bubble', 2000);
+    this.setInteractive();
+    this.on('pointerdown', function () {
+      this.emitter.emitParticles(100);
     });
   }
 
