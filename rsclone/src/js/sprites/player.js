@@ -1,4 +1,6 @@
 import Phaser from 'phaser';
+import Death from './Death';
+
 import {
   DEFAULT_MASS,
   DEFAULT_FRICTION,
@@ -20,6 +22,7 @@ function createPlayerAnimations(scene, key, sprite) {
 export default class Player extends Phaser.Physics.Matter.Sprite {
   constructor(scene, key, x, y, sprite, controls) {
     super(scene.matter.world, x, y, sprite);
+    this.isAlive = true;
     this.scene = scene;
     this.portals = this.scene.portals;
     this.key = key;
@@ -157,16 +160,16 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     });
   }
 
-  onSensorCollide({ bodyA, bodyB, pair }) { // may use pair as third argument
+  onSensorCollide({ bodyA, bodyB }) { // may use pair as third argument
     if (bodyB.isSensor) return; // We only care about collisions with physical objects
     if (bodyA === this.sensors.left) {
       this.isTouching.left = true;
       // optional solution for wall friction
-      if (pair.separation > 0.5) this.x += pair.separation - 0.5;
+      // if (pair.separation > 0.5) this.x += pair.separation - 0.5;
     } else if (bodyA === this.sensors.right) {
       this.isTouching.right = true;
       // optional solution for wall friction
-      if (pair.separation > 0.5) this.x -= pair.separation - 0.5;
+      // if (pair.separation > 0.5) this.x -= pair.separation - 0.5;
     } else if (bodyA === this.sensors.top) {
       this.isTouching.top = true;
     } else if (bodyA === this.sensors.bottom) {
@@ -248,6 +251,9 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
   }
 
   movePlayer() {
+    if (!this.isAlive) {
+      return;
+    }
     const currentVelocity = this.body.velocity;
     const maxVelocity = 2;
     /* left/right move */
