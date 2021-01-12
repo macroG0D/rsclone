@@ -11,6 +11,7 @@ export default class GameMenu extends Phaser.Scene {
     this.menuItems = {
       Continue: () => {
         this.scene.resume('Level1');
+        this.scene.resume('Score');
         this.scene.stop('GameMenu');
       },
       'New game': () => {
@@ -27,5 +28,6 @@ export default class GameMenu extends Phaser.Scene {
     createMenu(this, this.menuItems);
     this.music = this.sound.add('main_menu_music');
     // this.music.play({ loop: true });
+    window.location.hash = this.scene.key;
   }
 }
