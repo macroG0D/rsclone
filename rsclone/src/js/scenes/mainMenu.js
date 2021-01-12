@@ -1,13 +1,7 @@
 import Phaser from 'phaser';
-import {
-  createMenu,
-} from '../utils/createMenu';
-import {
-  createBg,
-} from '../utils/createBg';
-import {
-  playMusic,
-} from '../utils/music';
+import { createMenu } from '../utils/createMenu';
+import { createBg } from '../utils/createBg';
+import { playMusic } from '../utils/music';
 
 export default class MainMenu extends Phaser.Scene {
   constructor() {
@@ -17,12 +11,12 @@ export default class MainMenu extends Phaser.Scene {
   create() {
     this.menuItems = {
       Play: () => {
-        this.scene.start('MainMenuPlay');
+        this.scene.switch('MainMenuPlay');
         window.location.hash = 'MainMenuPlay';
       },
-      Leaderboard: () => this.scene.start('MainMenuLeaderBoard'),
-      Settings: () => this.scene.start('MainMenuSettings'),
-      Developers: () => this.scene.start('MainMenuDevelopers'),
+      Leaderboard: () => this.scene.switch('MainMenuLeaderBoard'),
+      Settings: () => this.scene.switch('MainMenuSettings'),
+      Developers: () => this.scene.switch('MainMenuDevelopers'),
       About: () => window.open('https://github.com/macroG0D/rsclone'),
     };
     createBg(this);

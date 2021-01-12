@@ -10,7 +10,7 @@ export default class MainMenuSettings extends Phaser.Scene {
 
   create() {
     this.menuItems = {
-      Settings: () => this.scene.start('MainMenu'),
+      Settings: () => this.scene.switch('MainMenu'),
     };
     createBg(this);
     createMenu(this, this.menuItems, true);
