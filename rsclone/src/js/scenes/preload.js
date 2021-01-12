@@ -8,6 +8,10 @@ import ibbBg from '../../assets/images/ibb_bg.png';
 import obbBg from '../../assets/images/obb_bg.png';
 import ibbKeys from '../../assets/images/ibbKeys.svg';
 import obbKeys from '../../assets/images/obbKeys.svg';
+import hedgehogHead from '../../assets/sprites/enemies/hedgehogs/hedgehog_head.svg';
+import hedgehogJumper from '../../assets/sprites/enemies/hedgehogs/hedgehog_jumper.svg';
+import hedgehogHalfButt from '../../assets/sprites/enemies/hedgehogs/hedgehog_halfButt.svg';
+import hedgehogFullButt from '../../assets/sprites/enemies/hedgehogs/hedgehog_fullButt.svg';
 import mainMenuMusic from '../../assets/music/main_menu.mp3';
 import level1Music from '../../assets/music/level1.mp3';
 import level2Music from '../../assets/music/level2.mp3';
@@ -35,6 +39,10 @@ export default class Preload extends Phaser.Scene {
     this.load.image('ibbBg', ibbBg);
     this.load.image('obbKeys', obbKeys);
     this.load.image('ibbKeys', ibbKeys);
+    this.load.image('hedgehog-head', hedgehogHead);
+    this.load.image('hedgehog-halfbutt', hedgehogHalfButt);
+    this.load.image('hedgehog-jumper', hedgehogJumper);
+    this.load.image('hedgehog-fullbutt', hedgehogFullButt);
 
     // Loading parallax's images
     this.load.image('sky', sky);
@@ -65,7 +73,8 @@ export default class Preload extends Phaser.Scene {
   }
 
   create() {
-    this.scene.start('MainMenu');
+    // this.scene.start('MainMenu');
+    this.scene.start('Level1');
   }
 
   showBootBg() {
