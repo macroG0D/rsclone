@@ -136,15 +136,16 @@ export default class Level1 extends Phaser.Scene {
   }
 
   scoreChange() {
+    // временно скор меняется по нажатию шифта - потом любое другое событие или действие
     this.cursors.shift.on('down', () => {
-      console.log('yf;fkb');
       this.score += 1;
+      // важна вот эта фраза для передачи апдейта скора
       eventsCenter.emit('update-score', this.score);
     });
 
-    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
-      this.cursors.shift.on('down');
-    });
+    // this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+    //   this.cursors.shift.on('down');
+    // });
   }
 
   gameMenu() {

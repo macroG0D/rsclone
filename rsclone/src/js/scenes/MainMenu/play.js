@@ -15,7 +15,6 @@ export default class MainMenuPlay extends Phaser.Scene {
     };
     createBg(this);
     createMenu(this, this.menuItems, true);
-    console.log('cjplfkb')
-    // window.location.hash = this.scene.key;
+    window.location.hash = this.scene.key;
   }
 }
