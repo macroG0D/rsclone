@@ -1,10 +1,10 @@
 import Phaser from 'phaser';
 
 import {
-  createMenu
+  createMenu,
 } from '../../utils/createMenu';
 import {
-  createBg
+  createBg,
 } from '../../utils/createBg';
 
 export default class MainMenuDevelopers extends Phaser.Scene {
@@ -24,6 +24,7 @@ export default class MainMenuDevelopers extends Phaser.Scene {
     this.createGithubIcons();
     window.location.hash = this.scene.key;
   }
+
   createGithubIcons() {
     const menuItemsCount = Object.keys(this.menuItems).length;
     for (let menuIndex = 0; menuIndex < menuItemsCount; menuIndex += 1) {

@@ -1,12 +1,12 @@
 import Phaser from 'phaser';
 import {
-  createMenu
+  createMenu,
 } from '../utils/createMenu';
 import {
-  createBg
+  createBg,
 } from '../utils/createBg';
 import {
-  playMusic
+  playMusic,
 } from '../utils/music';
 
 export default class MainMenu extends Phaser.Scene {
