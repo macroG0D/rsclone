@@ -5,12 +5,11 @@ import StandartHedgehog from '../sprites/enemies/StandartHedgehog';
 import JumpingHedgehog from '../sprites/enemies/JumpingHedgehog';
 import { gradientSquares, gradientColors, walls } from '../levels/level1/backgroundStructure';
 
-
 import {
-  BORDER_THICKNESS
+  BORDER_THICKNESS,
 } from '../constants';
 import {
-  playMusic
+  playMusic,
 } from '../utils/music';
 
 import eventsCenter from '../utils/EventsCenter';
@@ -92,7 +91,7 @@ export default class Level1 extends Phaser.Scene {
     gradientSquares.forEach((item, index) => {
       const {
         width,
-        height
+        height,
       } = item;
       const top = levelHeight - height;
       let left = 0;
