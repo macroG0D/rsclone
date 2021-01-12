@@ -199,7 +199,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
   }
 
   portalsListeners(scene, portal) {
-    scene.matterCollision.addOnCollideActive({
+    scene.matterCollision.addOnCollideStart({
       objectA: [this.sensors.center],
       objectB: portal,
       callback: () => (this.portalDive(portal)),
@@ -207,7 +207,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     });
   }
 
-  portalDive() {
+  portalDive(portal) {
+    portal.emitParticles(this.x, this.width, this.body.velocity.y, this.flipY);
     setTimeout(() => {
       this.switchGravity();
       playSound(this.scene, 'warp_cross_01');
