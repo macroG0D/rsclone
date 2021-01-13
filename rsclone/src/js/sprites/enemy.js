@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import Death from './death';
-import eventsCenter from '../utils/EventsCenter';
+import EventsCenter from '../utils/eventsCenter';
 
 export default class Enemy extends Phaser.Physics.Matter.Sprite {
   constructor(scene, x, y, spriteA) {
@@ -24,7 +24,7 @@ export default class Enemy extends Phaser.Physics.Matter.Sprite {
       this.isAlive = false;
       Death.deathAnimation(this.scene, this);
       // 50 просто для примера
-      eventsCenter.emit('update-score', 50);
+      EventsCenter.emit('update-score', 50);
     }
   }
 

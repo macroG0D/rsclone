@@ -179,7 +179,7 @@ export default class Level1 extends Phaser.Scene {
     this.cursors.shift.on('down', () => {
       this.score += 1;
       // важна вот эта фраза для передачи апдейта скора
-      eventsCenter.emit('update-score', this.score);
+      EventsCenter.emit('update-score', this.score);
     });
 
     // this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
