@@ -8,14 +8,11 @@ import ibbBg from '../../assets/images/ibb_bg.png';
 import obbBg from '../../assets/images/obb_bg.png';
 import ibbKeys from '../../assets/images/ibbKeys.svg';
 import obbKeys from '../../assets/images/obbKeys.svg';
-<<<<<<< HEAD
 import bubble from '../../assets/images/bubble.png';
-=======
 import hedgehogHead from '../../assets/sprites/enemies/hedgehogs/hedgehog_head.svg';
 import hedgehogJumper from '../../assets/sprites/enemies/hedgehogs/hedgehog_jumper.svg';
 import hedgehogHalfButt from '../../assets/sprites/enemies/hedgehogs/hedgehog_halfButt.svg';
 import hedgehogFullButt from '../../assets/sprites/enemies/hedgehogs/hedgehog_fullButt.svg';
->>>>>>> origin/develop
 import mainMenuMusic from '../../assets/music/main_menu.mp3';
 import level1Music from '../../assets/music/level1.mp3';
 import level2Music from '../../assets/music/level2.mp3';

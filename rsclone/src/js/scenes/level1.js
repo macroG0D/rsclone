@@ -16,10 +16,9 @@ const player2Controls = ['A', 'D', 'W', 'S'];
 
 const levelWidth = 5369;
 const levelHeight = 890;
-<<<<<<< HEAD
+
 const obbColors = [0xD15C81, 0x97425D, 0x6D3044];
 const ibbColors = [0x59D75C, 0x3F9A42, 0x2F7231];
-=======
 
 const parallaxImages = {
   sky: 0,
@@ -30,7 +29,6 @@ const parallaxImages = {
   rocks_1: 0.3,
   rocks_2: 0.6,
 };
->>>>>>> origin/develop
 export default class Level1 extends Phaser.Scene {
   constructor() {
     super('Level1');
@@ -46,17 +44,12 @@ export default class Level1 extends Phaser.Scene {
     // this.addBackgrounds();
     this.addParallax();
     this.addWalls();
-<<<<<<< HEAD
-    this.ibb = new Player(this, 'ibb', 3350, 400, 'ibb-sprite', player1Controls, ibbColors); // 200 200
-    this.obb = new Player(this, 'obb', 3300, 400, 'obb-sprite', player2Controls, obbColors); // 300 300
-=======
-    this.ibb = new Player(this, 'ibb', 3900, 350, 'ibb-sprite', player1Controls); // 200 200
-    this.obb = new Player(this, 'obb', 3900, 400, 'obb-sprite', player2Controls); // 300 300
+    this.ibb = new Player(this, 'ibb', 3900, 400, 'ibb-sprite', player1Controls, ibbColors); // 200 200
+    this.obb = new Player(this, 'obb', 3850, 400, 'obb-sprite', player2Controls, obbColors); // 300 300
     this.hedgehog = new StandartHedgehog(this, 3400, 558, 'hedgehog-head', 'hedgehog-halfbutt', 58);
     this.hedgehog.moveHorizontally(300, 'left', 2500);
     this.hedgehog2 = new JumpingHedgehog(this, 2800, 595, 'hedgehog-jumper', 'hedgehog-fullbutt', 80);
     this.hedgehog2.jump(180, 800);
->>>>>>> origin/develop
     this.cursors = this.input.keyboard.createCursorKeys();
     playMusic(this, 'level1_music');
     this.scene.run('Score');

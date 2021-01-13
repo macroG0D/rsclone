@@ -193,7 +193,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
   }
 
   portalDive(portal) {
-    portal.emitParticles(this.x, this.width, this.body.velocity.y, this.flipY);
+    portal.emitParticles(this.x, this.width, this.body.velocity.y, this.isRotated);
     setTimeout(() => {
       this.switchGravity();
       playSound(this.scene, 'warp_cross_01');

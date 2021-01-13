@@ -43,6 +43,7 @@ export default class Portal extends Phaser.GameObjects.Rectangle {
   }
 
   emitParticles(x, characterWidth, velocity, flipY) {
+    console.log(x, characterWidth, velocity, flipY);
     const additionalEmitterWidth = 0;
     const angleValue = 90;
     const lifespanTime = 1000;
