@@ -213,9 +213,10 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       /* because we are triggering switch gravity in interval(read comment in collision event
       description), this event can be triggered multiple times in a row. To avoid it we added
       flag that disables multiple gravitySwitch calls for 100ms */
-      setTimeout(() => {
-        this.disableGravitySwitch = false;
-      }, 30);
+      this.scene.time.addEvent({
+        delay: 30,
+        callback: () => { this.disableGravitySwitch = false; },
+      });
     }
   }
 
