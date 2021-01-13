@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import Enemy from '../Enemy';
+import Enemy from '../enemy';
 
 export default class StandartHedgehog extends Enemy {
   constructor(scene, x, y, spriteA, spriteB, offsetBetweenHeadAndButt) {

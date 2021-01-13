@@ -1,8 +1,8 @@
 import Phaser from 'phaser';
 import Player from '../sprites/player';
 import Portal from '../sprites/portal';
-import StandartHedgehog from '../sprites/enemies/StandartHedgehog';
-import JumpingHedgehog from '../sprites/enemies/JumpingHedgehog';
+import StandartHedgehog from '../sprites/enemies/standartHedgehog';
+import JumpingHedgehog from '../sprites/enemies/jumpingHedgehog';
 import { gradientSquares, gradientColors, walls } from '../levels/level1/backgroundStructure';
 
 import {

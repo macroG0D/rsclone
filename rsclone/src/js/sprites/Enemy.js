@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import Death from './Death';
+import Death from './death';
 
 export default class Enemy extends Phaser.Physics.Matter.Sprite {
   constructor(scene, x, y, spriteA) {
