@@ -41,12 +41,12 @@ export default class Level1 extends Phaser.Scene {
     // this.addBackgrounds();
     this.addParallax();
     this.addWalls();
-    this.ibb = new Player(this, 'ibb', 3900, 350, 'ibb-sprite', player1Controls); // 200 200
-    this.obb = new Player(this, 'obb', 3900, 400, 'obb-sprite', player2Controls); // 300 300
-    this.hedgehog = new StandartHedgehog(this, 3400, 558, 'hedgehog-head', 'hedgehog-halfbutt', 58);
+    this.ibb = new Player(this, 'ibb', 2500, 350, 'ibb-sprite', player1Controls); // 200 200
+    this.obb = new Player(this, 'obb', 3000, 400, 'obb-sprite', player2Controls); // 300 300
+    this.hedgehog = new StandartHedgehog(this, 3400, 558, 'hedgehog-head', 'hedgehog-halfbutt');
     this.hedgehog.moveHorizontally(300, 'left', 2500);
-    this.hedgehog2 = new JumpingHedgehog(this, 2800, 595, 'hedgehog-jumper', 'hedgehog-fullbutt', 80);
-    this.hedgehog2.jump(180, 800);
+    this.hedgehog2 = new JumpingHedgehog(this, 2800, 592, 'hedgehog-jumper', 'hedgehog-fullbutt');
+    this.hedgehog2.jump(180, 600);
     this.cursors = this.input.keyboard.createCursorKeys();
     playMusic(this, 'level1_music');
     this.scene.run('Score');
