@@ -9,7 +9,7 @@ import { gradientSquares, gradientColors, walls } from '../levels/level1/backgro
 
 import { BORDER_THICKNESS } from '../constants';
 import { playMusic } from '../utils/music';
-import eventsCenter from '../utils/EventsCenter';
+import EventsCenter from '../utils/eventsCenter';
 
 const player1Controls = ['LEFT', 'RIGHT', 'UP', 'DOWN'];
 const player2Controls = ['A', 'D', 'W', 'S'];
@@ -179,7 +179,7 @@ export default class Level1 extends Phaser.Scene {
     this.cursors.shift.on('down', () => {
       this.score += 1;
       // важна вот эта фраза для передачи апдейта скора
-      eventsCenter.emit('update-score', this.score);
+      EventsCenter.emit('update-score', this.score);
     });
 
     // this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
