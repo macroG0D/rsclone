@@ -6,8 +6,19 @@ export default class JumpingHedgehog extends Enemy {
     super(scene, x, y, spriteA);
     this.name = 'JumpingHedgehog';
     this.offsetBetweenHeadAndButt = offsetBetweenHeadAndButt;
+
     this.butt = scene.add.sprite(x, y + offsetBetweenHeadAndButt, spriteB);
-    this.buttSensor = scene.matter.add.gameObject(this.butt, { shape: { type: 'circle', radius: 40 } }).setFriction(0).setFrictionAir(0).setBounce(0);
+    this.buttSensor = scene.matter.add.gameObject(
+      this.butt,
+      {
+        shape: { type: 'circle', radius: 40 },
+        ignoreGravity: true,
+      },
+    )
+      .setFriction(0)
+      .setFrictionAir(0)
+      .setBounce(0);
+
     this.setSensors(x, y);
     this.scene.events.on('update', this.update, this);
   }
@@ -19,16 +30,10 @@ export default class JumpingHedgehog extends Enemy {
       top: this.Bodies.circle(0, 40, 40, {
         isSensor: true,
       }),
-      /*
-      bottom: this.Bodies.circle(0, this.height / 2, 40, {
-        isSensor: true,
-      }),
-      */
     };
     const compoundBody = this.Body.create({
       parts: [
         this.sensors.top,
-        // this.sensors.bottom,
       ],
       ignoreGravity: true,
     });
@@ -67,7 +72,6 @@ export default class JumpingHedgehog extends Enemy {
         const buttY = this.startY - target.value;
         this.y = y;
         this.butt.y = buttY + this.offsetBetweenHeadAndButt;
-        // this.sensors.bottom.position.y = this.butt.y;
         if (this.y === this.startY) {
           this.setFlipY(false);
         }
