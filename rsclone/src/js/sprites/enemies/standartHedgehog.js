@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import Enemy from '../enemy';
 
 export default class StandartHedgehog extends Enemy {
-  constructor(scene, x, y, spriteA, spriteB, offsetBetweenHeadAndButt) {
+  constructor(scene, x, y, spriteA, spriteB, offsetBetweenHeadAndButt = 58) {
     super(scene, x, y, spriteA);
     this.name = 'StandartHedgehog';
     this.offsetBetweenHeadAndButt = offsetBetweenHeadAndButt;
