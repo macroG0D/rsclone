@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import Death from './Death';
+import eventsCenter from '../utils/EventsCenter';
 
 export default class Enemy extends Phaser.Physics.Matter.Sprite {
   constructor(scene, x, y, spriteA) {
@@ -15,14 +16,20 @@ export default class Enemy extends Phaser.Physics.Matter.Sprite {
       player.isAlive = false;
       Death.deathAnimation(this.scene, player);
       this.isAlive = true;
+      eventsCenter.emit('update-score', 50);
     }
+    // eventsCenter.emit('update-score', 50);
   }
 
   gotKilled(pair) {
     if (pair.gameObjectB.type !== 'Rectangle' && pair.gameObjectB.isAlive) {
       this.isAlive = false;
       Death.deathAnimation(this.scene, this);
+      // 50 просто для примера
+      eventsCenter.emit('update-score', 50);
     }
+          // 50 просто для примера
+      // eventsCenter.emit('update-score', 50);
   }
 
   moveHorizontally(length, direction, speedMS) {
