@@ -22,19 +22,21 @@ function createPlayerAnimations(scene, key, sprite) {
 export default class Player extends Phaser.Physics.Matter.Sprite {
   constructor(scene, key, x, y, sprite, controls, particlesColors) {
     super(scene.matter.world, x, y, sprite);
+    this.isAlive = true;
     this.scene = scene;
     this.portals = this.scene.portals;
     this.key = key;
     this.isGrounded = false;
     this.isCarrying = false;
     this.isHeadStanding = false;
+    this.isRotated = false;
     // Jumping is going to have a cooldown
     this.canJump = true;
     this.jumpCooldownTimer = null;
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
     const { width: w, height: h } = this;
     const mainBody = Bodies.rectangle(0, 0, w * 0.75, h, {
-      chamfer: { radius: 1 },
+      chamfer: { radius: 8 },
     });
     this.sensors = {
       center: Bodies.rectangle(0, 0, 10, 10, { isSensor: true }),
@@ -43,7 +45,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       left: Bodies.rectangle(-w * 0.45, 0, 5, h * 0.4, { isSensor: true }),
       right: Bodies.rectangle(w * 0.45, 0, 5, h * 0.4, { isSensor: true }),
     };
-
     const compoundBody = Body.create({
       parts: [
         mainBody,
@@ -57,6 +58,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       friction: DEFAULT_FRICTION,
       mass: DEFAULT_MASS,
     });
+
     this
       .setExistingBody(compoundBody)
       .setFixedRotation() // disable spin around its mass center point
@@ -107,56 +109,41 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     this.portals.forEach((portal) => {
       this.portalsListeners(scene, portal);
     });
+    this.body.restitution = 0.3;
     this.emitter = new Emitter(scene, this, particlesColors, 'circle', 2000);
     this.setInteractive();
-    this.on('pointerdown', function () {
+    this.on('pointerdown', () => {
       this.emitter.emitParticles(50);
     });
   }
 
-  fixedPositionOnHead() {
-    const secondCharacterKey = this.getSecondCharacterKey();
-    if (this.isHeadStanding) this.x = this.scene[secondCharacterKey].x;
+  getAnotherPlayer() {
+    const anotherPlayerKey = this.key === 'ibb' ? 'obb' : 'ibb';
+    return this.scene[anotherPlayerKey];
   }
 
-  detachPositionOnHead() {
-    if (this.isHeadStanding) {
-      const bottomChar = this.getSecondCharacterKey();
-      this.scene[bottomChar].canJump = false;
-      this.isHeadStanding = false;
-      this.jumpCooldownTimer = this.scene.time.addEvent({
-        delay: 150,
-        // eslint-disable-next-line no-return-assign
-        callback: () => (this.scene[bottomChar].canJump = true),
-      });
-    }
+  isOnHead() {
+    this.isHeadStanding = true;
+    this.getAnotherPlayer().isCarrying = true;
   }
 
-  getSecondCharacterKey() {
-    return this.key === 'ibb' ? 'obb' : 'ibb';
+  isNotOnHead() {
+    this.isHeadStanding = false;
+    this.getAnotherPlayer().isCarrying = false;
   }
 
   // check if one player is standing on the second's head and update their statuses
   headStandingCheck() {
-    const secondCharacterKey = this.getSecondCharacterKey();
-    function isOnHead() {
-      this.isHeadStanding = true;
-      this.scene[secondCharacterKey].isCarrying = true;
-    }
-    function isNotOnHead() {
-      this.isHeadStanding = false;
-      this.scene[secondCharacterKey].isCarrying = false;
-    }
     this.scene.matterCollision.addOnCollideStart({
       objectA: this.sensors.bottom,
-      objectB: this.scene[secondCharacterKey].sensors.top,
-      callback: isOnHead,
+      objectB: this.getAnotherPlayer().sensors.top,
+      callback: this.isOnHead,
       context: this,
     });
     this.scene.matterCollision.addOnCollideEnd({
       objectA: this.sensors.bottom,
-      objectB: this.scene[secondCharacterKey].sensors.top,
-      callback: isNotOnHead,
+      objectB: this.getAnotherPlayer().sensors.top,
+      callback: this.isNotOnHead,
       context: this,
     });
   }
@@ -165,12 +152,22 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     if (bodyB.isSensor) return; // We only care about collisions with physical objects
     if (bodyA === this.sensors.left) {
       this.isTouching.left = true;
-      // optional solution for wall friction
-      if (pair.separation > 0.5) this.x += pair.separation - 0.5;
+      if (pair.separation > 3) {
+        if (!this.isRotated) {
+          this.x += 3;
+        } else {
+          this.x -= 3;
+        }
+      }
     } else if (bodyA === this.sensors.right) {
       this.isTouching.right = true;
-      // optional solution for wall friction
-      if (pair.separation > 0.5) this.x -= pair.separation - 0.5;
+      if (pair.separation > 3) {
+        if (!this.isRotated) {
+          this.x -= 3;
+        } else {
+          this.x += 3;
+        }
+      }
     } else if (bodyA === this.sensors.top) {
       this.isTouching.top = true;
     } else if (bodyA === this.sensors.bottom) {
@@ -184,22 +181,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     this.isTouching.top = false;
     this.isTouching.bottom = false;
     this.isTouching.center = false;
-  }
-
-  noWallsFriction() {
-    if (!this.isTouching.bottom) {
-      this.body.friction = 0;
-    } else {
-      this.body.friction = 0.02;
-    }
-  }
-
-  update() {
-    this.isGrounded = this.isTouching.bottom;
-    this.headStandingCheck();
-    this.fixedPositionOnHead();
-    this.noWallsFriction();
-    this.movePlayer(this.key);
   }
 
   portalsListeners(scene, portal) {
@@ -217,19 +198,22 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       this.switchGravity();
       playSound(this.scene, 'warp_cross_01');
     }, 50);
+  }
 
-    // commented the code below becouse it may be still needed
-    // const pixelsInterval = 5;
-    // const playerCenterY = Math.round(this.y + this.height / 2);
-    // const portalCenterY = Math.round(portal.y + portal.height / 2);
-    /* because collision event triggers with time
-     interval we cant strictly compare two values
-    so we are comparing player center position in small range around portal center */
-    // const playerLowerRangePos = playerCenterY < portalCenterY + pixelsInterval;
-    // const playerUpperRangePos = playerCenterY > portalCenterY - pixelsInterval;
-    // if (playerLowerRangePos && playerUpperRangePos) {
-    //   this.switchGravity();
-    // }
+  rotatePlayer() {
+    if (this.isRotated) {
+      this.angle = 0;
+      this.isRotated = false;
+      this.setFlipX(this.isRotated);
+    } else {
+      this.angle = 180;
+      this.isRotated = true;
+      if (this.lastMoveDirection === 'left') {
+        this.setFlipX(false);
+      } else {
+        this.setFlipX(this.isRotated);
+      }
+    }
   }
 
   switchGravity() {
@@ -239,44 +223,60 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       /* adding additional velocity to players body so that player velocity wont fade out if he will
       be constantly jumping through portal
       */
-      if (currVelocity < minVelocity) this.setVelocityY(this.flipY ? -minVelocity : minVelocity);
-      this.disableGravitySwitch = true; // toggle flag
+      if (currVelocity < minVelocity) {
+        this.setVelocityY(this.isRotated ? -minVelocity : minVelocity);
+      }
       this.body.gravityScale.y *= -1; // flip gravity
-      this.setFlipY(!this.flipY); // flip character sprite
+      this.rotatePlayer(); // rotate character
+      this.disableGravitySwitch = true; // toggle flag
       /* because we are triggering switch gravity in interval(read comment in collision event
       description), this event can be triggered multiple times in a row. To avoid it we added
       flag that disables multiple gravitySwitch calls for 100ms */
       setTimeout(() => {
         this.disableGravitySwitch = false;
-      }, 50);
+      }, 30);
     }
   }
 
   movePlayer() {
+    if (!this.isAlive) {
+      return;
+    }
     const currentVelocity = this.body.velocity;
     const maxVelocity = 2;
     /* left/right move */
     if (this.controls.left.isDown) {
       this.moveCharacter('left');
-      this.detachPositionOnHead(this.key);
     }
     if (this.controls.right.isDown) {
-      this.detachPositionOnHead(this.key);
       this.moveCharacter('right');
     }
+
     if (!this.controls.left.isDown && !this.controls.right.isDown) {
       this.anims.stop();
       if (this.anims.currentAnim) this.anims.setCurrentFrame(this.anims.currentAnim.frames[0]);
     }
+
     /* limit velocity after applying force, so that the characters wont speed up infinitely */
     if (currentVelocity.x > maxVelocity) this.setVelocityX(maxVelocity);
     if (currentVelocity.x < -maxVelocity) this.setVelocityX(-maxVelocity);
+
     /* jump */
     if ((this.controls.up.isDown || this.controls.down.isDown) && this.isGrounded && this.canJump) {
-      this.setVelocityY((this.isCarrying) ? -this.jumpVelocity * 2 : -this.jumpVelocity);
+      if (!this.isRotated) {
+        this.setVelocityY(-this.jumpVelocity);
+      } else {
+        this.setVelocityY(this.jumpVelocity);
+      }
+      if (this.isCarrying) {
+        Phaser.Physics.Matter.Matter.Body.setVelocity(this.getAnotherPlayer().body, {
+          x: this.body.velocity.x,
+          y: this.body.velocity.y,
+        });
+      }
       this.canJump = false;
       this.scene.time.addEvent({
-        delay: 800,
+        delay: 700,
         // eslint-disable-next-line no-return-assign
         callback: () => (this.canJump = true),
       });
@@ -287,17 +287,32 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     const moveForce = 0.015;
     const force = direction === 'right' ? moveForce : -moveForce;
     const shouldFlip = direction !== 'right';
-    this.setFlipX(shouldFlip); // flipping character sprite
+    this.lastMoveDirection = direction;
+    if (!this.isRotated) {
+      this.setFlipX(shouldFlip);
+    } else {
+      this.setFlipX(!shouldFlip); // flipping character sprite
+    }
     if (this.canMove(direction)) this.applyForce({ x: force, y: 0 });
+    if (this.isCarrying) {
+      this.getAnotherPlayer().applyForce({ x: force, y: 0 });
+    }
     this.anims.play(`move-${this.key}`, true); // playing move animation
   }
 
   canMove(direction) {
-    const thisPlayer = (this.key === 'ibb') ? this.scene.ibb : this.scene.obb;
-    const anotherPlayer = (this.key === 'ibb') ? this.scene.obb : this.scene.ibb;
-    const charactersDistance = Math.abs(thisPlayer.x - anotherPlayer.x);
-    if (direction === 'left' && thisPlayer.x <= anotherPlayer.x) return (charactersDistance < CHARACTERS_DISTANCE_MAX);
-    if (direction === 'right' && thisPlayer.x >= anotherPlayer.x) return (charactersDistance < CHARACTERS_DISTANCE_MAX);
+    const anotherPlayer = this.getAnotherPlayer();
+    const charactersDistance = Math.abs(this.x - anotherPlayer.x);
+    if (direction === 'left' && this.x <= anotherPlayer.x) return (charactersDistance < CHARACTERS_DISTANCE_MAX);
+    if (direction === 'right' && this.x >= anotherPlayer.x) return (charactersDistance < CHARACTERS_DISTANCE_MAX);
     return true;
+  }
+
+  update() {
+    if (this.scene) {
+      this.isGrounded = this.isTouching.bottom;
+      this.headStandingCheck();
+      this.movePlayer(this.key);
+    }
   }
 }

@@ -18,7 +18,7 @@ const menuItemOverStyle = {
 
 const MENU_ITEM_HEIGHT = 60;
 
-export function createMenu(scene, menuItems, back = false, backCallback = () => scene.scene.start('MainMenu')) {
+export function createMenu(scene, menuItems, back = false, backCallback = () => scene.scene.switch('MainMenu')) {
   const menuX = scene.cameras.main.centerX;
   const menuY = scene.cameras.main.centerY - MENU_ITEM_HEIGHT;
   scene.input.keyboard.createCursorKeys();
