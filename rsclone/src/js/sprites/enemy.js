@@ -14,7 +14,6 @@ export default class Enemy extends Phaser.Physics.Matter.Sprite {
     if (pair.gameObjectB && (pair.gameObjectB.key === 'ibb' || pair.gameObjectB.key === 'obb')) {
       const player = pair.gameObjectB;
       player.isAlive = false;
-      player.kill();
       Death.deathAnimation(this.scene, player, 'player');
       this.isAlive = true;
     }

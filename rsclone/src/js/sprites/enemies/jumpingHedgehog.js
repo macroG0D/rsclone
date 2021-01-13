@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import Enemy from '../enemy';
 
 export default class JumpingHedgehog extends Enemy {
-  constructor(scene, x, y, spriteA, spriteB, offsetBetweenHeadAndButt) {
+  constructor(scene, x, y, spriteA, spriteB, offsetBetweenHeadAndButt = 100) {
     super(scene, x, y, spriteA);
     this.name = 'JumpingHedgehog';
     this.offsetBetweenHeadAndButt = offsetBetweenHeadAndButt;
@@ -13,6 +13,7 @@ export default class JumpingHedgehog extends Enemy {
       {
         shape: { type: 'circle', radius: 40 },
         ignoreGravity: true,
+        isSensor: true,
       },
     )
       .setFriction(0)

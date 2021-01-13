@@ -1,6 +1,8 @@
 import Phaser from 'phaser';
 
-import { createBg } from '../../utils/createBg';
+import {
+  createBg
+} from '../../utils/createBg';
 
 const menuItemStyle = {
   font: '30px Montserrat',
@@ -44,7 +46,6 @@ export default class MainMenuSettings extends Phaser.Scene {
   create() {
     createBg(this);
     window.location.hash = this.scene.key;
-    this.isFullscreenOn = false;
     this.isMusicOn = true;
     this.isSoundOn = true;
     this.isEnglishOn = true;
@@ -67,17 +68,21 @@ export default class MainMenuSettings extends Phaser.Scene {
     this.input.keyboard.createCursorKeys();
     const menuX = this.cameras.main.centerX;
     const menuY = this.cameras.main.centerY - MENU_ITEM_HEIGHT;
-    const fullscreenItem = this.add.text(menuX, menuY + (-1 * MENU_ITEM_HEIGHT), 'fullscreen', isSelected2(this.isFullscreenOn))
+    const fullscreenItem = this.add.text(menuX, menuY + (-1 * MENU_ITEM_HEIGHT), 'fullscreen', isSelected2(this.game.scale.isFullscreen))
       .setOrigin(0.5)
       .setInteractive({
         useHandCursor: true,
       })
       .on('pointerover', () => fullscreenItem.setStyle(menuItemOverStyle))
       .on('pointerout', () => {
-        fullscreenItem.setStyle(isSelected2(this.isFullscreenOn));
+        fullscreenItem.setStyle(isSelected2(this.game.scale.isFullscreen));
       })
       .on('pointerdown', () => {
-        this.isFullscreenOn = !this.isFullscreenOn;
+        if (!this.game.scale.isFullscreen) {
+          this.game.scale.startFullscreen();
+        } else {
+          this.game.scale.stopFullscreen();
+        }
       });
 
     const musicItem = this.add.text(menuX, menuY + (0 * MENU_ITEM_HEIGHT), 'music', isSelected2(this.isMusicOn))
@@ -152,5 +157,9 @@ export default class MainMenuSettings extends Phaser.Scene {
       .on('pointerover', () => applyItem.setStyle(menuItemOverStyle))
       .on('pointerout', () => applyItem.setStyle(menuItemBackStyle))
       .on('pointerdown', () => this.scene.switch('MainMenu'));
+
+    this.game.scale.on('leavefullscreen', () => {
+      fullscreenItem.setStyle(isSelected2(this.game.scale.isFullscreen))
+    })
   }
 }
