@@ -16,9 +16,7 @@ export default class Enemy extends Phaser.Physics.Matter.Sprite {
       player.isAlive = false;
       Death.deathAnimation(this.scene, player);
       this.isAlive = true;
-      eventsCenter.emit('update-score', 50);
     }
-    // eventsCenter.emit('update-score', 50);
   }
 
   gotKilled(pair) {
@@ -28,8 +26,6 @@ export default class Enemy extends Phaser.Physics.Matter.Sprite {
       // 50 просто для примера
       eventsCenter.emit('update-score', 50);
     }
-          // 50 просто для примера
-      // eventsCenter.emit('update-score', 50);
   }
 
   moveHorizontally(length, direction, speedMS) {
