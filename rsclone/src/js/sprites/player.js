@@ -28,6 +28,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     this.isGrounded = false;
     this.isCarrying = false;
     this.isHeadStanding = false;
+    this.isRotated = false;
     // Jumping is going to have a cooldown
     this.canJump = true;
     this.jumpCooldownTimer = null;
@@ -62,7 +63,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       .setExistingBody(compoundBody)
       .setFixedRotation() // disable spin around its mass center point
       .setPosition(x, y);
-
     this.sprite = sprite;
     createPlayerAnimations(this.scene, this.key, this.sprite);
 
@@ -148,10 +148,22 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     if (bodyB.isSensor) return; // We only care about collisions with physical objects
     if (bodyA === this.sensors.left) {
       this.isTouching.left = true;
-      if (pair.separation > 4) this.x += 4;
+      if (pair.separation > 3) {
+        if (!this.isRotated) {
+          this.x += 3;
+        } else {
+          this.x -= 3;
+        }
+      }
     } else if (bodyA === this.sensors.right) {
       this.isTouching.right = true;
-      if (pair.separation > 4) this.x -= 4;
+      if (pair.separation > 3) {
+        if (!this.isRotated) {
+          this.x -= 3;
+        } else {
+          this.x += 3;
+        }
+      }
     } else if (bodyA === this.sensors.top) {
       this.isTouching.top = true;
     } else if (bodyA === this.sensors.bottom) {
@@ -168,7 +180,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
   }
 
   portalsListeners(scene, portal) {
-    scene.matterCollision.addOnCollideActive({
+    scene.matterCollision.addOnCollideStart({
       objectA: [this.sensors.center],
       objectB: portal,
       callback: () => (this.portalDive(portal)),
@@ -183,6 +195,22 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     }, 50);
   }
 
+  rotatePlayer() {
+    if (this.isRotated) {
+      this.angle = 0;
+      this.isRotated = false;
+      this.setFlipX(this.isRotated);
+    } else {
+      this.angle = 180;
+      this.isRotated = true;
+      if (this.lastMoveDirection === 'left') {
+        this.setFlipX(false);
+      } else {
+        this.setFlipX(this.isRotated);
+      }
+    }
+  }
+
   switchGravity() {
     if (!this.disableGravitySwitch) {
       const minVelocity = this.jumpVelocity * 1;
@@ -190,16 +218,18 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       /* adding additional velocity to players body so that player velocity wont fade out if he will
       be constantly jumping through portal
       */
-      if (currVelocity < minVelocity) this.setVelocityY(this.flipY ? -minVelocity : minVelocity);
-      this.disableGravitySwitch = true; // toggle flag
+      if (currVelocity < minVelocity) {
+        this.setVelocityY(this.isRotated ? -minVelocity : minVelocity);
+      }
       this.body.gravityScale.y *= -1; // flip gravity
-      this.setFlipY(!this.flipY); // flip character sprite
+      this.rotatePlayer(); // rotate character
+      this.disableGravitySwitch = true; // toggle flag
       /* because we are triggering switch gravity in interval(read comment in collision event
       description), this event can be triggered multiple times in a row. To avoid it we added
       flag that disables multiple gravitySwitch calls for 100ms */
       setTimeout(() => {
         this.disableGravitySwitch = false;
-      }, 50);
+      }, 30);
     }
   }
 
@@ -228,7 +258,11 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
     /* jump */
     if ((this.controls.up.isDown || this.controls.down.isDown) && this.isGrounded && this.canJump) {
-      this.setVelocityY(-this.jumpVelocity);
+      if (!this.isRotated) {
+        this.setVelocityY(-this.jumpVelocity);
+      } else {
+        this.setVelocityY(this.jumpVelocity);
+      }
       if (this.isCarrying) {
         Phaser.Physics.Matter.Matter.Body.setVelocity(this.getAnotherPlayer().body, {
           x: this.body.velocity.x,
@@ -248,7 +282,12 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     const moveForce = 0.015;
     const force = direction === 'right' ? moveForce : -moveForce;
     const shouldFlip = direction !== 'right';
-    this.setFlipX(shouldFlip); // flipping character sprite
+    this.lastMoveDirection = direction;
+    if (!this.isRotated) {
+      this.setFlipX(shouldFlip);
+    } else {
+      this.setFlipX(!shouldFlip); // flipping character sprite
+    }
     if (this.canMove(direction)) this.applyForce({ x: force, y: 0 });
     if (this.isCarrying) {
       this.getAnotherPlayer().applyForce({ x: force, y: 0 });

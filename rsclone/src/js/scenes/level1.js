@@ -2,9 +2,9 @@ import Phaser from 'phaser';
 
 import Player from '../sprites/player';
 import Portal from '../sprites/portal';
-import StandartHedgehog from '../sprites/enemies/StandartHedgehog';
-import JumpingHedgehog from '../sprites/enemies/JumpingHedgehog';
 
+import StandartHedgehog from '../sprites/enemies/standartHedgehog';
+import JumpingHedgehog from '../sprites/enemies/jumpingHedgehog';
 import { gradientSquares, gradientColors, walls } from '../levels/level1/backgroundStructure';
 
 import { BORDER_THICKNESS } from '../constants';
@@ -41,8 +41,8 @@ export default class Level1 extends Phaser.Scene {
     // this.addBackgrounds();
     this.addParallax();
     this.addWalls();
-    this.ibb = new Player(this, 'ibb', 3000, 400, 'ibb-sprite', player1Controls); // 200 200
-    this.obb = new Player(this, 'obb', 3020, 400, 'obb-sprite', player2Controls); // 300 300
+    this.ibb = new Player(this, 'ibb', 3900, 350, 'ibb-sprite', player1Controls); // 200 200
+    this.obb = new Player(this, 'obb', 3900, 400, 'obb-sprite', player2Controls); // 300 300
     this.hedgehog = new StandartHedgehog(this, 3400, 558, 'hedgehog-head', 'hedgehog-halfbutt', 58);
     this.hedgehog.moveHorizontally(300, 'left', 2500);
     this.hedgehog2 = new JumpingHedgehog(this, 2800, 595, 'hedgehog-jumper', 'hedgehog-fullbutt', 80);
