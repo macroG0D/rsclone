@@ -29,9 +29,9 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     this.isCarrying = false;
     this.isHeadStanding = false;
     this.isRotated = false;
-    // Jumping is going to have a cooldown
     this.canJump = true;
     this.jumpCooldownTimer = null;
+    this.direction = 'right';
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
     const { width: w, height: h } = this;
     const mainBody = Bodies.rectangle(0, 0, w * 0.75, h, {
@@ -45,6 +45,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       left: Bodies.rectangle(-w * 0.45, 0, 5, h * 0.4, { isSensor: true }),
       right: Bodies.rectangle(w * 0.45, 0, 5, h * 0.4, { isSensor: true }),
     };
+
     const compoundBody = Body.create({
       parts: [
         mainBody,
@@ -66,8 +67,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     this.sprite = sprite;
     createPlayerAnimations(this.scene, this.key, this.sprite);
 
-    this.controls = [];
-    [this.controls.left, this.controls.right, this.controls.up] = controls;
     this.jumpVelocity = 14; // jump velocity moved to player class
     this.disableGravitySwitch = false; // additional flag
     this.scene.add.existing(this);
@@ -148,27 +147,14 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     if (bodyB.isSensor) return; // We only care about collisions with physical objects
     if (bodyA === this.sensors.left) {
       this.isTouching.left = true;
-      if (pair.separation > 3) {
-        if (!this.isRotated) {
-          this.x += 3;
-        } else {
-          this.x -= 3;
-        }
-      }
-    } else if (bodyA === this.sensors.right) {
-      this.isTouching.right = true;
-      if (pair.separation > 3) {
-        if (!this.isRotated) {
-          this.x -= 3;
-        } else {
-          this.x += 3;
-        }
-      }
-    } else if (bodyA === this.sensors.top) {
-      this.isTouching.top = true;
-    } else if (bodyA === this.sensors.bottom) {
-      this.isTouching.bottom = true;
+      if (pair.separation > 3) this.x += (this.isRotated) ? -3 : 3;
     }
+    if (bodyA === this.sensors.right) {
+      this.isTouching.right = true;
+      if (pair.separation > 3) this.x += (this.isRotated) ? 3 : -3;
+    }
+    if (bodyA === this.sensors.top) this.isTouching.top = true;
+    if (bodyA === this.sensors.bottom) this.isTouching.bottom = true;
   }
 
   resetTouching() {
@@ -234,18 +220,12 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
   }
 
   movePlayer() {
-    if (!this.isAlive) {
-      return;
-    }
+    if (!this.isAlive) return;
     const currentVelocity = this.body.velocity;
     const maxVelocity = 2;
     /* left/right move */
-    if (this.controls.left.isDown) {
-      this.moveCharacter('left');
-    }
-    if (this.controls.right.isDown) {
-      this.moveCharacter('right');
-    }
+    if (this.controls.left.isDown) this.moveCharacter('left');
+    if (this.controls.right.isDown) this.moveCharacter('right');
 
     if (!this.controls.left.isDown && !this.controls.right.isDown) {
       this.anims.stop();
@@ -258,11 +238,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
     /* jump */
     if ((this.controls.up.isDown || this.controls.down.isDown) && this.isGrounded && this.canJump) {
-      if (!this.isRotated) {
-        this.setVelocityY(-this.jumpVelocity);
-      } else {
-        this.setVelocityY(this.jumpVelocity);
-      }
+      this.setVelocityY((this.isRotated) ? this.jumpVelocity : -this.jumpVelocity);
       if (this.isCarrying) {
         Phaser.Physics.Matter.Matter.Body.setVelocity(this.getAnotherPlayer().body, {
           x: this.body.velocity.x,
@@ -272,8 +248,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       this.canJump = false;
       this.scene.time.addEvent({
         delay: 700,
-        // eslint-disable-next-line no-return-assign
-        callback: () => (this.canJump = true),
+        callback: () => { this.canJump = true; },
       });
     }
   }
@@ -283,15 +258,9 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     const force = direction === 'right' ? moveForce : -moveForce;
     const shouldFlip = direction !== 'right';
     this.lastMoveDirection = direction;
-    if (!this.isRotated) {
-      this.setFlipX(shouldFlip);
-    } else {
-      this.setFlipX(!shouldFlip); // flipping character sprite
-    }
+    this.setFlipX((this.isRotated) ? !shouldFlip : shouldFlip);
     if (this.canMove(direction)) this.applyForce({ x: force, y: 0 });
-    if (this.isCarrying) {
-      this.getAnotherPlayer().applyForce({ x: force, y: 0 });
-    }
+    if (this.isCarrying) this.getAnotherPlayer().applyForce({ x: force, y: 0 });
     this.anims.play(`move-${this.key}`, true); // playing move animation
   }
 
