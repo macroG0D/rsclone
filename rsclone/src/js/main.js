@@ -36,7 +36,7 @@ class Main {
           enableSleeping: false,
           gravity: { y: 2 },
           debug: {
-            showBody: true,
+            showBody: false,
             showStaticBody: false,
           },
         },

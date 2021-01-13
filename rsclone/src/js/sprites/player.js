@@ -20,7 +20,7 @@ function createPlayerAnimations(scene, key, sprite) {
   });
 }
 export default class Player extends Phaser.Physics.Matter.Sprite {
-  constructor(scene, key, x, y, sprite, controls) {
+  constructor(scene, key, x, y, sprite, controls, particlesColors) {
     super(scene.matter.world, x, y, sprite);
     this.scene = scene;
     this.portals = this.scene.portals;
@@ -104,14 +104,13 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       callback: this.onSensorCollide,
       context: this,
     });
-
     this.portals.forEach((portal) => {
       this.portalsListeners(scene, portal);
     });
-    this.emitter = new Emitter(scene, this, 'bubble', 2000);
+    this.emitter = new Emitter(scene, this, particlesColors, 'circle', 2000);
     this.setInteractive();
     this.on('pointerdown', function () {
-      this.emitter.emitParticles(100);
+      this.emitter.emitParticles(50);
     });
   }
 

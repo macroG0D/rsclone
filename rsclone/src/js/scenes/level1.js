@@ -11,7 +11,8 @@ const player2Controls = ['A', 'D', 'W', 'S'];
 
 const levelWidth = 5369;
 const levelHeight = 890;
-
+const obbColors = [0xD15C81, 0x97425D, 0x6D3044];
+const ibbColors = [0x59D75C, 0x3F9A42, 0x2F7231];
 export default class Level1 extends Phaser.Scene {
   constructor() {
     super('Level1');
@@ -25,8 +26,8 @@ export default class Level1 extends Phaser.Scene {
     this.cameras.main.roundPixels = true;
     this.addBackgrounds();
     this.addWalls();
-    this.ibb = new Player(this, 'ibb', 3350, 400, 'ibb-sprite', player1Controls); // 200 200
-    this.obb = new Player(this, 'obb', 3300, 400, 'obb-sprite', player2Controls); // 300 300
+    this.ibb = new Player(this, 'ibb', 3350, 400, 'ibb-sprite', player1Controls, ibbColors); // 200 200
+    this.obb = new Player(this, 'obb', 3300, 400, 'obb-sprite', player2Controls, obbColors); // 300 300
     this.cursors = this.input.keyboard.createCursorKeys();
     playMusic(this, 'level1_music');
   }
