@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import Death from './death';
+import eventsCenter from '../utils/EventsCenter';
 
 export default class Enemy extends Phaser.Physics.Matter.Sprite {
   constructor(scene, x, y, spriteA) {
@@ -22,6 +23,8 @@ export default class Enemy extends Phaser.Physics.Matter.Sprite {
     if (pair.gameObjectB && pair.gameObjectB.type !== 'Rectangle' && pair.gameObjectB.isAlive) {
       this.isAlive = false;
       Death.deathAnimation(this.scene, this);
+      // 50 просто для примера
+      eventsCenter.emit('update-score', 50);
     }
   }
 
