@@ -304,7 +304,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
   }
 
   update() {
-    if (this.scene) {
+    if (this.scene && this.isAlive) {
       this.isGrounded = this.isTouching.bottom;
       this.headStandingCheck();
       this.movePlayer(this.key);
