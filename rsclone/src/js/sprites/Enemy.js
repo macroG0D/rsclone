@@ -19,7 +19,7 @@ export default class Enemy extends Phaser.Physics.Matter.Sprite {
   }
 
   gotKilled(pair) {
-    if (pair.gameObjectB.type !== 'Rectangle' && pair.gameObjectB.isAlive) {
+    if (pair.gameObjectB && pair.gameObjectB.type !== 'Rectangle' && pair.gameObjectB.isAlive) {
       this.isAlive = false;
       Death.deathAnimation(this.scene, this);
     }

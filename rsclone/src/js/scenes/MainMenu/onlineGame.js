@@ -10,9 +10,9 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
 
   create() {
     this.menuItems = {
-      'Start Game': () => this.scene.run('Level1'),
+      'Start Game': () => this.scene.start('Level1'),
     };
-    this.menuCallBack = () => this.scene.start('MainMenuPlay');
+    this.menuCallBack = () => this.scene.switch('MainMenuPlay');
     this.createImg();
     createBg(this);
     createMenu(this, this.menuItems, true, this.menuCallBack);

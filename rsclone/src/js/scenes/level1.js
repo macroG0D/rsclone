@@ -1,17 +1,14 @@
 import Phaser from 'phaser';
+
 import Player from '../sprites/player';
 import Portal from '../sprites/portal';
+
 import StandartHedgehog from '../sprites/enemies/standartHedgehog';
 import JumpingHedgehog from '../sprites/enemies/jumpingHedgehog';
 import { gradientSquares, gradientColors, walls } from '../levels/level1/backgroundStructure';
 
-import {
-  BORDER_THICKNESS,
-} from '../constants';
-import {
-  playMusic,
-} from '../utils/music';
-
+import { BORDER_THICKNESS } from '../constants';
+import { playMusic } from '../utils/music';
 import eventsCenter from '../utils/EventsCenter';
 
 const player1Controls = ['LEFT', 'RIGHT', 'UP', 'DOWN'];
@@ -48,8 +45,8 @@ export default class Level1 extends Phaser.Scene {
     this.obb = new Player(this, 'obb', 3900, 400, 'obb-sprite', player2Controls); // 300 300
     this.hedgehog = new StandartHedgehog(this, 3400, 558, 'hedgehog-head', 'hedgehog-halfbutt', 58);
     this.hedgehog.moveHorizontally(300, 'left', 2500);
-    this.hedgehog2 = new JumpingHedgehog(this, 2800, 595, 'hedgehog-jumper', 'hedgehog-fullbutt', 100);
-    this.hedgehog2.jump(200, 800);
+    this.hedgehog2 = new JumpingHedgehog(this, 2800, 595, 'hedgehog-jumper', 'hedgehog-fullbutt', 80);
+    this.hedgehog2.jump(180, 800);
     this.cursors = this.input.keyboard.createCursorKeys();
     playMusic(this, 'level1_music');
     this.scene.run('Score');
@@ -171,8 +168,10 @@ export default class Level1 extends Phaser.Scene {
   }
 
   update() {
-    this.centerCamera();
-    this.scrollParallax();
+    if (this.ibb && this.obb) {
+      this.centerCamera();
+      this.scrollParallax();
+    }
   }
 
   scoreChange() {
@@ -191,8 +190,7 @@ export default class Level1 extends Phaser.Scene {
   gameMenu() {
     this.cursors.space.on('down', () => {
       this.scene.pause('Score');
-      this.scene.pause('Level1');
-      this.scene.run('GameMenu');
+      this.scene.switch('GameMenu');
     });
   }
 }

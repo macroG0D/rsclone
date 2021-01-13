@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+
 import { createMenu } from '../../utils/createMenu';
 import { createBg } from '../../utils/createBg';
 
@@ -10,24 +11,21 @@ export default class GameMenu extends Phaser.Scene {
   create() {
     this.menuItems = {
       Continue: () => {
-        this.scene.resume('Level1');
         this.scene.resume('Score');
-        this.scene.stop('GameMenu');
+        this.scene.switch('Level1');
       },
       'New game': () => {
         this.scene.stop('Level1');
         this.scene.start('MainMenuPlay');
       },
-      // Leaderboard: () => this.scene.start('MainMenuLeaderBoard'),
-      Settings: () => this.scene.start('MainMenuSettings'),
-      'Main menu': () => this.scene.start('MainMenu'),
-      // Developers: () => this.scene.start('MainMenuDevelopers'),
-      // About: () => window.open('https://github.com/macroG0D/rsclone'),
+      Settings: () => this.scene.switch('MainMenuSettings'),
+      'Main menu': () => {
+        this.scene.stop('Level1');
+        this.scene.start('MainMenu');
+      },
     };
     createBg(this);
     createMenu(this, this.menuItems);
-    this.music = this.sound.add('main_menu_music');
-    // this.music.play({ loop: true });
     window.location.hash = this.scene.key;
   }
 }
