@@ -33,7 +33,10 @@ const menuItemOverStyle = {
 };
 
 const menuItemSelectedStyle = {
+  font: '30px Montserrat',
   fill: '#D22D61',
+  align: 'center',
+  fontStyle: 'strong',
 };
 
 const MENU_ITEM_HEIGHT = 60;
@@ -45,61 +48,106 @@ export default class MainMenuSettings extends Phaser.Scene {
 
   create() {
     createBg(this);
-    this.createItems();
     window.location.hash = this.scene.key;
+    this.isFullscreenOn = false;
+    this.isMusicOn = true;
+    this.isSoundOn = true;
+    this.isEnglishOn = true;
+    this.isRusionOn = !this.isEnglishOn;
+    this.createItems();
   }
 
   createItems() {
+    const isSelected = (menuItem, isON) => {
+      (isON) ? menuItem.setStyle(menuItemSelectedStyle) : menuItem.setStyle(menuItemStyle);
+    };
+
+    const isSelected2 = (isON) => {
+      if (isON) {
+        return menuItemSelectedStyle;
+      }
+      return menuItemStyle;
+    };
+
     this.input.keyboard.createCursorKeys();
     const menuX = this.cameras.main.centerX;
     const menuY = this.cameras.main.centerY - MENU_ITEM_HEIGHT;
-    const fullscreenItem = this.add.text(menuX, menuY + (-1 * MENU_ITEM_HEIGHT), 'fullscreen', menuItemStyle)
+    const fullscreenItem = this.add.text(menuX, menuY + (-1 * MENU_ITEM_HEIGHT), 'fullscreen', isSelected2(this.isFullscreenOn))
       .setOrigin(0.5)
       .setInteractive({
         useHandCursor: true,
       })
       .on('pointerover', () => fullscreenItem.setStyle(menuItemOverStyle))
-      .on('pointerout', () => fullscreenItem.setStyle(menuItemStyle))
-      .on('pointerdown', () => console.log('fullscreenItem'));
+      .on('pointerout', () => {
+        fullscreenItem.setStyle(isSelected2(this.isFullscreenOn));
+      })
+      .on('pointerdown', () => {
+        this.isFullscreenOn = !this.isFullscreenOn;
+      });
 
-    const musicItem = this.add.text(menuX, menuY + (0 * MENU_ITEM_HEIGHT), 'music', menuItemStyle)
+    const musicItem = this.add.text(menuX, menuY + (0 * MENU_ITEM_HEIGHT), 'music', isSelected2(this.isMusicOn))
       .setOrigin(0.5)
       .setInteractive({
         useHandCursor: true,
       })
       .on('pointerover', () => musicItem.setStyle(menuItemOverStyle))
-      .on('pointerout', () => musicItem.setStyle(menuItemStyle))
-      .on('pointerdown', () => console.log('musicItem'));
+      .on('pointerout', () => {
+        musicItem.setStyle(isSelected2(this.isMusicOn));
+      })
+      .on('pointerdown', () => {
+        this.isMusicOn = !this.isMusicOn;
+      });
 
-    const soundItem = this.add.text(menuX, menuY + (1 * MENU_ITEM_HEIGHT), 'sound', menuItemStyle)
+    const soundItem = this.add.text(menuX, menuY + (1 * MENU_ITEM_HEIGHT), 'sound', isSelected2(this.isSoundOn))
       .setOrigin(0.5)
       .setInteractive({
         useHandCursor: true,
       })
       .on('pointerover', () => soundItem.setStyle(menuItemOverStyle))
-      .on('pointerout', () => soundItem.setStyle(menuItemStyle))
-      .on('pointerdown', () => console.log('soundItem'));
+      .on('pointerout', () => {
+        soundItem.setStyle(isSelected2(this.isSoundOn));
+      })
+      .on('pointerdown', () => {
+        this.isSoundOn = !this.isSoundOn;
+      });
 
-    const engItem = this.add.text(menuX - 250, menuY + (2 * MENU_ITEM_HEIGHT), 'english', menuItemStyle)
+    const engItem = this.add.text(menuX - 150, menuY + (2 * MENU_ITEM_HEIGHT), 'english', isSelected2(this.isEnglishOn))
       .setOrigin(0.5)
       .setInteractive({
         useHandCursor: true,
       })
       .on('pointerover', () => engItem.setStyle(menuItemOverStyle))
-      .on('pointerout', () => engItem.setStyle(menuItemStyle))
-      .on('pointerdown', () => console.log('engItem'));
+      .on('pointerout', () => {
+        engItem.setStyle(isSelected2(this.isEnglishOn));
+      });
+    // .on('pointerdown', () => {
+    //   this.isEnglishOn = !this.isEnglishOn;
+    //   this.isRussianOn = !this.isRussianOn;
+    //   engItem.setStyle(isSelected2(this.isEnglishOn));
+    //   rusItem.setStyle(isSelected2(this.isRussianOn));
+    // });
 
     const langItem = this.add.text(menuX, menuY + (2 * MENU_ITEM_HEIGHT), 'language', menuItemDisableStyle)
       .setOrigin(0.5);
 
-    const rusItem = this.add.text(menuX + 250, menuY + (2 * MENU_ITEM_HEIGHT), 'russian', menuItemStyle)
+    const rusItem = this.add.text(menuX + 150, menuY + (2 * MENU_ITEM_HEIGHT), 'russian', isSelected2(this.isRussianOn))
       .setOrigin(0.5)
       .setInteractive({
         useHandCursor: true,
       })
       .on('pointerover', () => rusItem.setStyle(menuItemOverStyle))
-      .on('pointerout', () => rusItem.setStyle(menuItemStyle))
-      .on('pointerdown', () => console.log('rusItem'));
+      .on('pointerout', () => {
+        rusItem.setStyle(isSelected2(this.isRussianOn));
+      })
+      .on('pointerdown', () => {
+        this.isEnglishOn = !this.isEnglishOn;
+        this.isRussianOn = !this.isRussianOn;
+      });
+
+    engItem.on('pointerdown', () => {
+      this.isEnglishOn = !this.isEnglishOn;
+      this.isRussianOn = !this.isRussianOn;
+    });
 
     const applyItem = this.add.text(menuX, menuY + 250, 'apply', menuItemBackStyle)
       .setOrigin(0.5)
