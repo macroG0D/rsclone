@@ -2,14 +2,9 @@ import Phaser from 'phaser';
 import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
 import Create from './components/dom-create';
 
-import {
-  SCENE_LIST,
-} from './scenes/_scenesList';
+import { SCENE_LIST } from './scenes/_scenesList';
 
-import {
-  GAME_WIDTH,
-  GAME_HEIGHT,
-} from './constants';
+import { GAME_WIDTH, GAME_HEIGHT } from './constants';
 
 const WebFont = require('webfontloader');
 
@@ -39,9 +34,7 @@ class Main {
         default: 'matter',
         matter: {
           enableSleeping: false,
-          gravity: {
-            y: 2,
-          },
+          gravity: { y: 2 },
           debug: {
             showBody: true,
             showStaticBody: true,
@@ -49,11 +42,13 @@ class Main {
         },
       },
       plugins: {
-        scene: [{
-          plugin: PhaserMatterCollisionPlugin, // The plugin class
-          key: 'matterCollision', // Where to store in Scene.Systems, e.g. scene.sys.matterCollision
-          mapping: 'matterCollision', // Where to store in the Scene, e.g. scene.matterCollision
-        }],
+        scene: [
+          {
+            plugin: PhaserMatterCollisionPlugin, // The plugin class
+            key: 'matterCollision', // Where to store in Scene.Systems, e.g. scene.sys.matterCollision
+            mapping: 'matterCollision', // Where to store in the Scene, e.g. scene.matterCollision
+          },
+        ],
       },
       fps: {
         target: 60,
@@ -66,14 +61,11 @@ class Main {
       key: undefined,
       track: undefined,
     };
-    this.game.localeEng = true;
   }
 }
 
 WebFont.load({
-  google: {
-    families: ['Montserrat'],
-  },
+  google: { families: ['Montserrat'] },
 });
 
 const main = new Main();
