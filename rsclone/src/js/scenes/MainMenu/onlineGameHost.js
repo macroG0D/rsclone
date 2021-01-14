@@ -1,23 +1,30 @@
 import Phaser from 'phaser';
+import Client from '../../utils/client';
 
 import { createMenu } from '../../utils/createMenu';
 import { createBg } from '../../utils/createBg';
 
 export default class MainMenuOnlineGame extends Phaser.Scene {
   constructor() {
-    super('MainMenuOnlineGame');
+    super('MainMenuOnlineGameHost');
   }
 
   create() {
     this.menuItems = {
-      'Host a game': () => this.scene.start('MainMenuOnlineGameHost'),
-      'Join a game': () => this.scene.switch('MainMenuOnlineGameJoin'),
+      'Looking for a partner...': () => this.scene.switch('MainMenuOnlineGameHost'),
     };
-    this.menuCallBack = () => this.scene.switch('MainMenuPlay');
+    this.menuCallBack = () => this.scene.switch('MainMenuOnlineGame');
     this.createImg();
     createBg(this);
     createMenu(this, this.menuItems, true, this.menuCallBack);
     window.location.hash = this.scene.key;
+    this.requestHostGame();
+  }
+
+  requestHostGame() {
+    this.client = new Client();
+    this.client.init();
+    this.client.sendData('hostGame');
   }
 
   createImg() {

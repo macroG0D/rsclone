@@ -1,48 +1,23 @@
 const socketIO = require('socket.io');
 
+function generateSession() {
+  const randomNum = Math.floor(Math.random() * 9998 + 1);
+  return `game#${randomNum.toString().padStart(4, '0')}`;
+}
+
 module.exports = {
   init(server) {
-    this.sessions = [];
+    this.sessions = {};
     this.io = socketIO(server);
     this.io.on('connection', (socket) => {
-      socket.on('playerMove', (data) => this.onPlayerMove(socket, data));
-      this.onConnection(socket);
+      socket.on('hostGame', (data) => this.onHostGame(socket, data));
+      // this.onConnection(socket);
     });
   },
 
-  onPlayerMove(socket, data) {
-    const session = this.sessions.find(
-      (sess) => (sess.playerOneSocket === socket || sess.playerTwoSocket === socket),
-    );
-
-    if (session) {
-      const partnerSocket = (session.playerOneSocket === socket)
-        ? session.playerTwoSocket : session.playerOneSocket;
-      partnerSocket.emit('partnerMove', data);
-    }
-  },
-
-  getPendingSession() {
-    return this.sessions.find(
-      (session) => (session.playerOneSocket && !session.playerTwoSocket),
-    );
-  },
-
-  createPendingSession(socket) {
-    const session = { playerOneSocket: socket, playerTwoSocket: null };
-    this.sessions.push(session);
-  },
-
-  startGame(session) {
-    session.playerOneSocket.emit('gameStart', { master: true });
-    session.playerTwoSocket.emit('gameStart');
-  },
-
-  onConnection(socket) {
-    console.log(`new user connected ${socket.id}`);
-    const session = this.getPendingSession();
-    if (!session) this.createPendingSession(socket);
-    session.playerTwoSocket = socket;
-    this.startGame(session);
+  onHostGame(socket) {
+    let sessionName = generateSession();
+    while (sessionName in this.sessions) sessionName = generateSession();
+    console.log(sessionName);
   },
 };

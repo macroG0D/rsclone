@@ -4,6 +4,8 @@ import MainMenu from './mainMenu';
 import MainMenuPlay from './MainMenu/play';
 import MainMenuLocalGame from './MainMenu/localGame';
 import MainMenuOnlineGame from './MainMenu/onlineGame';
+import MainMenuOnlineGameHost from './MainMenu/onlineGameHost';
+import MainMenuOnlineGameJoin from './MainMenu/onlineGameJoin';
 import MainMenuLeaderBoard from './MainMenu/leaderBoard';
 import MainMenuSettings from './MainMenu/settings';
 import MainMenuDevelopers from './MainMenu/developers';
@@ -18,6 +20,8 @@ export const SCENE_LIST = [
   MainMenuPlay,
   MainMenuLocalGame,
   MainMenuOnlineGame,
+  MainMenuOnlineGameHost,
+  MainMenuOnlineGameJoin,
   MainMenuLeaderBoard,
   MainMenuSettings,
   MainMenuDevelopers,
