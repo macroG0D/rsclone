@@ -1,8 +1,6 @@
 import Phaser from 'phaser';
 
-import {
-  createBg
-} from '../../utils/createBg';
+import { createBg } from '../../utils/createBg';
 
 const menuItemStyle = {
   font: '30px Montserrat',
@@ -159,7 +157,7 @@ export default class MainMenuSettings extends Phaser.Scene {
       .on('pointerdown', () => this.scene.switch('MainMenu'));
 
     this.game.scale.on('leavefullscreen', () => {
-      fullscreenItem.setStyle(isSelected2(this.game.scale.isFullscreen))
-    })
+      fullscreenItem.setStyle(isSelected2(this.game.scale.isFullscreen));
+    });
   }
 }
