@@ -41,9 +41,9 @@ export default class Level1 extends Phaser.Scene {
     // this.addBackgrounds();
     this.addParallax();
     this.addWalls();
-    this.ibb = new Player(this, 'ibb', 2500, 350, 'ibb-sprite', player1Controls); // 200 200
-    this.obb = new Player(this, 'obb', 3000, 400, 'obb-sprite', player2Controls); // 300 300
-    this.hedgehog = new StandartHedgehog(this, 3400, 558, 'hedgehog-head', 'hedgehog-halfbutt');
+    this.ibb = new Player(this, 'ibb', 3900, 400, 'ibb-sprite', player1Controls); // 200 200
+    this.obb = new Player(this, 'obb', 3950, 400, 'obb-sprite', player2Controls); // 300 300
+    this.hedgehog = new StandartHedgehog(this, 3400, 558, 'hedgehog-head', 'hedgehog-halfbutt', 58);
     this.hedgehog.moveHorizontally(300, 'left', 2500);
     this.hedgehog2 = new JumpingHedgehog(this, 2800, 592, 'hedgehog-jumper', 'hedgehog-fullbutt');
     this.hedgehog2.jump(180, 600);
@@ -137,7 +137,8 @@ export default class Level1 extends Phaser.Scene {
         this.portals.push(portal);
       } else {
         const wall = this.add.rectangle(wallX, wallY, wallWidth, wallHeight, wallColor);
-        this.matter.add.gameObject(wall, objSettings);
+        const wallGameObject = this.matter.add.gameObject(wall, objSettings);
+        wallGameObject.setCollisionGroup(2); // we have to add collision groups to make emitter work
       }
     });
   }

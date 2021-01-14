@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import Emitter from '../utils/emitter';
 
 import {
   DEFAULT_MASS,
@@ -19,7 +20,7 @@ function createPlayerAnimations(scene, key, sprite) {
   });
 }
 export default class Player extends Phaser.Physics.Matter.Sprite {
-  constructor(scene, key, x, y, sprite, controls) {
+  constructor(scene, key, x, y, sprite, controls, particlesColors) {
     super(scene.matter.world, x, y, sprite);
     this.isAlive = true;
     this.scene = scene;
@@ -37,7 +38,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     const mainBody = Bodies.rectangle(0, 0, w * 0.75, h, {
       chamfer: { radius: 8 },
     });
-
     this.sensors = {
       center: Bodies.rectangle(0, 0, 10, 10, { isSensor: true }),
       top: Bodies.rectangle(0, h - h * 1.48, w * 0.5, 5, { isSensor: true }),
@@ -106,11 +106,15 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       callback: this.onSensorCollide,
       context: this,
     });
-
     this.portals.forEach((portal) => {
       this.portalsListeners(scene, portal);
     });
     this.body.restitution = 0.3;
+    this.emitter = new Emitter(scene, this, 'triangle');
+    this.setInteractive();
+    this.on('pointerdown', () => {
+      this.emitter.emitParticles(50);
+    });
   }
 
   getAnotherPlayer() {
@@ -188,7 +192,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     });
   }
 
-  portalDive() {
+  portalDive(portal) {
+    portal.emitParticles(this.x, this.width, this.body.velocity.y, this.isRotated);
     setTimeout(() => {
       this.switchGravity();
       playSound(this.scene, 'warp_cross_01');
