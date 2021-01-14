@@ -19,12 +19,12 @@ const levelHeight = 890;
 
 const parallaxImages = {
   sky: 0,
-  clouds_1: 0.3,
-  clouds_2: 0.6,
-  clouds_3: 0.9,
-  clouds_4: 0.12,
-  rocks_1: 0.3,
-  rocks_2: 0.6,
+  clouds_1: 0.1,
+  clouds_2: 0.2,
+  clouds_3: 0.3,
+  clouds_4: 0.4,
+  rocks_1: 0.1,
+  rocks_2: 0.2,
 };
 export default class Level1 extends Phaser.Scene {
   constructor() {
@@ -58,10 +58,10 @@ export default class Level1 extends Phaser.Scene {
     this.parallax = {};
     Object.entries(parallaxImages).forEach(([key, speed]) => {
       const sprite = this.add.tileSprite(
-        0,
-        0,
-        this.game.config.width,
-        this.game.config.height,
+        -50,
+        -32,
+        this.game.config.width + 100,
+        this.game.config.height + 64,
         key,
       )
         .setOrigin(0, 0)
@@ -162,8 +162,7 @@ export default class Level1 extends Phaser.Scene {
       const cameraX = parseInt(charactersXDiff / 2 + closestToLeftCharacterX, 10);
       const cameraY = parseInt(charactersYDiff / 2 + closestToTopCharacterY, 10);
       if (camZoom !== cam.zoom) cam.setZoom(camZoom);
-      if (cameraX !== cam.midPoint.x) cam.centerOnX(cameraX);
-      if (cameraY !== cam.midPoint.Y) cam.centerOnY(cameraY);
+      cam.pan(cameraX, cameraY, 100);
       this.charactersDistance = charactersXDiff;
     }
   }

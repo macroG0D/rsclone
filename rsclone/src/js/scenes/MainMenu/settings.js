@@ -1,8 +1,6 @@
 import Phaser from 'phaser';
 
-import {
-  createBg
-} from '../../utils/createBg';
+import { createBg } from '../../utils/createBg';
 
 const menuItemStyle = {
   font: '30px Montserrat',
