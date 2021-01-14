@@ -7,21 +7,12 @@ export default class Score extends Phaser.Scene {
   }
 
   create() {
-    this.eng = this.game.localeEng;
     this.currentScore = 0;
     this.currentTime = 0;
     this.addScore();
     this.addTimer();
+
     EventsCenter.on('update-score', this.updateScore, this);
-    if (!this.game.localeEng) {
-      this.updateLang();
-    }
-    this.events.on('wake', () => {
-      if (this.eng !== this.game.localeEng) {
-        this.updateLang();
-        this.eng = this.game.localeEng;
-      }
-    });
   }
 
   addTimer() {
@@ -47,8 +38,7 @@ export default class Score extends Phaser.Scene {
       delay: 1000,
       callback: () => {
         this.currentTime += 1;
-        this.currentTimeStyled = setTimerStyle(this.currentTime);
-        this.timerText.setText(`time:  ${this.currentTimeStyled}`);
+        this.timerText.setText(`time:  ${setTimerStyle(this.currentTime)}`);
       },
       callbackScope: this,
       loop: true,
@@ -68,15 +58,5 @@ export default class Score extends Phaser.Scene {
     console.log('обновили скор');
     this.currentScore += score;
     this.scoreText.setText(`score:  ${this.currentScore}`);
-  }
-
-  updateLang() {
-    if (this.game.localeEng) {
-      this.scoreText.setText(`score:  ${this.currentScore}`);
-      this.timerText.setText(`time:  ${this.currentTimeStyled}`);
-    } else {
-      this.scoreText.setText(`очки:  ${this.currentScore}`);
-      this.timerText.setText(`время:  ${this.currentTimeStyled}`);
-    }
   }
 }
