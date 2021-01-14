@@ -9,14 +9,31 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
   }
 
   create() {
+    this.eng = this.game.localeEng;
     this.menuItems = {
-      'Start Game': () => this.scene.start('Level1'),
+      startGame: () => this.scene.start('Level1'),
     };
     this.menuCallBack = () => this.scene.switch('MainMenuPlay');
     this.createImg();
     createBg(this);
     createMenu(this, this.menuItems, true, this.menuCallBack);
-    window.location.hash = this.scene.key;
+    this.update();
+    this.events.on('wake', () => {
+      if (this.eng !== this.game.localeEng) {
+        this.update();
+        this.eng = this.game.localeEng;
+      }
+    });
+  }
+
+  update() {
+    if (this.game.localeEng) {
+      this.startGameItem.setText('start game');
+      this.menuItemBack.setText('back');
+    } else {
+      this.startGameItem.setText('начать игру');
+      this.menuItemBack.setText('назад');
+    }
   }
 
   createImg() {

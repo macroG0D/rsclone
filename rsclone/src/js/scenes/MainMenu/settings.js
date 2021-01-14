@@ -163,7 +163,7 @@ export default class MainMenuSettings extends Phaser.Scene {
       this.langItem.setText('language');
       this.applyItem.setText('apply');
     } else {
-      this.fullscreenItem.setText('на весь экран');
+      this.fullscreenItem.setText(' на весь экран');
       this.musicItem.setText('музыка');
       this.soundItem.setText('звук');
       this.rusItem.setText('русский');
