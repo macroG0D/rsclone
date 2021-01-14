@@ -162,7 +162,7 @@ export default class Level1 extends Phaser.Scene {
       const cameraX = parseInt(charactersXDiff / 2 + closestToLeftCharacterX, 10);
       const cameraY = parseInt(charactersYDiff / 2 + closestToTopCharacterY, 10);
       if (camZoom !== cam.zoom) cam.setZoom(camZoom);
-      cam.pan(cameraX, cameraY, 250);
+      cam.pan(cameraX, cameraY, 100);
       this.charactersDistance = charactersXDiff;
     }
   }
