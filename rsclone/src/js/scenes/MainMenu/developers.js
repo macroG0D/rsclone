@@ -9,6 +9,7 @@ export default class MainMenuDevelopers extends Phaser.Scene {
   }
 
   create() {
+    this.eng = this.game.localeEng;
     this.menuItems = {
       macroG0D: () => window.open('https://github.com/macroG0D'),
       'i3-code': () => window.open('https://github.com/i3-code'),
@@ -18,7 +19,23 @@ export default class MainMenuDevelopers extends Phaser.Scene {
     createBg(this);
     createMenu(this, this.menuItems, true);
     this.createGithubIcons();
-    window.location.hash = this.scene.key;
+    if (!this.game.localeEng) {
+      this.update();
+    }
+    this.events.on('wake', () => {
+      if (this.eng !== this.game.localeEng) {
+        this.update();
+        this.eng = this.game.localeEng;
+      }
+    });
+  }
+
+  update() {
+    if (this.game.localeEng) {
+      this.menuItemBack.setText('back');
+    } else {
+      this.menuItemBack.setText('назад');
+    }
   }
 
   createGithubIcons() {

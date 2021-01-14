@@ -24,7 +24,7 @@ export function createMenu(scene, menuItems, back = false, backCallback = () => 
   scene.input.keyboard.createCursorKeys();
 
   Object.entries(menuItems).forEach(([itemName, itemLink], itemIndex) => {
-    const menuItem = scene.add.text(
+    scene[itemName + 'Item'] = scene.add.text(
       menuX,
       menuY + (itemIndex * MENU_ITEM_HEIGHT),
       itemName,
@@ -32,19 +32,19 @@ export function createMenu(scene, menuItems, back = false, backCallback = () => 
     )
       .setOrigin(0.5)
       .setInteractive({ useHandCursor: true })
-      .on('pointerover', () => menuItem.setStyle(menuItemOverStyle))
-      .on('pointerout', () => menuItem.setStyle(menuItemStyle))
+      .on('pointerover', () => scene[itemName + 'Item'].setStyle(menuItemOverStyle))
+      .on('pointerout', () => scene[itemName + 'Item'].setStyle(menuItemStyle))
       .on('pointerdown', () => itemLink());
   });
 
   if (back) {
-    const menuItemBack = scene.add.text(menuX, menuY + 250, 'back', menuItemBackStyle)
+    scene.menuItemBack = scene.add.text(menuX, menuY + 250, 'back', menuItemBackStyle)
       .setOrigin(0.5)
       .setInteractive({
         useHandCursor: true,
       })
-      .on('pointerover', () => menuItemBack.setStyle(menuItemOverStyle))
-      .on('pointerout', () => menuItemBack.setStyle(menuItemBackStyle))
+      .on('pointerover', () => scene.menuItemBack.setStyle(menuItemOverStyle))
+      .on('pointerout', () => scene.menuItemBack.setStyle(menuItemBackStyle))
       .on('pointerdown', backCallback);
 
     scene.input.keyboard.addKey('ESC').on('down', backCallback);
