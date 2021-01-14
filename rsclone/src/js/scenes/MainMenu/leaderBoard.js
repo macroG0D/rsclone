@@ -9,11 +9,30 @@ export default class MainMenuLeaderBoard extends Phaser.Scene {
   }
 
   create() {
+    this.eng = this.game.localeEng;
     this.menuItems = {
-      Leaderboard: () => this.scene.switch('MainMenu'),
+      leaderboard: () => this.scene.switch('MainMenu'),
     };
     createBg(this);
     createMenu(this, this.menuItems, true);
-    window.location.hash = this.scene.key;
+    if (!this.game.localeEng) {
+      this.update();
+    }
+    this.events.on('wake', () => {
+      if (this.eng !== this.game.localeEng) {
+        this.update();
+        this.eng = this.game.localeEng;
+      }
+    });
+  }
+
+  update() {
+    if (this.game.localeEng) {
+      this.leaderboardItem.setText('leaderboard');
+      this.menuItemBack.setText('back');
+    } else {
+      this.leaderboardItem.setText('лидеры');
+      this.menuItemBack.setText('назад');
+    }
   }
 }
