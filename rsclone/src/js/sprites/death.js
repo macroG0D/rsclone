@@ -22,6 +22,12 @@ export default class Death {
         case 'player': {
           const emitter = new Emitter(scene, creatureObject, 'circle');
           emitter.emitParticles(50);
+          scene.time.addEvent({
+            delay: 3500,
+            callback: () => {
+              scene.scene.restart('Level1');
+            },
+          });
           break;
         }
         default:
