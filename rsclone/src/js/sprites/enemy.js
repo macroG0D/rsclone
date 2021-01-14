@@ -11,7 +11,7 @@ export default class Enemy extends Phaser.Physics.Matter.Sprite {
   }
 
   killPlayer(pair) {
-    if (pair.gameObjectB && (pair.gameObjectB.key === 'ibb' || pair.gameObjectB.key === 'obb')) {
+    if (pair.gameObjectB && (pair.gameObjectB.key === 'ibb' || pair.gameObjectB.key === 'obb') && pair.gameObjectB.isAlive) {
       const player = pair.gameObjectB;
       player.isAlive = false;
       Death.deathAnimation(this.scene, player, 'player');
@@ -20,11 +20,10 @@ export default class Enemy extends Phaser.Physics.Matter.Sprite {
   }
 
   gotKilled(pair) {
-    if (pair.gameObjectB && pair.gameObjectB.type !== 'Rectangle' && pair.gameObjectB.isAlive) {
+    if (pair.gameObjectB && pair.gameObjectB.type !== 'Rectangle' && pair.gameObjectB.isAlive && this.isAlive) {
       this.isAlive = false;
       Death.deathAnimation(this.scene, this, 'enemy');
-      // 50 просто для примера
-      EventsCenter.emit('update-score', 50);
+      EventsCenter.emit('update-score', 100);
     }
   }
 
