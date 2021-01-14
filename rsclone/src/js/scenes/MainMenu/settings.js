@@ -139,7 +139,7 @@ export default class MainMenuSettings extends Phaser.Scene {
       this.updateItems();
     });
 
-    this.applyItem = this.add.text(menuX, menuY + 250, '', menuItemBackStyle)
+    this.applyItem = this.add.text(menuX, 610, '', menuItemBackStyle)
       .setOrigin(0.5)
       .setInteractive({
         useHandCursor: true,
@@ -171,5 +171,17 @@ export default class MainMenuSettings extends Phaser.Scene {
       this.langItem.setText('язык');
       this.applyItem.setText('применить');
     }
+  }
+
+  checkLang() {
+    if (!this.game.localeEng) {
+      this.updateLang();
+    }
+    this.events.on('wake', () => {
+      if (this.eng !== this.game.localeEng) {
+        this.updateLang();
+        this.eng = this.game.localeEng;
+      }
+    });
   }
 }

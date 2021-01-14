@@ -1,7 +1,11 @@
 import Phaser from 'phaser';
 
-import { createMenu } from '../../utils/createMenu';
-import { createBg } from '../../utils/createBg';
+import {
+  createMenu
+} from '../../utils/createMenu';
+import {
+  createBg
+} from '../../utils/createBg';
 
 export default class MainMenuLocalGame extends Phaser.Scene {
   constructor() {
@@ -17,17 +21,11 @@ export default class MainMenuLocalGame extends Phaser.Scene {
     createBg(this);
     this.createImg();
     createMenu(this, this.menuItems, true, this.menuCallBack);
-    this.update();
-    this.events.on('wake', () => {
-      if (this.eng !== this.game.localeEng) {
-        this.update();
-        this.eng = this.game.localeEng;
-      }
-    });
+    this.checkLang();
     this.startGameItem.setY(437);
   }
 
-  update() {
+  updateLang() {
     if (this.game.localeEng) {
       this.startGameItem.setText('start game');
       this.menuItemBack.setText('back');
@@ -57,6 +55,16 @@ export default class MainMenuLocalGame extends Phaser.Scene {
       delay: delayTime,
       yoyo: true,
       repeat: -1,
+    });
+  }
+
+  checkLang() {
+    this.updateLang();
+    this.events.on('wake', () => {
+      if (this.eng !== this.game.localeEng) {
+        this.updateLang();
+        this.eng = this.game.localeEng;
+      }
     });
   }
 }

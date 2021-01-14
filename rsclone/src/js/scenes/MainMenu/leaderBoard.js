@@ -15,18 +15,10 @@ export default class MainMenuLeaderBoard extends Phaser.Scene {
     };
     createBg(this);
     createMenu(this, this.menuItems, true);
-    if (!this.game.localeEng) {
-      this.update();
-    }
-    this.events.on('wake', () => {
-      if (this.eng !== this.game.localeEng) {
-        this.update();
-        this.eng = this.game.localeEng;
-      }
-    });
+    this.checkLang();
   }
 
-  update() {
+  updateLang() {
     if (this.game.localeEng) {
       this.leaderboardItem.setText('leaderboard');
       this.menuItemBack.setText('back');
@@ -34,5 +26,17 @@ export default class MainMenuLeaderBoard extends Phaser.Scene {
       this.leaderboardItem.setText('лидеры');
       this.menuItemBack.setText('назад');
     }
+  }
+
+  checkLang() {
+    if (!this.game.localeEng) {
+      this.updateLang();
+    }
+    this.events.on('wake', () => {
+      if (this.eng !== this.game.localeEng) {
+        this.updateLang();
+        this.eng = this.game.localeEng;
+      }
+    });
   }
 }

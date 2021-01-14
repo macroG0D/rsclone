@@ -16,17 +16,19 @@ const menuItemOverStyle = {
   fill: '#D22D61',
 };
 
-const MENU_ITEM_HEIGHT = 60;
+const MENU_ITEM_HEIGHT = 50;
 
 export function createMenu(scene, menuItems, back = false, backCallback = () => scene.scene.switch('MainMenu')) {
   const menuX = scene.cameras.main.centerX;
-  const menuY = scene.cameras.main.centerY - MENU_ITEM_HEIGHT;
+  const menuY = scene.cameras.main.centerY;
+  const countItems = Object.keys(menuItems).length;
+  const menuYstart = Math.floor((scene.cameras.main.height - countItems * MENU_ITEM_HEIGHT) / 2);
   scene.input.keyboard.createCursorKeys();
 
   Object.entries(menuItems).forEach(([itemName, itemLink], itemIndex) => {
     scene[itemName + 'Item'] = scene.add.text(
       menuX,
-      menuY + (itemIndex * MENU_ITEM_HEIGHT),
+      menuYstart + (itemIndex * MENU_ITEM_HEIGHT),
       itemName,
       menuItemStyle,
     )

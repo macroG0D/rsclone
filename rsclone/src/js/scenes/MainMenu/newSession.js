@@ -29,26 +29,23 @@ const menuItemOverStyle = {
   fill: '#D22D61',
 };
 
-export default class MainMenuSettings extends Phaser.Scene {
+export default class MainMenuNewSession extends Phaser.Scene {
   constructor() {
     super('MainMenuNewSession');
+  }
+
+  init(data) {
+    this.roomID = data;
   }
 
   create() {
     this.eng = this.game.localeEng;
     // число просто для примера
-    this.roomNumber = 1354;
+    this.roomID = 1354;
+    this.roomNumber = this.roomID;
     createBg(this);
     this.createItems();
-    if (!this.game.localeEng) {
-      this.updateLang();
-    }
-    this.events.on('wake', () => {
-      if (this.eng !== this.game.localeEng) {
-        this.updateLang();
-        this.eng = this.game.localeEng;
-      }
-    });
+    this.checkLang();
   }
 
   createItems() {
@@ -73,5 +70,17 @@ export default class MainMenuSettings extends Phaser.Scene {
       this.waiting.setText('ожидание второго игрока');
       this.cancel.setText('отмена');
     }
+  }
+
+  checkLang() {
+    if (!this.game.localeEng) {
+      this.updateLang();
+    }
+    this.events.on('wake', () => {
+      if (this.eng !== this.game.localeEng) {
+        this.updateLang();
+        this.eng = this.game.localeEng;
+      }
+    });
   }
 }

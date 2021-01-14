@@ -1,12 +1,12 @@
 import Phaser from 'phaser';
 import {
-  createMenu
+  createMenu,
 } from '../utils/createMenu';
 import {
-  createBg
+  createBg,
 } from '../utils/createBg';
 import {
-  playMusic
+  playMusic,
 } from '../utils/music';
 
 export default class MainMenu extends Phaser.Scene {
@@ -26,18 +26,10 @@ export default class MainMenu extends Phaser.Scene {
     createBg(this);
     createMenu(this, this.menuItems);
     playMusic(this, 'main_menu_music');
-    if (!this.game.localeEng) {
-      this.update();
-    }
-    this.events.on('wake', () => {
-      if (this.eng !== this.game.localeEng) {
-        this.update();
-        this.eng = this.game.localeEng;
-      }
-    });
+    this.checkLang();
   }
 
-  update() {
+  updateLang() {
     if (this.game.localeEng) {
       this.playItem.setText('play');
       this.leaderboardItem.setText('leaderboard');
@@ -51,5 +43,17 @@ export default class MainMenu extends Phaser.Scene {
       this.developersItem.setText('разработчики');
       this.aboutItem.setText('о нас');
     }
+  }
+
+  checkLang() {
+    if (!this.game.localeEng) {
+      this.updateLang();
+    }
+    this.events.on('wake', () => {
+      if (this.eng !== this.game.localeEng) {
+        this.updateLang();
+        this.eng = this.game.localeEng;
+      }
+    });
   }
 }

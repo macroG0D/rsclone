@@ -19,18 +19,10 @@ export default class MainMenuDevelopers extends Phaser.Scene {
     createBg(this);
     createMenu(this, this.menuItems, true);
     this.createGithubIcons();
-    if (!this.game.localeEng) {
-      this.update();
-    }
-    this.events.on('wake', () => {
-      if (this.eng !== this.game.localeEng) {
-        this.update();
-        this.eng = this.game.localeEng;
-      }
-    });
+    this.checkLang();
   }
 
-  update() {
+  updateLang() {
     if (this.game.localeEng) {
       this.menuItemBack.setText('back');
     } else {
@@ -42,8 +34,20 @@ export default class MainMenuDevelopers extends Phaser.Scene {
     const menuItemsCount = Object.keys(this.menuItems).length;
     for (let menuIndex = 0; menuIndex < menuItemsCount; menuIndex += 1) {
       this.add.image(this.cameras.main.centerX - 140,
-        (this.game.config.height / 2 + (menuItemsCount * 30)) - (60 * menuIndex),
+        (this.game.config.height / 2 + (menuItemsCount * 25)) - 50 - (50 * menuIndex),
         'githubIcon');
     }
+  }
+
+  checkLang() {
+    if (!this.game.localeEng) {
+      this.updateLang();
+    }
+    this.events.on('wake', () => {
+      if (this.eng !== this.game.localeEng) {
+        this.updateLang();
+        this.eng = this.game.localeEng;
+      }
+    });
   }
 }

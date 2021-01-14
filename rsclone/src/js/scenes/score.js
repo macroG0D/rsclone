@@ -13,15 +13,7 @@ export default class Score extends Phaser.Scene {
     this.addScore();
     this.addTimer();
     EventsCenter.on('update-score', this.updateScore, this);
-    if (!this.game.localeEng) {
-      this.updateLang();
-    }
-    this.events.on('wake', () => {
-      if (this.eng !== this.game.localeEng) {
-        this.updateLang();
-        this.eng = this.game.localeEng;
-      }
-    });
+    this.updateLang();
   }
 
   addTimer() {
@@ -78,5 +70,17 @@ export default class Score extends Phaser.Scene {
       this.scoreText.setText(`очки:  ${this.currentScore}`);
       this.timerText.setText(`время:  ${this.currentTimeStyled}`);
     }
+  }
+
+  checkLang() {
+    if (!this.game.localeEng) {
+      this.updateLang();
+    }
+    this.events.on('wake', () => {
+      if (this.eng !== this.game.localeEng) {
+        this.updateLang();
+        this.eng = this.game.localeEng;
+      }
+    });
   }
 }
