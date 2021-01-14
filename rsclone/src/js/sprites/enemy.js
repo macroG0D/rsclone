@@ -16,11 +16,13 @@ export default class Enemy extends Phaser.Physics.Matter.Sprite {
       player.isAlive = false;
       Death.deathAnimation(this.scene, player, 'player');
       this.scene.time.addEvent({
-        delay: 2000,
+        delay: 1500,
         callback: () => {
           const anotherPlayerKey = player.key === 'ibb' ? 'obb' : 'ibb';
-          this.scene[anotherPlayerKey].isAlive = false;
-          Death.deathAnimation(this.scene, this.scene[anotherPlayerKey], 'player');
+          if (this.scene[anotherPlayerKey].isAlive) {
+            this.scene[anotherPlayerKey].isAlive = false;
+            Death.deathAnimation(this.scene, this.scene[anotherPlayerKey], 'player');
+          }
         },
       });
     }
