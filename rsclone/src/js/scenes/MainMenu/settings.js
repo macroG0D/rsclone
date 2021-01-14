@@ -45,20 +45,13 @@ export default class MainMenuSettings extends Phaser.Scene {
 
   create() {
     createBg(this);
-    // window.location.hash = this.scene.key;
     this.isMusicOn = true;
     this.isSoundOn = true;
-    this.isEnglishOn = true;
-    this.isRusionOn = !this.isEnglishOn;
     this.createItems();
     this.updateItems();
   }
 
   createItems() {
-    // const isSelected2 = (menuItem, isON) => {
-    //   (isON) ? menuItem.setStyle(menuItemSelectedStyle) : menuItem.setStyle(menuItemStyle);
-    // };
-
     const isSelected = (isON) => {
       if (isON) {
         return menuItemSelectedStyle;
@@ -112,43 +105,37 @@ export default class MainMenuSettings extends Phaser.Scene {
         this.isSoundOn = !this.isSoundOn;
       });
 
-    this.engItem = this.add.text(menuX - 100, menuY + (2 * MENU_ITEM_HEIGHT), '', isSelected(this.isEnglishOn))
+    this.engItem = this.add.text(menuX - 100, menuY + (2 * MENU_ITEM_HEIGHT), '', isSelected(this.game.localeEng))
       .setOrigin(1, 0.5)
       .setInteractive({
         useHandCursor: true,
       })
       .on('pointerover', () => this.engItem.setStyle(menuItemOverStyle))
       .on('pointerout', () => {
-        this.engItem.setStyle(isSelected(this.isEnglishOn));
+        this.engItem.setStyle(isSelected(this.game.localeEng));
       });
 
     this.langItem = this.add.text(menuX, menuY + (2 * MENU_ITEM_HEIGHT), '', menuItemDisableStyle)
       .setOrigin(0.5);
 
-    this.rusItem = this.add.text(menuX + 100, menuY + (2 * MENU_ITEM_HEIGHT), '', isSelected(this.isRussianOn))
+    this.rusItem = this.add.text(menuX + 100, menuY + (2 * MENU_ITEM_HEIGHT), '', isSelected(!this.game.localeEng))
       .setOrigin(0, 0.5)
       .setInteractive({
         useHandCursor: true,
       })
       .on('pointerover', () => this.rusItem.setStyle(menuItemOverStyle))
       .on('pointerout', () => {
-        this.rusItem.setStyle(isSelected(this.isRussianOn));
+        this.rusItem.setStyle(isSelected(!this.game.localeEng));
       })
       .on('pointerdown', () => {
-        this.isEnglishOn = !this.isEnglishOn;
-        this.isRussianOn = !this.isRussianOn;
-        this.engItem.setStyle(isSelected(this.isEnglishOn));
-        this.game.localeEng = (this.isRussianOn) ? false : true;
-        console.log(this.game.localeEng);
+        this.game.localeEng = !this.game.localeEng;
+        this.engItem.setStyle(isSelected(this.game.localeEng));
         this.updateItems();
       });
 
     this.engItem.on('pointerdown', () => {
-      this.isEnglishOn = !this.isEnglishOn;
-      this.isRussianOn = !this.isRussianOn;
-      this.rusItem.setStyle(isSelected(this.isRussianOn));
-      this.game.localeEng = (this.isRussianOn) ? false : true;
-      console.log(this.game.localeEng);
+      this.game.localeEng = !this.game.localeEng;
+      this.rusItem.setStyle(isSelected(!this.game.localeEng));
       this.updateItems();
     });
 

@@ -3,12 +3,12 @@ import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
 import Create from './components/dom-create';
 
 import {
-  SCENE_LIST
+  SCENE_LIST,
 } from './scenes/_scenesList';
 
 import {
   GAME_WIDTH,
-  GAME_HEIGHT
+  GAME_HEIGHT,
 } from './constants';
 
 const WebFont = require('webfontloader');
@@ -40,7 +40,7 @@ class Main {
         matter: {
           enableSleeping: false,
           gravity: {
-            y: 2
+            y: 2,
           },
           debug: {
             showBody: true,
@@ -53,7 +53,7 @@ class Main {
           plugin: PhaserMatterCollisionPlugin, // The plugin class
           key: 'matterCollision', // Where to store in Scene.Systems, e.g. scene.sys.matterCollision
           mapping: 'matterCollision', // Where to store in the Scene, e.g. scene.matterCollision
-        }, ],
+        }],
       },
       fps: {
         target: 60,
@@ -72,7 +72,7 @@ class Main {
 
 WebFont.load({
   google: {
-    families: ['Montserrat']
+    families: ['Montserrat'],
   },
 });
 
