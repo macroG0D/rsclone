@@ -7,6 +7,7 @@ import MainMenuOnlineGame from './MainMenu/onlineGame';
 import MainMenuLeaderBoard from './MainMenu/leaderBoard';
 import MainMenuSettings from './MainMenu/settings';
 import MainMenuDevelopers from './MainMenu/developers';
+import MainMenuNewSession from './MainMenu/newSession';
 import Score from './score';
 import Level1 from './level1';
 import GameMenu from './MainMenu/gameMenu';
@@ -21,6 +22,7 @@ export const SCENE_LIST = [
   MainMenuLeaderBoard,
   MainMenuSettings,
   MainMenuDevelopers,
+  MainMenuNewSession,
   Level1,
   GameMenu,
   Score,

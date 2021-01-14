@@ -11,7 +11,8 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
   create() {
     this.eng = this.game.localeEng;
     this.menuItems = {
-      startGame: () => this.scene.start('Level1'),
+      newSession: () => this.scene.start('MainMenuNewSession'),
+      joinSession: () => this.scene.start('Level1'),
     };
     this.menuCallBack = () => this.scene.switch('MainMenuPlay');
     this.createImg();
@@ -28,10 +29,12 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
 
   update() {
     if (this.game.localeEng) {
-      this.startGameItem.setText('start game');
+      this.newSessionItem.setText('new session');
+      this.joinSessionItem.setText('join session');
       this.menuItemBack.setText('back');
     } else {
-      this.startGameItem.setText('начать игру');
+      this.newSessionItem.setText('новая сессия');
+      this.joinSessionItem.setText('присоединиться');
       this.menuItemBack.setText('назад');
     }
   }
