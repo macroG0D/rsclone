@@ -8,6 +8,7 @@ import ibbBg from '../../assets/images/ibb_bg.png';
 import obbBg from '../../assets/images/obb_bg.png';
 import ibbKeys from '../../assets/images/ibbKeys.svg';
 import obbKeys from '../../assets/images/obbKeys.svg';
+import bubble from '../../assets/images/bubble.png';
 import hedgehogHead from '../../assets/sprites/enemies/hedgehogs/hedgehog_head.svg';
 import hedgehogJumper from '../../assets/sprites/enemies/hedgehogs/hedgehog_jumper.svg';
 import hedgehogHalfButt from '../../assets/sprites/enemies/hedgehogs/hedgehog_halfButt.svg';
@@ -39,6 +40,7 @@ export default class Preload extends Phaser.Scene {
     this.load.image('ibbBg', ibbBg);
     this.load.image('obbKeys', obbKeys);
     this.load.image('ibbKeys', ibbKeys);
+    this.load.image('bubble', bubble);
     this.load.image('hedgehog-head', hedgehogHead);
     this.load.image('hedgehog-halfbutt', hedgehogHalfButt);
     this.load.image('hedgehog-jumper', hedgehogJumper);
@@ -73,7 +75,8 @@ export default class Preload extends Phaser.Scene {
   }
 
   create() {
-    this.scene.start('MainMenu');
+    // this.scene.start('MainMenu');
+    this.scene.start('Level1');
   }
 
   showBootBg() {

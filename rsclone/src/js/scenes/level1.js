@@ -19,12 +19,12 @@ const levelHeight = 890;
 
 const parallaxImages = {
   sky: 0,
-  clouds_1: 0.3,
-  clouds_2: 0.6,
-  clouds_3: 0.9,
-  clouds_4: 0.12,
-  rocks_1: 0.3,
-  rocks_2: 0.6,
+  clouds_1: 0.1,
+  clouds_2: 0.2,
+  clouds_3: 0.3,
+  clouds_4: 0.4,
+  rocks_1: 0.1,
+  rocks_2: 0.2,
 };
 export default class Level1 extends Phaser.Scene {
   constructor() {
@@ -41,12 +41,12 @@ export default class Level1 extends Phaser.Scene {
     // this.addBackgrounds();
     this.addParallax();
     this.addWalls();
-    this.ibb = new Player(this, 'ibb', 3900, 350, 'ibb-sprite', player1Controls); // 200 200
-    this.obb = new Player(this, 'obb', 3900, 400, 'obb-sprite', player2Controls); // 300 300
+    this.ibb = new Player(this, 'ibb', 3900, 400, 'ibb-sprite', player1Controls); // 200 200
+    this.obb = new Player(this, 'obb', 3950, 400, 'obb-sprite', player2Controls); // 300 300
     this.hedgehog = new StandartHedgehog(this, 3400, 558, 'hedgehog-head', 'hedgehog-halfbutt', 58);
     this.hedgehog.moveHorizontally(300, 'left', 2500);
-    this.hedgehog2 = new JumpingHedgehog(this, 2800, 595, 'hedgehog-jumper', 'hedgehog-fullbutt', 80);
-    this.hedgehog2.jump(180, 800);
+    this.hedgehog2 = new JumpingHedgehog(this, 2800, 592, 'hedgehog-jumper', 'hedgehog-fullbutt');
+    this.hedgehog2.jump(180, 600);
     this.cursors = this.input.keyboard.createCursorKeys();
     playMusic(this, 'level1_music');
     this.scene.run('Score');
@@ -58,10 +58,10 @@ export default class Level1 extends Phaser.Scene {
     this.parallax = {};
     Object.entries(parallaxImages).forEach(([key, speed]) => {
       const sprite = this.add.tileSprite(
-        0,
-        0,
-        this.game.config.width,
-        this.game.config.height,
+        -50,
+        -32,
+        this.game.config.width + 100,
+        this.game.config.height + 64,
         key,
       )
         .setOrigin(0, 0)
@@ -137,7 +137,8 @@ export default class Level1 extends Phaser.Scene {
         this.portals.push(portal);
       } else {
         const wall = this.add.rectangle(wallX, wallY, wallWidth, wallHeight, wallColor);
-        this.matter.add.gameObject(wall, objSettings);
+        const wallGameObject = this.matter.add.gameObject(wall, objSettings);
+        wallGameObject.setCollisionGroup(2); // we have to add collision groups to make emitter work
       }
     });
   }
@@ -161,8 +162,7 @@ export default class Level1 extends Phaser.Scene {
       const cameraX = parseInt(charactersXDiff / 2 + closestToLeftCharacterX, 10);
       const cameraY = parseInt(charactersYDiff / 2 + closestToTopCharacterY, 10);
       if (camZoom !== cam.zoom) cam.setZoom(camZoom);
-      if (cameraX !== cam.midPoint.x) cam.centerOnX(cameraX);
-      if (cameraY !== cam.midPoint.Y) cam.centerOnY(cameraY);
+      cam.pan(cameraX, cameraY, 250);
       this.charactersDistance = charactersXDiff;
     }
   }

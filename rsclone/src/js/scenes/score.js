@@ -55,7 +55,8 @@ export default class Score extends Phaser.Scene {
   }
 
   updateScore(score) {
-    this.currentScore = score;
+    console.log('обновили скор');
+    this.currentScore += score;
     this.scoreText.setText(`score:  ${this.currentScore}`);
   }
 }

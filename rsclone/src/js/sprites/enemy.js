@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import Death from './death';
+import EventsCenter from '../utils/eventsCenter';
 
 export default class Enemy extends Phaser.Physics.Matter.Sprite {
   constructor(scene, x, y, spriteA) {
@@ -10,18 +11,19 @@ export default class Enemy extends Phaser.Physics.Matter.Sprite {
   }
 
   killPlayer(pair) {
-    if (pair.gameObjectB && (pair.gameObjectB.key === 'ibb' || pair.gameObjectB.key === 'obb')) {
+    if (pair.gameObjectB && (pair.gameObjectB.key === 'ibb' || pair.gameObjectB.key === 'obb') && pair.gameObjectB.isAlive) {
       const player = pair.gameObjectB;
       player.isAlive = false;
-      Death.deathAnimation(this.scene, player);
+      Death.deathAnimation(this.scene, player, 'player');
       this.isAlive = true;
     }
   }
 
   gotKilled(pair) {
-    if (pair.gameObjectB && pair.gameObjectB.type !== 'Rectangle' && pair.gameObjectB.isAlive) {
+    if (pair.gameObjectB && pair.gameObjectB.type !== 'Rectangle' && pair.gameObjectB.isAlive && this.isAlive) {
       this.isAlive = false;
-      Death.deathAnimation(this.scene, this);
+      Death.deathAnimation(this.scene, this, 'enemy');
+      EventsCenter.emit('update-score', 100);
     }
   }
 
