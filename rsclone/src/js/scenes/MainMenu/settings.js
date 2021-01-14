@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 
 import {
-  createBg
+  createBg,
 } from '../../utils/createBg';
 
 const menuItemStyle = {
@@ -45,20 +45,21 @@ export default class MainMenuSettings extends Phaser.Scene {
 
   create() {
     createBg(this);
-    window.location.hash = this.scene.key;
+    // window.location.hash = this.scene.key;
     this.isMusicOn = true;
     this.isSoundOn = true;
     this.isEnglishOn = true;
     this.isRusionOn = !this.isEnglishOn;
     this.createItems();
+    this.updateItems();
   }
 
   createItems() {
-    // const isSelected = (menuItem, isON) => {
+    // const isSelected2 = (menuItem, isON) => {
     //   (isON) ? menuItem.setStyle(menuItemSelectedStyle) : menuItem.setStyle(menuItemStyle);
     // };
 
-    const isSelected2 = (isON) => {
+    const isSelected = (isON) => {
       if (isON) {
         return menuItemSelectedStyle;
       }
@@ -68,14 +69,14 @@ export default class MainMenuSettings extends Phaser.Scene {
     this.input.keyboard.createCursorKeys();
     const menuX = this.cameras.main.centerX;
     const menuY = this.cameras.main.centerY - MENU_ITEM_HEIGHT;
-    const fullscreenItem = this.add.text(menuX, menuY + (-1 * MENU_ITEM_HEIGHT), 'fullscreen', isSelected2(this.game.scale.isFullscreen))
+    this.fullscreenItem = this.add.text(menuX, menuY + (-1 * MENU_ITEM_HEIGHT), '', isSelected(this.game.scale.isFullscreen))
       .setOrigin(0.5)
       .setInteractive({
         useHandCursor: true,
       })
-      .on('pointerover', () => fullscreenItem.setStyle(menuItemOverStyle))
+      .on('pointerover', () => this.fullscreenItem.setStyle(menuItemOverStyle))
       .on('pointerout', () => {
-        fullscreenItem.setStyle(isSelected2(this.game.scale.isFullscreen));
+        this.fullscreenItem.setStyle(isSelected(this.game.scale.isFullscreen));
       })
       .on('pointerdown', () => {
         if (!this.game.scale.isFullscreen) {
@@ -85,81 +86,103 @@ export default class MainMenuSettings extends Phaser.Scene {
         }
       });
 
-    const musicItem = this.add.text(menuX, menuY + (0 * MENU_ITEM_HEIGHT), 'music', isSelected2(this.isMusicOn))
+    this.musicItem = this.add.text(menuX, menuY + (0 * MENU_ITEM_HEIGHT), '', isSelected(this.isMusicOn))
       .setOrigin(0.5)
       .setInteractive({
         useHandCursor: true,
       })
-      .on('pointerover', () => musicItem.setStyle(menuItemOverStyle))
+      .on('pointerover', () => this.musicItem.setStyle(menuItemOverStyle))
       .on('pointerout', () => {
-        musicItem.setStyle(isSelected2(this.isMusicOn));
+        this.musicItem.setStyle(isSelected(this.isMusicOn));
       })
       .on('pointerdown', () => {
         this.isMusicOn = !this.isMusicOn;
       });
 
-    const soundItem = this.add.text(menuX, menuY + (1 * MENU_ITEM_HEIGHT), 'sound', isSelected2(this.isSoundOn))
+    this.soundItem = this.add.text(menuX, menuY + (1 * MENU_ITEM_HEIGHT), '', isSelected(this.isSoundOn))
       .setOrigin(0.5)
       .setInteractive({
         useHandCursor: true,
       })
-      .on('pointerover', () => soundItem.setStyle(menuItemOverStyle))
+      .on('pointerover', () => this.soundItem.setStyle(menuItemOverStyle))
       .on('pointerout', () => {
-        soundItem.setStyle(isSelected2(this.isSoundOn));
+        this.soundItem.setStyle(isSelected(this.isSoundOn));
       })
       .on('pointerdown', () => {
         this.isSoundOn = !this.isSoundOn;
       });
 
-    const engItem = this.add.text(menuX - 150, menuY + (2 * MENU_ITEM_HEIGHT), 'english', isSelected2(this.isEnglishOn))
-      .setOrigin(0.5)
+    this.engItem = this.add.text(menuX - 100, menuY + (2 * MENU_ITEM_HEIGHT), '', isSelected(this.isEnglishOn))
+      .setOrigin(1, 0.5)
       .setInteractive({
         useHandCursor: true,
       })
-      .on('pointerover', () => engItem.setStyle(menuItemOverStyle))
+      .on('pointerover', () => this.engItem.setStyle(menuItemOverStyle))
       .on('pointerout', () => {
-        engItem.setStyle(isSelected2(this.isEnglishOn));
+        this.engItem.setStyle(isSelected(this.isEnglishOn));
       });
-    // .on('pointerdown', () => {
-    //   this.isEnglishOn = !this.isEnglishOn;
-    //   this.isRussianOn = !this.isRussianOn;
-    //   engItem.setStyle(isSelected2(this.isEnglishOn));
-    //   rusItem.setStyle(isSelected2(this.isRussianOn));
-    // });
 
-    this.add.text(menuX, menuY + (2 * MENU_ITEM_HEIGHT), 'language', menuItemDisableStyle)
+    this.langItem = this.add.text(menuX, menuY + (2 * MENU_ITEM_HEIGHT), '', menuItemDisableStyle)
       .setOrigin(0.5);
 
-    const rusItem = this.add.text(menuX + 150, menuY + (2 * MENU_ITEM_HEIGHT), 'russian', isSelected2(this.isRussianOn))
-      .setOrigin(0.5)
+    this.rusItem = this.add.text(menuX + 100, menuY + (2 * MENU_ITEM_HEIGHT), '', isSelected(this.isRussianOn))
+      .setOrigin(0, 0.5)
       .setInteractive({
         useHandCursor: true,
       })
-      .on('pointerover', () => rusItem.setStyle(menuItemOverStyle))
+      .on('pointerover', () => this.rusItem.setStyle(menuItemOverStyle))
       .on('pointerout', () => {
-        rusItem.setStyle(isSelected2(this.isRussianOn));
+        this.rusItem.setStyle(isSelected(this.isRussianOn));
       })
       .on('pointerdown', () => {
         this.isEnglishOn = !this.isEnglishOn;
         this.isRussianOn = !this.isRussianOn;
+        this.engItem.setStyle(isSelected(this.isEnglishOn));
+        this.game.localeEng = (this.isRussianOn) ? false : true;
+        console.log(this.game.localeEng);
+        this.updateItems();
       });
 
-    engItem.on('pointerdown', () => {
+    this.engItem.on('pointerdown', () => {
       this.isEnglishOn = !this.isEnglishOn;
       this.isRussianOn = !this.isRussianOn;
+      this.rusItem.setStyle(isSelected(this.isRussianOn));
+      this.game.localeEng = (this.isRussianOn) ? false : true;
+      console.log(this.game.localeEng);
+      this.updateItems();
     });
 
-    const applyItem = this.add.text(menuX, menuY + 250, 'apply', menuItemBackStyle)
+    this.applyItem = this.add.text(menuX, menuY + 250, '', menuItemBackStyle)
       .setOrigin(0.5)
       .setInteractive({
         useHandCursor: true,
       })
-      .on('pointerover', () => applyItem.setStyle(menuItemOverStyle))
-      .on('pointerout', () => applyItem.setStyle(menuItemBackStyle))
+      .on('pointerover', () => this.applyItem.setStyle(menuItemOverStyle))
+      .on('pointerout', () => this.applyItem.setStyle(menuItemBackStyle))
       .on('pointerdown', () => this.scene.switch('MainMenu'));
 
     this.game.scale.on('leavefullscreen', () => {
-      fullscreenItem.setStyle(isSelected2(this.game.scale.isFullscreen))
-    })
+      this.fullscreenItem.setStyle(isSelected(this.game.scale.isFullscreen));
+    });
+  }
+
+  updateItems() {
+    if (this.game.localeEng) {
+      this.fullscreenItem.setText('fullscreen');
+      this.musicItem.setText('music');
+      this.soundItem.setText('sound');
+      this.rusItem.setText('russian');
+      this.engItem.setText('english');
+      this.langItem.setText('language');
+      this.applyItem.setText('apply');
+    } else {
+      this.fullscreenItem.setText('на весь экран');
+      this.musicItem.setText('музыка');
+      this.soundItem.setText('звук');
+      this.rusItem.setText('русский');
+      this.engItem.setText('английский');
+      this.langItem.setText('язык');
+      this.applyItem.setText('применить');
+    }
   }
 }
