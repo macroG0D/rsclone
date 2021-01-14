@@ -19,7 +19,7 @@ export default class GameOver extends Phaser.Scene {
     this.time.addEvent({
       delay: 2500,
       callback: () => {
-        this.scene.switch('Level1');
+        this.scene.start('Level1');
       },
     });
   }
