@@ -35,6 +35,7 @@ export default class Level1 extends Phaser.Scene {
   }
 
   create() {
+    EventsCenter.destroy(); // destory preveousely created instance to prevent score multiply
     this.matter.world.setBounds(0, 0, levelWidth, levelHeight, BORDER_THICKNESS);
     this.cameras.main.setBounds(0, 0, levelWidth, levelHeight);
     this.cameras.main.roundPixels = true;
@@ -50,7 +51,7 @@ export default class Level1 extends Phaser.Scene {
     this.cursors = this.input.keyboard.createCursorKeys();
     playMusic(this, 'level1_music');
     this.scene.run('Score');
-    this.scoreChange();
+    // this.scoreChange();
     this.gameMenu();
   }
 
@@ -174,18 +175,19 @@ export default class Level1 extends Phaser.Scene {
     }
   }
 
-  scoreChange() {
-    // временно скор меняется по нажатию шифта - потом любое другое событие или действие
-    this.cursors.shift.on('down', () => {
-      this.score += 1;
-      // важна вот эта фраза для передачи апдейта скора
-      EventsCenter.emit('update-score', this.score);
-    });
+  // scoreChange() {
+  //   console.log('test');
+  //   // временно скор меняется по нажатию шифта - потом любое другое событие или действие
+  //   this.cursors.shift.on('down', () => {
+  //     this.score += 1;
+  //     // важна вот эта фраза для передачи апдейта скора
+  //     EventsCenter.emit('update-score', this.score);
+  //   });
 
-    // this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
-    //   this.cursors.shift.on('down');
-    // });
-  }
+  //   // this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+  //   //   this.cursors.shift.on('down');
+  //   // });
+  // }
 
   gameMenu() {
     this.cursors.space.on('down', () => {
