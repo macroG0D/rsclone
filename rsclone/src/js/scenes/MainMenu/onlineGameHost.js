@@ -24,6 +24,7 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
     this.client.on('hostGameSuccess', (sessionName) => {
       this.menu[0].item.setText(`${sessionName} awaiting connection...`);
     });
+    this.client.on('startGame', (gameData) => this.scene.start('Level1', gameData));
     this.requestHostGame();
   }
 

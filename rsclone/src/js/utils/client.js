@@ -19,6 +19,10 @@ export default class Client extends Phaser.Events.EventEmitter {
     this.socket.on('joinGameSuccess', (sessionNames) => {
       if (sessionNames) this.emit('joinGameSuccess', sessionNames);
     });
+
+    this.socket.on('startGame', (gameData) => {
+      this.emit('startGame', gameData);
+    });
   }
 
   sendData(key, data) {

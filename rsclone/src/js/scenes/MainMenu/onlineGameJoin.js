@@ -23,6 +23,7 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
       };
       this.menu = createMenu(this, this.menuItems, true, this.menuCallBack);
     });
+    this.client.on('startGame', (gameData) => this.scene.start('Level1', gameData));
     this.requestJoinGame();
   }
 

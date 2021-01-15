@@ -13,6 +13,7 @@ module.exports = {
       socket.on('requestHostGame', () => this.onRequestHostGame(socket));
       socket.on('requestJoinGame', () => this.onRequestJoinGame(socket));
       socket.on('requestDropGame', () => this.onDisconnect(socket));
+      socket.on('joinGame', (sessionName) => this.onJoinGame(socket, sessionName));
       socket.on('disconnect', () => this.onDisconnect(socket));
     });
   },
@@ -38,12 +39,24 @@ module.exports = {
   onRequestJoinGame(socket) {
     const sessionNames = [];
     Object.values(this.sessions).forEach((session) => {
-      if (session && session.name) sessionNames.push(session.name);
+      if (session && session.name && !session.playerTwoSocket) sessionNames.push(session.name);
     });
     socket.emit('joinGameSuccess', sessionNames);
   },
 
   onDisconnect(socket) {
     if (this.sessions[socket.id]) this.sessions[socket.id] = undefined;
+  },
+
+  onJoinGame(socket, sessionName) {
+    Object.values(this.sessions).forEach((session) => {
+      if (session && session.name && session.name === sessionName) {
+        const currentSession = session;
+        currentSession.playerTwoSocket = socket;
+        // Start the game;
+        currentSession.playerOneSocket.emit('startGame', { master: true });
+        currentSession.playerTwoSocket.emit('startGame', { master: false });
+      }
+    });
   },
 };

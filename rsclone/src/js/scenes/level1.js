@@ -34,6 +34,10 @@ export default class Level1 extends Phaser.Scene {
     this.score = 0;
   }
 
+  init(gameData) {
+    if (gameData && gameData.master) this.master = gameData.master;
+  }
+
   create() {
     this.matter.world.setBounds(0, 0, levelWidth, levelHeight, BORDER_THICKNESS);
     this.cameras.main.setBounds(0, 0, levelWidth, levelHeight);
