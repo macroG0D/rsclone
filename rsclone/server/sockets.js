@@ -1,6 +1,6 @@
 const socketIO = require('socket.io');
 
-function generateSession() {
+function generateSessionName() {
   const randomNum = Math.floor(Math.random() * 9998 + 1);
   return `game#${randomNum.toString().padStart(4, '0')}`;
 }
@@ -11,13 +11,16 @@ module.exports = {
     this.io = socketIO(server);
     this.io.on('connection', (socket) => {
       socket.on('hostGame', (data) => this.onHostGame(socket, data));
+      socket.on('disconnect', () => console.log('user disconnected'));
       // this.onConnection(socket);
     });
   },
 
   onHostGame(socket) {
-    let sessionName = generateSession();
-    while (sessionName in this.sessions) sessionName = generateSession();
-    console.log(sessionName);
+    let sessionName;
+    while (!sessionName || (sessionName && sessionName in this.sessions)) {
+      sessionName = generateSessionName();
+    }
+    console.log(socket.id, sessionName);
   },
 };

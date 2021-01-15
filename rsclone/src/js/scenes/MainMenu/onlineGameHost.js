@@ -1,5 +1,4 @@
 import Phaser from 'phaser';
-import Client from '../../utils/client';
 
 import { createMenu } from '../../utils/createMenu';
 import { createBg } from '../../utils/createBg';
@@ -17,13 +16,11 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
     this.createImg();
     createBg(this);
     createMenu(this, this.menuItems, true, this.menuCallBack);
-    window.location.hash = this.scene.key;
+    this.client = this.game.client;
     this.requestHostGame();
   }
 
   requestHostGame() {
-    this.client = new Client();
-    this.client.init();
     this.client.sendData('hostGame');
   }
 

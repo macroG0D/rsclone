@@ -4,7 +4,8 @@ import io from 'socket.io-client';
 import { SERVER_HOST } from '../constants';
 
 export default class Client extends Phaser.Events.EventEmitter {
-  init() {
+  constructor() {
+    super();
     this.sent = {};
     this.master = false;
     this.socket = io(SERVER_HOST);
