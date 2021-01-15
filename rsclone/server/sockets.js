@@ -10,17 +10,40 @@ module.exports = {
     this.sessions = {};
     this.io = socketIO(server);
     this.io.on('connection', (socket) => {
-      socket.on('hostGame', (data) => this.onHostGame(socket, data));
-      socket.on('disconnect', () => console.log('user disconnected'));
-      // this.onConnection(socket);
+      socket.on('requestHostGame', () => this.onRequestHostGame(socket));
+      socket.on('requestJoinGame', () => this.onRequestJoinGame(socket));
+      socket.on('requestDropGame', () => this.onDisconnect(socket));
+      socket.on('disconnect', () => this.onDisconnect(socket));
     });
   },
 
-  onHostGame(socket) {
-    let sessionName;
-    while (!sessionName || (sessionName && sessionName in this.sessions)) {
-      sessionName = generateSessionName();
+  onRequestHostGame(socket) {
+    if (!this.sessions[socket.id]) this.sessions[socket.id] = {};
+    const session = this.sessions[socket.id];
+
+    if (!session.name) session.name = generateSessionName();
+
+    if (!session.playerOneSocket || session.playerOneSocket.id !== socket.id) {
+      session.playerOneSocket = socket;
     }
-    console.log(socket.id, sessionName);
+
+    if (session.playerTwoSocket) {
+      session.playerTwoSocket.emit('dropGame');
+      session.playerTwoSocket = undefined;
+    }
+
+    session.playerOneSocket.emit('hostGameSuccess', session.name);
+  },
+
+  onRequestJoinGame(socket) {
+    const sessionNames = [];
+    Object.values(this.sessions).forEach((session) => {
+      if (session && session.name) sessionNames.push(session.name);
+    });
+    socket.emit('joinGameSuccess', sessionNames);
+  },
+
+  onDisconnect(socket) {
+    if (this.sessions[socket.id]) this.sessions[socket.id] = undefined;
   },
 };

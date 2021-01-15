@@ -5,10 +5,13 @@ const APP_DIST = '../dist';
 const http = require('http');
 const path = require('path');
 const express = require('express');
+const cors = require('cors');
 const sockets = require('./sockets');
 
 // Create the server
 const app = express();
+app.use(cors());
+app.options('*', cors());
 const server = http.createServer(app);
 
 // Host the app

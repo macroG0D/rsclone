@@ -12,22 +12,43 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
     this.menuItems = {
       'Looking for a partner...': () => this.scene.switch('MainMenuOnlineGameHost'),
     };
-    this.menuCallBack = () => this.scene.switch('MainMenuOnlineGame');
-    this.createImg();
+    this.menuCallBack = () => {
+      this.client.sendData('requestDropGame');
+      this.scene.stop();
+      this.scene.switch('MainMenuOnlineGame');
+    };
     createBg(this);
-    createMenu(this, this.menuItems, true, this.menuCallBack);
+    this.createImg();
+    this.menu = createMenu(this, this.menuItems, true, this.menuCallBack);
     this.client = this.game.client;
+    this.client.on('hostGameSuccess', (sessionName) => {
+      this.menu[0].item.setText(`${sessionName} awaiting connection...`);
+    });
     this.requestHostGame();
   }
 
   requestHostGame() {
-    this.client.sendData('hostGame');
+    this.client.sendData('requestHostGame');
   }
 
   createImg() {
-    this.add.image(314, 215, 'ibbImg');
-    this.add.image(967, 215, 'obbImg');
-    this.add.image(314, 437, 'ibbKeys');
-    this.add.image(967, 437, 'obbKeys');
+    this.add.image(314, 215, 'ibbBg');
+    this.ibb = this.add.image(314, 215, 'ibbImg');
+    this.animate(this.ibb, 0);
+    this.add.image(967, 215, 'obbBg');
+    this.obb = this.add.image(967, 215, 'obbImg');
+    this.animate(this.obb, 1000);
+  }
+
+  animate(character, delay) {
+    this.tweens.add({
+      targets: character,
+      scale: 1.1,
+      ease: 'Linear',
+      duration: 1000,
+      delay,
+      yoyo: true,
+      repeat: -1,
+    });
   }
 }
