@@ -1,11 +1,7 @@
 import Phaser from 'phaser';
-
-import {
-  createMenu
-} from '../../utils/createMenu';
-import {
-  createBg
-} from '../../utils/createBg';
+import { LOCALE } from '../../constants';
+import { createMenu } from '../../utils/createMenu';
+import { createBg } from '../../utils/createBg';
 
 export default class GameMenu extends Phaser.Scene {
   constructor() {
@@ -36,17 +32,15 @@ export default class GameMenu extends Phaser.Scene {
 
   updateLang() {
     if (this.game.localeEng) {
-      this.continueItem.setText('continue');
-      this.newGameItem.setText('new game');
-      this.settingsItem.setText('settings');
-      this.mainMenuItem.setText('main menu');
-      this.menuItemBack.setText('back');
+      this.continueItem.setText(LOCALE.gameMenu.continue.en);
+      this.newGameItem.setText(LOCALE.gameMenu.newGame.en);
+      this.settingsItem.setText(LOCALE.gameMenu.settings.en);
+      this.mainMenuItem.setText(LOCALE.gameMenu.mainMenu.en);
     } else {
-      this.continueItem.setText('продолжить');
-      this.newGameItem.setText('новая игра');
-      this.settingsItem.setText('настройки');
-      this.mainMenuItem.setText('главное меню');
-      this.menuItemBack.setText('назад');
+      this.continueItem.setText(LOCALE.gameMenu.continue.ru);
+      this.newGameItem.setText(LOCALE.gameMenu.newGame.ru);
+      this.settingsItem.setText(LOCALE.gameMenu.settings.ru);
+      this.mainMenuItem.setText(LOCALE.gameMenu.mainMenu.ru);
     }
   }
 

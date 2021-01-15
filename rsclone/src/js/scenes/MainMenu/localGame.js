@@ -1,11 +1,7 @@
 import Phaser from 'phaser';
-
-import {
-  createMenu
-} from '../../utils/createMenu';
-import {
-  createBg
-} from '../../utils/createBg';
+import { LOCALE } from '../../constants';
+import { createMenu } from '../../utils/createMenu';
+import { createBg } from '../../utils/createBg';
 
 export default class MainMenuLocalGame extends Phaser.Scene {
   constructor() {
@@ -27,11 +23,11 @@ export default class MainMenuLocalGame extends Phaser.Scene {
 
   updateLang() {
     if (this.game.localeEng) {
-      this.startGameItem.setText('start game');
-      this.menuItemBack.setText('back');
+      this.startGameItem.setText(LOCALE.localGame.startGame.en);
+      this.menuItemBack.setText(LOCALE.localGame.back.en);
     } else {
-      this.startGameItem.setText('начать игру');
-      this.menuItemBack.setText('назад');
+      this.startGameItem.setText(LOCALE.localGame.startGame.ru);
+      this.menuItemBack.setText(LOCALE.localGame.back.ru);
     }
   }
 

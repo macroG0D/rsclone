@@ -1,13 +1,8 @@
 import Phaser from 'phaser';
-import {
-  createMenu,
-} from '../utils/createMenu';
-import {
-  createBg,
-} from '../utils/createBg';
-import {
-  playMusic,
-} from '../utils/music';
+import { createMenu } from '../utils/createMenu';
+import { createBg } from '../utils/createBg';
+import { playMusic } from '../utils/music';
+import { LOCALE } from '../constants';
 
 export default class MainMenu extends Phaser.Scene {
   constructor() {
@@ -31,24 +26,22 @@ export default class MainMenu extends Phaser.Scene {
 
   updateLang() {
     if (this.game.localeEng) {
-      this.playItem.setText('play');
-      this.leaderboardItem.setText('leaderboard');
-      this.settingsItem.setText('settings');
-      this.developersItem.setText('developers');
-      this.aboutItem.setText('about');
+      this.playItem.setText(LOCALE.mainMenu.play.en);
+      this.leaderboardItem.setText(LOCALE.mainMenu.leaderboard.en);
+      this.settingsItem.setText(LOCALE.mainMenu.settings.en);
+      this.developersItem.setText(LOCALE.mainMenu.developers.en);
+      this.aboutItem.setText(LOCALE.mainMenu.about.en);
     } else {
-      this.playItem.setText('играть');
-      this.leaderboardItem.setText('лидеры');
-      this.settingsItem.setText('настройки');
-      this.developersItem.setText('разработчики');
-      this.aboutItem.setText('о нас');
+      this.playItem.setText(LOCALE.mainMenu.play.ru);
+      this.leaderboardItem.setText(LOCALE.mainMenu.leaderboard.ru);
+      this.settingsItem.setText(LOCALE.mainMenu.settings.ru);
+      this.developersItem.setText(LOCALE.mainMenu.developers.ru);
+      this.aboutItem.setText(LOCALE.mainMenu.about.ru);
     }
   }
 
   checkLang() {
-    if (!this.game.localeEng) {
-      this.updateLang();
-    }
+    if (!this.game.localeEng) this.updateLang();
     this.events.on('wake', () => {
       if (this.eng !== this.game.localeEng) {
         this.updateLang();

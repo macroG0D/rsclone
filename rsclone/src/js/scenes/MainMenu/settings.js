@@ -1,8 +1,6 @@
 import Phaser from 'phaser';
-
-import {
-  createBg,
-} from '../../utils/createBg';
+import { LOCALE } from '../../constants';
+import { createBg } from '../../utils/createBg';
 
 const menuItemStyle = {
   font: '30px Montserrat',
@@ -155,28 +153,26 @@ export default class MainMenuSettings extends Phaser.Scene {
 
   updateItems() {
     if (this.game.localeEng) {
-      this.fullscreenItem.setText('fullscreen');
-      this.musicItem.setText('music');
-      this.soundItem.setText('sound');
-      this.rusItem.setText('russian');
-      this.engItem.setText('english');
-      this.langItem.setText('language');
-      this.applyItem.setText('apply');
+      this.fullscreenItem.setText(LOCALE.settings.fullscreen.en);
+      this.musicItem.setText(LOCALE.settings.music.en);
+      this.soundItem.setText(LOCALE.settings.sound.en);
+      this.rusItem.setText(LOCALE.settings.russian.en);
+      this.engItem.setText(LOCALE.settings.english.en);
+      this.langItem.setText(LOCALE.settings.language.en);
+      this.applyItem.setText(LOCALE.settings.apply.en);
     } else {
-      this.fullscreenItem.setText(' на весь экран');
-      this.musicItem.setText('музыка');
-      this.soundItem.setText('звук');
-      this.rusItem.setText('русский');
-      this.engItem.setText('английский');
-      this.langItem.setText('язык');
-      this.applyItem.setText('применить');
+      this.fullscreenItem.setText(LOCALE.settings.fullscreen.ru);
+      this.musicItem.setText(LOCALE.settings.music.ru);
+      this.soundItem.setText(LOCALE.settings.sound.ru);
+      this.rusItem.setText(LOCALE.settings.russian.ru);
+      this.engItem.setText(LOCALE.settings.english.ru);
+      this.langItem.setText(LOCALE.settings.language.ru);
+      this.applyItem.setText(LOCALE.settings.apply.ru);
     }
   }
 
   checkLang() {
-    if (!this.game.localeEng) {
-      this.updateLang();
-    }
+    if (!this.game.localeEng) this.updateLang();
     this.events.on('wake', () => {
       if (this.eng !== this.game.localeEng) {
         this.updateLang();

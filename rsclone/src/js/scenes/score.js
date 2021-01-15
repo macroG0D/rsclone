@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import EventsCenter from '../utils/eventsCenter';
+import { LOCALE } from '../constants';
 
 export default class Score extends Phaser.Scene {
   constructor() {
@@ -64,11 +65,11 @@ export default class Score extends Phaser.Scene {
 
   updateLang() {
     if (this.game.localeEng) {
-      this.scoreText.setText(`score:  ${this.currentScore}`);
-      this.timerText.setText(`time:  ${this.currentTimeStyled}`);
+      this.scoreText.setText(`${LOCALE.score.score.en} ${this.currentScore}`);
+      this.timerText.setText(`${LOCALE.score.timer.en}  ${this.currentTimeStyled}`);
     } else {
-      this.scoreText.setText(`очки:  ${this.currentScore}`);
-      this.timerText.setText(`время:  ${this.currentTimeStyled}`);
+      this.scoreText.setText(`${LOCALE.score.score.ru}  ${this.currentScore}`);
+      this.timerText.setText(`${LOCALE.score.timer.ru}  ${this.currentTimeStyled}`);
     }
   }
 

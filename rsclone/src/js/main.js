@@ -2,14 +2,9 @@ import Phaser from 'phaser';
 import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
 import Create from './components/dom-create';
 
-import {
-  SCENE_LIST,
-} from './scenes/_scenesList';
+import { SCENE_LIST } from './scenes/_scenesList';
 
-import {
-  GAME_WIDTH,
-  GAME_HEIGHT,
-} from './constants';
+import { GAME_WIDTH, GAME_HEIGHT } from './constants';
 
 const WebFont = require('webfontloader');
 
@@ -66,7 +61,7 @@ class Main {
       key: undefined,
       track: undefined,
     };
-    this.game.localeEng = true;
+    this.game.localeEng = false;
   }
 }
 

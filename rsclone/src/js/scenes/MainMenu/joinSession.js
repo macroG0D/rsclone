@@ -1,11 +1,7 @@
 import Phaser from 'phaser';
-
-import {
-  createMenu
-} from '../../utils/createMenu';
-import {
-  createBg
-} from '../../utils/createBg';
+import { LOCALE } from '../../constants';
+import { createMenu } from '../../utils/createMenu';
+import { createBg } from '../../utils/createBg';
 
 const titleStyle = {
   font: '45px Montserrat',
@@ -41,18 +37,16 @@ export default class MainMenuJoinSession extends Phaser.Scene {
 
   updateLang() {
     if (this.game.localeEng) {
-      this.choose.setText('choose session to join');
-      this.menuItemBack.setText('back');
+      this.choose.setText(LOCALE.joinSession.choose.en);
+      this.menuItemBack.setText(LOCALE.joinSession.back.en);
     } else {
-      this.choose.setText('выбрать сессию');
-      this.menuItemBack.setText('назад');
+      this.choose.setText(LOCALE.joinSession.choose.ru);
+      this.menuItemBack.setText(LOCALE.joinSession.back.ru);
     }
   }
 
   checkLang() {
-    if (!this.game.localeEng) {
-      this.updateLang();
-    }
+    if (!this.game.localeEng) this.updateLang();
     this.events.on('wake', () => {
       if (this.eng !== this.game.localeEng) {
         this.updateLang();

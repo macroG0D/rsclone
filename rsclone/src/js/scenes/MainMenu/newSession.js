@@ -1,8 +1,6 @@
 import Phaser from 'phaser';
-
-import {
-  createBg,
-} from '../../utils/createBg';
+import { LOCALE } from '../../constants';
+import { createBg } from '../../utils/createBg';
 
 const selectedStyle = {
   font: '30px Montserrat',
@@ -64,18 +62,16 @@ export default class MainMenuNewSession extends Phaser.Scene {
 
   updateLang() {
     if (this.game.localeEng) {
-      this.waiting.setText('waiting for second player');
-      this.cancel.setText('cancel');
+      this.waiting.setText(LOCALE.newSession.waiting.en);
+      this.cancel.setText(LOCALE.newSession.cancel.en);
     } else {
-      this.waiting.setText('ожидание второго игрока');
-      this.cancel.setText('отмена');
+      this.waiting.setText(LOCALE.newSession.waiting.ru);
+      this.cancel.setText(LOCALE.newSession.cancel.ru);
     }
   }
 
   checkLang() {
-    if (!this.game.localeEng) {
-      this.updateLang();
-    }
+    if (!this.game.localeEng) this.updateLang();
     this.events.on('wake', () => {
       if (this.eng !== this.game.localeEng) {
         this.updateLang();

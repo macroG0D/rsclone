@@ -1,11 +1,7 @@
 import Phaser from 'phaser';
-
-import {
-  createMenu
-} from '../../utils/createMenu';
-import {
-  createBg
-} from '../../utils/createBg';
+import { LOCALE } from '../../constants';
+import { createMenu } from '../../utils/createMenu';
+import { createBg } from '../../utils/createBg';
 
 export default class MainMenuOnlineGame extends Phaser.Scene {
   constructor() {
@@ -30,13 +26,13 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
 
   updateLang() {
     if (this.game.localeEng) {
-      this.newSessionItem.setText('new session');
-      this.joinSessionItem.setText('join session');
-      this.menuItemBack.setText('back');
+      this.newSessionItem.setText(LOCALE.onlineGame.newSession.en);
+      this.joinSessionItem.setText(LOCALE.onlineGame.joinSession.en);
+      this.menuItemBack.setText(LOCALE.onlineGame.back.en);
     } else {
-      this.newSessionItem.setText('новая сессия');
-      this.joinSessionItem.setText('присоединиться');
-      this.menuItemBack.setText('назад');
+      this.newSessionItem.setText(LOCALE.onlineGame.newSession.ru);
+      this.joinSessionItem.setText(LOCALE.onlineGame.joinSession.ru);
+      this.menuItemBack.setText(LOCALE.onlineGame.back.ru);
     }
   }
 
