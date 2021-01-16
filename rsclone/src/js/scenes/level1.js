@@ -36,9 +36,13 @@ export default class Level1 extends Phaser.Scene {
   init(gameData) {
     const player1Controls = ['LEFT', 'RIGHT', 'UP', 'DOWN'];
     const player2Controls = ['A', 'D', 'W', 'S'];
-    this.player1Input = new Input(this, 'ibb', player1Controls);
-    this.player2Input = new Input(this, 'obb', player2Controls);
-    if (gameData && gameData.master) this.master = gameData.master;
+    if (gameData && gameData.online) {
+      if (gameData.master) this.player1Input = new Input(this, 'ibb', player1Controls);
+      if (!gameData.master) this.player2Input = new Input(this, 'obb', player1Controls);
+    } else {
+      this.player1Input = new Input(this, 'ibb', player1Controls);
+      this.player2Input = new Input(this, 'obb', player2Controls);
+    }
   }
 
   create() {

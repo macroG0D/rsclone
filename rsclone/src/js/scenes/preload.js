@@ -26,6 +26,8 @@ import clouds4 from '../../assets/images/background/clouds_4.png';
 import rocks1 from '../../assets/images/background/rocks_1.png';
 import rocks2 from '../../assets/images/background/rocks_2.png';
 
+import LoadingBar from '../utils/loadingBar';
+
 export default class Preload extends Phaser.Scene {
   constructor() {
     super('Preload');
@@ -33,6 +35,7 @@ export default class Preload extends Phaser.Scene {
 
   preload() {
     this.showBootBg();
+    this.loadingBar = new LoadingBar(this);
     this.load.image('githubIcon', githubIcon);
     this.load.image('obbImg', obbImg);
     this.load.image('ibbImg', ibbImg);

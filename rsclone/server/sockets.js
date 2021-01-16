@@ -10,7 +10,7 @@ module.exports = {
     this.sessions = {};
     this.io = socketIO(server, {
       cors: {
-        origin: ['http://localhost:3000', 'http://localhost'],
+        origin: ['http://localhost:3000', 'http://localhost', 'http://127.0.0.1'],
         methods: ['GET', 'POST'],
       },
     });
@@ -59,8 +59,8 @@ module.exports = {
         const currentSession = session;
         currentSession.playerTwoSocket = socket;
         // Start the game;
-        currentSession.playerOneSocket.emit('startGame', { master: true });
-        currentSession.playerTwoSocket.emit('startGame', { master: false });
+        currentSession.playerOneSocket.emit('startGame', { online: true, master: true });
+        currentSession.playerTwoSocket.emit('startGame', { online: true, master: false });
       }
     });
   },
