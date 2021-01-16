@@ -139,7 +139,7 @@ export default class Level1 extends Phaser.Scene {
       } else {
         const wall = this.add.rectangle(wallX, wallY, wallWidth, wallHeight, wallColor);
         const wallGameObject = this.matter.add.gameObject(wall, objSettings);
-        wallGameObject.setCollisionGroup(2); // we have to add collision groups to make emitter work
+        wallGameObject.setCollisionCategory(16);
       }
     });
   }
