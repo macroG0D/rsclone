@@ -103,6 +103,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       this.portalsListeners(scene, portal);
     });
     this.body.restitution = 0.3;
+    this.setCollisionCategory(2);
   }
 
   getAnotherPlayer() {

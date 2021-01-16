@@ -1,3 +1,5 @@
+import EventsCenter from './eventsCenter';
+
 const obbParticlesColors = [0xD15C81, 0x97425D, 0x6D3044];
 const ibbParticlesColors = [0x59D75C, 0x3F9A42, 0x2F7231];
 export default class Emitter {
@@ -60,21 +62,34 @@ export default class Emitter {
           break;
         }
         case 'crystal': {
-          particleGameObject = this.scene.add.image(this.gameObject.x, this.gameObject.y, 'bubble');
+          particleGameObject = this.scene.add.image(this.gameObject.x, this.gameObject.y, 'crystal');
           break;
         }
         default:
           break;
       }
-      particleGameObject.setScale(randomScale);
+      if (this.particleType !== 'crystal') particleGameObject.setScale(randomScale);
       const particle = this.scene.matter.add.gameObject(
         particleGameObject,
         matterParams,
       );
-      if (this.particleType !== 'crystal') {
-        particle.setCollisionGroup(2);
-        particle.setCollidesWith(0);
+      if (this.particleType === 'crystal') {
+        const crystalScoreValue = 10;
+        this.scene.matterCollision.addOnCollideStart({
+          objectA: particle,
+          objectB: [this.scene.ibb, this.scene.obb],
+          callback: (eventData) => {
+            eventData.gameObjectA.destroy();
+            EventsCenter.emit('update-score', crystalScoreValue);
+          },
+          context: this,
+        });
       }
+      const collisionCategory = this.particleType === 'crystal' ? 4 : 8;
+      const collidesWith = this.particleType === 'crystal' ? [2, 16] : 16;
+      particle.setCollisionCategory(collisionCategory);
+      particle.setCollidesWith(collidesWith);
+
       const velocityX = (Math.round(Math.random()) * 2 - 1) * Math.random() * 10;
       const velocityY = Math.random() * (this.reverseGravity ? 15 : -15);
       particle.setVelocity(velocityX, velocityY);
