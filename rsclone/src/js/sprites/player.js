@@ -5,7 +5,6 @@ import {
   DEFAULT_MASS,
   DEFAULT_FRICTION,
   DEFAULT_FRICTION_AIR,
-  CONTROL_KEYS_SEQUENCE,
   CHARACTERS_DISTANCE_MAX,
 } from '../constants';
 
@@ -20,9 +19,15 @@ function createPlayerAnimations(scene, key, sprite) {
   });
 }
 export default class Player extends Phaser.Physics.Matter.Sprite {
-  constructor(scene, key, x, y, sprite, controls) {
+  constructor(scene, key, x, y, sprite) {
     super(scene.matter.world, x, y, sprite);
     createPlayerAnimations(scene, key, sprite);
+    this.directions = {
+      up: false,
+      down: false,
+      left: false,
+      right: false,
+    };
     this.portals = this.scene.portals;
     this.isAlive = true;
     this.scene = scene;
@@ -65,14 +70,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     this.jumpVelocity = 14; // jump velocity moved to player class
     this.disableGravitySwitch = false; // additional flag
     this.scene.add.existing(this);
-
-    this.controls = {};
-    controls.forEach((controlKey, controlIndex) => {
-      const direction = CONTROL_KEYS_SEQUENCE[controlIndex];
-      this.controls[direction] = this.scene
-        .input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes[controlKey]);
-    });
-
     this.scene.events.on('update', this.update, this);
 
     // Track which sensors are touching something
@@ -221,10 +218,10 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     const currentVelocity = this.body.velocity;
     const maxVelocity = 2;
     /* left/right move */
-    if (this.controls.left.isDown) this.moveCharacter('left');
-    if (this.controls.right.isDown) this.moveCharacter('right');
+    if (this.directions.left) this.moveCharacter('left');
+    if (this.directions.right) this.moveCharacter('right');
 
-    if (!this.controls.left.isDown && !this.controls.right.isDown) {
+    if (!this.directions.left && !this.directions.right) {
       this.anims.stop();
       if (this.anims.currentAnim) this.anims.setCurrentFrame(this.anims.currentAnim.frames[0]);
     }
@@ -234,7 +231,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     if (currentVelocity.x < -maxVelocity) this.setVelocityX(-maxVelocity);
 
     /* jump */
-    if ((this.controls.up.isDown || this.controls.down.isDown) && this.isGrounded && this.canJump) {
+    if ((this.directions.up || this.directions.down) && this.isGrounded && this.canJump) {
       this.setVelocityY((this.isRotated) ? this.jumpVelocity : -this.jumpVelocity);
       if (this.isCarrying) {
         Phaser.Physics.Matter.Matter.Body.setVelocity(this.getAnotherPlayer().body, {

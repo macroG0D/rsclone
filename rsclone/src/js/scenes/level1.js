@@ -3,6 +3,8 @@ import Phaser from 'phaser';
 import Player from '../sprites/player';
 import Portal from '../sprites/portal';
 
+import Input from '../utils/input';
+
 import StandartHedgehog from '../sprites/enemies/standartHedgehog';
 import JumpingHedgehog from '../sprites/enemies/jumpingHedgehog';
 import { gradientSquares, gradientColors, walls } from '../levels/level1/backgroundStructure';
@@ -10,9 +12,6 @@ import { gradientSquares, gradientColors, walls } from '../levels/level1/backgro
 import { BORDER_THICKNESS } from '../constants';
 import { playMusic } from '../utils/music';
 import EventsCenter from '../utils/eventsCenter';
-
-const player1Controls = ['LEFT', 'RIGHT', 'UP', 'DOWN'];
-const player2Controls = ['A', 'D', 'W', 'S'];
 
 const levelWidth = 5369;
 const levelHeight = 890;
@@ -35,6 +34,10 @@ export default class Level1 extends Phaser.Scene {
   }
 
   init(gameData) {
+    const player1Controls = ['LEFT', 'RIGHT', 'UP', 'DOWN'];
+    const player2Controls = ['A', 'D', 'W', 'S'];
+    this.player1Input = new Input(this, 'ibb', player1Controls);
+    this.player2Input = new Input(this, 'obb', player2Controls);
     if (gameData && gameData.master) this.master = gameData.master;
   }
 
@@ -45,8 +48,8 @@ export default class Level1 extends Phaser.Scene {
     // this.addBackgrounds();
     this.addParallax();
     this.addWalls();
-    this.ibb = new Player(this, 'ibb', 3900, 400, 'ibb-sprite', player1Controls); // 200 200
-    this.obb = new Player(this, 'obb', 3950, 400, 'obb-sprite', player2Controls); // 300 300
+    this.ibb = new Player(this, 'ibb', 3900, 400, 'ibb-sprite'); // 200 200
+    this.obb = new Player(this, 'obb', 3950, 400, 'obb-sprite'); // 300 300
     this.hedgehog = new StandartHedgehog(this, 3400, 558, 'hedgehog-head', 'hedgehog-halfbutt', 58);
     this.hedgehog.moveHorizontally(300, 'left', 2500);
     this.hedgehog2 = new JumpingHedgehog(this, 2800, 592, 'hedgehog-jumper', 'hedgehog-fullbutt');
@@ -73,6 +76,10 @@ export default class Level1 extends Phaser.Scene {
 
       this.parallax[key] = { key, sprite, speed };
     });
+  }
+
+  setDirection(key, direction, state) {
+    this[key].directions[direction] = state;
   }
 
   scrollParallax() {

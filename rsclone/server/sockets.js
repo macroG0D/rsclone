@@ -8,7 +8,12 @@ function generateSessionName() {
 module.exports = {
   init(server) {
     this.sessions = {};
-    this.io = socketIO(server);
+    this.io = socketIO(server, {
+      cors: {
+        origin: ['http://localhost:3000', 'http://localhost'],
+        methods: ['GET', 'POST'],
+      },
+    });
     this.io.on('connection', (socket) => {
       socket.on('requestHostGame', () => this.onRequestHostGame(socket));
       socket.on('requestJoinGame', () => this.onRequestJoinGame(socket));
