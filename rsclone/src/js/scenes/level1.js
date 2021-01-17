@@ -42,8 +42,8 @@ export default class Level1 extends Phaser.Scene {
     // this.addBackgrounds();
     this.addParallax();
     this.addWalls();
-    this.ibb = new Player(this, 'ibb', 3900, 400, 'ibb-sprite', player1Controls); // 200 200
-    this.obb = new Player(this, 'obb', 3950, 400, 'obb-sprite', player2Controls); // 300 300
+    this.ibb = new Player(this, 'ibb', 4400, 400, 'ibb-sprite', player1Controls); // 200 200
+    this.obb = new Player(this, 'obb', 4450, 400, 'obb-sprite', player2Controls); // 300 300
     this.hedgehog = new StandartHedgehog(this, 3400, 558, 'hedgehog-head', 'hedgehog-halfbutt', 58);
     this.hedgehog.moveHorizontally(300, 'left', 2500);
     this.hedgehog2 = new JumpingHedgehog(this, 2800, 592, 'hedgehog-jumper', 'hedgehog-fullbutt');
