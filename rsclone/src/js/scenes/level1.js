@@ -133,7 +133,7 @@ export default class Level1 extends Phaser.Scene {
       if (isPortal) {
         // moved portal to separate class for better detection in collision event with instanceof
         const portal = new Portal(
-          this, wallX, wallY, wallWidth, wallHeight, wallColor, objSettings,
+          this, wallX, wallY, wallWidth, wallHeight, wallColor, isVertical, objSettings,
         );
         this.portals.push(portal);
       } else {

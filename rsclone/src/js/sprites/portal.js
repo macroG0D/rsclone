@@ -1,10 +1,11 @@
 import Phaser from 'phaser';
 
 export default class Portal extends Phaser.GameObjects.Rectangle {
-  constructor(scene, x, y, width, height, color, objSettings) {
+  constructor(scene, x, y, width, height, color, isVertical, objSettings) {
     super(scene, x, y, width, height, color); // new Rectangle()
     scene.matter.add.gameObject(this, objSettings);
     this.addBubbles(scene, x, y, width, height);
+    this.isVertical = isVertical;
   }
 
   addBubbles(scene, x, y, width, height) {
@@ -42,26 +43,43 @@ export default class Portal extends Phaser.GameObjects.Rectangle {
     });
   }
 
-  emitParticles(x, characterWidth, velocity, flipY) {
+  emitParticles(x, y, characterWidth, characterHeight, velocity, flipY) {
     const additionalEmitterWidth = 0;
-    const angleValue = 90;
+    const directionVelocity = this.isVertical ? velocity.x : velocity.y;
+    const angleValue = this.isVertical ? 0 : 90;
     const lifespanTime = 1000;
-    const gravityValue = Math.abs(velocity) * 40;
-    const emitterAngle = flipY ? -angleValue : angleValue;
-    const emitterSpeed = { min: velocity * 10, max: velocity * 25 };
-    const emitterGravityY = flipY ? gravityValue : -gravityValue;
-    const emitterLine = new Phaser.Geom.Line(
-      x - additionalEmitterWidth / 2 - characterWidth / 2, // x1
-      this.emitterParams.y + this.emitterParams.height / 2, // y1
-      x + characterWidth + additionalEmitterWidth, // x2
-      this.emitterParams.y + this.emitterParams.height / 2, // y2
-    );
-    const passingEmitter = this.particle.createEmitter({
+    const gravityValue = Math.abs(directionVelocity) * 40;
+    const emitterAngle = flipY ? Math.abs(angleValue + 180) : angleValue;
+    const speedCoefs = {
+      min: this.isVertical ? 15 : 10,
+      max: this.isVertical ? 30 : 25,
+    };
+    const emitterSpeed = {
+      min: directionVelocity * speedCoefs.min,
+      max: directionVelocity * speedCoefs.max,
+    };
+    const emitterGravity = flipY ? gravityValue : -gravityValue;
+    let emitterLine;
+    if (this.isVertical) {
+      emitterLine = new Phaser.Geom.Line(
+        x + this.emitterParams.width / 2, // x1
+        y - characterHeight / 2, // y1
+        x + this.emitterParams.width / 2, // x2
+        y + characterHeight / 2, // y2
+      );
+    } else {
+      emitterLine = new Phaser.Geom.Line(
+        x - additionalEmitterWidth / 2 - characterWidth / 2, // x1
+        this.emitterParams.y + this.emitterParams.height / 2, // y1
+        x + characterWidth + additionalEmitterWidth, // x2
+        this.emitterParams.y + this.emitterParams.height / 2, // y2
+      );
+    }
+    const emitterConfig = {
       lifespan: lifespanTime,
       speed: emitterSpeed,
       scale: { min: 0.25, max: 1 },
       angle: emitterAngle,
-      gravityY: emitterGravityY,
       alpha: {
         start: 1,
         end: 0,
@@ -72,7 +90,13 @@ export default class Portal extends Phaser.GameObjects.Rectangle {
         type: 'edge',
         quantity: 15,
       },
-    });
+    };
+    if (this.isVertical) {
+      emitterConfig.gravityX = emitterGravity;
+    } else {
+      emitterConfig.gravityY = emitterGravity;
+    }
+    const passingEmitter = this.particle.createEmitter(emitterConfig);
     passingEmitter.stop();
     passingEmitter.explode(15);
     setTimeout(() => {

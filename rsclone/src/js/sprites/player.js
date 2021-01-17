@@ -1,5 +1,4 @@
 import Phaser from 'phaser';
-import Emitter from '../utils/emitter';
 
 import {
   DEFAULT_MASS,
@@ -169,12 +168,17 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
   }
 
   portalDive(portal) {
-    portal.emitParticles(this.x, this.width, this.body.velocity.y, this.isRotated);
+    portal.emitParticles(
+      this.x, this.y,
+      this.width, this.height,
+      this.body.velocity,
+      this.isRotated,
+    );
     this.scene.time.addEvent({
       delay: 50,
       callback: () => {
         playSound(this.scene, 'warp_cross_01');
-        this.switchGravity();
+        this.switchGravity(portal.isVertical);
       },
     });
   }
@@ -190,14 +194,14 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     this.setFlipX(this.direction === checkDirection);
   }
 
-  switchGravity() {
+  switchGravity(isVertical) {
     if (!this.disableGravitySwitch) {
       const minVelocity = this.jumpVelocity;
       const currVelocity = Math.abs(this.body.velocity.y);
       /* adding additional velocity to players body so that player velocity wont fade out if he will
       be constantly jumping through portal
       */
-      if (currVelocity < minVelocity) {
+      if (currVelocity < minVelocity && !isVertical) {
         this.setVelocityY(this.isRotated ? -minVelocity : minVelocity);
       }
       this.body.gravityScale.y *= -1; // flip gravity
