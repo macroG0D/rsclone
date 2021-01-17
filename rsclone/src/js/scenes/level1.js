@@ -14,17 +14,15 @@ import EventsCenter from '../utils/eventsCenter';
 const player1Controls = ['LEFT', 'RIGHT', 'UP', 'DOWN'];
 const player2Controls = ['A', 'D', 'W', 'S'];
 
-const levelWidth = 5369;
+const levelWidth = 8500; // 5369
 const levelHeight = 890;
 
 const parallaxImages = {
-  sky: 0,
-  clouds_1: 0.1,
-  clouds_2: 0.2,
-  clouds_3: 0.3,
-  clouds_4: 0.4,
-  rocks_1: 0.1,
-  rocks_2: 0.2,
+  sky: 0.2,
+  clouds_0: 0.1,
+  bg_0: 0.1,
+  bg_1: 0.2,
+  bg_2: 0.3,
 };
 export default class Level1 extends Phaser.Scene {
   constructor() {
