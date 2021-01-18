@@ -31,6 +31,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     this.isHeadStanding = false;
     this.isRotated = false;
     this.canJump = true;
+    this.lockVelocity = true;
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
     const { width: w, height: h } = this;
     const mainBody = Bodies.rectangle(0, 0, w * 0.75, h, { chamfer: { radius: 8 } });
@@ -195,26 +196,26 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
   }
 
   switchGravity(isVertical) {
-    if (!this.disableGravitySwitch) {
-      const minVelocity = this.jumpVelocity;
-      const currVelocity = Math.abs(this.body.velocity.y);
-      /* adding additional velocity to players body so that player velocity wont fade out if he will
-      be constantly jumping through portal
-      */
-      if (currVelocity < minVelocity && !isVertical) {
+    const verticalVelocityForce = 5;
+    const minVelocity = isVertical ? verticalVelocityForce : this.jumpVelocity;
+    const currVelocity = Math.abs(isVertical ? this.body.velocity.x : this.body.velocity.y);
+    /* adding additional velocity to players body so that player velocity wont fade out if he will
+    be constantly jumping through portal
+    */
+    if (currVelocity < minVelocity) {
+      if (isVertical) {
+        this.lockVelocity = false;
+        this.setVelocityX(this.isRotated ? -minVelocity : minVelocity);
+        this.scene.time.addEvent({
+          delay: 30,
+          callback: () => { this.lockVelocity = true; },
+        });
+      } else {
         this.setVelocityY(this.isRotated ? -minVelocity : minVelocity);
       }
-      this.body.gravityScale.y *= -1; // flip gravity
-      this.rotatePlayer(); // rotate character
-      this.disableGravitySwitch = true; // toggle flag
-      /* because we are triggering switch gravity in interval(read comment in collision event
-      description), this event can be triggered multiple times in a row. To avoid it we added
-      flag that disables multiple gravitySwitch calls for 100ms */
-      this.scene.time.addEvent({
-        delay: 30,
-        callback: () => { this.disableGravitySwitch = false; },
-      });
     }
+    this.body.gravityScale.y *= -1; // flip gravity
+    this.rotatePlayer(); // rotate character
   }
 
   movePlayer() {
@@ -230,10 +231,11 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       if (this.anims.currentAnim) this.anims.setCurrentFrame(this.anims.currentAnim.frames[0]);
     }
 
-    /* limit velocity after applying force, so that the characters wont speed up infinitely */
-    if (currentVelocity.x > maxVelocity) this.setVelocityX(maxVelocity);
-    if (currentVelocity.x < -maxVelocity) this.setVelocityX(-maxVelocity);
-
+    if (this.lockVelocity) {
+      /* limit velocity after applying force, so that the characters wont speed up infinitely */
+      if (currentVelocity.x > maxVelocity) this.setVelocityX(maxVelocity);
+      if (currentVelocity.x < -maxVelocity) this.setVelocityX(-maxVelocity);
+    }
     /* jump */
     if ((this.controls.up.isDown || this.controls.down.isDown) && this.isGrounded && this.canJump) {
       this.setVelocityY((this.isRotated) ? this.jumpVelocity : -this.jumpVelocity);
