@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 
 import { createMenu } from '../../utils/createMenu';
 import { createBg } from '../../utils/createBg';
+import { createImg } from '../../utils/createImg';
 
 export default class MainMenuOnlineGame extends Phaser.Scene {
   constructor() {
@@ -10,9 +11,9 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
 
   create() {
     createBg(this);
-    this.createImg();
+    createImg(this);
     this.client = this.game.client;
-    this.client.on('joinGameSuccess', (sessionNames) => {
+    this.client.on('requestGamesSuccess', (sessionNames) => {
       this.menuItems = {};
       sessionNames.forEach((sessionName) => {
         this.menuItems[sessionName] = () => this.joinGame(sessionName);
@@ -21,38 +22,30 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
         this.scene.stop();
         this.scene.switch('MainMenuOnlineGame');
       };
+      if (!sessionNames.length) this.menuItems['No games hosted'] = this.menuCallBack;
       this.menu = createMenu(this, this.menuItems, true, this.menuCallBack);
+    });
+    this.client.on('gameReady', (sessionName) => {
+      this.menu[0].item.setText(`${sessionName} ready!`);
+      this.menu[0].item.off('pointerdown');
+      this.menu[0].item.on('pointerdown', () => this.requestStartGame(sessionName));
+      for (let itemIndex = 1; itemIndex < this.menu.length; itemIndex += 1) {
+        if (this.menu[itemIndex].item) this.menu[itemIndex].item.destroy();
+      }
     });
     this.client.on('startGame', (gameData) => this.scene.start('Level1', gameData));
     this.requestJoinGame();
   }
 
   requestJoinGame() {
-    this.client.sendData('requestJoinGame');
+    this.client.sendData('requestGames');
   }
 
   joinGame(sessionName) {
     this.client.sendData('joinGame', sessionName);
   }
 
-  createImg() {
-    this.add.image(314, 215, 'ibbBg');
-    this.ibb = this.add.image(314, 215, 'ibbImg');
-    this.animate(this.ibb, 0);
-    this.add.image(967, 215, 'obbBg');
-    this.obb = this.add.image(967, 215, 'obbImg');
-    this.animate(this.obb, 1000);
-  }
-
-  animate(character, delay) {
-    this.tweens.add({
-      targets: character,
-      scale: 1.1,
-      ease: 'Linear',
-      duration: 1000,
-      delay,
-      yoyo: true,
-      repeat: -1,
-    });
+  requestStartGame(sessionName) {
+    this.client.sendData('requestStartGame', sessionName);
   }
 }

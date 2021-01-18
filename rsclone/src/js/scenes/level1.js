@@ -4,12 +4,14 @@ import Player from '../sprites/player';
 import Portal from '../sprites/portal';
 
 import Input from '../utils/input';
+import NetworkInput from '../utils/networkInput';
+import NetworkSync from '../utils/networkSync';
 
 import StandartHedgehog from '../sprites/enemies/standartHedgehog';
 import JumpingHedgehog from '../sprites/enemies/jumpingHedgehog';
 import { gradientSquares, gradientColors, walls } from '../levels/level1/backgroundStructure';
 
-import { BORDER_THICKNESS } from '../constants';
+import { BORDER_THICKNESS, PLAYER_1_CONTROLS, PLAYER_2_CONTROLS } from '../constants';
 import { playMusic } from '../utils/music';
 import EventsCenter from '../utils/eventsCenter';
 
@@ -33,19 +35,19 @@ export default class Level1 extends Phaser.Scene {
     this.score = 0;
   }
 
-  init(gameData) {
-    const player1Controls = ['LEFT', 'RIGHT', 'UP', 'DOWN'];
-    const player2Controls = ['A', 'D', 'W', 'S'];
+  create(gameData) {
+    this.client = this.game.client;
     if (gameData && gameData.online) {
-      if (gameData.master) this.player1Input = new Input(this, 'ibb', player1Controls);
-      if (!gameData.master) this.player2Input = new Input(this, 'obb', player1Controls);
+      this.online = true;
+      this.playerKey = (gameData.master) ? 'ibb' : 'obb';
+      this.player1Input = new Input(this, this.playerKey, PLAYER_1_CONTROLS);
+      this.networkInput = new NetworkInput(this);
+      this.networkSync = new NetworkSync(this, this.playerKey);
     } else {
-      this.player1Input = new Input(this, 'ibb', player1Controls);
-      this.player2Input = new Input(this, 'obb', player2Controls);
+      this.player1Input = new Input(this, 'ibb', PLAYER_1_CONTROLS);
+      this.player2Input = new Input(this, 'obb', PLAYER_2_CONTROLS);
     }
-  }
 
-  create() {
     this.matter.world.setBounds(0, 0, levelWidth, levelHeight, BORDER_THICKNESS);
     this.cameras.main.setBounds(0, 0, levelWidth, levelHeight);
     this.cameras.main.roundPixels = true;
@@ -187,6 +189,7 @@ export default class Level1 extends Phaser.Scene {
       this.centerCamera();
       this.scrollParallax();
     }
+    if (this.online) this.networkSync.sync();
   }
 
   scoreChange() {

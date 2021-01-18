@@ -13,11 +13,27 @@ export default class Input extends Phaser.Events.EventEmitter {
         .input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes[controlKey], true, true);
 
       this.controls[direction].on('down', () => {
-        this.scene.setDirection(playerKey, direction, true);
+        if (!this.scene.online) {
+          this.scene.setDirection(playerKey, direction, true);
+          return;
+        }
+        this.scene.client.sendData('playerMove', {
+          playerKey,
+          direction,
+          movementFlag: true,
+        });
       });
 
       this.controls[direction].on('up', () => {
-        this.scene.setDirection(playerKey, direction, false);
+        if (!this.scene.online) {
+          this.scene.setDirection(playerKey, direction, false);
+          return;
+        }
+        this.scene.client.sendData('playerMove', {
+          playerKey,
+          direction,
+          movementFlag: false,
+        });
       });
     });
   }
