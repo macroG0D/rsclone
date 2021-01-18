@@ -1,5 +1,4 @@
 import Phaser from 'phaser';
-import Emitter from '../utils/emitter';
 
 import {
   DEFAULT_MASS,
@@ -268,7 +267,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       this.isGrounded = this.isTouching.bottom;
       this.headStandingCheck();
       this.movePlayer();
-      console.log(this);
     }
   }
 }
