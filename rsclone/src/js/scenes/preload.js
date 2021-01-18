@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
-import ibbSprite from '../../assets/sprites/ibb/ibb-sprite.png';
-import obbSprite from '../../assets/sprites/obb/obb-sprite.png';
+import ibbSpriteMove from '../../assets/sprites/ibb/ibb-move.png';
+import obbSpriteMove from '../../assets/sprites/obb/obb-move.png';
 import githubIcon from '../../assets/images/github-logo-face.svg';
 import ibbImg from '../../assets/images/ibb_stay.png';
 import obbImg from '../../assets/images/obb_stay.png';
@@ -20,12 +20,15 @@ import level2Music from '../../assets/music/level2.mp3';
 import warpCross01Sound from '../../assets/sounds/warp_cross_a_01.mp3';
 
 import sky from '../../assets/images/background/sky.png';
-import clouds1 from '../../assets/images/background/clouds_1.png';
-import clouds2 from '../../assets/images/background/clouds_2.png';
-import clouds3 from '../../assets/images/background/clouds_3.png';
-import clouds4 from '../../assets/images/background/clouds_4.png';
-import rocks1 from '../../assets/images/background/rocks_1.png';
-import rocks2 from '../../assets/images/background/rocks_2.png';
+import clouds0 from '../../assets/images/background/clouds_0.png';
+import bg0 from '../../assets/images/background/bg_0.png';
+import bg1 from '../../assets/images/background/bg_1.png';
+import bg2 from '../../assets/images/background/bg_2.png';
+
+// world environment
+import platformLong from '../../assets/sprites/environment/platform-long.png';
+
+import LoadingBar from '../utils/loadingBar';
 
 export default class Preload extends Phaser.Scene {
   constructor() {
@@ -34,6 +37,7 @@ export default class Preload extends Phaser.Scene {
 
   preload() {
     this.showBootBg();
+    this.loadingBar = new LoadingBar(this);
     this.load.image('githubIcon', githubIcon);
     this.load.image('obbImg', obbImg);
     this.load.image('ibbImg', ibbImg);
@@ -50,12 +54,13 @@ export default class Preload extends Phaser.Scene {
 
     // Loading parallax's images
     this.load.image('sky', sky);
-    this.load.image('clouds_1', clouds1);
-    this.load.image('clouds_2', clouds2);
-    this.load.image('clouds_3', clouds3);
-    this.load.image('clouds_4', clouds4);
-    this.load.image('rocks_1', rocks1);
-    this.load.image('rocks_2', rocks2);
+    this.load.image('clouds_0', clouds0);
+    this.load.image('bg_0', bg0);
+    this.load.image('bg_1', bg1);
+    this.load.image('bg_2', bg2);
+
+    // Loading world environment sprites
+    this.load.image('platform-long', platformLong);
 
     // Loading music
     this.load.audio('main_menu_music', mainMenuMusic);
@@ -65,20 +70,20 @@ export default class Preload extends Phaser.Scene {
     // Loading Sounds
     this.load.audio('warp_cross_01', warpCross01Sound);
 
-    this.load.spritesheet('ibb-sprite', ibbSprite, {
+    this.load.spritesheet('ibb-move', ibbSpriteMove, {
       frameWidth: 47,
       frameHeight: 52,
     });
 
-    this.load.spritesheet('obb-sprite', obbSprite, {
+    this.load.spritesheet('obb-move', obbSpriteMove, {
       frameWidth: 47,
       frameHeight: 62,
     });
   }
 
   create() {
-    // this.scene.start('MainMenu');
-    this.scene.start('Level1');
+    this.scene.start('MainMenu');
+    // this.scene.start('Level1');
   }
 
   showBootBg() {

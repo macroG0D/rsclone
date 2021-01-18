@@ -19,3 +19,6 @@ export const COLLISION_CATEGORIES = {
   visualParticle: 16,
   physicalParticle: 32,
 };
+export const SERVER_HOST = 'http://localhost:80';
+export const PLAYER_1_CONTROLS = ['LEFT', 'RIGHT', 'UP', 'DOWN'];
+export const PLAYER_2_CONTROLS = ['A', 'D', 'W', 'S'];
