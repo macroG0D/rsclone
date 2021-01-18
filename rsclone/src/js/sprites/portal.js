@@ -1,11 +1,27 @@
 import Phaser from 'phaser';
+import { COLLISION_CATEGORIES, PARTICLES_COLORS } from '../constants';
 
 export default class Portal extends Phaser.GameObjects.Rectangle {
-  constructor(scene, x, y, width, height, color, isVertical, objSettings) {
+  constructor(scene, x, y, width, height, color, isVertical, objSettings,
+    collisionGroup = [COLLISION_CATEGORIES.ibb, COLLISION_CATEGORIES.obb]) {
     super(scene, x, y, width, height, color); // new Rectangle()
     scene.matter.add.gameObject(this, objSettings);
+    this.collisionGroup = collisionGroup;
+    this.checkTint();
     this.addBubbles(scene, x, y, width, height);
     this.isVertical = isVertical;
+  }
+
+  checkTint() {
+    this.shouldTint = !Array.isArray(this.collisionGroup);
+    if (this.shouldTint) {
+      this.getParticlesTint();
+    }
+  }
+
+  getParticlesTint() {
+    const isIbb = this.collisionGroup === COLLISION_CATEGORIES.ibb;
+    this.tintColor = isIbb ? PARTICLES_COLORS.ibb[0] : PARTICLES_COLORS.obb[0];
   }
 
   addBubbles(scene, x, y, width, height) {
@@ -41,6 +57,9 @@ export default class Portal extends Phaser.GameObjects.Rectangle {
       bounce: 0.8,
       bounds: emitterBounds,
     });
+    if (this.shouldTint) {
+      this.emitter.setTint(this.tintColor);
+    }
   }
 
   emitParticles(x, y, characterWidth, characterHeight, velocity, flipY) {
@@ -97,6 +116,9 @@ export default class Portal extends Phaser.GameObjects.Rectangle {
       emitterConfig.gravityY = emitterGravity;
     }
     const passingEmitter = this.particle.createEmitter(emitterConfig);
+    if (this.shouldTint) {
+      passingEmitter.setTint(this.tintColor);
+    }
     passingEmitter.stop();
     passingEmitter.explode(15);
     setTimeout(() => {

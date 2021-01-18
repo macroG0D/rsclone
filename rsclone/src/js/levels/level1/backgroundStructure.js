@@ -1,3 +1,5 @@
+import { COLLISION_CATEGORIES } from '../../constants';
+
 const portalWidth = 186;
 const gradientSquares = [
   {
@@ -145,6 +147,7 @@ const walls = [
     x: 4496,
     isPortal: true,
     isVertical: false,
+    collisionGroup: COLLISION_CATEGORIES.ibb,
   },
   {
     width: 127,
@@ -159,6 +162,7 @@ const walls = [
     x: 4793,
     isPortal: true,
     isVertical: true,
+    collisionGroup: COLLISION_CATEGORIES.obb,
   },
 
   {

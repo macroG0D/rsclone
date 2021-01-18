@@ -19,7 +19,7 @@ function createPlayerAnimations(scene, key, sprite) {
   });
 }
 export default class Player extends Phaser.Physics.Matter.Sprite {
-  constructor(scene, key, x, y, sprite, controls) {
+  constructor(scene, key, x, y, sprite, controls, collisionCategory) {
     super(scene.matter.world, x, y, sprite);
     createPlayerAnimations(scene, key, sprite);
     this.portals = this.scene.portals;
@@ -103,7 +103,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       this.portalsListeners(scene, portal);
     });
     this.body.restitution = 0.3;
-    this.setCollisionCategory(2);
+    this.setCollisionCategory(collisionCategory);
   }
 
   getAnotherPlayer() {

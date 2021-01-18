@@ -1,7 +1,6 @@
 import EventsCenter from './eventsCenter';
+import { COLLISION_CATEGORIES, PARTICLES_COLORS } from '../constants';
 
-const obbParticlesColors = [0xD15C81, 0x97425D, 0x6D3044];
-const ibbParticlesColors = [0x59D75C, 0x3F9A42, 0x2F7231];
 export default class Emitter {
   constructor(scene, gameObject, particleType, reverseGravity = false, particleLifespan = 2000) {
     this.scene = scene;
@@ -9,7 +8,7 @@ export default class Emitter {
     this.particleType = particleType;
     this.particleLifespan = particleLifespan;
     this.reverseGravity = reverseGravity;
-    this.particleColors = this.gameObject.key === 'ibb' ? ibbParticlesColors : obbParticlesColors;
+    this.particleColors = this.gameObject.key === 'ibb' ? PARTICLES_COLORS.ibb : PARTICLES_COLORS.obb;
   }
 
   emitParticles(amount) {
@@ -85,8 +84,8 @@ export default class Emitter {
           context: this,
         });
       }
-      const collisionCategory = this.particleType === 'crystal' ? 4 : 8;
-      const collidesWith = this.particleType === 'crystal' ? [2, 16] : 16;
+      const collisionCategory = this.particleType === 'crystal' ? COLLISION_CATEGORIES.physicalParticle : COLLISION_CATEGORIES.visualParticle;
+      const collidesWith = this.particleType === 'crystal' ? [COLLISION_CATEGORIES.player, COLLISION_CATEGORIES.wall] : COLLISION_CATEGORIES.wall;
       particle.setCollisionCategory(collisionCategory);
       particle.setCollidesWith(collidesWith);
 
