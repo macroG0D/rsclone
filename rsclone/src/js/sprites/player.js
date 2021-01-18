@@ -237,6 +237,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         });
       }
       this.canJump = false;
+      playSound(this.scene, 'popbase');
       this.scene.time.addEvent({
         delay: 700,
         callback: () => { this.canJump = true; },
