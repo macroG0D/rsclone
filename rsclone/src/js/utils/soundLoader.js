@@ -12,6 +12,7 @@ function load(scene, key, fileName, count) {
 }
 
 export function soundLoader(scene) {
+  // sound key, file name, number of files
   load(scene, 'warp_cross', 'warp_cross_a', 3);
   load(scene, 'popbase', 'popbase', 4);
   load(scene, 'xbb_death', 'xbb_death_sounds_wobble', 13);
