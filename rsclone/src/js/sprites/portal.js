@@ -10,8 +10,8 @@ export default class Portal extends Phaser.GameObjects.Rectangle {
       this.checkTint();
       this.addWall(scene, x, y, width, height, collisionGroup);
     }
-    this.addBubbles(scene, x, y, width, height);
     this.isVertical = isVertical;
+    this.addBubbles(scene, x, y, width, height);
   }
 
   checkTint() {
@@ -43,14 +43,18 @@ export default class Portal extends Phaser.GameObjects.Rectangle {
     this.particle.setDepth(1); // z-index
     /* in original game bubbles can spawn higher then the wall height
     therefore adding additional space for bubbles spawn zone */
-    const BUBBLES_ZONE_ADDITIONAL_SPACE = 5;
+    const ADDITIONAL_SPACE = 5;
     /* as we are adding rectangle without matter physics, it's coordinates are counted from
     [0,0] not center of mass, therefore recalculating position of emitter rectangle */
+    const xCoord = this.isVertical ? x - width / 2 - ADDITIONAL_SPACE : x - width / 2;
+    const yCoord = this.isVertical ? y - height / 2 : y - height / 2 - ADDITIONAL_SPACE;
+    const resultWidth = this.isVertical ? width + ADDITIONAL_SPACE * 2 : width;
+    const resultHeight = this.isVertical ? height : height + ADDITIONAL_SPACE * 2;
     this.emitterParams = {
-      x: x - width / 2,
-      y: y - height / 2 - BUBBLES_ZONE_ADDITIONAL_SPACE,
-      width,
-      height: height + BUBBLES_ZONE_ADDITIONAL_SPACE * 2,
+      x: xCoord,
+      y: yCoord,
+      width: resultWidth,
+      height: resultHeight,
     };
     /* bound where bubbles are locked */
     const emitterBounds = new Phaser.Geom.Rectangle(
