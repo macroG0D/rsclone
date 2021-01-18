@@ -4,16 +4,17 @@ import Player from '../sprites/player';
 import Portal from '../sprites/portal';
 import MovingPlatform from '../sprites/movingPlatform';
 
+import Input from '../utils/input';
+import NetworkInput from '../utils/networkInput';
+import NetworkSync from '../utils/networkSync';
+
 import StandartHedgehog from '../sprites/enemies/standartHedgehog';
 import JumpingHedgehog from '../sprites/enemies/jumpingHedgehog';
 import { gradientSquares, gradientColors, walls } from '../levels/level1/backgroundStructure';
 
-import { BORDER_THICKNESS } from '../constants';
+import { BORDER_THICKNESS, PLAYER_1_CONTROLS, PLAYER_2_CONTROLS } from '../constants';
 import { playMusic } from '../utils/music';
 import EventsCenter from '../utils/eventsCenter';
-
-const player1Controls = ['LEFT', 'RIGHT', 'UP', 'DOWN'];
-const player2Controls = ['A', 'D', 'W', 'S'];
 
 const levelWidth = 10500; // 5369
 const levelHeight = 2890;
@@ -33,7 +34,18 @@ export default class Level1 extends Phaser.Scene {
     this.score = 0;
   }
 
-  create() {
+  create(gameData) {
+    this.client = this.game.client;
+    if (gameData && gameData.online) {
+      this.online = true;
+      this.playerKey = (gameData.master) ? 'ibb' : 'obb';
+      this.player1Input = new Input(this, this.playerKey, PLAYER_1_CONTROLS);
+      this.networkInput = new NetworkInput(this);
+      this.networkSync = new NetworkSync(this, this.playerKey);
+    } else {
+      this.player1Input = new Input(this, 'ibb', PLAYER_1_CONTROLS);
+      this.player2Input = new Input(this, 'obb', PLAYER_2_CONTROLS);
+    }
     EventsCenter.destroy(); // destory preveousely created instance to prevent score multiply
     this.matter.world.setBounds(0, 0, levelWidth, levelHeight, BORDER_THICKNESS);
     this.cameras.main.setBounds(0, 0, levelWidth, levelHeight);
@@ -45,8 +57,8 @@ export default class Level1 extends Phaser.Scene {
     this.movingPlatform1 = new MovingPlatform(this, 6500, 1330, 'platform-long', 700, 'horisontal');
     this.movingPlatform2 = new MovingPlatform(this, 10000, 2000, 'platform-long', -1780, 'vertical');
 
-    this.ibb = new Player(this, 'ibb', 300, 1000, 'ibb-move', player1Controls); // 300 200
-    this.obb = new Player(this, 'obb', 200, 1000, 'obb-move', player2Controls); // 200 300
+    this.ibb = new Player(this, 'ibb', 300, 1000, 'ibb-move');
+    this.obb = new Player(this, 'obb', 200, 1000, 'obb-move');
     // enemies spawn
     this.hedgehog1 = new JumpingHedgehog(this, 1125, 1900, 'hedgehog-jumper', 'hedgehog-fullbutt');
     this.hedgehog1.moveHorizontally(50, 'left', 250);
@@ -87,6 +99,10 @@ export default class Level1 extends Phaser.Scene {
 
       this.parallax[key] = { key, sprite, speed };
     });
+  }
+
+  setDirection(key, direction, state) {
+    this[key].directions[direction] = state;
   }
 
   scrollParallax() {
@@ -191,6 +207,7 @@ export default class Level1 extends Phaser.Scene {
       this.centerCamera();
       this.scrollParallax();
     }
+    if (this.online) this.networkSync.sync();
   }
 
   gameMenu() {

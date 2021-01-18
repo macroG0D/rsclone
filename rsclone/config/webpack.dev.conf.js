@@ -9,6 +9,7 @@ module.exports = merge(baseWebpackConfig, {
   devServer: {
     contentBase: baseWebpackConfig.externals.paths.dist,
     watchContentBase: true,
+    writeToDisk: true,
     open: true,
     port: 3000,
     hot: true,

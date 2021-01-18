@@ -22,6 +22,7 @@ export function createMenu(scene, menuItems, back = false, backCallback = () => 
   const menuX = scene.cameras.main.centerX;
   const menuY = scene.cameras.main.centerY - MENU_ITEM_HEIGHT;
   scene.input.keyboard.createCursorKeys();
+  const menu = [];
 
   Object.entries(menuItems).forEach(([itemName, itemLink], itemIndex) => {
     const menuItem = scene.add.text(
@@ -29,7 +30,15 @@ export function createMenu(scene, menuItems, back = false, backCallback = () => 
       menuY + (itemIndex * MENU_ITEM_HEIGHT),
       itemName,
       menuItemStyle,
-    )
+    );
+
+    menu.push({
+      name: itemName,
+      link: itemLink,
+      item: menuItem,
+    });
+
+    menuItem
       .setOrigin(0.5)
       .setInteractive({ useHandCursor: true })
       .on('pointerover', () => menuItem.setStyle(menuItemOverStyle))
@@ -49,6 +58,8 @@ export function createMenu(scene, menuItems, back = false, backCallback = () => 
 
     scene.input.keyboard.addKey('ESC').on('down', backCallback);
   }
+
+  return menu;
 }
 
 export default createMenu;

@@ -2,6 +2,8 @@ import Phaser from 'phaser';
 import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
 import Create from './components/dom-create';
 
+import Client from './utils/client';
+
 import { SCENE_LIST } from './scenes/_scenesList';
 
 import { GAME_WIDTH, GAME_HEIGHT } from './constants';
@@ -37,7 +39,7 @@ class Main {
           gravity: { y: 2 },
           debug: {
             showBody: false,
-            showStaticBody: true,
+            showStaticBody: false,
           },
         },
       },
@@ -57,6 +59,7 @@ class Main {
       scene: SCENE_LIST,
     };
     this.game = new Phaser.Game(this.gameConfig);
+    this.game.client = new Client();
     this.game.music = {
       key: undefined,
       track: undefined,

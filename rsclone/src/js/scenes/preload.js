@@ -28,6 +28,8 @@ import bg2 from '../../assets/images/background/bg_2.png';
 // world environment
 import platformLong from '../../assets/sprites/environment/platform-long.png';
 
+import LoadingBar from '../utils/loadingBar';
+
 export default class Preload extends Phaser.Scene {
   constructor() {
     super('Preload');
@@ -35,6 +37,7 @@ export default class Preload extends Phaser.Scene {
 
   preload() {
     this.showBootBg();
+    this.loadingBar = new LoadingBar(this);
     this.load.image('githubIcon', githubIcon);
     this.load.image('obbImg', obbImg);
     this.load.image('ibbImg', ibbImg);
@@ -79,8 +82,8 @@ export default class Preload extends Phaser.Scene {
   }
 
   create() {
-    // this.scene.start('MainMenu');
-    this.scene.start('Level1');
+    this.scene.start('MainMenu');
+    // this.scene.start('Level1');
   }
 
   showBootBg() {
