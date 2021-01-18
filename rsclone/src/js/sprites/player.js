@@ -7,7 +7,7 @@ import {
   CHARACTERS_DISTANCE_MAX,
 } from '../constants';
 
-import { playSound } from '../utils/sound';
+import { playSound } from '../utils/playSound';
 
 function createPlayerAnimations(scene, key, sprite) {
   scene.anims.create({
@@ -170,7 +170,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     this.scene.time.addEvent({
       delay: 50,
       callback: () => {
-        playSound(this.scene, 'warp_cross_01');
+        playSound(this.scene, 'warp_cross');
         this.switchGravity();
       },
     });
