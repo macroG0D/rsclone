@@ -15,7 +15,7 @@ function createPlayerAnimations(scene, key, sprite) {
   scene.anims.create({
     key: `move-${key}`,
     frames: scene.game.anims.generateFrameNumbers(sprite),
-    frameRate: 62,
+    frameRate: 60,
     repeat: -1,
   });
 }
