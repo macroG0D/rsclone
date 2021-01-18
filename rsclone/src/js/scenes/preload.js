@@ -25,6 +25,9 @@ import bg0 from '../../assets/images/background/bg_0.png';
 import bg1 from '../../assets/images/background/bg_1.png';
 import bg2 from '../../assets/images/background/bg_2.png';
 
+// world environment
+import platformLong from '../../assets/sprites/environment/platform-long.png';
+
 export default class Preload extends Phaser.Scene {
   constructor() {
     super('Preload');
@@ -52,6 +55,9 @@ export default class Preload extends Phaser.Scene {
     this.load.image('bg_0', bg0);
     this.load.image('bg_1', bg1);
     this.load.image('bg_2', bg2);
+
+    // Loading world environment sprites
+    this.load.image('platform-long', platformLong);
 
     // Loading music
     this.load.audio('main_menu_music', mainMenuMusic);
