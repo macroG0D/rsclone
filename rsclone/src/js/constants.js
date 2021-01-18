@@ -13,9 +13,9 @@ export const PARTICLES_COLORS = {
   ibb: [0x59D75C, 0x3F9A42, 0x2F7231],
 };
 export const COLLISION_CATEGORIES = {
-  wall: 16,
-  ibb: 2,
-  obb: 32,
-  visualParticle: 4,
-  physicalParticle: 8,
+  wall: 2,
+  ibb: 4,
+  obb: 8,
+  visualParticle: 16,
+  physicalParticle: 32,
 };

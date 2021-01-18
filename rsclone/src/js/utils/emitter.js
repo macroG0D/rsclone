@@ -85,7 +85,7 @@ export default class Emitter {
         });
       }
       const collisionCategory = this.particleType === 'crystal' ? COLLISION_CATEGORIES.physicalParticle : COLLISION_CATEGORIES.visualParticle;
-      const collidesWith = this.particleType === 'crystal' ? [COLLISION_CATEGORIES.player, COLLISION_CATEGORIES.wall] : COLLISION_CATEGORIES.wall;
+      const collidesWith = this.particleType === 'crystal' ? [COLLISION_CATEGORIES.ibb, COLLISION_CATEGORIES.obb, COLLISION_CATEGORIES.wall] : COLLISION_CATEGORIES.wall;
       particle.setCollisionCategory(collisionCategory);
       particle.setCollidesWith(collidesWith);
 

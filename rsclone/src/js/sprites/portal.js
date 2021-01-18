@@ -20,8 +20,8 @@ export default class Portal extends Phaser.GameObjects.Rectangle {
   }
 
   getParticlesTint() {
-    const isIbb = this.collisionGroup === COLLISION_CATEGORIES.ibb;
-    this.tintColor = isIbb ? PARTICLES_COLORS.ibb[0] : PARTICLES_COLORS.obb[0];
+    const isIbbPortal = this.collisionGroup === COLLISION_CATEGORIES.ibb;
+    this.tintColor = isIbbPortal ? PARTICLES_COLORS.ibb[0] : PARTICLES_COLORS.obb[0];
   }
 
   addBubbles(scene, x, y, width, height) {
