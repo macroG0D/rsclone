@@ -2,21 +2,34 @@ import Phaser from 'phaser';
 import { COLLISION_CATEGORIES, PARTICLES_COLORS } from '../constants';
 
 export default class Portal extends Phaser.GameObjects.Rectangle {
-  constructor(scene, x, y, width, height, color, isVertical, objSettings,
-    collisionGroup = [COLLISION_CATEGORIES.ibb, COLLISION_CATEGORIES.obb]) {
+  constructor(scene, x, y, width, height, color, isVertical, objSettings, collisionGroup) {
     super(scene, x, y, width, height, color); // new Rectangle()
     scene.matter.add.gameObject(this, objSettings);
-    this.collisionGroup = collisionGroup;
-    this.checkTint();
+    if (collisionGroup) {
+      this.collisionGroup = collisionGroup;
+      this.checkTint();
+      this.addWall(scene, x, y, width, height, collisionGroup);
+    }
     this.addBubbles(scene, x, y, width, height);
     this.isVertical = isVertical;
   }
 
   checkTint() {
-    this.shouldTint = !Array.isArray(this.collisionGroup);
-    if (this.shouldTint) {
+    if (this.collisionGroup) {
       this.getParticlesTint();
     }
+  }
+
+  addWall(scene, x, y, width, height, collisionCategory) {
+    const wall = new Phaser.GameObjects.Rectangle(scene, x, y, width, height);
+    this.additionalWall = scene.matter.add.gameObject(wall, {
+      isStatic: true,
+      isSensor: false,
+    });
+    const isIbbPortal = collisionCategory === COLLISION_CATEGORIES.ibb;
+    const collidesWith = isIbbPortal ? COLLISION_CATEGORIES.obb : COLLISION_CATEGORIES.ibb;
+    this.additionalWall.setCollisionCategory(collisionCategory);
+    this.additionalWall.setCollidesWith(collidesWith);
   }
 
   getParticlesTint() {
@@ -57,7 +70,7 @@ export default class Portal extends Phaser.GameObjects.Rectangle {
       bounce: 0.8,
       bounds: emitterBounds,
     });
-    if (this.shouldTint) {
+    if (this.collisionGroup) {
       this.emitter.setTint(this.tintColor);
     }
   }
@@ -116,7 +129,7 @@ export default class Portal extends Phaser.GameObjects.Rectangle {
       emitterConfig.gravityY = emitterGravity;
     }
     const passingEmitter = this.particle.createEmitter(emitterConfig);
-    if (this.shouldTint) {
+    if (this.collisionGroup) {
       passingEmitter.setTint(this.tintColor);
     }
     passingEmitter.stop();

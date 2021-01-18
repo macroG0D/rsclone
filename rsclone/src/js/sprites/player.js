@@ -36,7 +36,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     const { width: w, height: h } = this;
     const mainBody = Bodies.rectangle(0, 0, w * 0.75, h, { chamfer: { radius: 8 } });
     this.sensors = {
-      center: Bodies.rectangle(0, 0, 10, 10, { isSensor: true }),
+      center: Bodies.rectangle(0, 0, 1, 1, { isSensor: true }),
       top: Bodies.rectangle(0, h - h * 1.48, w * 0.5, 5, { isSensor: true }),
       bottom: Bodies.rectangle(0, h * 0.48, w * 0.5, 5, { isSensor: true }),
       left: Bodies.rectangle(-w * 0.45, 0, 5, h * 0.4, { isSensor: true }),
