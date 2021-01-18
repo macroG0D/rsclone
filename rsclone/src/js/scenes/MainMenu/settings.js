@@ -154,7 +154,10 @@ export default class MainMenuSettings extends Phaser.Scene {
       })
       .on('pointerover', () => applyItem.setStyle(menuItemOverStyle))
       .on('pointerout', () => applyItem.setStyle(menuItemBackStyle))
-      .on('pointerdown', () => this.scene.switch('MainMenu'));
+      .on('pointerdown', () => {
+        this.scene.stop('Level1');
+        this.scene.switch('MainMenu');
+      });
 
     this.game.scale.on('leavefullscreen', () => {
       fullscreenItem.setStyle(isSelected2(this.game.scale.isFullscreen));

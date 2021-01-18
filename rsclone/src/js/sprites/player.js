@@ -14,7 +14,7 @@ function createPlayerAnimations(scene, key, sprite) {
   scene.anims.create({
     key: `move-${key}`,
     frames: scene.game.anims.generateFrameNumbers(sprite),
-    frameRate: 62,
+    frameRate: 60,
     repeat: -1,
   });
 }
@@ -101,9 +101,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       this.portalsListeners(scene, portal);
     });
     this.body.restitution = 0.3;
-    this.emitter = new Emitter(scene, this, 'triangle');
-    this.setInteractive();
-    this.on('pointerdown', () => { this.emitter.emitParticles(50); });
+    this.setCollisionCategory(2);
   }
 
   getAnotherPlayer() {

@@ -32,7 +32,7 @@ export default class Score extends Phaser.Scene {
     };
     this.timerText = this.add.text(10, 10, 'time: 00 : 00 : 00', {
       font: '20px Montserrat',
-      fill: '#E5E5E5',
+      fill: '#003554',
     }).setScrollFactor(0, 0).setOrigin(0);
     this.time.addEvent({
       delay: 1000,
@@ -48,14 +48,13 @@ export default class Score extends Phaser.Scene {
   addScore() {
     this.scoreText = this.add.text(10, 35, '', {
       font: '20px Montserrat',
-      fill: '#E5E5E5',
+      fill: '#003554',
     }).setScrollFactor(0, 0).setOrigin(0);
 
     this.scoreText.setText(`score:  ${this.currentScore}`);
   }
 
   updateScore(score) {
-    console.log('обновили скор');
     this.currentScore += score;
     this.scoreText.setText(`score:  ${this.currentScore}`);
   }

@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 
 import Player from '../sprites/player';
 import Portal from '../sprites/portal';
+import MovingPlatform from '../sprites/movingPlatform';
 
 import Input from '../utils/input';
 import NetworkInput from '../utils/networkInput';
@@ -15,17 +16,15 @@ import { BORDER_THICKNESS, PLAYER_1_CONTROLS, PLAYER_2_CONTROLS } from '../const
 import { playMusic } from '../utils/music';
 import EventsCenter from '../utils/eventsCenter';
 
-const levelWidth = 5369;
-const levelHeight = 890;
+const levelWidth = 10500; // 5369
+const levelHeight = 2890;
 
 const parallaxImages = {
-  sky: 0,
-  clouds_1: 0.1,
-  clouds_2: 0.2,
-  clouds_3: 0.3,
-  clouds_4: 0.4,
-  rocks_1: 0.1,
-  rocks_2: 0.2,
+  sky: 0.2,
+  clouds_0: 0.1,
+  bg_0: 0.1,
+  bg_1: 0.2,
+  bg_2: 0.3,
 };
 export default class Level1 extends Phaser.Scene {
   constructor() {
@@ -47,23 +46,41 @@ export default class Level1 extends Phaser.Scene {
       this.player1Input = new Input(this, 'ibb', PLAYER_1_CONTROLS);
       this.player2Input = new Input(this, 'obb', PLAYER_2_CONTROLS);
     }
-
+    EventsCenter.destroy(); // destory preveousely created instance to prevent score multiply
     this.matter.world.setBounds(0, 0, levelWidth, levelHeight, BORDER_THICKNESS);
     this.cameras.main.setBounds(0, 0, levelWidth, levelHeight);
     this.cameras.main.roundPixels = true;
     // this.addBackgrounds();
     this.addParallax();
     this.addWalls();
-    this.ibb = new Player(this, 'ibb', 3900, 400, 'ibb-sprite'); // 200 200
-    this.obb = new Player(this, 'obb', 3950, 400, 'obb-sprite'); // 300 300
-    this.hedgehog = new StandartHedgehog(this, 3400, 558, 'hedgehog-head', 'hedgehog-halfbutt', 58);
-    this.hedgehog.moveHorizontally(300, 'left', 2500);
-    this.hedgehog2 = new JumpingHedgehog(this, 2800, 592, 'hedgehog-jumper', 'hedgehog-fullbutt');
-    this.hedgehog2.jump(180, 600);
+
+    this.movingPlatform1 = new MovingPlatform(this, 6500, 1330, 'platform-long', 700, 'horisontal');
+    this.movingPlatform2 = new MovingPlatform(this, 10000, 2000, 'platform-long', -1780, 'vertical');
+
+    this.ibb = new Player(this, 'ibb', 300, 1000, 'ibb-move');
+    this.obb = new Player(this, 'obb', 200, 1000, 'obb-move');
+    // enemies spawn
+    this.hedgehog1 = new JumpingHedgehog(this, 1125, 1900, 'hedgehog-jumper', 'hedgehog-fullbutt');
+    this.hedgehog1.moveHorizontally(50, 'left', 250);
+    this.hedgehog1.jump(800, 1200);
+    this.hedgehog2 = new StandartHedgehog(this, 1450, 1420, 'hedgehog-head', 'hedgehog-halfbutt', 58);
+    this.hedgehog2.moveHorizontally(185, 'left', 1800);
+    this.hedgehog3 = new JumpingHedgehog(this, 2500, 1592, 'hedgehog-jumper', 'hedgehog-fullbutt');
+    this.hedgehog3.jump(180, 700);
+    this.hedgehog4 = new JumpingHedgehog(this, 2650, 1592, 'hedgehog-jumper', 'hedgehog-fullbutt');
+    this.hedgehog4.jump(180, 900);
+    this.hedgehog5 = new JumpingHedgehog(this, 2800, 1592, 'hedgehog-jumper', 'hedgehog-fullbutt');
+    this.hedgehog5.jump(180, 500);
+    this.hedgehog6 = new StandartHedgehog(this, 3400, 1558, 'hedgehog-head', 'hedgehog-halfbutt', 58);
+    this.hedgehog6.moveHorizontally(300, 'left', 2500);
+    this.hedgehog7 = new StandartHedgehog(this, 4290, 1458, 'hedgehog-head', 'hedgehog-halfbutt', 58);
+    this.hedgehog7.moveHorizontally(150, 'left', 1000);
+    this.hedgehog8 = new StandartHedgehog(this, 4850, 1230, 'hedgehog-head', 'hedgehog-halfbutt', 58);
+    this.hedgehog8.moveHorizontally(0.1, 'left', 5000);
+
     this.cursors = this.input.keyboard.createCursorKeys();
     playMusic(this, 'level1_music');
     this.scene.run('Score');
-    this.scoreChange();
     this.gameMenu();
   }
 
@@ -123,7 +140,8 @@ export default class Level1 extends Phaser.Scene {
   }
 
   addWalls() {
-    const wallDefaultColor = 0x082228;
+    // const wallDefaultColor = 0x082228;
+    const wallDefaultColor = 0x062C42;
     const portalColor = 0xffffff;
     const wallDefaultHeight = 16;
 
@@ -155,7 +173,7 @@ export default class Level1 extends Phaser.Scene {
       } else {
         const wall = this.add.rectangle(wallX, wallY, wallWidth, wallHeight, wallColor);
         const wallGameObject = this.matter.add.gameObject(wall, objSettings);
-        wallGameObject.setCollisionGroup(2); // we have to add collision groups to make emitter work
+        wallGameObject.setCollisionCategory(16);
       }
     });
   }
@@ -190,19 +208,6 @@ export default class Level1 extends Phaser.Scene {
       this.scrollParallax();
     }
     if (this.online) this.networkSync.sync();
-  }
-
-  scoreChange() {
-    // временно скор меняется по нажатию шифта - потом любое другое событие или действие
-    this.cursors.shift.on('down', () => {
-      this.score += 1;
-      // важна вот эта фраза для передачи апдейта скора
-      EventsCenter.emit('update-score', this.score);
-    });
-
-    // this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
-    //   this.cursors.shift.on('down');
-    // });
   }
 
   gameMenu() {
