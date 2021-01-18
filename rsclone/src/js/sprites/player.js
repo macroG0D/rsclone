@@ -248,7 +248,10 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
   moveCharacter(direction) {
     const moveForce = 0.015;
     const force = (direction === 'right') ? moveForce : -moveForce;
-    if (this.canMove(direction)) this.applyForce({ x: force, y: 0 });
+    if (this.canMove(direction)) {
+      this.applyForce({ x: force, y: 0 });
+      if (this.isGrounded) playSound(this.scene, `xbb_run_${direction}`);
+    }
     if (this.isCarrying) this.getAnotherPlayer().applyForce({ x: force, y: 0 });
     this.direction = direction;
     this.turnCharacter();

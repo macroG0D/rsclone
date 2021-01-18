@@ -18,7 +18,8 @@ export function soundLoader(scene) {
   load(scene, 'void_chatter', 'void_chatter', 10);
   load(scene, 'glass_drop', 'glass_drop_cleaner', 10);
   load(scene, 'diamond_collect', 'diamond_collect', 3);
-  console.log(scene.cache);
+  load(scene, 'xbb_run_left', 'xbb_left_footfall', 14);
+  load(scene, 'xbb_run_right', 'xbb_right_footfall', 14);
 }
 
 export default soundLoader;

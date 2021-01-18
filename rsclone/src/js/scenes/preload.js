@@ -18,8 +18,6 @@ import mainMenuMusic from '../../assets/music/main_menu.mp3';
 import level1Music from '../../assets/music/level1.mp3';
 import level2Music from '../../assets/music/level2.mp3';
 
-// import warpCross01Sound from '../../assets/sounds/warp_cross_a_01.mp3';
-
 import sky from '../../assets/images/background/sky.png';
 import clouds0 from '../../assets/images/background/clouds_0.png';
 import bg0 from '../../assets/images/background/bg_0.png';
@@ -70,7 +68,6 @@ export default class Preload extends Phaser.Scene {
     this.load.audio('level2_music', level2Music);
 
     // Loading Sounds
-    // this.load.audio('warp_cross_01', warpCross01Sound);
     soundLoader(this);
 
     this.load.spritesheet('ibb-move', ibbSpriteMove, {
