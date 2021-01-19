@@ -27,11 +27,13 @@ class Main {
     };
     const savedVersion = settings.cookieVersion;
     if (savedVersion !== cookieVersion) localStorage.clear();
+    this.settings = settings;
     this.init();
   }
 
   init() {
     this.gameContainer = new Create('div', document.body, 'game-container').node;
+
     this.gameConfig = {
       type: Phaser.AUTO,
       parent: this.gameContainer,
@@ -66,18 +68,25 @@ class Main {
         forceSetTimeOut: true,
       },
       scene: SCENE_LIST,
+      dom: { createContainer: true },
     };
+
     this.game = new Phaser.Game(this.gameConfig);
+
     this.game.client = new Client();
+
     this.game.music = {
       current: undefined,
       cache: {},
     };
+
     this.game.sounds = {
       volume: {},
       cache: {},
       walk: { ibb: {}, obb: {} },
     };
+
+    this.game.app = this; // link to main class
   }
 }
 

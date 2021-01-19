@@ -1,0 +1,20 @@
+.game-menu {
+    user-select: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 32px;
+    color: #000000;
+}
+
+.game-menu-item {
+    text-align: center;
+    margin: 10px auto;
+    &:hover, &-active {
+        color: #d22d61;
+        cursor: pointer;
+    }
+    &-back {
+        margin: 30px auto;
+        color: #979797;
+        font-size: 20px;
+    }
+}

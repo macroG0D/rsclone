@@ -10,16 +10,18 @@ export default class MainMenu extends Phaser.Scene {
 
   create() {
     this.menuItems = {
-      Play: () => {
+      play: () => {
         this.scene.switch('MainMenuPlay');
       },
-      Leaderboard: () => this.scene.switch('MainMenuLeaderBoard'),
-      Settings: () => this.scene.switch('MainMenuSettings'),
-      Developers: () => this.scene.switch('MainMenuDevelopers'),
-      About: () => window.open('https://github.com/macroG0D/rsclone'),
+      leaderboard: () => this.scene.switch('MainMenuLeaderBoard'),
+      settings: () => this.scene.switch('MainMenuSettings'),
+      developers: () => this.scene.switch('MainMenuDevelopers'),
+      about: () => window.open('https://github.com/macroG0D/rsclone'),
     };
     createBg(this);
-    createMenu(this, this.menuItems);
+    createMenu(this, this.menuItems, true);
     playMusic(this);
+    // this.menu = new Menu().node;
+    // const element = this.add.dom(400, 300, this.menu);
   }
 }
