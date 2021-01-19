@@ -73,7 +73,11 @@ class Main {
       current: undefined,
       cache: {},
     };
-    this.game.sounds = { cache: {} };
+    this.game.sounds = {
+      volume: {},
+      cache: {},
+      walk: { ibb: {}, obb: {} },
+    };
   }
 }
 
