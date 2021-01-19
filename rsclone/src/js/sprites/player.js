@@ -18,7 +18,7 @@ function createPlayerAnimations(scene, key, sprite) {
   });
 }
 export default class Player extends Phaser.Physics.Matter.Sprite {
-  constructor(scene, key, x, y, sprite) {
+  constructor(scene, key, x, y, sprite, collisionCategory) {
     super(scene.matter.world, x, y, sprite);
     createPlayerAnimations(scene, key, sprite);
     this.directions = {
@@ -36,11 +36,12 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     this.isHeadStanding = false;
     this.isRotated = false;
     this.canJump = true;
+    this.lockVelocity = true;
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
     const { width: w, height: h } = this;
     const mainBody = Bodies.rectangle(0, 0, w * 0.75, h, { chamfer: { radius: 8 } });
     this.sensors = {
-      center: Bodies.rectangle(0, 0, 10, 10, { isSensor: true }),
+      center: Bodies.rectangle(0, 0, 1, 1, { isSensor: true }),
       top: Bodies.rectangle(0, h - h * 1.48, w * 0.5, 5, { isSensor: true }),
       bottom: Bodies.rectangle(0, h * 0.48, w * 0.5, 5, { isSensor: true }),
       left: Bodies.rectangle(-w * 0.45, 0, 5, h * 0.4, { isSensor: true }),
@@ -100,7 +101,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       this.portalsListeners(scene, portal);
     });
     this.body.restitution = 0.3;
-    this.setCollisionCategory(2);
+    this.setCollisionCategory(collisionCategory);
   }
 
   getAnotherPlayer() {
@@ -166,12 +167,17 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
   }
 
   portalDive(portal) {
-    portal.emitParticles(this.x, this.width, this.body.velocity.y, this.isRotated);
+    portal.emitParticles(
+      this.x, this.y,
+      this.width, this.height,
+      this.body.velocity,
+      this.isRotated,
+    );
     this.scene.time.addEvent({
       delay: 50,
       callback: () => {
         playSound(this.scene, 'warp_cross');
-        this.switchGravity();
+        this.switchGravity(portal.isVertical);
       },
     });
   }
@@ -187,27 +193,27 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     this.setFlipX(this.direction === checkDirection);
   }
 
-  switchGravity() {
-    if (!this.disableGravitySwitch) {
-      const minVelocity = this.jumpVelocity;
-      const currVelocity = Math.abs(this.body.velocity.y);
-      /* adding additional velocity to players body so that player velocity wont fade out if he will
-      be constantly jumping through portal
-      */
-      if (currVelocity < minVelocity) {
+  switchGravity(isVertical) {
+    const verticalVelocityForce = 5;
+    const minVelocity = isVertical ? verticalVelocityForce : this.jumpVelocity;
+    const currVelocity = Math.abs(isVertical ? this.body.velocity.x : this.body.velocity.y);
+    /* adding additional velocity to players body so that player velocity wont fade out if he will
+    be constantly jumping through portal
+    */
+    if (currVelocity < minVelocity) {
+      if (isVertical) {
+        this.lockVelocity = false;
+        this.setVelocityX(this.isRotated ? -minVelocity : minVelocity);
+        this.scene.time.addEvent({
+          delay: 30,
+          callback: () => { this.lockVelocity = true; },
+        });
+      } else {
         this.setVelocityY(this.isRotated ? -minVelocity : minVelocity);
       }
-      this.body.gravityScale.y *= -1; // flip gravity
-      this.rotatePlayer(); // rotate character
-      this.disableGravitySwitch = true; // toggle flag
-      /* because we are triggering switch gravity in interval(read comment in collision event
-      description), this event can be triggered multiple times in a row. To avoid it we added
-      flag that disables multiple gravitySwitch calls for 100ms */
-      this.scene.time.addEvent({
-        delay: 30,
-        callback: () => { this.disableGravitySwitch = false; },
-      });
     }
+    this.body.gravityScale.y *= -1; // flip gravity
+    this.rotatePlayer(); // rotate character
   }
 
   movePlayer() {
@@ -223,10 +229,11 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       if (this.anims.currentAnim) this.anims.setCurrentFrame(this.anims.currentAnim.frames[0]);
     }
 
-    /* limit velocity after applying force, so that the characters wont speed up infinitely */
-    if (currentVelocity.x > maxVelocity) this.setVelocityX(maxVelocity);
-    if (currentVelocity.x < -maxVelocity) this.setVelocityX(-maxVelocity);
-
+    if (this.lockVelocity) {
+      /* limit velocity after applying force, so that the characters wont speed up infinitely */
+      if (currentVelocity.x > maxVelocity) this.setVelocityX(maxVelocity);
+      if (currentVelocity.x < -maxVelocity) this.setVelocityX(-maxVelocity);
+    }
     /* jump */
     if ((this.directions.up || this.directions.down) && this.isGrounded && this.canJump) {
       this.setVelocityY((this.isRotated) ? this.jumpVelocity : -this.jumpVelocity);

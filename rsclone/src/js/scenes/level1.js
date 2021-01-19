@@ -12,7 +12,8 @@ import StandartHedgehog from '../sprites/enemies/standartHedgehog';
 import JumpingHedgehog from '../sprites/enemies/jumpingHedgehog';
 import { gradientSquares, gradientColors, walls } from '../levels/level1/backgroundStructure';
 
-import { BORDER_THICKNESS, PLAYER_1_CONTROLS, PLAYER_2_CONTROLS } from '../constants';
+import { BORDER_THICKNESS, PLAYER_1_CONTROLS, PLAYER_2_CONTROLS, COLLISION_CATEGORIES } from '../constants';
+
 import { playMusic } from '../utils/music';
 import EventsCenter from '../utils/eventsCenter';
 
@@ -57,8 +58,8 @@ export default class Level1 extends Phaser.Scene {
     this.movingPlatform1 = new MovingPlatform(this, 6500, 1330, 'platform-long', 700, 'horisontal');
     this.movingPlatform2 = new MovingPlatform(this, 10000, 2000, 'platform-long', -1780, 'vertical');
 
-    this.ibb = new Player(this, 'ibb', 300, 1000, 'ibb-move');
-    this.obb = new Player(this, 'obb', 200, 1000, 'obb-move');
+    this.ibb = new Player(this, 'ibb', 300, 1000, 'ibb-move', COLLISION_CATEGORIES.ibb);
+    this.obb = new Player(this, 'obb', 200, 1000, 'obb-move', COLLISION_CATEGORIES.obb);
     // enemies spawn
     this.hedgehog1 = new JumpingHedgehog(this, 1125, 1900, 'hedgehog-jumper', 'hedgehog-fullbutt');
     this.hedgehog1.moveHorizontally(50, 'left', 250);
@@ -152,6 +153,7 @@ export default class Level1 extends Phaser.Scene {
         x,
         isPortal,
         isVertical,
+        collisionGroup,
       } = item;
       const top = y - wallDefaultHeight;
       const wallHeight = isVertical ? width : wallDefaultHeight;
@@ -167,13 +169,15 @@ export default class Level1 extends Phaser.Scene {
       if (isPortal) {
         // moved portal to separate class for better detection in collision event with instanceof
         const portal = new Portal(
-          this, wallX, wallY, wallWidth, wallHeight, wallColor, objSettings,
+          this, wallX, wallY,
+          wallWidth, wallHeight, wallColor,
+          isVertical, objSettings, collisionGroup,
         );
         this.portals.push(portal);
       } else {
         const wall = this.add.rectangle(wallX, wallY, wallWidth, wallHeight, wallColor);
         const wallGameObject = this.matter.add.gameObject(wall, objSettings);
-        wallGameObject.setCollisionCategory(16);
+        wallGameObject.setCollisionCategory(COLLISION_CATEGORIES.wall);
       }
     });
   }

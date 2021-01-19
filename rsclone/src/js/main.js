@@ -38,8 +38,8 @@ class Main {
           enableSleeping: false,
           gravity: { y: 2 },
           debug: {
-            showBody: false,
-            showStaticBody: false,
+            showBody: true,
+            showStaticBody: true,
           },
         },
       },
