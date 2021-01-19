@@ -18,7 +18,6 @@ export default class MainMenuDevelopers extends Phaser.Scene {
     createBg(this);
     createMenu(this, this.menuItems, true);
     this.createGithubIcons();
-    window.location.hash = this.scene.key;
   }
 
   createGithubIcons() {

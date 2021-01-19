@@ -12,7 +12,6 @@ export default class MainMenu extends Phaser.Scene {
     this.menuItems = {
       Play: () => {
         this.scene.switch('MainMenuPlay');
-        window.location.hash = 'MainMenuPlay';
       },
       Leaderboard: () => this.scene.switch('MainMenuLeaderBoard'),
       Settings: () => this.scene.switch('MainMenuSettings'),
@@ -22,13 +21,5 @@ export default class MainMenu extends Phaser.Scene {
     createBg(this);
     createMenu(this, this.menuItems);
     playMusic(this, 'main_menu_music');
-    window.location.hash = this.scene.key;
-    this.oldHash = window.location.hash.slice(1);
-    window.onpopstate = () => {
-      const hashKey = window.location.hash.slice(1);
-      this.oldHash = hashKey;
-      this.game.scene.bringToTop(hashKey);
-      this.game.scene.run(hashKey);
-    };
   }
 }
