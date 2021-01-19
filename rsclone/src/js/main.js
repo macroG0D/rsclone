@@ -14,6 +14,15 @@ class Main {
   constructor() {
     const cookieVersion = 0;
     const settings = JSON.parse(localStorage.getItem('rsc-game-settings')) || {
+      locale: 'en',
+      sound: {
+        enabled: true,
+        volume: 0.01,
+      },
+      music: {
+        enabled: true,
+        volume: 0.005,
+      },
       cookieVersion,
     };
     const savedVersion = settings.cookieVersion;
