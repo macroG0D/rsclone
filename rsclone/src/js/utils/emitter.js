@@ -1,4 +1,5 @@
 import EventsCenter from './eventsCenter';
+import { playSound } from './playSound';
 
 const obbParticlesColors = [0xD15C81, 0x97425D, 0x6D3044];
 const ibbParticlesColors = [0x59D75C, 0x3F9A42, 0x2F7231];
@@ -81,6 +82,7 @@ export default class Emitter {
           callback: (eventData) => {
             eventData.gameObjectA.destroy();
             EventsCenter.emit('update-score', crystalScoreValue);
+            playSound(this.scene, 'diamond_collect');
           },
           context: this,
         });

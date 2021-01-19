@@ -7,7 +7,7 @@ import {
   CHARACTERS_DISTANCE_MAX,
 } from '../constants';
 
-import { playSound } from '../utils/sound';
+import { playSound } from '../utils/playSound';
 
 function createPlayerAnimations(scene, key, sprite) {
   scene.anims.create({
@@ -170,7 +170,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     this.scene.time.addEvent({
       delay: 50,
       callback: () => {
-        playSound(this.scene, 'warp_cross_01');
+        playSound(this.scene, 'warp_cross');
         this.switchGravity();
       },
     });
@@ -237,6 +237,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         });
       }
       this.canJump = false;
+      playSound(this.scene, 'popbase');
       this.scene.time.addEvent({
         delay: 700,
         callback: () => { this.canJump = true; },
@@ -247,7 +248,10 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
   moveCharacter(direction) {
     const moveForce = 0.015;
     const force = (direction === 'right') ? moveForce : -moveForce;
-    if (this.canMove(direction)) this.applyForce({ x: force, y: 0 });
+    if (this.canMove(direction)) {
+      this.applyForce({ x: force, y: 0 });
+      if (this.isGrounded) playSound(this.scene, `xbb_run_${direction}`);
+    }
     if (this.isCarrying) this.getAnotherPlayer().applyForce({ x: force, y: 0 });
     this.direction = direction;
     this.turnCharacter();
