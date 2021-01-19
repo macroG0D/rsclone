@@ -63,8 +63,8 @@ export default class Level1 extends Phaser.Scene {
     this.movingPlatform1 = new MovingPlatform(this, 6500, 1330, 'platform-long', 1100, 'horizontal');
     this.movingPlatform2 = new MovingPlatform(this, 10000, 1800, 'platform-long', -1580, 'vertical');
 
-    this.obb = new Player(this, 'obb', 6500, 1000, 'obb-move', COLLISION_CATEGORIES.obb);
-    this.ibb = new Player(this, 'ibb', 6500, 1000, 'ibb-move', COLLISION_CATEGORIES.ibb);
+    this.obb = new Player(this, 'obb', 200, 1100, 'obb-move', COLLISION_CATEGORIES.obb);
+    this.ibb = new Player(this, 'ibb', 300, 1200, 'ibb-move', COLLISION_CATEGORIES.ibb);
     this.ibb.headStandingCheck();
     this.obb.headStandingCheck();
     // enemies spawn
