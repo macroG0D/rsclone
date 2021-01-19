@@ -64,6 +64,8 @@ class Main {
       key: undefined,
       track: undefined,
     };
+    this.game.sounds = {};
+    this.game.soundsCache = {};
   }
 }
 

@@ -1,4 +1,6 @@
 import EventsCenter from './eventsCenter';
+import { playSound } from './playSound';
+
 import { COLLISION_CATEGORIES, PARTICLES_COLORS } from '../constants';
 
 export default class Emitter {
@@ -80,6 +82,7 @@ export default class Emitter {
           callback: (eventData) => {
             eventData.gameObjectA.destroy();
             EventsCenter.emit('update-score', crystalScoreValue);
+            playSound(this.scene, 'diamond_collect');
           },
           context: this,
         });
