@@ -36,7 +36,7 @@ export default class Enemy extends Phaser.Physics.Matter.Sprite {
     }
   }
 
-  moveHorizontally(length, direction, speedMS) {
+  moveHorizontally(length, direction, speedMS, easeModel = 'Sine', easeType = 'InOut') {
     let destination = length;
     if (direction === 'right') {
       destination = Math.abs(destination);
@@ -47,7 +47,7 @@ export default class Enemy extends Phaser.Physics.Matter.Sprite {
       from: 0,
       to: destination,
       duration: speedMS,
-      ease: Phaser.Math.Easing.Sine.InOut,
+      ease: Phaser.Math.Easing[easeModel][easeType],
       repeat: -1,
       yoyo: true,
       onUpdate: (tween, target) => {
@@ -68,6 +68,34 @@ export default class Enemy extends Phaser.Physics.Matter.Sprite {
       },
       onYoyo: () => {
         this.setFlipX(true);
+      },
+    });
+  }
+
+  jump(length, speedMS) {
+    this.scene.tweens.addCounter({
+      from: 0,
+      to: !this.isUpsideDown ? length * -1 : length,
+      duration: speedMS,
+      ease: Phaser.Math.Easing.Sine.InOut,
+      repeat: -1,
+      yoyo: true,
+      onUpdate: (tween, target) => {
+        if (!this.isAlive) {
+          this.body.destroy();
+          this.butt.destroy();
+          return;
+        }
+        const y = this.startY + target.value;
+        const buttY = this.startY - target.value;
+        this.y = y;
+        this.butt.y = buttY + this.offsetBetweenHeadAndButt;
+        if (this.y === this.startY) {
+          this.setFlipY(false);
+        }
+      },
+      onYoyo: () => {
+        this.setFlipY(true);
       },
     });
   }
