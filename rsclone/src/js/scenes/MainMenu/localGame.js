@@ -17,6 +17,5 @@ export default class MainMenuLocalGame extends Phaser.Scene {
     createBg(this);
     createImg(this);
     createMenu(this, this.menuItems, true, this.menuCallBack);
-    window.location.hash = this.scene.key;
   }
 }

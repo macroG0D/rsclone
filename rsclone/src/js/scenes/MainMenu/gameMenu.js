@@ -26,6 +26,5 @@ export default class GameMenu extends Phaser.Scene {
     };
     createBg(this);
     createMenu(this, this.menuItems);
-    window.location.hash = this.scene.key;
   }
 }

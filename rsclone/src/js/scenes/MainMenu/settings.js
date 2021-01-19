@@ -43,7 +43,6 @@ export default class MainMenuSettings extends Phaser.Scene {
 
   create() {
     createBg(this);
-    window.location.hash = this.scene.key;
     this.isMusicOn = true;
     this.isSoundOn = true;
     this.isEnglishOn = true;

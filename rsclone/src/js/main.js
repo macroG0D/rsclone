@@ -14,6 +14,15 @@ class Main {
   constructor() {
     const cookieVersion = 0;
     const settings = JSON.parse(localStorage.getItem('rsc-game-settings')) || {
+      locale: 'en',
+      sound: {
+        enabled: true,
+        volume: 0.01,
+      },
+      music: {
+        enabled: true,
+        volume: 0.005,
+      },
       cookieVersion,
     };
     const savedVersion = settings.cookieVersion;
@@ -61,11 +70,10 @@ class Main {
     this.game = new Phaser.Game(this.gameConfig);
     this.game.client = new Client();
     this.game.music = {
-      key: undefined,
-      track: undefined,
+      current: undefined,
+      cache: {},
     };
-    this.game.sounds = {};
-    this.game.soundsCache = {};
+    this.game.sounds = { cache: {} };
   }
 }
 
