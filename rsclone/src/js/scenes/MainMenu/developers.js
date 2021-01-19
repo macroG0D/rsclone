@@ -1,7 +1,6 @@
 import Phaser from 'phaser';
 
 import { createMenu } from '../../utils/createMenu';
-import { createBg } from '../../utils/createBg';
 
 export default class MainMenuDevelopers extends Phaser.Scene {
   constructor() {
@@ -15,7 +14,6 @@ export default class MainMenuDevelopers extends Phaser.Scene {
       Heliken: () => window.open('https://github.com/Heliken'),
       mauta: () => window.open('https://github.com/mauta'),
     };
-    createBg(this);
     createMenu(this, this.menuItems, true);
     this.createGithubIcons();
   }

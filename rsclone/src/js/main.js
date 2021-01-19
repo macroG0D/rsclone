@@ -43,6 +43,7 @@ class Main {
         width: GAME_WIDTH,
         height: GAME_HEIGHT,
       },
+      backgroundColor: '#e5e5e5',
       physics: {
         default: 'matter',
         matter: {

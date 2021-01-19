@@ -6,7 +6,8 @@ export function createMenu(scene, menuItems, back = false, backCallback = () => 
   const menuX = scene.cameras.main.centerX;
   const menuY = scene.cameras.main.centerY;
   const locale = LOCALE[scene.game.app.settings.locale];
-  // scene.input.keyboard.createCursorKeys();
+  scene.input.keyboard.createCursorKeys();
+  scene.input.keyboard.addKey('ESC').on('down', backCallback);
   const menu = new Create('div', false, 'game-menu');
   menu.items = {};
   Object.entries(menuItems).forEach(([itemName, itemLink], itemIndex) => {

@@ -1,7 +1,6 @@
 import Phaser from 'phaser';
 
 import { createMenu } from '../../utils/createMenu';
-import { createBg } from '../../utils/createBg';
 
 export default class MainMenuOnlineGame extends Phaser.Scene {
   constructor() {
@@ -15,7 +14,6 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
     };
     this.menuCallBack = () => this.scene.switch('MainMenuPlay');
     this.createImg();
-    createBg(this);
     createMenu(this, this.menuItems, true, this.menuCallBack);
   }
 

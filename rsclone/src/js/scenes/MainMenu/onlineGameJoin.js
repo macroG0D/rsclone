@@ -1,7 +1,6 @@
 import Phaser from 'phaser';
 
 import { createMenu } from '../../utils/createMenu';
-import { createBg } from '../../utils/createBg';
 import { createImg } from '../../utils/createImg';
 
 export default class MainMenuOnlineGame extends Phaser.Scene {
@@ -10,7 +9,6 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
   }
 
   create() {
-    createBg(this);
     createImg(this);
     this.client = this.game.client;
     this.client.on('requestGamesSuccess', (sessionNames) => {

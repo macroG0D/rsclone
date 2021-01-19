@@ -1,7 +1,5 @@
 import Phaser from 'phaser';
 
-import { createBg } from '../../utils/createBg';
-
 const menuItemStyle = {
   font: '30px Montserrat',
   fill: '#000000',
@@ -42,7 +40,6 @@ export default class MainMenuSettings extends Phaser.Scene {
   }
 
   create() {
-    createBg(this);
     this.isMusicOn = true;
     this.isSoundOn = true;
     this.isEnglishOn = true;
