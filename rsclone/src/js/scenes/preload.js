@@ -14,7 +14,7 @@ import hedgehogHead from '../../assets/sprites/enemies/hedgehogs/hedgehog_head.s
 import hedgehogJumper from '../../assets/sprites/enemies/hedgehogs/hedgehog_jumper.svg';
 import hedgehogHalfButt from '../../assets/sprites/enemies/hedgehogs/hedgehog_halfButt.svg';
 import hedgehogFullButt from '../../assets/sprites/enemies/hedgehogs/hedgehog_fullButt.svg';
-import mainMenuMusic from '../../assets/music/main_menu.mp3';
+import menuMusic from '../../assets/music/main_menu.mp3';
 import level1Music from '../../assets/music/level1.mp3';
 import level2Music from '../../assets/music/level2.mp3';
 
@@ -63,7 +63,7 @@ export default class Preload extends Phaser.Scene {
     this.load.image('platform-long', platformLong);
 
     // Loading music
-    this.load.audio('main_menu_music', mainMenuMusic);
+    this.load.audio('menu_music', menuMusic);
     this.load.audio('level1_music', level1Music);
     this.load.audio('level2_music', level2Music);
 

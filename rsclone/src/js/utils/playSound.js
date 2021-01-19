@@ -10,8 +10,8 @@ export function playSound(scene, key) {
   if (soundCount) {
     const soundNumber = getRandomInt(1, soundCount).toString().padStart(2, '0');
     const soundKey = `${key}_${soundNumber}`;
-    if (!game.soundsCache[soundKey]) game.soundsCache[soundKey] = game.sound.add(soundKey);
-    const sound = game.soundsCache[soundKey];
+    if (!game.sounds.cache[soundKey]) game.sounds.cache[soundKey] = game.sound.add(soundKey);
+    const sound = game.sounds.cache[soundKey];
     sound.play({ volume: SOUND_VOLUME });
   }
 }

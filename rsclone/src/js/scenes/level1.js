@@ -12,9 +12,14 @@ import StandartHedgehog from '../sprites/enemies/standartHedgehog';
 import JumpingHedgehog from '../sprites/enemies/jumpingHedgehog';
 import { gradientSquares, gradientColors, walls } from '../levels/level1/backgroundStructure';
 
-import { BORDER_THICKNESS, PLAYER_1_CONTROLS, PLAYER_2_CONTROLS, COLLISION_CATEGORIES } from '../constants';
+import {
+  BORDER_THICKNESS,
+  PLAYER_1_CONTROLS,
+  PLAYER_2_CONTROLS,
+  COLLISION_CATEGORIES,
+} from '../constants';
 
-import { playMusic } from '../utils/music';
+import { playMusic } from '../utils/playMusic';
 import EventsCenter from '../utils/eventsCenter';
 
 const levelWidth = 10500; // 5369
@@ -80,7 +85,7 @@ export default class Level1 extends Phaser.Scene {
     this.hedgehog8.moveHorizontally(0.1, 'left', 5000);
 
     this.cursors = this.input.keyboard.createCursorKeys();
-    playMusic(this, 'level1_music');
+    playMusic(this);
     this.scene.run('Score');
     this.gameMenu();
   }

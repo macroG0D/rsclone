@@ -70,11 +70,10 @@ class Main {
     this.game = new Phaser.Game(this.gameConfig);
     this.game.client = new Client();
     this.game.music = {
-      key: undefined,
-      track: undefined,
+      current: undefined,
+      cache: {},
     };
-    this.game.sounds = {};
-    this.game.soundsCache = {};
+    this.game.sounds = { cache: {} };
   }
 }
 

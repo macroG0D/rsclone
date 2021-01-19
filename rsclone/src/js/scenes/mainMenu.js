@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import { createMenu } from '../utils/createMenu';
 import { createBg } from '../utils/createBg';
-import { playMusic } from '../utils/music';
+import { playMusic } from '../utils/playMusic';
 
 export default class MainMenu extends Phaser.Scene {
   constructor() {
@@ -20,6 +20,6 @@ export default class MainMenu extends Phaser.Scene {
     };
     createBg(this);
     createMenu(this, this.menuItems);
-    playMusic(this, 'main_menu_music');
+    playMusic(this);
   }
 }
