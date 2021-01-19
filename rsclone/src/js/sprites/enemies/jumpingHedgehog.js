@@ -8,7 +8,8 @@ export default class JumpingHedgehog extends Enemy {
     this.isUpsideDown = isUpsideDown;
     this.offsetBetweenHeadAndButt = this.isUpsideDown
       ? offsetBetweenHeadAndButt * -1 : offsetBetweenHeadAndButt;
-    this.butt = scene.add.sprite(x, y + offsetBetweenHeadAndButt, spriteB);
+    console.log(this.offsetBetweenHeadAndButt);
+    this.butt = scene.add.sprite(x, y + this.offsetBetweenHeadAndButt, spriteB);
     this.buttSensor = scene.matter.add.gameObject(
       this.butt,
       {
@@ -62,7 +63,7 @@ export default class JumpingHedgehog extends Enemy {
   jump(length, speedMS) {
     this.scene.tweens.addCounter({
       from: 0,
-      to: -`${length}`,
+      to: !this.isUpsideDown ? length * -1 : length,
       duration: speedMS,
       ease: Phaser.Math.Easing.Sine.InOut,
       repeat: -1,
