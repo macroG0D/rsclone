@@ -102,6 +102,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     });
     this.body.restitution = 0.3;
     this.setCollisionCategory(collisionCategory);
+
     this.landingEvent();
   }
 
@@ -285,9 +286,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
   update() {
     if (this.scene && this.isAlive) {
       this.isGrounded = this.isTouching.bottom;
-      this.headStandingCheck();
       this.movePlayer();
-      // this.landingEvent();
     }
   }
 }

@@ -65,6 +65,8 @@ export default class Level1 extends Phaser.Scene {
 
     this.ibb = new Player(this, 'ibb', 300, 1000, 'ibb-move', COLLISION_CATEGORIES.ibb);
     this.obb = new Player(this, 'obb', 200, 1000, 'obb-move', COLLISION_CATEGORIES.obb);
+    this.ibb.headStandingCheck();
+    this.obb.headStandingCheck();
     // enemies spawn
     this.hedgehog1 = new JumpingHedgehog(this, 1125, 1900, 'hedgehog-jumper', 'hedgehog-fullbutt');
     this.hedgehog1.moveHorizontally(50, 'left', 250);
