@@ -63,7 +63,7 @@ export default class Level1 extends Phaser.Scene {
     this.movingPlatform1 = new MovingPlatform(this, 6500, 1330, 'platform-long', 700, 'horisontal');
     this.movingPlatform2 = new MovingPlatform(this, 10000, 2000, 'platform-long', -1780, 'vertical');
 
-    this.ibb = new Player(this, 'ibb', 300, 1000, 'ibb-move', COLLISION_CATEGORIES.ibb);
+    this.ibb = new Player(this, 'ibb', 200, 1000, 'ibb-move', COLLISION_CATEGORIES.ibb);
     this.obb = new Player(this, 'obb', 200, 1000, 'obb-move', COLLISION_CATEGORIES.obb);
     this.ibb.headStandingCheck();
     this.obb.headStandingCheck();
@@ -71,7 +71,7 @@ export default class Level1 extends Phaser.Scene {
     this.hedgehog1 = new JumpingHedgehog(this, 1125, 1900, 'hedgehog-jumper', 'hedgehog-fullbutt');
     this.hedgehog1.moveHorizontally(50, 'left', 250);
     this.hedgehog1.jump(800, 1200);
-    this.hedgehog2 = new StandartHedgehog(this, 1450, 1420, 'hedgehog-head', 'hedgehog-halfbutt', 58);
+    this.hedgehog2 = new StandartHedgehog(this, 1450, 1420, 'hedgehog-head', 'hedgehog-halfbutt');
     this.hedgehog2.moveHorizontally(185, 'left', 1800);
     this.hedgehog3 = new JumpingHedgehog(this, 2500, 1592, 'hedgehog-jumper', 'hedgehog-fullbutt');
     this.hedgehog3.jump(180, 700);
@@ -79,11 +79,11 @@ export default class Level1 extends Phaser.Scene {
     this.hedgehog4.jump(180, 900);
     this.hedgehog5 = new JumpingHedgehog(this, 2800, 1592, 'hedgehog-jumper', 'hedgehog-fullbutt');
     this.hedgehog5.jump(180, 500);
-    this.hedgehog6 = new StandartHedgehog(this, 3400, 1558, 'hedgehog-head', 'hedgehog-halfbutt', 58);
+    this.hedgehog6 = new StandartHedgehog(this, 3400, 1558, 'hedgehog-head', 'hedgehog-halfbutt');
     this.hedgehog6.moveHorizontally(300, 'left', 2500);
-    this.hedgehog7 = new StandartHedgehog(this, 4290, 1458, 'hedgehog-head', 'hedgehog-halfbutt', 58);
+    this.hedgehog7 = new StandartHedgehog(this, 4290, 1458, 'hedgehog-head', 'hedgehog-halfbutt');
     this.hedgehog7.moveHorizontally(150, 'left', 1000);
-    this.hedgehog8 = new StandartHedgehog(this, 4850, 1230, 'hedgehog-head', 'hedgehog-halfbutt', 58);
+    this.hedgehog8 = new StandartHedgehog(this, 4850, 1230, 'hedgehog-head', 'hedgehog-halfbutt');
     this.hedgehog8.moveHorizontally(0.1, 'left', 5000);
 
     this.cursors = this.input.keyboard.createCursorKeys();

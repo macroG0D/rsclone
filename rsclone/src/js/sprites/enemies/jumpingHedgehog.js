@@ -2,11 +2,12 @@ import Phaser from 'phaser';
 import Enemy from '../enemy';
 
 export default class JumpingHedgehog extends Enemy {
-  constructor(scene, x, y, spriteA, spriteB, offsetBetweenHeadAndButt = 100) {
+  constructor(scene, x, y, spriteA, spriteB, isUpsideDown = false, offsetBetweenHeadAndButt = 100) {
     super(scene, x, y, spriteA);
     this.name = 'JumpingHedgehog';
-    this.offsetBetweenHeadAndButt = offsetBetweenHeadAndButt;
-
+    this.isUpsideDown = isUpsideDown;
+    this.offsetBetweenHeadAndButt = this.isUpsideDown
+      ? offsetBetweenHeadAndButt * -1 : offsetBetweenHeadAndButt;
     this.butt = scene.add.sprite(x, y + offsetBetweenHeadAndButt, spriteB);
     this.buttSensor = scene.matter.add.gameObject(
       this.butt,
@@ -21,6 +22,9 @@ export default class JumpingHedgehog extends Enemy {
       .setBounce(0);
 
     this.setSensors(x, y);
+    this.butt.angle = this.isUpsideDown ? 180 : 0;
+    this.angle = this.isUpsideDown ? 180 : 0;
+
     this.scene.events.on('update', this.update, this);
   }
 
