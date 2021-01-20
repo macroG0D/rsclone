@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { createMenu } from '../utils/createMenu';
+import Menu from '../components/menu';
 import { playMusic } from '../utils/playMusic';
 
 export default class MainMenu extends Phaser.Scene {
@@ -8,7 +8,7 @@ export default class MainMenu extends Phaser.Scene {
   }
 
   create() {
-    this.menuItems = {
+    const menuItems = {
       play: () => {
         this.scene.switch('MainMenuPlay');
       },
@@ -17,7 +17,7 @@ export default class MainMenu extends Phaser.Scene {
       developers: () => this.scene.switch('MainMenuDevelopers'),
       about: () => window.open('https://github.com/macroG0D/rsclone'),
     };
-    createMenu(this, this.menuItems);
+    this.menu = new Menu(this, menuItems);
     playMusic(this);
   }
 }
