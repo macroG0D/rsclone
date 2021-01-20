@@ -20,8 +20,9 @@ export default class Menu extends Create {
       }
       item.link = itemLink;
       item.index = itemIndex;
-      item.node.addEventListener('click', itemLink, false);
       this.items[itemIndex] = item;
+      item.node.addEventListener('pointerdown', itemLink, false);
+      item.node.addEventListener('pointermove', () => this.highlightItem(itemIndex), false);
     });
     scene.input.keyboard.addKey('UP').on('down', () => this.switchItem('up'));
     scene.input.keyboard.addKey('DOWN').on('down', () => this.switchItem('down'));

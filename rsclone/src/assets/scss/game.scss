@@ -8,9 +8,17 @@
 .game-menu-item {
     text-align: center;
     margin: 10px auto;
-    &:hover, &-active {
+    &::before, &::after {
+        content: '\00B7';
+        color: #e5e5e5e5;
+        margin: 0 10px;
+    }
+    &-active {
         color: #d22d61;
         cursor: pointer;
+        &::before, &::after {
+            color: #d22d61;
+        }
     }
     &-back {
         margin: 30px auto;
