@@ -2,12 +2,14 @@ import Phaser from 'phaser';
 import Enemy from '../enemy';
 
 export default class JumpingHedgehog extends Enemy {
-  constructor(scene, x, y, spriteA, spriteB, offsetBetweenHeadAndButt = 100) {
+  constructor(scene, x, y, spriteA, spriteB,
+    isUpsideDown = false, offsetBetweenHeadAndButt = 100, buttX = 0) {
     super(scene, x, y, spriteA);
     this.name = 'JumpingHedgehog';
-    this.offsetBetweenHeadAndButt = offsetBetweenHeadAndButt;
-
-    this.butt = scene.add.sprite(x, y + offsetBetweenHeadAndButt, spriteB);
+    this.isUpsideDown = isUpsideDown;
+    this.offsetBetweenHeadAndButt = this.isUpsideDown
+      ? offsetBetweenHeadAndButt * -1 : offsetBetweenHeadAndButt;
+    this.butt = scene.add.sprite(x + buttX, y + this.offsetBetweenHeadAndButt, spriteB);
     this.buttSensor = scene.matter.add.gameObject(
       this.butt,
       {
@@ -21,6 +23,9 @@ export default class JumpingHedgehog extends Enemy {
       .setBounce(0);
 
     this.setSensors(x, y);
+    this.butt.angle = this.isUpsideDown ? 180 : 0;
+    this.angle = this.isUpsideDown ? 180 : 0;
+
     this.scene.events.on('update', this.update, this);
   }
 
@@ -52,34 +57,6 @@ export default class JumpingHedgehog extends Enemy {
       objectA: [this.buttSensor],
       callback: this.gotKilled,
       context: this,
-    });
-  }
-
-  jump(length, speedMS) {
-    this.scene.tweens.addCounter({
-      from: 0,
-      to: -`${length}`,
-      duration: speedMS,
-      ease: Phaser.Math.Easing.Sine.InOut,
-      repeat: -1,
-      yoyo: true,
-      onUpdate: (tween, target) => {
-        if (!this.isAlive) {
-          this.body.destroy();
-          this.butt.destroy();
-          return;
-        }
-        const y = this.startY + target.value;
-        const buttY = this.startY - target.value;
-        this.y = y;
-        this.butt.y = buttY + this.offsetBetweenHeadAndButt;
-        if (this.y === this.startY) {
-          this.setFlipY(false);
-        }
-      },
-      onYoyo: () => {
-        this.setFlipY(true);
-      },
     });
   }
 }

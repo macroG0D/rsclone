@@ -10,8 +10,8 @@ export const MUSIC_VOLUME = 0.005;
 export const SOUND_VOLUME = 0.01;
 export const SOUND_WALK_DELAY = { ibb: 200, obb: 300 };
 export const PARTICLES_COLORS = {
-  obb: [0xD15C81, 0x97425D, 0x6D3044],
-  ibb: [0x59D75C, 0x3F9A42, 0x2F7231],
+  obb: [0xF75186, 0xF75186, 0xF8095C],
+  ibb: [0x2CC954, 0x6CDD89, 0x00FF42],
 };
 export const COLLISION_CATEGORIES = {
   wall: 2,

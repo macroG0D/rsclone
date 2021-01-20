@@ -102,6 +102,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     });
     this.body.restitution = 0.3;
     this.setCollisionCategory(collisionCategory);
+
+    this.landingEvent();
   }
 
   getAnotherPlayer() {
@@ -131,6 +133,14 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       objectA: this.sensors.bottom,
       objectB: this.getAnotherPlayer().sensors.top,
       callback: this.isNotOnHead,
+      context: this,
+    });
+  }
+
+  landingEvent() {
+    this.scene.matterCollision.addOnCollideStart({
+      objectA: this.sensors.bottom,
+      callback: () => { playSound(this.scene, 'popbase'); },
       context: this,
     });
   }
@@ -174,7 +184,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       this.isRotated,
     );
     this.scene.time.addEvent({
-      delay: 50,
+      delay: 80,
       callback: () => {
         playSound(this.scene, 'warp_cross');
         this.switchGravity(portal.isVertical);
@@ -194,7 +204,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
   }
 
   switchGravity(isVertical) {
-    const verticalVelocityForce = 5;
+    const verticalVelocityForce = 0;
     const minVelocity = isVertical ? verticalVelocityForce : this.jumpVelocity;
     const currVelocity = Math.abs(isVertical ? this.body.velocity.x : this.body.velocity.y);
     /* adding additional velocity to players body so that player velocity wont fade out if he will
@@ -276,7 +286,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
   update() {
     if (this.scene && this.isAlive) {
       this.isGrounded = this.isTouching.bottom;
-      this.headStandingCheck();
       this.movePlayer();
     }
   }

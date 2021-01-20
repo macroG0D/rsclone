@@ -60,29 +60,55 @@ export default class Level1 extends Phaser.Scene {
     this.addParallax();
     this.addWalls();
 
-    this.movingPlatform1 = new MovingPlatform(this, 6500, 1330, 'platform-long', 700, 'horisontal');
-    this.movingPlatform2 = new MovingPlatform(this, 10000, 2000, 'platform-long', -1780, 'vertical');
+    this.movingPlatform1 = new MovingPlatform(this, 6500, 1330, 'platform-long', 1100, 'horizontal');
+    this.movingPlatform2 = new MovingPlatform(this, 10000, 1800, 'platform-long', -1580, 'vertical');
 
-    this.ibb = new Player(this, 'ibb', 300, 1000, 'ibb-move', COLLISION_CATEGORIES.ibb);
-    this.obb = new Player(this, 'obb', 200, 1000, 'obb-move', COLLISION_CATEGORIES.obb);
+    this.obb = new Player(this, 'obb', 200, 1100, 'obb-move', COLLISION_CATEGORIES.obb);
+    this.ibb = new Player(this, 'ibb', 300, 1200, 'ibb-move', COLLISION_CATEGORIES.ibb);
+    this.ibb.headStandingCheck();
+    this.obb.headStandingCheck();
     // enemies spawn
+    // enemies set 1
     this.hedgehog1 = new JumpingHedgehog(this, 1125, 1900, 'hedgehog-jumper', 'hedgehog-fullbutt');
     this.hedgehog1.moveHorizontally(50, 'left', 250);
     this.hedgehog1.jump(800, 1200);
-    this.hedgehog2 = new StandartHedgehog(this, 1450, 1420, 'hedgehog-head', 'hedgehog-halfbutt', 58);
+    this.hedgehog2 = new StandartHedgehog(this, 1450, 1356, 'hedgehog-head', 'hedgehog-halfbutt');
     this.hedgehog2.moveHorizontally(185, 'left', 1800);
-    this.hedgehog3 = new JumpingHedgehog(this, 2500, 1592, 'hedgehog-jumper', 'hedgehog-fullbutt');
-    this.hedgehog3.jump(180, 700);
-    this.hedgehog4 = new JumpingHedgehog(this, 2650, 1592, 'hedgehog-jumper', 'hedgehog-fullbutt');
-    this.hedgehog4.jump(180, 900);
-    this.hedgehog5 = new JumpingHedgehog(this, 2800, 1592, 'hedgehog-jumper', 'hedgehog-fullbutt');
-    this.hedgehog5.jump(180, 500);
-    this.hedgehog6 = new StandartHedgehog(this, 3400, 1558, 'hedgehog-head', 'hedgehog-halfbutt', 58);
-    this.hedgehog6.moveHorizontally(300, 'left', 2500);
-    this.hedgehog7 = new StandartHedgehog(this, 4290, 1458, 'hedgehog-head', 'hedgehog-halfbutt', 58);
-    this.hedgehog7.moveHorizontally(150, 'left', 1000);
-    this.hedgehog8 = new StandartHedgehog(this, 4850, 1230, 'hedgehog-head', 'hedgehog-halfbutt', 58);
-    this.hedgehog8.moveHorizontally(0.1, 'left', 5000);
+    // enemies set 2
+    this.hedgehog3 = new JumpingHedgehog(this, 2000, 1592, 'hedgehog-jumper', 'hedgehog-fullbutt');
+    this.hedgehog3.jump(50, 800);
+    this.hedgehog4 = new JumpingHedgehog(this, 2150, 1694, 'hedgehog-jumper', 'hedgehog-fullbutt', true, 100);
+    this.hedgehog4.jump(180, 700);
+    this.hedgehog5 = new JumpingHedgehog(this, 2300, 1592, 'hedgehog-jumper', 'hedgehog-fullbutt');
+    this.hedgehog5.jump(180, 900);
+    this.hedgehog6 = new JumpingHedgehog(this, 2450, 1592, 'hedgehog-jumper', 'hedgehog-fullbutt');
+    this.hedgehog6.jump(180, 500);
+    this.hedgehog7 = new JumpingHedgehog(this, 2600, 1695, 'hedgehog-jumper', 'hedgehog-fullbutt', true);
+    this.hedgehog7.jump(15090, 5600);
+    this.hedgehog8 = new JumpingHedgehog(this, 2750, 1592, 'hedgehog-jumper', 'hedgehog-fullbutt');
+    this.hedgehog8.jump(180, 450);
+    // enemies set 3
+    this.hedgehog9 = new StandartHedgehog(this, 3400, 1368, 'hedgehog-head', 'hedgehog-halfbutt', true);
+    this.hedgehog9.moveHorizontally(300, 'left', 2500, 'Bounce', 'Out');
+    this.hedgehog10 = new StandartHedgehog(this, 3550, 1368, 'hedgehog-head', 'hedgehog-halfbutt', true);
+    this.hedgehog10.moveHorizontally(300, 'left', 2500, 'Bounce', 'In');
+
+    this.hedgehog11 = new StandartHedgehog(this, 4290, 1457, 'hedgehog-head', 'hedgehog-halfbutt');
+    this.hedgehog11.moveHorizontally(150, 'left', 1000);
+    this.hedgehog12 = new JumpingHedgehog(this, 4950, 1120, 'hedgehog-jumper', 'hedgehog-fullbutt', true, 85);
+    this.hedgehog12.moveHorizontally(100, 'left', 300);
+    this.hedgehog12.jump(50, 1500);
+
+    this.hedgehog13 = new JumpingHedgehog(this, 5860, 860, 'hedgehog-jumper', 'hedgehog-fullbutt', true, 85);
+    this.hedgehog13.moveHorizontally(10, 'left', 300);
+    this.hedgehog13.jump(150, 1500);
+    this.hedgehog14 = new StandartHedgehog(this, 6030, 945, 'hedgehog-head', 'hedgehog-halfbutt');
+    this.hedgehog14.moveHorizontally(0.1, 'left', 5000);
+
+    this.hedgehog15 = new JumpingHedgehog(this, 6920, 1230, 'hedgehog-jumper', 'hedgehog-fullbutt', false, -100, 100);
+    this.hedgehog15.jump(4, 1500);
+    this.hedgehog16 = new JumpingHedgehog(this, 7520, 1265, 'hedgehog-jumper', 'hedgehog-fullbutt', false, -100, 100);
+    this.hedgehog16.jump(80, 300);
 
     this.cursors = this.input.keyboard.createCursorKeys();
     playMusic(this);
