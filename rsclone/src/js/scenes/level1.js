@@ -212,6 +212,7 @@ export default class Level1 extends Phaser.Scene {
   }
 
   update() {
+    if (!this.game.isStarted) this.game.isStarted = true;
     if (this.ibb && this.obb) {
       this.centerCamera();
       this.scrollParallax();

@@ -20,4 +20,8 @@ export default class MainMenu extends Phaser.Scene {
     this.menu = new Menu(this, menuItems);
     playMusic(this);
   }
+
+  update() {
+    if (this.game.isStarted) this.game.isStarted = false;
+  }
 }
