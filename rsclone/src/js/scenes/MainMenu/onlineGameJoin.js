@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-import { createMenu } from '../../utils/createMenu';
+import Menu from '../../components/menu';
 import { createImg } from '../../utils/createImg';
 
 export default class MainMenuOnlineGame extends Phaser.Scene {
@@ -10,24 +10,30 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
 
   create() {
     createImg(this);
+    let menuItems = {
+      'Looking for a partner...': () => this.scene.switch('MainMenuOnlineGameJoin'),
+    };
+    const menuCallBack = () => {
+      this.scene.stop();
+      this.scene.switch('MainMenuOnlineGame');
+    };
+    this.menu = new Menu(this, menuItems, true, menuCallBack);
+
     this.client = this.game.client;
     this.client.on('requestGamesSuccess', (sessionNames) => {
-      this.menuItems = {};
+      this.menu.spawn.destroy();
+      menuItems = {};
       sessionNames.forEach((sessionName) => {
-        this.menuItems[sessionName] = () => this.joinGame(sessionName);
+        menuItems[sessionName] = () => this.joinGame(sessionName);
       });
-      this.menuCallBack = () => {
-        this.scene.stop();
-        this.scene.switch('MainMenuOnlineGame');
-      };
-      if (!sessionNames.length) this.menuItems['No games hosted'] = this.menuCallBack;
-      this.menu = createMenu(this, this.menuItems, true, this.menuCallBack);
+      if (!sessionNames.length) this.menuItems['No games hosted'] = menuCallBack;
+      this.menu = new Menu(this, menuItems, true, menuCallBack);
     });
     this.client.on('gameReady', (sessionName) => {
       this.menu[0].item.setText(`${sessionName} ready!`);
       this.menu[0].item.off('pointerdown');
       this.menu[0].item.on('pointerdown', () => this.requestStartGame(sessionName));
-      for (let itemIndex = 1; itemIndex < this.menu.length; itemIndex += 1) {
+      for (let itemIndex = 1; itemIndex < this.menu.length - 1; itemIndex += 1) {
         if (this.menu[itemIndex].item) this.menu[itemIndex].item.destroy();
       }
     });

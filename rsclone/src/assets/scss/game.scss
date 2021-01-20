@@ -13,16 +13,16 @@
         color: #e5e5e5e5;
         margin: 0 0.1em;
     }
+    &-back {
+        margin: 30px auto;
+        color: #979797;
+        font-size: 24px;
+    }
     &-active {
         color: #d22d61;
         cursor: pointer;
         &::before, &::after {
             color: #d22d61;
         }
-    }
-    &-back {
-        margin: 30px auto;
-        color: #979797;
-        font-size: 20px;
     }
 }

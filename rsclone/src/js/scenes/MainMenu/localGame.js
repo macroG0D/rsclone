@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-import { createMenu } from '../../utils/createMenu';
+import Menu from '../../components/menu';
 import { createImg } from '../../utils/createImg';
 
 export default class MainMenuLocalGame extends Phaser.Scene {
@@ -9,11 +9,11 @@ export default class MainMenuLocalGame extends Phaser.Scene {
   }
 
   create() {
-    this.menuItems = {
+    createImg(this, true);
+    const menuItems = {
       startGame: () => this.scene.start('Level1'),
     };
-    this.menuCallBack = () => this.scene.switch('MainMenuPlay');
-    createImg(this, true);
-    createMenu(this, this.menuItems, true, this.menuCallBack);
+    const menuCallBack = () => this.scene.switch('MainMenuPlay');
+    this.menu = new Menu(this, menuItems, true, menuCallBack);
   }
 }
