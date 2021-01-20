@@ -67,9 +67,6 @@ export default class Preload extends Phaser.Scene {
     this.load.audio('level1_music', level1Music);
     this.load.audio('level2_music', level2Music);
 
-    // Loading Sounds
-    soundLoader(this);
-
     this.load.spritesheet('ibb-move', ibbSpriteMove, {
       frameWidth: 47,
       frameHeight: 52,
@@ -79,6 +76,9 @@ export default class Preload extends Phaser.Scene {
       frameWidth: 47,
       frameHeight: 62,
     });
+
+    // Loading Sounds
+    soundLoader(this);
   }
 
   create() {

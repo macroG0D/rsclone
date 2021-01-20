@@ -9,7 +9,7 @@ export default class MainMenuLeaderBoard extends Phaser.Scene {
 
   create() {
     this.menuItems = {
-      Leaderboard: () => this.scene.switch('MainMenu'),
+      leaderboard: () => this.scene.switch('MainMenu'),
     };
     createMenu(this, this.menuItems, true);
   }

@@ -9,8 +9,8 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
 
   create() {
     this.menuItems = {
-      'Host a game': () => this.scene.start('MainMenuOnlineGameHost'),
-      'Join a game': () => this.scene.start('MainMenuOnlineGameJoin'),
+      hostGame: () => this.scene.start('MainMenuOnlineGameHost'),
+      joinGame: () => this.scene.start('MainMenuOnlineGameJoin'),
     };
     this.menuCallBack = () => this.scene.switch('MainMenuPlay');
     this.createImg();
