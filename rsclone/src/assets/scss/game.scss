@@ -9,9 +9,9 @@
     text-align: center;
     margin: 10px auto;
     &::before, &::after {
-        content: '\00B7';
+        content: '\2022';
         color: #e5e5e5e5;
-        margin: 0 10px;
+        margin: 0 0.1em;
     }
     &-active {
         color: #d22d61;
