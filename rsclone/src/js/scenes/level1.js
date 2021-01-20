@@ -102,7 +102,7 @@ export default class Level1 extends Phaser.Scene {
     this.hedgehog13 = new JumpingHedgehog(this, 5860, 860, 'hedgehog-jumper', 'hedgehog-fullbutt', true, 85);
     this.hedgehog13.moveHorizontally(10, 'left', 300);
     this.hedgehog13.jump(150, 1500);
-    this.hedgehog14 = new StandartHedgehog(this, 6020, 945, 'hedgehog-head', 'hedgehog-halfbutt');
+    this.hedgehog14 = new StandartHedgehog(this, 6030, 945, 'hedgehog-head', 'hedgehog-halfbutt');
     this.hedgehog14.moveHorizontally(0.1, 'left', 5000);
 
     this.hedgehog15 = new JumpingHedgehog(this, 6920, 1230, 'hedgehog-jumper', 'hedgehog-fullbutt', false, -100, 100);
