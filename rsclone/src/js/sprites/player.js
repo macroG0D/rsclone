@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import Death from './death';
 
 import {
   DEFAULT_MASS,
@@ -104,11 +105,40 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     this.setCollisionCategory(collisionCategory);
 
     this.landingEvent();
+    this.addCollideWorldBoundsListener();
   }
 
   getAnotherPlayer() {
     const anotherPlayerKey = this.key === 'ibb' ? 'obb' : 'ibb';
     return this.scene[anotherPlayerKey];
+  }
+
+  addCollideWorldBoundsListener() {
+    const worldBounds = this.scene.matter.world.walls;
+    this.scene.matterCollision.addOnCollideStart({
+      objectA: [worldBounds.top, worldBounds.bottom],
+      objectB: [this, this.getAnotherPlayer()],
+      callback: this.kill,
+      context: this,
+    });
+  }
+
+  kill(pair) {
+    if (pair.gameObjectB && (pair.gameObjectB.key === 'ibb' || pair.gameObjectB.key === 'obb') && pair.gameObjectB.isAlive) {
+      const player = pair.gameObjectB;
+      player.isAlive = false;
+      Death.deathAnimation(this.scene, player, 'player');
+      this.scene.time.addEvent({
+        delay: 500,
+        callback: () => {
+          const anotherPlayerKey = player.key === 'ibb' ? 'obb' : 'ibb';
+          if (this.scene[anotherPlayerKey].isAlive) {
+            this.scene[anotherPlayerKey].isAlive = false;
+            Death.deathAnimation(this.scene, this.scene[anotherPlayerKey], 'player');
+          }
+        },
+      });
+    }
   }
 
   isOnHead() {
