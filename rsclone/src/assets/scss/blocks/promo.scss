@@ -1,0 +1,29 @@
+.promo {
+  padding: 60px 0;
+
+  @media (max-width: 640px) {
+    padding-bottom: 60px;
+  }
+}
+
+.promo__text {
+  width: 1046px;
+  margin: 0 auto;
+  font-size: 32px;
+  line-height: 132%;
+  text-align: center;
+  color: $mainFontColor;
+
+  @media (max-width: 1200px) {
+    width: 940px;
+  }
+
+  @media (max-width: 1000px) {
+    width: calc(100% - 40px);
+  }
+
+  @media (max-width: 640px) {
+    font-size: 24px;
+    width: calc(100% - 20px);
+  }
+}

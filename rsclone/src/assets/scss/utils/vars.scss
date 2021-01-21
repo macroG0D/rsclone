@@ -1,8 +1,16 @@
 // Font
-$mainFont                : "Roboto", sans-serif;
+$mainFont                : 'Montserrat', sans-serif;
 
 // Size
-$mainFontColor           : #101010;
+$mainFontColor           : #505050;
+$startFontColor          : #0A3D5A;
+$menuActiveColor         : #003553;
+$accentColor             : #FF0A7F;
+$bgLightColor            : #FBFBFB;
+$lightColor              : #F4F4F4;
+$lightFontColor          : #ffffff;
+$ibbColor                : #00EB6B;
+
 $mainFontSize            : 16px;
 $mainFontWeight          : 400;
 $mainLineHeight          : 1.4;
@@ -15,12 +23,12 @@ $phoneWidth              : 480px;
 $smPhoneWidth            : 320px;
 
 // Main color
-$default-color           : #ffffff;
+
 $primary-color           : #ace0f9;
 $success-color           : #26de81;
 $danger-color            : #fc5c65;
 $warning-color           : #fed330;
-$light-color             : #999999;
+
 $purple-color            : #8854d0;
 
 // Neutral Color

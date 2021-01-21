@@ -1,0 +1,44 @@
+.play{
+  background-image: url(../../../assets/images/landing/cta-screen-image.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
+  @media (max-width: 640px) {
+
+    background-position: -65px center;
+  }
+}
+
+.play__wrap {
+  @include screenSize;
+  // padding-top: 225px;
+  // padding-bottom: 255px;
+  padding-top: 14.1%;
+  padding-bottom: 16%;
+
+  
+  @media (max-width: 640px) {
+    padding-top: 106px;
+    padding-bottom: 122px;
+  }
+}
+
+.play__button {
+  @include btn_play
+}
+
+
+.play__title {
+  font-size: 24px;
+  line-height: 130%;
+  font-weight: 400;
+  text-align: center;
+  color: $lightColor;
+  margin-bottom: 30px;
+
+  @media (max-width: 640px) {
+    width: 300px;
+    margin: 0 auto 30px;
+  }
+ }

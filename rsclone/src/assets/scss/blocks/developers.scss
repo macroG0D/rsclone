@@ -1,0 +1,95 @@
+.developers {
+  @include screenSize;
+  padding-top: 100px;
+  padding-bottom: 160px;
+  color: $lightColor;
+
+}
+
+.developers__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+
+  @media (max-width: 840px) {
+    flex-direction: column;
+ }
+}
+
+.developers__item {
+  display: block;
+  width: calc(50% - 10px);
+  background-image: url(../../../assets/images/landing/bg-develop.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-radius: 5px;
+  height: 224px;
+  padding-top: 62px;
+  padding-left: 40px;
+  padding-right: 40px;
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: 840px) {
+    width: 100%;
+    margin: 0 auto;
+ }
+}
+
+.developers__title {
+  @include title;
+  margin: 0;
+  margin-bottom: 60px;
+
+
+}
+
+.developers__name{
+  margin: 0;
+  font-size: 36px;
+  margin-bottom: 52px;
+  font-weight: 600;
+
+  @media (max-width: 640px) {
+     font-size: 28px;
+  }
+}
+
+.developers__role{
+  color: $accentColor;
+  margin: 0;
+  margin-bottom: 8px;
+  font-size: 18px;
+  font-weight: 600;
+
+  @media (max-width: 640px) {
+    font-size: 16px;
+ }
+}
+
+.developers__git{
+  font-size: 18px;
+  font-weight: 600;
+  align-self: flex-end;
+  text-align: right;
+  position: relative;
+
+  &::before{
+    display: block;
+    position: absolute;
+    content: url(../../../assets/images/landing/git.svg);
+    top: 0;
+    left: -25px;
+    width: 20px;
+  }
+
+  &:hover{
+    color: $accentColor;
+  }
+
+  @media (max-width: 640px) {
+    font-size: 16px;
+ }
+}
+

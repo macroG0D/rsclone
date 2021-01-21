@@ -1,0 +1,43 @@
+.about {
+  background-color: $bgLightColor;
+  padding-top: 67px;
+  padding-bottom: 69px;
+}
+
+.about__wrap {
+  @include screenSize;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.about__title {
+  @include title;
+  margin-top: 33px;
+}
+
+.about__text {
+  width: 866px;
+  font-size: 32px;
+  line-height: 132%;
+  color: $mainFontColor;
+
+  @media (max-width: 1200px) {
+    width: 700px;
+  }
+
+  @media (max-width: 850px) {
+    width: 445px;
+  }
+
+  @media (max-width: 640px) {
+    font-size: 24px;
+    width: calc(100% - 20px);
+    text-align: center;
+  }
+}
