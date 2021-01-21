@@ -2,6 +2,8 @@ import Phaser from 'phaser';
 
 import Menu from '../../components/menu';
 
+import { localization } from '../../utils/localization';
+
 export default class MainMenuPlay extends Phaser.Scene {
   constructor() {
     super('MainMenuPlay');
@@ -17,5 +19,6 @@ export default class MainMenuPlay extends Phaser.Scene {
 
   update() {
     if (this.game.isStarted) this.game.isStarted = false;
+    localization(this);
   }
 }

@@ -3,6 +3,8 @@ import Phaser from 'phaser';
 import Menu from '../../components/menu';
 import { createImg } from '../../utils/createImg';
 
+import { localization } from '../../utils/localization';
+
 export default class MainMenuOnlineGame extends Phaser.Scene {
   constructor() {
     super('MainMenuOnlineGameJoin');
@@ -51,5 +53,9 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
 
   requestStartGame(sessionName) {
     this.client.sendData('requestStartGame', sessionName);
+  }
+
+  update() {
+    localization(this);
   }
 }

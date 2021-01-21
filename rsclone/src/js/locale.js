@@ -41,6 +41,14 @@ export const LOCALE = {
     // online game menu
     hostGame: 'создать игру',
     joinGame: 'присоединиться к игре',
+    // settings menu
+    fullscreen: 'на весь экран',
+    music: 'музыка',
+    sound: 'звук',
+    language: 'язык',
+    // score
+    time: 'время',
+    score: 'очки',
   },
 };
 

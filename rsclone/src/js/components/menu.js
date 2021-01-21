@@ -18,6 +18,7 @@ export default class Menu extends Create {
         item.node.classList.add('game-menu-item-active');
         this.activeItem = itemIndex;
       }
+      item.name = itemName;
       item.link = itemLink;
       item.index = itemIndex;
       this.items.push(item);
@@ -32,6 +33,7 @@ export default class Menu extends Create {
       const index = this.items.length;
       const localBackName = locale.back;
       this.back = new Create('div', this.node, 'game-menu-item', localBackName);
+      this.back.name = 'back';
       this.back.link = backCallback;
       this.back.index = index;
       this.items.push(this.back);

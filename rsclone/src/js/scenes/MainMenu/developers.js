@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 
 import Menu from '../../components/menu';
+import { localization } from '../../utils/localization';
 
 export default class MainMenuDevelopers extends Phaser.Scene {
   constructor() {
@@ -16,6 +17,10 @@ export default class MainMenuDevelopers extends Phaser.Scene {
     };
     this.menu = new Menu(this, menuItems, true);
     // this.createGithubIcons();
+  }
+
+  update() {
+    localization(this);
   }
 
   createGithubIcons() {

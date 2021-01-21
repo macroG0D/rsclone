@@ -51,3 +51,37 @@
     }
 }
 
+.game-score {
+    user-select: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 32px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+        "scoreTimeLabel scoreTime"
+        "scoreScoreLabel scoreScore";
+    &-time {
+        grid-area: scoreTime;
+        &-label {
+            margin: 0 10px;
+            text-align: right;
+            grid-area: scoreTimeLabel;
+            &::after {
+                content: ':';
+            }
+        }
+    }
+    &-score {
+        grid-area: scoreScore;
+        &-label {
+            margin: 0 10px;
+            text-align: right;
+            grid-area: scoreScoreLabel;
+            &::after {
+                content: ':';
+            }
+        }
+    }
+
+}

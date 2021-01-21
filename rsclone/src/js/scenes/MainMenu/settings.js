@@ -1,7 +1,9 @@
 import Phaser from 'phaser';
-import Range from '../../components/range';
 
 import Menu from '../../components/menu';
+import Range from '../../components/range';
+
+import { localization } from '../../utils/localization';
 
 export default class MainMenuPlay extends Phaser.Scene {
   constructor() {
@@ -27,6 +29,10 @@ export default class MainMenuPlay extends Phaser.Scene {
     this.range = new Range(this, rangeItems);
   }
 
+  update() {
+    localization(this);
+  }
+
   back() {
     this.scene.switch((this.game.isStarted) ? 'GameMenu' : 'MainMenu');
   }
@@ -41,7 +47,9 @@ export default class MainMenuPlay extends Phaser.Scene {
         if (settings.fullscreen && !document.fullscreenElement) {
           this.game.app.gameContainer.requestFullscreen();
         }
-        if (!settings.fullscreen && document.exitFullscreen) document.exitFullscreen();
+        if (!settings.fullscreen && document.fullscreenElement && document.exitFullscreen) {
+          document.exitFullscreen();
+        }
         break;
       case ('music'):
         settings.music.volume = value / 100;
@@ -49,6 +57,9 @@ export default class MainMenuPlay extends Phaser.Scene {
         break;
       case ('sound'):
         settings.sound.volume = value / 100;
+        break;
+      case ('locale'):
+        settings.locale = (+value) ? 'ru' : 'en';
         break;
       default:
     }

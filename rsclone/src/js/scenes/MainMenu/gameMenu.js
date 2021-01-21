@@ -2,6 +2,8 @@ import Phaser from 'phaser';
 
 import Menu from '../../components/menu';
 
+import { localization } from '../../utils/localization';
+
 export default class GameMenu extends Phaser.Scene {
   constructor() {
     super('GameMenu');
@@ -9,7 +11,7 @@ export default class GameMenu extends Phaser.Scene {
 
   create() {
     const menuItems = {
-      сontinue: () => {
+      continue: () => {
         this.scene.resume('Score');
         this.scene.switch('Level1');
       },
@@ -26,5 +28,9 @@ export default class GameMenu extends Phaser.Scene {
       },
     };
     this.menu = new Menu(this, menuItems);
+  }
+
+  update() {
+    localization(this);
   }
 }
