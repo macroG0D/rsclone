@@ -1,17 +1,20 @@
 import Phaser from 'phaser';
 
 export default class LevelsEntourage {
-  constructor(scene, x, y, sprite, flipY, flipX, depth = 0, colorA = 0xffffff, colorB = 0x00FF66) {
+  constructor(scene, scale, x, y, randomCoof, sprite, flipY, flipX, depth = 0,
+    animationSpeed, colorA = 0xffffff, colorB = 0x00FF66) {
     this.scene = scene;
     this.entourageObject = null;
-    this.init(x, y, sprite, depth);
+    this.init(scale, x, y, sprite, randomCoof, depth);
     this.compose(flipY, flipX);
-    this.entourageObjectAnimation(colorA, colorB);
+    this.entourageObjectAnimation(colorA, colorB, animationSpeed);
+    this.glow();
   }
 
-  init(x, y, sprite, depth) {
-    this.entourageObject = this.scene.add.sprite(x, y, sprite);
-    this.entourageObject.setOrigin(1);
+  init(scale, x, y, sprite, randomCoof, depth) {
+    this.entourageObject = this.scene.add.sprite(Math.random() * randomCoof + x, y, sprite);
+    this.entourageObject.setOrigin(0, 1);
+    this.entourageObject.scaleX = scale;
     this.entourageObject.depth = depth;
   }
 
@@ -24,18 +27,18 @@ export default class LevelsEntourage {
     }
   }
 
-  entourageObjectAnimation(colorA, colorB) {
+  entourageObjectAnimation(colorA, colorB, animationSpeed) {
     const primaryColor = Phaser.Display.Color.ValueToColor(colorA);
     const secondatyColor = Phaser.Display.Color.ValueToColor(colorB);
 
     this.scene.tweens.addCounter({
       from: 0,
       to: 300,
-      duration: 3000,
+      duration: animationSpeed,
       ease: Phaser.Math.Easing.Sine.InOut,
       repeat: -1,
       yoyo: true,
-      onUpdate: tween => {
+      onUpdate: (tween) => {
         const value = tween.getValue();
         const colorObject = Phaser.Display.Color.Interpolate.ColorWithColor(
           primaryColor,
@@ -47,5 +50,16 @@ export default class LevelsEntourage {
         this.entourageObject.setTint(color);
       },
     });
+  }
+
+  glow() {
+    console.log(this.entourageObject);
+    const color = Phaser.Display.Color.IntegerToRGB(Math.random() * 0xf0ff00);
+    const light = this.scene.add.pointlight(
+      this.entourageObject.x - (Math.random() * 100), this.entourageObject.y - Math.random() * 100,
+      0, this.entourageObject.width * Math.random() * 1.8, Math.random() * 0.075,
+    );
+    light.depth = 1;
+    light.color.setTo(color.r, color.g, color.b);
   }
 }

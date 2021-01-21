@@ -66,12 +66,27 @@ export default class Level1 extends Phaser.Scene {
     this.movingPlatform2 = new MovingPlatform(this, 10000, 1800, 'platform-long', -1580, 'vertical');
 
     // Entourage
-    this.boabab01 = new LevelsEntourage(this, 200, 1442, 'boabab06', false, false, 0);
-    // this.boabab01.
-    // console.log(this.boabab01);
+    this.tree1 = new LevelsEntourage(this, 1, 100, 1442, 25, 'boabab01', false, true, 100, 3000);
+    this.tree2 = new LevelsEntourage(this, 1, 200, 1442, 25, 'palm02', false, true, 0, 2850);
+    this.tree3 = new LevelsEntourage(this, 1, 200, 1442, 25, 'boabab02', false, false, 0, 1850);
+    this.tree4 = new LevelsEntourage(this, 1, 300, 1442, 25, 'boabab03', false, false, 0, 3000);
+    this.tree5 = new LevelsEntourage(this, 1, 500, 1442, 25, 'boabab05', false, false, 98, 1500);
+    this.tree6 = new LevelsEntourage(this, 1, 700, 1442, 25, 'boabab06', false, false, 0, 3000);
+    this.tree7 = new LevelsEntourage(this, 1, 930, 1442, 25, 'palm06', false, false, 0, 3000);
 
-    this.obb = new Player(this, 'obb', 200, 1100, 'obb-move', COLLISION_CATEGORIES.obb);
-    this.ibb = new Player(this, 'ibb', 300, 1200, 'ibb-move', COLLISION_CATEGORIES.ibb);
+    this.tree8 = new LevelsEntourage(this, 1, 1419, 1378, 25, 'palm02', false, false, 98, 3000);
+    this.tree8 = new LevelsEntourage(this, 1, 1319, 1378, 25, 'boabab01', false, false, 0, 3000);
+
+    this.grassSet01 = new LevelsEntourage(this, 1, 0, 1443, 1, 'grassSet01', false, false, 101, 1500);
+    this.grassSet02 = new LevelsEntourage(this, 1, 300, 1443, 1, 'grassSet01', false, false, 98, 600);
+    this.grassSet03 = new LevelsEntourage(this, 1, 600, 1443, 1, 'grassSet01', false, false, 101, 1800);
+    this.grassSet03 = new LevelsEntourage(this, 1, 683, 1443, 1, 'grassSet01', false, false, 98, 1800);
+    this.grassSet03 = new LevelsEntourage(this, 0.96, 1522, 1393, 1, 'grassUnderWorldSet01', true, false, 101, 1800);
+    // this.grassSet03 = new LevelsEntourage(this, 300, 1446, 'grassSet01', false, false, 100);
+    // this.grassSet04 = new LevelsEntourage(this, 320, 1444, 'grassSet01', false, false, 0);
+
+    this.obb = new Player(this, 'obb', 1600, 1100, 'obb-move', COLLISION_CATEGORIES.obb);
+    this.ibb = new Player(this, 'ibb', 1700, 1200, 'ibb-move', COLLISION_CATEGORIES.ibb);
     this.ibb.headStandingCheck();
     this.obb.headStandingCheck();
     // enemies spawn

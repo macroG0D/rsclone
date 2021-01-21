@@ -28,12 +28,22 @@ import bg2 from '../../assets/images/background/bg_2.png';
 import platformLong from '../../assets/sprites/environment/platform-long.png';
 
 // world static environment
-import boabab01 from '../../assets/sprites/environment/boabab01.svg';
-import boabab02 from '../../assets/sprites/environment/boabab02.svg';
-import boabab03 from '../../assets/sprites/environment/boabab03.svg';
-import boabab04 from '../../assets/sprites/environment/boabab04.svg';
-import boabab05 from '../../assets/sprites/environment/boabab05.svg';
-import boabab06 from '../../assets/sprites/environment/boabab06.svg';
+import boabab01 from '../../assets/sprites/environment/trees/boabab01.svg';
+import boabab02 from '../../assets/sprites/environment/trees/boabab02.svg';
+import boabab03 from '../../assets/sprites/environment/trees/boabab03.svg';
+import boabab04 from '../../assets/sprites/environment/trees/boabab04.svg';
+import boabab05 from '../../assets/sprites/environment/trees/boabab05.svg';
+import boabab06 from '../../assets/sprites/environment/trees/boabab06.svg';
+
+import palm01 from '../../assets/sprites/environment/trees/palm01.svg';
+import palm02 from '../../assets/sprites/environment/trees/palm02.svg';
+import palm03 from '../../assets/sprites/environment/trees/palm03.svg';
+import palm04 from '../../assets/sprites/environment/trees/palm04.svg';
+import palm05 from '../../assets/sprites/environment/trees/palm05.svg';
+import palm06 from '../../assets/sprites/environment/trees/palm06.svg';
+
+import grassSet01 from '../../assets/sprites/environment/onFloor/grassSet01.svg';
+import grassUnderWorldSet01 from '../../assets/sprites/environment/onFloor/grassSet01_underWorld.svg';
 
 import LoadingBar from '../utils/loadingBar';
 import { soundLoader } from '../utils/soundLoader';
@@ -78,7 +88,15 @@ export default class Preload extends Phaser.Scene {
     this.load.image('boabab05', boabab05);
     this.load.image('boabab06', boabab06);
 
-    this.load.image('boabab06', boabab06);
+    this.load.image('palm01', palm01);
+    this.load.image('palm02', palm02);
+    this.load.image('palm03', palm03);
+    this.load.image('palm04', palm04);
+    this.load.image('palm05', palm05);
+    this.load.image('palm06', palm06);
+
+    this.load.image('grassSet01', grassSet01);
+    this.load.image('grassUnderWorldSet01', grassUnderWorldSet01);
 
     // Loading music
     this.load.audio('menu_music', menuMusic);
