@@ -1,12 +1,5 @@
 export const LOCALE = {
   en: {
-    // main menu
-    play: 'play',
-    leaderboard: 'leaderboard',
-    settings: 'settings',
-    developers: 'developers',
-    about: 'about',
-    back: 'back',
     // play menu
     localGame: 'local game',
     onlineGame: 'online game',
@@ -46,6 +39,8 @@ export const LOCALE = {
     music: 'музыка',
     sound: 'звук',
     language: 'язык',
+    off: 'выкл.',
+    on: 'вкл.',
     // score
     time: 'время',
     score: 'очки',

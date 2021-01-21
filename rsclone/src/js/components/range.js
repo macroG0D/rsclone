@@ -17,6 +17,8 @@ export default class Range extends Create {
       item.name = itemName;
       this.items[itemName] = item;
       item.range.node.addEventListener('input', () => scene.changeSettings(itemName), false);
+      item.range.node.addEventListener('focusout', () => scene.focusOut(itemName), false);
+      item.node.addEventListener('pointermove', () => scene.menu.highlightItem(itemIndex), false);
       /*
       const item = new Create('div', this.node, 'game-menu-item', localItemName);
       if (!itemIndex) {
@@ -49,8 +51,8 @@ export default class Range extends Create {
     }
     */
     const { x, y } = scene.menu.spawn;
-    scene.menu.spawn.x -= 200;
-    scene.menu.back.node.style.marginLeft = '250px';
+    this.scene.menu.spawn.x -= 200;
+    this.scene.menu.back.node.style.marginLeft = '250px';
     this.spawn = scene.add.dom(x + 200, y - 38, this.node);
     this.spawn.setOrigin(0.5);
   }

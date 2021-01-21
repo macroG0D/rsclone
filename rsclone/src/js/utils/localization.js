@@ -7,7 +7,7 @@ export function localization(currScene) {
   if (appLocale !== sceneLocale) {
     scene.locale = appLocale;
     const locale = LOCALE[appLocale];
-    const { menu } = scene;
+    const { menu, range } = scene;
     const { key } = scene.scene;
 
     if (menu) {
@@ -25,8 +25,23 @@ export function localization(currScene) {
       }
     }
 
+    if (range) {
+      Object.values(range.items).forEach((rangeItem) => {
+        const item = rangeItem;
+        if (item.left && item.left.name) {
+          const localeValue = locale[item.left.name] || item.left.name;
+          const currValue = item.left.node.innerHTML;
+          if (localeValue && localeValue !== currValue) item.left.node.innerHTML = localeValue;
+        }
+        if (item.right && item.right.name) {
+          const localeValue = locale[item.right.name] || item.right.name;
+          const currValue = item.right.node.innerHTML;
+          if (localeValue && localeValue !== currValue) item.right.node.innerHTML = localeValue;
+        }
+      });
+    }
+
     if (key && key === 'Score') {
-      console.log('here!');
       if (scene.timeLabel) {
         const localeTime = locale.time || 'time';
         const currTime = scene.timeLabel.node.innerHTML;

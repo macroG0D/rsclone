@@ -42,7 +42,7 @@
     }
     &-label {
         margin: 0 10px;
-        &-active {
+        &.active {
             color: #d22d61;
         }
     }
@@ -52,9 +52,11 @@
 }
 
 .game-score {
+    margin: 10px;
     user-select: none;
     font-family: 'Montserrat', sans-serif;
     font-size: 32px;
+    color: #000000;
     display: grid;
     grid-template-columns: 1fr 2fr;
     grid-template-rows: 1fr 1fr;
@@ -64,7 +66,7 @@
     &-time {
         grid-area: scoreTime;
         &-label {
-            margin: 0 10px;
+            margin: 0 5px;
             text-align: right;
             grid-area: scoreTimeLabel;
             &::after {
@@ -75,7 +77,7 @@
     &-score {
         grid-area: scoreScore;
         &-label {
-            margin: 0 10px;
+            margin: 0 5px;
             text-align: right;
             grid-area: scoreScoreLabel;
             &::after {
