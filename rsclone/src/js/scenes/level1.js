@@ -3,6 +3,7 @@ import Phaser from 'phaser';
 import Player from '../sprites/player';
 import Portal from '../sprites/portal';
 import MovingPlatform from '../sprites/movingPlatform';
+import LevelsEntourage from '../levels/levelsEntourage';
 
 import Input from '../utils/input';
 import NetworkInput from '../utils/networkInput';
@@ -60,8 +61,14 @@ export default class Level1 extends Phaser.Scene {
     this.addParallax();
     this.addWalls();
 
+    // interactive level objects
     this.movingPlatform1 = new MovingPlatform(this, 6500, 1330, 'platform-long', 1100, 'horizontal');
     this.movingPlatform2 = new MovingPlatform(this, 10000, 1800, 'platform-long', -1580, 'vertical');
+
+    // Entourage
+    this.boabab01 = new LevelsEntourage(this, 200, 1442, 'boabab06', false, false, 0);
+    // this.boabab01.
+    // console.log(this.boabab01);
 
     this.obb = new Player(this, 'obb', 200, 1100, 'obb-move', COLLISION_CATEGORIES.obb);
     this.ibb = new Player(this, 'ibb', 300, 1200, 'ibb-move', COLLISION_CATEGORIES.ibb);

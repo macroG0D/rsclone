@@ -24,8 +24,16 @@ import bg0 from '../../assets/images/background/bg_0.png';
 import bg1 from '../../assets/images/background/bg_1.png';
 import bg2 from '../../assets/images/background/bg_2.png';
 
-// world environment
+// world interactive environment
 import platformLong from '../../assets/sprites/environment/platform-long.png';
+
+// world static environment
+import boabab01 from '../../assets/sprites/environment/boabab01.svg';
+import boabab02 from '../../assets/sprites/environment/boabab02.svg';
+import boabab03 from '../../assets/sprites/environment/boabab03.svg';
+import boabab04 from '../../assets/sprites/environment/boabab04.svg';
+import boabab05 from '../../assets/sprites/environment/boabab05.svg';
+import boabab06 from '../../assets/sprites/environment/boabab06.svg';
 
 import LoadingBar from '../utils/loadingBar';
 import { soundLoader } from '../utils/soundLoader';
@@ -59,8 +67,18 @@ export default class Preload extends Phaser.Scene {
     this.load.image('bg_1', bg1);
     this.load.image('bg_2', bg2);
 
-    // Loading world environment sprites
+    // Loading world interactive environment sprites
     this.load.image('platform-long', platformLong);
+
+    // Loading world static environment sprites
+    this.load.image('boabab01', boabab01);
+    this.load.image('boabab02', boabab02);
+    this.load.image('boabab03', boabab03);
+    this.load.image('boabab04', boabab04);
+    this.load.image('boabab05', boabab05);
+    this.load.image('boabab06', boabab06);
+
+    this.load.image('boabab06', boabab06);
 
     // Loading music
     this.load.audio('menu_music', menuMusic);
