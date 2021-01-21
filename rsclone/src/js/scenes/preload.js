@@ -82,13 +82,12 @@ export default class Preload extends Phaser.Scene {
   }
 
   create() {
-    // this.scene.start('MainMenu');
+    this.scene.start('MainMenu');
     // this.scene.start('Level1');
-    this.scene.start('MainMenuSettings');
   }
 
   showBootBg() {
     const ratio = this.game.config.width / 1920;
-    this.add.sprite(0, 0, 'bootBg').setScale(ratio).setOrigin(0);
+    this.add.sprite(0, 0, 'bootBg').setScale(ratio).setOrigin(0, 0);
   }
 }
