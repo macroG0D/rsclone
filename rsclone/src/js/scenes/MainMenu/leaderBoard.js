@@ -1,7 +1,8 @@
 import Phaser from 'phaser';
 
-import { createMenu } from '../../utils/createMenu';
-import { createBg } from '../../utils/createBg';
+import Menu from '../../components/menu';
+
+import { localization } from '../../utils/localization';
 
 export default class MainMenuLeaderBoard extends Phaser.Scene {
   constructor() {
@@ -9,10 +10,13 @@ export default class MainMenuLeaderBoard extends Phaser.Scene {
   }
 
   create() {
-    this.menuItems = {
-      Leaderboard: () => this.scene.switch('MainMenu'),
+    const menuItems = {
+      leaderboard: () => this.scene.switch('MainMenu'),
     };
-    createBg(this);
-    createMenu(this, this.menuItems, true);
+    this.menu = new Menu(this, menuItems, true);
+  }
+
+  update() {
+    localization(this);
   }
 }

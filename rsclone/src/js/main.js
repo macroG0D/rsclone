@@ -15,23 +15,28 @@ class Main {
     const cookieVersion = 0;
     const settings = JSON.parse(localStorage.getItem('rsc-game-settings')) || {
       locale: 'en',
+      fullscreen: false,
       sound: {
         enabled: true,
-        volume: 0.01,
+        volume: 0.2,
       },
       music: {
         enabled: true,
-        volume: 0.005,
+        volume: 0.1,
       },
+      level: 1,
+      score: 0,
       cookieVersion,
     };
     const savedVersion = settings.cookieVersion;
     if (savedVersion !== cookieVersion) localStorage.clear();
+    this.settings = settings;
     this.init();
   }
 
   init() {
     this.gameContainer = new Create('div', document.body, 'game-container').node;
+
     this.gameConfig = {
       type: Phaser.AUTO,
       parent: this.gameContainer,
@@ -41,6 +46,7 @@ class Main {
         width: GAME_WIDTH,
         height: GAME_HEIGHT,
       },
+      backgroundColor: '#e5e5e5',
       physics: {
         default: 'matter',
         matter: {
@@ -66,18 +72,25 @@ class Main {
         forceSetTimeOut: true,
       },
       scene: SCENE_LIST,
+      dom: { createContainer: true },
     };
+
     this.game = new Phaser.Game(this.gameConfig);
+
     this.game.client = new Client();
+
     this.game.music = {
       current: undefined,
       cache: {},
     };
+
     this.game.sounds = {
       volume: {},
       cache: {},
       walk: { ibb: {}, obb: {} },
     };
+
+    this.game.app = this; // link to main class
   }
 }
 

@@ -1,6 +1,7 @@
 @import "utils/_reset";
 @import "utils/_normalize";
 @import "utils/vars";
+@import "./game.scss";
 
 html {
 	font-family: $mainFont;

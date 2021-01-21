@@ -1,7 +1,9 @@
 import Phaser from 'phaser';
 
-import { createMenu } from '../../utils/createMenu';
-import { createBg } from '../../utils/createBg';
+import Menu from '../../components/menu';
+import { createImg } from '../../utils/createImg';
+
+import { localization } from '../../utils/localization';
 
 export default class MainMenuOnlineGame extends Phaser.Scene {
   constructor() {
@@ -9,20 +11,16 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
   }
 
   create() {
-    this.menuItems = {
-      'Host a game': () => this.scene.start('MainMenuOnlineGameHost'),
-      'Join a game': () => this.scene.start('MainMenuOnlineGameJoin'),
+    createImg(this);
+    const menuItems = {
+      hostGame: () => this.scene.start('MainMenuOnlineGameHost'),
+      joinGame: () => this.scene.start('MainMenuOnlineGameJoin'),
     };
-    this.menuCallBack = () => this.scene.switch('MainMenuPlay');
-    this.createImg();
-    createBg(this);
-    createMenu(this, this.menuItems, true, this.menuCallBack);
+    const menuCallBack = () => this.scene.switch('MainMenuPlay');
+    this.menu = new Menu(this, menuItems, true, menuCallBack);
   }
 
-  createImg() {
-    this.add.image(314, 215, 'ibbImg');
-    this.add.image(967, 215, 'obbImg');
-    this.add.image(314, 437, 'ibbKeys');
-    this.add.image(967, 437, 'obbKeys');
+  update() {
+    localization(this);
   }
 }

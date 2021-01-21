@@ -1,0 +1,89 @@
+@import "./components/range.scss";
+
+.game-menu {
+    user-select: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 32px;
+    color: #000000;
+}
+
+.game-menu-item {
+    text-align: center;
+    margin: 10px auto;
+    &::before, &::after {
+        content: '\2022';
+        color: #e5e5e5e5;
+        margin: 0 0.1em;
+    }
+    &-back {
+        margin: 30px auto;
+        color: #979797;
+        font-size: 24px;
+    }
+    &-active {
+        color: #d22d61;
+        cursor: pointer;
+        &::before, &::after {
+            color: #d22d61;
+        }
+    }
+}
+
+
+.game-input {
+    user-select: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 32px;
+    margin: 10px auto;
+    color: #000000;
+    &-container {
+        display: flex;
+        align-items: center;
+    }
+    &-label {
+        margin: 0 10px;
+        &.active {
+            color: #d22d61;
+        }
+    }
+    &-range {
+        width: 50px;
+    }
+}
+
+.game-score {
+    margin: 10px;
+    user-select: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 32px;
+    color: #000000;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+        "scoreTimeLabel scoreTime"
+        "scoreScoreLabel scoreScore";
+    &-time {
+        grid-area: scoreTime;
+        &-label {
+            margin: 0 5px;
+            text-align: right;
+            grid-area: scoreTimeLabel;
+            &::after {
+                content: ':';
+            }
+        }
+    }
+    &-score {
+        grid-area: scoreScore;
+        &-label {
+            margin: 0 5px;
+            text-align: right;
+            grid-area: scoreScoreLabel;
+            &::after {
+                content: ':';
+            }
+        }
+    }
+
+}

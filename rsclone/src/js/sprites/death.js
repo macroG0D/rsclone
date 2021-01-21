@@ -28,8 +28,8 @@ export default class Death {
           scene.time.addEvent({
             delay: 3500,
             callback: () => {
-              scene.scene.switch('GameOver');
               scene.scene.stop('Level1');
+              scene.scene.switch('GameOver');
             },
           });
           break;
