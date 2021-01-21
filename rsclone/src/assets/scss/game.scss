@@ -1,3 +1,5 @@
+@import "./components/range.scss";
+
 .game-menu {
     user-select: none;
     font-family: 'Montserrat', sans-serif;
@@ -26,3 +28,26 @@
         }
     }
 }
+
+
+.game-input {
+    user-select: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 32px;
+    margin: 10px auto;
+    color: #000000;
+    &-container {
+        display: flex;
+        align-items: center;
+    }
+    &-label {
+        margin: 0 10px;
+        &-active {
+            color: #d22d61;
+        }
+    }
+    &-range {
+        width: 50px;
+    }
+}
+
