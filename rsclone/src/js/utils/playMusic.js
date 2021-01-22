@@ -7,7 +7,7 @@ export function playMusic(scene) {
   const { game } = scene;
   const { key } = scene.scene;
   const track = trackList[key];
-  const { volume } = scene.game.app.settings.volume.music;
+  const volume = scene.game.app.settings.volume.music;
   const musicConfig = { volume, loop: true };
   if (track) {
     const musicKey = `${track}_music`;

@@ -73,17 +73,20 @@ export default class MainMenuPlay extends Phaser.Scene {
           right.node.classList.remove('active');
           left.node.classList.add('active');
         }
+        this.game.app.saveSettings();
         break;
       case ('music'):
         settings.volume.music = value / 100;
         if (this.game.music.current) this.game.music.current.setVolume(value / 100);
         right.node.innerHTML = value;
         if (!left.node.innerHTML) right.node.classList.add('active');
+        this.game.app.saveSettings();
         break;
       case ('sound'):
         settings.volume.sound = value / 100;
         right.node.innerHTML = value;
         if (!left.node.innerHTML) right.node.classList.add('active');
+        this.game.app.saveSettings();
         break;
       case ('locale'):
         settings.locale = (value) ? 'ru' : 'en';
@@ -95,6 +98,7 @@ export default class MainMenuPlay extends Phaser.Scene {
           right.node.classList.remove('active');
           left.node.classList.add('active');
         }
+        this.game.app.saveSettings();
         break;
       default:
     }

@@ -89,6 +89,10 @@ class Main {
 
     this.game.app = this; // link to main class
   }
+
+  saveSettings() {
+    localStorage.setItem('rsc-game-settings', JSON.stringify(this.settings));
+  }
 }
 
 WebFont.load({
