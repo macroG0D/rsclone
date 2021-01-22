@@ -24,6 +24,8 @@ export default class MainMenuPlay extends Phaser.Scene {
     };
     const menuCallBack = () => this.back();
     this.menu = new Menu(this, menuItems, true, menuCallBack);
+    this.menu.menu.node.style.gridArea = '1 / 1 / 2 / 2';
+    this.menu.menu.node.style.alignItems = 'flex-end';
 
     const off = locale.off || 'off';
     const on = locale.on || 'on';
@@ -33,7 +35,7 @@ export default class MainMenuPlay extends Phaser.Scene {
       sound: [200, 100, this.getSettings('sound'), '', this.getSettings('sound')],
       locale: [undefined, 1, this.getSettings('locale'), 'en', 'ru'],
     };
-    this.range = new Range(this, rangeItems);
+    this.range = new Range(this, rangeItems, this.menu.container.node);
   }
 
   update() {

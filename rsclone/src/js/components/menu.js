@@ -5,15 +5,16 @@ import { LOCALE } from '../locale';
 export default class Menu extends Create {
   constructor(scene, menuItems, back = false, backCallback) {
     super('div', false, 'game-menu');
-    this.scene = scene;
-    scene.input.keyboard.createCursorKeys();
-    const { centerX, centerY } = scene.cameras.main;
     const locale = LOCALE[scene.game.app.settings.locale];
+    scene.input.keyboard.createCursorKeys();
+    this.scene = scene;
+    this.container = new Create('div', this.node, 'game-menu-container');
+    this.menu = new Create('div', this.container.node, 'game-menu-menu');
     this.items = [];
 
     Object.entries(menuItems).forEach(([itemName, itemLink], itemIndex) => {
       const localItemName = locale[itemName] || itemName;
-      const item = new Create('div', this.node, 'game-menu-item', localItemName);
+      const item = new Create('div', this.menu.node, 'game-menu-item', localItemName);
       if (!itemIndex) {
         item.node.classList.add('game-menu-item-active');
         this.activeItem = itemIndex;
@@ -22,7 +23,7 @@ export default class Menu extends Create {
       item.link = itemLink;
       item.index = itemIndex;
       this.items.push(item);
-      item.node.addEventListener('pointerdown', itemLink, false);
+      item.node.addEventListener('click', itemLink, false);
       item.node.addEventListener('pointermove', () => this.highlightItem(itemIndex), false);
     });
     scene.input.keyboard.addKey('UP').on('down', () => this.switchItem('up'));
@@ -34,16 +35,18 @@ export default class Menu extends Create {
       const index = this.items.length;
       const localBackName = locale.back;
       this.back = new Create('div', this.node, 'game-menu-item', localBackName);
+      this.back.node.classList.add('game-menu-back');
       this.back.name = 'back';
       this.back.link = bcc;
       this.back.index = index;
       this.items.push(this.back);
       this.back.node.classList.add('game-menu-item-back');
-      this.back.node.addEventListener('pointerdown', bcc, false);
+      this.back.node.addEventListener('click', bcc, false);
       this.back.node.addEventListener('pointermove', () => this.highlightItem(index), false);
       scene.input.keyboard.addKey('ESC').on('down', bcc);
     }
 
+    const { centerX, centerY } = scene.cameras.main;
     this.spawn = scene.add.dom(centerX, centerY, this.node);
     this.spawn.setOrigin(0.5);
   }
