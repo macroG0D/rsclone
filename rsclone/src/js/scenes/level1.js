@@ -66,10 +66,10 @@ export default class Level1 extends Phaser.Scene {
     this.movingPlatform2 = new MovingPlatform(this, 10000, 1800, 'platform-long', -1580, 'vertical');
 
     // Entourage
-    this.grassSet = new LevelsEntourage(this, 1, 0, 1443, 1, 'grassSet01', false, false, 101, 1500);
-    this.grassSet = new LevelsEntourage(this, 1, 300, 1443, 1, 'grassSet01', false, false, 98, 600);
-    this.grassSet = new LevelsEntourage(this, 1, 600, 1443, 1, 'grassSet01', false, false, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 683, 1443, 1, 'grassSet01', false, false, 98, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 0, 1443, 1, 'grassSet02', false, false, 101, 1500);
+    this.grassSet = new LevelsEntourage(this, 1, 300, 1443, 1, 'grassSet02', false, false, 98, 600);
+    this.grassSet = new LevelsEntourage(this, 1, 680, 1443, 1, 'grassSet01', false, true, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 683, 1443, 1, 'grassSet02', false, false, 98, 1800);
     this.grassSet = new LevelsEntourage(this, 0.96, 1522, 1393, 1, 'grassUnderWorldSet01', true, false, 101, 1800);
     this.grassSet = new LevelsEntourage(this, 0.6, 1522, 1485, 1, 'grassSet02', false, false, 101, 1800);
 
@@ -174,8 +174,8 @@ export default class Level1 extends Phaser.Scene {
     light.depth = 100;
     light.color.setTo(color.r, color.g, color.b);
 
-    this.obb = new Player(this, 'obb', 10220, 100, 'obb-move', COLLISION_CATEGORIES.obb);
-    this.ibb = new Player(this, 'ibb', 10220, 160, 'ibb-move', COLLISION_CATEGORIES.ibb);
+    this.obb = new Player(this, 'obb', 220, 1100, 'obb-move', COLLISION_CATEGORIES.obb);
+    this.ibb = new Player(this, 'ibb', 240, 1160, 'ibb-move', COLLISION_CATEGORIES.ibb);
     this.ibb.headStandingCheck();
     this.obb.headStandingCheck();
     // enemies spawn
