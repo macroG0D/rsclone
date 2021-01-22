@@ -3,7 +3,7 @@ import Create from './dom-create';
 import { LOCALE } from '../locale';
 
 export default class Menu extends Create {
-  constructor(scene, menuItems, back = false, backCallback = () => scene.scene.switch('MainMenu')) {
+  constructor(scene, menuItems, back = false, backCallback) {
     super('div', false, 'game-menu');
     this.scene = scene;
     scene.input.keyboard.createCursorKeys();
@@ -30,17 +30,18 @@ export default class Menu extends Create {
     scene.input.keyboard.addKey('ENTER').on('down', () => this.selectItem());
 
     if (back) {
+      const bcc = backCallback || function bcc() { scene.scene.switch('MainMenu'); };
       const index = this.items.length;
       const localBackName = locale.back;
       this.back = new Create('div', this.node, 'game-menu-item', localBackName);
       this.back.name = 'back';
-      this.back.link = backCallback;
+      this.back.link = bcc;
       this.back.index = index;
       this.items.push(this.back);
       this.back.node.classList.add('game-menu-item-back');
-      this.back.node.addEventListener('pointerdown', backCallback, false);
+      this.back.node.addEventListener('pointerdown', bcc, false);
       this.back.node.addEventListener('pointermove', () => this.highlightItem(index), false);
-      scene.input.keyboard.addKey('ESC').on('down', backCallback);
+      scene.input.keyboard.addKey('ESC').on('down', bcc);
     }
 
     this.spawn = scene.add.dom(centerX, centerY, this.node);

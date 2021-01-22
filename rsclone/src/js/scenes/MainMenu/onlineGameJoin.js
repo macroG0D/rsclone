@@ -16,7 +16,7 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
       'Looking for a partner...': () => {},
     };
     const menuCallBack = () => {
-      this.scene.stop();
+      this.client.sendData('requestDropGame');
       this.scene.switch('MainMenuOnlineGame');
     };
     this.menu = new Menu(this, menuItems, true, menuCallBack);
