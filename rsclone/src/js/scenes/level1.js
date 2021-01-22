@@ -66,27 +66,116 @@ export default class Level1 extends Phaser.Scene {
     this.movingPlatform2 = new MovingPlatform(this, 10000, 1800, 'platform-long', -1580, 'vertical');
 
     // Entourage
-    this.tree1 = new LevelsEntourage(this, 1, 100, 1442, 25, 'boabab01', false, true, 100, 3000);
-    this.tree2 = new LevelsEntourage(this, 1, 200, 1442, 25, 'palm02', false, true, 0, 2850);
-    this.tree3 = new LevelsEntourage(this, 1, 200, 1442, 25, 'boabab02', false, false, 0, 1850);
-    this.tree4 = new LevelsEntourage(this, 1, 300, 1442, 25, 'boabab03', false, false, 0, 3000);
-    this.tree5 = new LevelsEntourage(this, 1, 500, 1442, 25, 'boabab05', false, false, 98, 1500);
-    this.tree6 = new LevelsEntourage(this, 1, 700, 1442, 25, 'boabab06', false, false, 0, 3000);
-    this.tree7 = new LevelsEntourage(this, 1, 930, 1442, 25, 'palm06', false, false, 0, 3000);
+    this.grassSet = new LevelsEntourage(this, 1, 0, 1443, 1, 'grassSet01', false, false, 101, 1500);
+    this.grassSet = new LevelsEntourage(this, 1, 300, 1443, 1, 'grassSet01', false, false, 98, 600);
+    this.grassSet = new LevelsEntourage(this, 1, 600, 1443, 1, 'grassSet01', false, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 683, 1443, 1, 'grassSet01', false, false, 98, 1800);
+    this.grassSet = new LevelsEntourage(this, 0.96, 1522, 1393, 1, 'grassUnderWorldSet01', true, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 0.6, 1522, 1485, 1, 'grassSet02', false, false, 101, 1800);
 
-    this.tree8 = new LevelsEntourage(this, 1, 1419, 1378, 25, 'palm02', false, false, 98, 3000);
-    this.tree8 = new LevelsEntourage(this, 1, 1319, 1378, 25, 'boabab01', false, false, 0, 3000);
+    this.tree = new LevelsEntourage(this, 1, 100, 1442, 25, 'boabab01', false, true, 100, 3000);
+    this.tree = new LevelsEntourage(this, 1, 200, 1442, 25, 'palm02', false, true, 0, 2850);
+    this.tree = new LevelsEntourage(this, 1, 200, 1442, 25, 'boabab02', false, false, 0, 1850);
+    this.tree = new LevelsEntourage(this, 1, 300, 1442, 25, 'boabab03', false, false, 0, 3000);
+    this.tree = new LevelsEntourage(this, 1, 500, 1442, 25, 'boabab05', false, false, 98, 1500);
+    this.tree = new LevelsEntourage(this, 1, 700, 1442, 25, 'boabab06', false, false, 0, 3000);
+    this.tree = new LevelsEntourage(this, 1, 930, 1442, 25, 'palm06', false, false, 0, 3000);
 
-    this.grassSet01 = new LevelsEntourage(this, 1, 0, 1443, 1, 'grassSet01', false, false, 101, 1500);
-    this.grassSet02 = new LevelsEntourage(this, 1, 300, 1443, 1, 'grassSet01', false, false, 98, 600);
-    this.grassSet03 = new LevelsEntourage(this, 1, 600, 1443, 1, 'grassSet01', false, false, 101, 1800);
-    this.grassSet03 = new LevelsEntourage(this, 1, 683, 1443, 1, 'grassSet01', false, false, 98, 1800);
-    this.grassSet03 = new LevelsEntourage(this, 0.96, 1522, 1393, 1, 'grassUnderWorldSet01', true, false, 101, 1800);
-    // this.grassSet03 = new LevelsEntourage(this, 300, 1446, 'grassSet01', false, false, 100);
-    // this.grassSet04 = new LevelsEntourage(this, 320, 1444, 'grassSet01', false, false, 0);
+    this.grassSet = new LevelsEntourage(this, 1, 1200, 1379, 1, 'grassSet01', false, false, 101, 1500);
 
-    this.obb = new Player(this, 'obb', 1600, 1100, 'obb-move', COLLISION_CATEGORIES.obb);
-    this.ibb = new Player(this, 'ibb', 1700, 1200, 'ibb-move', COLLISION_CATEGORIES.ibb);
+    this.tree = new LevelsEntourage(this, 1, 1319, 1378, 25, 'boabab01', false, false, 0, 3000);
+    this.tree = new LevelsEntourage(this, 1, 1419, 1378, 25, 'palm02', false, false, 98, 3000);
+
+    this.grassSet = new LevelsEntourage(this, 1, 1711, 1637, 1, 'grassSet02', false, false, 98, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 2031, 1637, 1, 'grassSet01', false, false, 98, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 2361, 1637, 1, 'grassSet02', false, true, 98, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 2361, 1637, 1, 'grassSet02', false, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 2361, 1637, 1, 'flowersSet01', false, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 2888, 1637, 1, 'grassSet01', false, true, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 0.27, 2988, 1637, 1, 'grassSet02', false, false, 101, 1800);
+
+    this.grassSet = new LevelsEntourage(this, 1, 2017, 1651, 1, 'grassUnderWorldSet01', true, false, 98, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 2331, 1651, 1, 'grassUnderWorldSet02', true, true, 98, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 2331, 1651, 1, 'grassUnderWorldSet02', true, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 2566, 1651, 1, 'grassUnderWorldSet02', true, true, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 2566, 1651, 1, 'grassUnderWorldSet02', true, true, 101, 1800);
+
+    this.grassSet = new LevelsEntourage(this, 0.31, 3087, 1762, 1, 'grassUnderWorldSet02', true, false, 101, 1800);
+
+    this.tree = new LevelsEntourage(this, 1, 2021, 1651, 25, 'curved01', true, false, 0, 3000);
+    this.tree = new LevelsEntourage(this, 1, 2166, 1651, 25, 'palm03', true, false, 0, 3000);
+    this.tree = new LevelsEntourage(this, 1, 2466, 1651, 25, 'curved03', true, false, 0, 3000);
+    this.tree = new LevelsEntourage(this, 1, 2566, 1651, 25, 'curved02', true, false, 0, 3000);
+
+    this.grassSet = new LevelsEntourage(this, 1, 3053, 1284, 1, 'grassSet01', false, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 3298, 1284, 1, 'grassSet01', false, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 3053, 1299, 1, 'grassUnderWorldSet02', true, true, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 3278, 1299, 1, 'grassUnderWorldSet01', true, true, 101, 1800);
+    this.tree = new LevelsEntourage(this, 1, 3153, 1284, 25, 'curved02', true, false, 0, 3000);
+    this.tree = new LevelsEntourage(this, 1, 3153, 1284, 25, 'curved01', false, true, 0, 3000);
+    this.tree = new LevelsEntourage(this, 1, 3253, 1284, 25, 'boabab04', false, false, 0, 3000);
+    this.tree = new LevelsEntourage(this, 1, 3353, 1284, 25, 'boabab05', false, false, 0, 3000);
+
+    this.tree = new LevelsEntourage(this, 1, 3729, 1584, 25, 'palm03', true, false, 0, 3000);
+    this.tree = new LevelsEntourage(this, 1, 3786, 1568, 25, 'palm04', false, false, 0, 3000);
+    this.tree = new LevelsEntourage(this, 1, 3890, 1584, 25, 'palm02', true, true, 0, 3000);
+
+    this.grassSet = new LevelsEntourage(this, 1, 3616, 1568, 1, 'grassSet02', false, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 3758, 1568, 1, 'grassSet01', false, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 3600, 1583, 1, 'grassUnderWorldSet01', true, true, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 3770, 1583, 1, 'grassUnderWorldSet02', true, true, 101, 1800);
+
+    this.grassSet = new LevelsEntourage(this, 0.82, 4075, 1481, 1, 'grassSet02', false, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 0.82, 4072, 1481, 1, 'flowersSet01', false, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 0.82, 4272, 1481, 1, 'flowersSet01', false, true, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 0.82, 4172, 1481, 1, 'flowersSet01', false, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 4200, 1481, 1, 'flowersSet01', false, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 0.82, 4350, 1495, 1, 'grassUnderWorldSet01', true, false, 101, 1800);
+
+    this.grassSet = new LevelsEntourage(this, 0.51, 4334, 1400, 1, 'grassSet02', false, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 0.45, 4493, 1415, 1, 'grassUnderWorldSet02', true, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 0.36, 4681, 1400, 1, 'grassSet02', false, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 0.4, 4809, 1415, 1, 'grassUnderWorldSet02', true, false, 101, 1800);
+
+    this.grassSet = new LevelsEntourage(this, 1.1, 4794, 1253, 1, 'grassSet02', false, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 1.04, 5141, 1267, 1, 'grassUnderWorldSet01', true, false, 101, 1800);
+
+    this.grassSet = new LevelsEntourage(this, 1, 5328, 1253, 1, 'grassSet01', false, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 5648, 1267, 1, 'grassUnderWorldSet02', true, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 5610, 1253, 1, 'grassSet02', false, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 5945, 1267, 1, 'grassUnderWorldSet01', true, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 5770, 1253, 1, 'flowersSet01', false, false, 101, 1800);
+
+    this.tree = new LevelsEntourage(this, 1, 5658, 1267, 25, 'boabab01', true, false, 98, 3000);
+    this.tree = new LevelsEntourage(this, 1, 5610, 1253, 25, 'palm04', false, false, 0, 3000);
+    this.tree = new LevelsEntourage(this, 1, 5428, 1253, 25, 'palm02', false, true, 0, 3000);
+
+    this.grassSet = new LevelsEntourage(this, 0.95, 5928, 970, 1, 'grassSet02', false, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 0.85, 6218, 983, 1, 'grassUnderWorldSet02', true, false, 101, 1800);
+
+    this.grassSet = new LevelsEntourage(this, 0.47, 7730, 1314, 1, 'grassSet02', false, false, 101, 1800);
+    this.tree = new LevelsEntourage(this, 1, 7760, 1314, 1, 'boabab03', false, false, 98, 1800);
+    this.grassSet = new LevelsEntourage(this, 0.47, 7878, 1330, 1, 'grassUnderWorldSet02', true, false, 101, 1800);
+
+    // level 1 finish
+    this.grassSet = new LevelsEntourage(this, 1, 10199, 165, 1, 'grassSet01', false, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 10299, 165, 1, 'flowersSet01', false, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 10219, 165, 1, 'flowersSet01', false, false, 0, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 10399, 165, 1, 'flowersSet01', false, true, 98, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 10239, 165, 1, 'flowersSet01', false, false, 98, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 10389, 165, 1, 'flowersSet01', false, false, 0, 1800);
+
+    // lvl 2 gate
+    const color = Phaser.Display.Color.IntegerToRGB(0xddddff);
+    const light = this.add.pointlight(
+      10490, 100,
+      10, 280, 1,
+    );
+    light.depth = 100;
+    light.color.setTo(color.r, color.g, color.b);
+
+    this.obb = new Player(this, 'obb', 10220, 100, 'obb-move', COLLISION_CATEGORIES.obb);
+    this.ibb = new Player(this, 'ibb', 10220, 160, 'ibb-move', COLLISION_CATEGORIES.ibb);
     this.ibb.headStandingCheck();
     this.obb.headStandingCheck();
     // enemies spawn
@@ -110,23 +199,23 @@ export default class Level1 extends Phaser.Scene {
     this.hedgehog8 = new JumpingHedgehog(this, 2750, 1592, 'hedgehog-jumper', 'hedgehog-fullbutt');
     this.hedgehog8.jump(180, 450);
     // enemies set 3
-    this.hedgehog9 = new StandartHedgehog(this, 3400, 1368, 'hedgehog-head', 'hedgehog-halfbutt', true);
+    this.hedgehog9 = new StandartHedgehog(this, 3400, 1322, 'hedgehog-head', 'hedgehog-halfbutt', true);
     this.hedgehog9.moveHorizontally(300, 'left', 2500, 'Bounce', 'Out');
-    this.hedgehog10 = new StandartHedgehog(this, 3550, 1368, 'hedgehog-head', 'hedgehog-halfbutt', true);
+    this.hedgehog10 = new StandartHedgehog(this, 3550, 1322, 'hedgehog-head', 'hedgehog-halfbutt', true);
     this.hedgehog10.moveHorizontally(300, 'left', 2500, 'Bounce', 'In');
-
+    // enemies set 4
     this.hedgehog11 = new StandartHedgehog(this, 4290, 1457, 'hedgehog-head', 'hedgehog-halfbutt');
     this.hedgehog11.moveHorizontally(150, 'left', 1000);
     this.hedgehog12 = new JumpingHedgehog(this, 4950, 1120, 'hedgehog-jumper', 'hedgehog-fullbutt', true, 85);
     this.hedgehog12.moveHorizontally(100, 'left', 300);
     this.hedgehog12.jump(50, 1500);
-
+    // enemies set 5
     this.hedgehog13 = new JumpingHedgehog(this, 5860, 860, 'hedgehog-jumper', 'hedgehog-fullbutt', true, 85);
     this.hedgehog13.moveHorizontally(10, 'left', 300);
     this.hedgehog13.jump(150, 1500);
     this.hedgehog14 = new StandartHedgehog(this, 6030, 945, 'hedgehog-head', 'hedgehog-halfbutt');
     this.hedgehog14.moveHorizontally(0.1, 'left', 5000);
-
+    // enemies set 6
     this.hedgehog15 = new JumpingHedgehog(this, 6920, 1230, 'hedgehog-jumper', 'hedgehog-fullbutt', false, -100, 100);
     this.hedgehog15.jump(4, 1500);
     this.hedgehog16 = new JumpingHedgehog(this, 7520, 1265, 'hedgehog-jumper', 'hedgehog-fullbutt', false, -100, 100);

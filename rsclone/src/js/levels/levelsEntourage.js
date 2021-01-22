@@ -53,11 +53,10 @@ export default class LevelsEntourage {
   }
 
   glow() {
-    console.log(this.entourageObject);
     const color = Phaser.Display.Color.IntegerToRGB(Math.random() * 0xf0ff00);
     const light = this.scene.add.pointlight(
       this.entourageObject.x - (Math.random() * 100), this.entourageObject.y - Math.random() * 100,
-      0, this.entourageObject.width * Math.random() * 1.8, Math.random() * 0.075,
+      0, this.entourageObject.width * Math.random() * 1.8, Math.random() * 0.05,
     );
     light.depth = 1;
     light.color.setTo(color.r, color.g, color.b);
