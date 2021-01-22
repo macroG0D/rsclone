@@ -12,9 +12,16 @@ import {
 import { playSound, playWalkSound } from '../utils/playSound';
 
 function createPlayerAnimations(scene, key, sprite) {
-  scene.anims.create({
+  const { anims } = scene;
+  anims.create({
+    key: `idle-${key}`,
+    frames: anims.generateFrameNumbers(sprite, { start: 0, end: 217 }),
+    frameRate: 60,
+    repeat: -1,
+  });
+  anims.create({
     key: `move-${key}`,
-    frames: scene.game.anims.generateFrameNumbers(sprite),
+    frames: anims.generateFrameNumbers(sprite, { start: 218, end: 255 }),
     frameRate: 60,
     repeat: -1,
   });
@@ -23,6 +30,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
   constructor(scene, key, x, y, sprite, collisionCategory) {
     super(scene.matter.world, x, y, sprite);
     createPlayerAnimations(scene, key, sprite);
+    this.moving = false;
+    this.jumping = false;
     this.directions = {
       up: false,
       down: false,
@@ -64,7 +73,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       friction: DEFAULT_FRICTION,
       mass: DEFAULT_MASS,
     });
-
     this
       .setExistingBody(compoundBody)
       .setFixedRotation() // disable spin around its mass center point
@@ -281,11 +289,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     if (this.directions.left) this.moveCharacter('left');
     if (this.directions.right) this.moveCharacter('right');
 
-    if (!this.directions.left && !this.directions.right) {
-      this.anims.stop();
-      if (this.anims.currentAnim) this.anims.setCurrentFrame(this.anims.currentAnim.frames[0]);
-    }
-
     if (this.lockVelocity) {
       /* limit velocity after applying force, so that the characters wont speed up infinitely */
       if (currentVelocity.x > maxVelocity) this.setVelocityX(maxVelocity);
@@ -319,7 +322,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     if (this.isCarrying) this.getAnotherPlayer().applyForce({ x: force, y: 0 });
     this.direction = direction;
     this.turnCharacter();
-    this.anims.play(`move-${this.key}`, true); // playing move animation
   }
 
   canMove(direction) {
@@ -335,6 +337,13 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       this.isGrounded = this.isTouching.bottom;
       this.movePlayer();
       this.playerGlow();
+      if (this.isGrounded) {
+        if (this.body.force.x !== 0) {
+          this.anims.play(`move-${this.key}`, true);
+        } else {
+          this.anims.play(`idle-${this.key}`, true);
+        }
+      }
     }
   }
 }

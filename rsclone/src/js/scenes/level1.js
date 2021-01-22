@@ -23,7 +23,7 @@ import {
 import { playMusic } from '../utils/playMusic';
 import EventsCenter from '../utils/eventsCenter';
 
-const levelWidth = 10500; // 5369
+const levelWidth = 10500;
 const levelHeight = 2890;
 
 const parallaxImages = {
@@ -174,8 +174,9 @@ export default class Level1 extends Phaser.Scene {
     light.depth = 100;
     light.color.setTo(color.r, color.g, color.b);
 
-    this.obb = new Player(this, 'obb', 220, 1100, 'obb-move', COLLISION_CATEGORIES.obb);
-    this.ibb = new Player(this, 'ibb', 240, 1160, 'ibb-move', COLLISION_CATEGORIES.ibb);
+    // ibb & obb spawn
+    this.obb = new Player(this, 'obb', 220, 1100, 'obb-sprite', COLLISION_CATEGORIES.obb);
+    this.ibb = new Player(this, 'ibb', 240, 1160, 'ibb-sprite', COLLISION_CATEGORIES.ibb);
     this.ibb.headStandingCheck();
     this.obb.headStandingCheck();
     // enemies spawn
@@ -283,7 +284,6 @@ export default class Level1 extends Phaser.Scene {
   }
 
   addWalls() {
-    // const wallDefaultColor = 0x082228;
     const wallDefaultColor = 0x062C42;
     const portalColor = 0xffffff;
     const wallDefaultHeight = 16;
