@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 
 import Player from '../sprites/player';
 import Portal from '../sprites/portal';
+import LevelEnd from '../utils/levelEnd';
 import MovingPlatform from '../sprites/movingPlatform';
 import LevelsEntourage from '../levels/levelsEntourage';
 
@@ -57,14 +58,103 @@ export default class Level1 extends Phaser.Scene {
     this.matter.world.setBounds(0, 0, levelWidth, levelHeight, BORDER_THICKNESS);
     this.cameras.main.setBounds(0, 0, levelWidth, levelHeight);
     this.cameras.main.roundPixels = true;
-    // this.addBackgrounds();
+
+    this.addPlayers();
     this.addParallax();
     this.addWalls();
-
+    // enemies spawn
+    this.spawnEnemies();
     // interactive level objects
+    this.addMovingPlatforms();
+
+    // Entourage
+    this.addEntourage();
+    // level 1 finish
+    this.addLevelFinish();
+
+    this.cursors = this.input.keyboard.createCursorKeys();
+    playMusic(this);
+    this.scene.run('Score');
+    this.gameMenu();
+  }
+
+  addPlayers() {
+    this.obb = new Player(this, 'obb', 10250, 100, 'obb-move', COLLISION_CATEGORIES.obb); // 220 1100
+    this.ibb = new Player(this, 'ibb', 10300, 100, 'ibb-move', COLLISION_CATEGORIES.ibb); // 240 1160
+    this.ibb.headStandingCheck();
+    this.obb.headStandingCheck();
+  }
+
+  spawnEnemies() {
+    // enemies set 1
+    this.hedgehog1 = new JumpingHedgehog(this, 1125, 1900, 'hedgehog-jumper', 'hedgehog-fullbutt');
+    this.hedgehog1.moveHorizontally(50, 'left', 250);
+    this.hedgehog1.jump(800, 1200);
+    this.hedgehog2 = new StandartHedgehog(this, 1450, 1356, 'hedgehog-head', 'hedgehog-halfbutt');
+    this.hedgehog2.moveHorizontally(185, 'left', 1800);
+    // enemies set 2
+    this.hedgehog3 = new JumpingHedgehog(this, 2000, 1592, 'hedgehog-jumper', 'hedgehog-fullbutt');
+    this.hedgehog3.jump(50, 800);
+    this.hedgehog4 = new JumpingHedgehog(this, 2150, 1694, 'hedgehog-jumper', 'hedgehog-fullbutt', true, 100);
+    this.hedgehog4.jump(180, 700);
+    this.hedgehog5 = new JumpingHedgehog(this, 2300, 1592, 'hedgehog-jumper', 'hedgehog-fullbutt');
+    this.hedgehog5.jump(180, 900);
+    this.hedgehog6 = new JumpingHedgehog(this, 2450, 1592, 'hedgehog-jumper', 'hedgehog-fullbutt');
+    this.hedgehog6.jump(180, 500);
+    this.hedgehog7 = new JumpingHedgehog(this, 2600, 1695, 'hedgehog-jumper', 'hedgehog-fullbutt', true);
+    this.hedgehog7.jump(15090, 5600);
+    this.hedgehog8 = new JumpingHedgehog(this, 2750, 1592, 'hedgehog-jumper', 'hedgehog-fullbutt');
+    this.hedgehog8.jump(180, 450);
+    // enemies set 3
+    this.hedgehog9 = new StandartHedgehog(this, 3400, 1322, 'hedgehog-head', 'hedgehog-halfbutt', true);
+    this.hedgehog9.moveHorizontally(300, 'left', 2500, 'Bounce', 'Out');
+    this.hedgehog10 = new StandartHedgehog(this, 3550, 1322, 'hedgehog-head', 'hedgehog-halfbutt', true);
+    this.hedgehog10.moveHorizontally(300, 'left', 2500, 'Bounce', 'In');
+    // enemies set 4
+    this.hedgehog11 = new StandartHedgehog(this, 4290, 1457, 'hedgehog-head', 'hedgehog-halfbutt');
+    this.hedgehog11.moveHorizontally(150, 'left', 1000);
+    this.hedgehog12 = new JumpingHedgehog(this, 4950, 1120, 'hedgehog-jumper', 'hedgehog-fullbutt', true, 85);
+    this.hedgehog12.moveHorizontally(100, 'left', 300);
+    this.hedgehog12.jump(50, 1500);
+    // enemies set 5
+    this.hedgehog13 = new JumpingHedgehog(this, 5860, 860, 'hedgehog-jumper', 'hedgehog-fullbutt', true, 85);
+    this.hedgehog13.moveHorizontally(10, 'left', 300);
+    this.hedgehog13.jump(150, 1500);
+    this.hedgehog14 = new StandartHedgehog(this, 6030, 945, 'hedgehog-head', 'hedgehog-halfbutt');
+    this.hedgehog14.moveHorizontally(0.1, 'left', 5000);
+    // enemies set 6
+    this.hedgehog15 = new JumpingHedgehog(this, 6920, 1230, 'hedgehog-jumper', 'hedgehog-fullbutt', false, -100, 100);
+    this.hedgehog15.jump(4, 1500);
+    this.hedgehog16 = new JumpingHedgehog(this, 7520, 1265, 'hedgehog-jumper', 'hedgehog-fullbutt', false, -100, 100);
+    this.hedgehog16.jump(80, 300);
+  }
+
+  addMovingPlatforms() {
     this.movingPlatform1 = new MovingPlatform(this, 6500, 1330, 'platform-long', 1100, 'horizontal');
     this.movingPlatform2 = new MovingPlatform(this, 10000, 1800, 'platform-long', -1580, 'vertical');
+  }
 
+  addLevelFinish() {
+    this.grassSet = new LevelsEntourage(this, 1, 10199, 165, 1, 'grassSet01', false, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 10299, 165, 1, 'flowersSet01', false, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 10219, 165, 1, 'flowersSet01', false, false, 0, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 10399, 165, 1, 'flowersSet01', false, true, 98, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 10239, 165, 1, 'flowersSet01', false, false, 98, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 10389, 165, 1, 'flowersSet01', false, false, 0, 1800);
+
+    // lvl 2 gate
+    const color = Phaser.Display.Color.IntegerToRGB(0xddddff);
+    const light = this.add.pointlight(
+      10490, 100,
+      10, 280, 1,
+    );
+    light.depth = 100;
+    light.color.setTo(color.r, color.g, color.b);
+
+    this.levelEnd = new LevelEnd(this, 10500, 0);
+  }
+
+  addEntourage() {
     // Entourage
     this.grassSet = new LevelsEntourage(this, 1, 0, 1443, 1, 'grassSet02', false, false, 101, 1500);
     this.grassSet = new LevelsEntourage(this, 1, 300, 1443, 1, 'grassSet02', false, false, 98, 600);
@@ -156,75 +246,6 @@ export default class Level1 extends Phaser.Scene {
     this.grassSet = new LevelsEntourage(this, 0.47, 7730, 1314, 1, 'grassSet02', false, false, 101, 1800);
     this.tree = new LevelsEntourage(this, 1, 7760, 1314, 1, 'boabab03', false, false, 98, 1800);
     this.grassSet = new LevelsEntourage(this, 0.47, 7878, 1330, 1, 'grassUnderWorldSet02', true, false, 101, 1800);
-
-    // level 1 finish
-    this.grassSet = new LevelsEntourage(this, 1, 10199, 165, 1, 'grassSet01', false, false, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 10299, 165, 1, 'flowersSet01', false, false, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 10219, 165, 1, 'flowersSet01', false, false, 0, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 10399, 165, 1, 'flowersSet01', false, true, 98, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 10239, 165, 1, 'flowersSet01', false, false, 98, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 10389, 165, 1, 'flowersSet01', false, false, 0, 1800);
-
-    // lvl 2 gate
-    const color = Phaser.Display.Color.IntegerToRGB(0xddddff);
-    const light = this.add.pointlight(
-      10490, 100,
-      10, 280, 1,
-    );
-    light.depth = 100;
-    light.color.setTo(color.r, color.g, color.b);
-
-    this.obb = new Player(this, 'obb', 220, 1100, 'obb-move', COLLISION_CATEGORIES.obb);
-    this.ibb = new Player(this, 'ibb', 240, 1160, 'ibb-move', COLLISION_CATEGORIES.ibb);
-    this.ibb.headStandingCheck();
-    this.obb.headStandingCheck();
-    // enemies spawn
-    // enemies set 1
-    this.hedgehog1 = new JumpingHedgehog(this, 1125, 1900, 'hedgehog-jumper', 'hedgehog-fullbutt');
-    this.hedgehog1.moveHorizontally(50, 'left', 250);
-    this.hedgehog1.jump(800, 1200);
-    this.hedgehog2 = new StandartHedgehog(this, 1450, 1356, 'hedgehog-head', 'hedgehog-halfbutt');
-    this.hedgehog2.moveHorizontally(185, 'left', 1800);
-    // enemies set 2
-    this.hedgehog3 = new JumpingHedgehog(this, 2000, 1592, 'hedgehog-jumper', 'hedgehog-fullbutt');
-    this.hedgehog3.jump(50, 800);
-    this.hedgehog4 = new JumpingHedgehog(this, 2150, 1694, 'hedgehog-jumper', 'hedgehog-fullbutt', true, 100);
-    this.hedgehog4.jump(180, 700);
-    this.hedgehog5 = new JumpingHedgehog(this, 2300, 1592, 'hedgehog-jumper', 'hedgehog-fullbutt');
-    this.hedgehog5.jump(180, 900);
-    this.hedgehog6 = new JumpingHedgehog(this, 2450, 1592, 'hedgehog-jumper', 'hedgehog-fullbutt');
-    this.hedgehog6.jump(180, 500);
-    this.hedgehog7 = new JumpingHedgehog(this, 2600, 1695, 'hedgehog-jumper', 'hedgehog-fullbutt', true);
-    this.hedgehog7.jump(15090, 5600);
-    this.hedgehog8 = new JumpingHedgehog(this, 2750, 1592, 'hedgehog-jumper', 'hedgehog-fullbutt');
-    this.hedgehog8.jump(180, 450);
-    // enemies set 3
-    this.hedgehog9 = new StandartHedgehog(this, 3400, 1322, 'hedgehog-head', 'hedgehog-halfbutt', true);
-    this.hedgehog9.moveHorizontally(300, 'left', 2500, 'Bounce', 'Out');
-    this.hedgehog10 = new StandartHedgehog(this, 3550, 1322, 'hedgehog-head', 'hedgehog-halfbutt', true);
-    this.hedgehog10.moveHorizontally(300, 'left', 2500, 'Bounce', 'In');
-    // enemies set 4
-    this.hedgehog11 = new StandartHedgehog(this, 4290, 1457, 'hedgehog-head', 'hedgehog-halfbutt');
-    this.hedgehog11.moveHorizontally(150, 'left', 1000);
-    this.hedgehog12 = new JumpingHedgehog(this, 4950, 1120, 'hedgehog-jumper', 'hedgehog-fullbutt', true, 85);
-    this.hedgehog12.moveHorizontally(100, 'left', 300);
-    this.hedgehog12.jump(50, 1500);
-    // enemies set 5
-    this.hedgehog13 = new JumpingHedgehog(this, 5860, 860, 'hedgehog-jumper', 'hedgehog-fullbutt', true, 85);
-    this.hedgehog13.moveHorizontally(10, 'left', 300);
-    this.hedgehog13.jump(150, 1500);
-    this.hedgehog14 = new StandartHedgehog(this, 6030, 945, 'hedgehog-head', 'hedgehog-halfbutt');
-    this.hedgehog14.moveHorizontally(0.1, 'left', 5000);
-    // enemies set 6
-    this.hedgehog15 = new JumpingHedgehog(this, 6920, 1230, 'hedgehog-jumper', 'hedgehog-fullbutt', false, -100, 100);
-    this.hedgehog15.jump(4, 1500);
-    this.hedgehog16 = new JumpingHedgehog(this, 7520, 1265, 'hedgehog-jumper', 'hedgehog-fullbutt', false, -100, 100);
-    this.hedgehog16.jump(80, 300);
-
-    this.cursors = this.input.keyboard.createCursorKeys();
-    playMusic(this);
-    this.scene.run('Score');
-    this.gameMenu();
   }
 
   addParallax() {
@@ -355,6 +376,11 @@ export default class Level1 extends Phaser.Scene {
       this.scrollParallax();
     }
     if (this.online) this.networkSync.sync();
+    this.checkIfPlayersAreAtFinish();
+  }
+
+  checkIfPlayersAreAtFinish() {
+    if (this.ibb.hasFinished && this.obb.hasFinished) this.levelEnd.completeLevel();
   }
 
   gameMenu() {

@@ -39,6 +39,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     this.isRotated = false;
     this.canJump = true;
     this.lockVelocity = true;
+    this.hasFinished = false;
     this.depth = this.key === 'ibb' ? 99 : 97; // z index
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
     const { width: w, height: h } = this;
@@ -123,6 +124,10 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         light.destroy();
       },
     });
+  }
+
+  toggleFinishState() {
+    this.hasFinished = !this.hasFinished;
   }
 
   getAnotherPlayer() {
