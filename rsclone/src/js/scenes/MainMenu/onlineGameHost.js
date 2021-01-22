@@ -11,7 +11,6 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
   }
 
   create() {
-    console.log('create!');
     createImg(this);
     const menuItems = {
       'Looking for a partner...': () => {},
