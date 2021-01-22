@@ -17,10 +17,10 @@ export default class MainMenuPlay extends Phaser.Scene {
     const locale = LOCALE[appLocale];
 
     const menuItems = {
-      fullscreen: () => {},
-      music: () => {},
-      sound: () => {},
-      language: () => {},
+      fullscreen: '',
+      music: '',
+      sound: '',
+      language: '',
     };
     const menuCallBack = () => this.back();
     this.menu = new Menu(this, menuItems, true, menuCallBack);
