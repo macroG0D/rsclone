@@ -6,6 +6,7 @@ import {
   DEFAULT_FRICTION,
   DEFAULT_FRICTION_AIR,
   CHARACTERS_DISTANCE_MAX,
+  PARTICLES_COLORS,
 } from '../constants';
 
 import { playSound, playWalkSound } from '../utils/playSound';
@@ -38,6 +39,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     this.isRotated = false;
     this.canJump = true;
     this.lockVelocity = true;
+    this.depth = this.key === 'ibb' ? 99 : 97; // z index
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
     const { width: w, height: h } = this;
     const mainBody = Bodies.rectangle(0, 0, w * 0.75, h, { chamfer: { radius: 8 } });
@@ -106,6 +108,21 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
     this.landingEvent();
     this.addCollideWorldBoundsListener();
+  }
+
+  playerGlow() {
+    const color = Phaser.Display.Color.IntegerToRGB((PARTICLES_COLORS[this.key][2]));
+    const light = this.scene.add.pointlight(
+      this.body.position.x, this.body.position.y, 0, this.width / 1.1, 0.075,
+    );
+    light.depth = 1;
+    light.color.setTo(color.r, color.g, color.b);
+    this.scene.time.addEvent({
+      delay: 10,
+      callback: () => {
+        light.destroy();
+      },
+    });
   }
 
   getAnotherPlayer() {
@@ -317,6 +334,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     if (this.scene && this.isAlive) {
       this.isGrounded = this.isTouching.bottom;
       this.movePlayer();
+      this.playerGlow();
     }
   }
 }
