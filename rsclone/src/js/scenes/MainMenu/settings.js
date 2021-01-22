@@ -75,13 +75,13 @@ export default class MainMenuPlay extends Phaser.Scene {
         }
         break;
       case ('music'):
-        settings.music.volume = value / 100;
+        settings.volume.music = value / 100;
         if (this.game.music.current) this.game.music.current.setVolume(value / 100);
         right.node.innerHTML = value;
         if (!left.node.innerHTML) right.node.classList.add('active');
         break;
       case ('sound'):
-        settings.sound.volume = value / 100;
+        settings.volume.sound = value / 100;
         right.node.innerHTML = value;
         if (!left.node.innerHTML) right.node.classList.add('active');
         break;
@@ -106,9 +106,9 @@ export default class MainMenuPlay extends Phaser.Scene {
       case ('fullscreen'):
         return +settings.fullscreen;
       case ('music'):
-        return +settings.music.volume * 100;
+        return +settings.volume.music * 100;
       case ('sound'):
-        return +settings.sound.volume * 100;
+        return +settings.volume.sound * 100;
       case ('locale'):
         return +(settings.locale !== 'en');
       default:
