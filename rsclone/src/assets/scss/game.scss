@@ -89,7 +89,6 @@
         grid-area: scoreTime;
         &-label {
             margin: 0 5px;
-            text-align: right;
             grid-area: scoreTimeLabel;
             &::after {
                 content: ':';
@@ -100,7 +99,6 @@
         grid-area: scoreScore;
         &-label {
             margin: 0 5px;
-            text-align: right;
             grid-area: scoreScoreLabel;
             &::after {
                 content: ':';

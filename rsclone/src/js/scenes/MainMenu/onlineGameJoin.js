@@ -13,7 +13,7 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
   create() {
     createImg(this);
     let menuItems = {
-      'Looking for a partner...': () => {},
+      'Looking for a partner...': '',
     };
     const menuCallBack = () => {
       this.client.sendData('requestDropGame');
