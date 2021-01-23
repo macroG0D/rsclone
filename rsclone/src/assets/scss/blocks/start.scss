@@ -11,9 +11,11 @@
 
   @media (max-width: 1200px) {
     background-size: auto;
+    background-position: left 150px;
   }
   @media (max-width: 640px) {
     padding-top: 146px;
+    background-position: right 150px;
   }
 }
 
@@ -48,9 +50,12 @@
     width: calc(100% - 40px);
   }
 
+  @media (max-width: 680px) {
+    font-size: 18px;
+  }
+
   @media (max-width: 640px) {
     margin: 39px auto;
-    font-size: 18px;
   }
 }
 
