@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
-import ibbSpriteMove from '../../assets/sprites/ibb/ibb-move.png';
-import obbSpriteMove from '../../assets/sprites/obb/obb-move.png';
+import ibbSprite from '../../assets/sprites/ibb/ibb.png';
+import obbSprite from '../../assets/sprites/obb/obb.png';
 import githubIcon from '../../assets/images/github-logo-face.svg';
 import ibbImg from '../../assets/images/ibb_stay.png';
 import obbImg from '../../assets/images/obb_stay.png';
@@ -117,12 +117,12 @@ export default class Preload extends Phaser.Scene {
     this.load.audio('level1_music', level1Music);
     this.load.audio('level2_music', level2Music);
 
-    this.load.spritesheet('ibb-move', ibbSpriteMove, {
+    this.load.spritesheet('ibb-sprite', ibbSprite, {
       frameWidth: 47,
       frameHeight: 52,
     });
 
-    this.load.spritesheet('obb-move', obbSpriteMove, {
+    this.load.spritesheet('obb-sprite', obbSprite, {
       frameWidth: 47,
       frameHeight: 62,
     });

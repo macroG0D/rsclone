@@ -22,7 +22,7 @@ import {
 
 import { playMusic } from '../utils/playMusic';
 
-const levelWidth = 10500; // 5369
+const levelWidth = 10500;
 const levelHeight = 2890;
 
 const parallaxImages = {
@@ -65,104 +65,144 @@ export default class Level1 extends Phaser.Scene {
     this.movingPlatform2 = new MovingPlatform(this, 10000, 1800, 'platform-long', -1580, 'vertical');
 
     // Entourage
-    this.grassSet = new LevelsEntourage(this, 1, 0, 1443, 1, 'grassSet02', false, false, 101, 1500);
-    this.grassSet = new LevelsEntourage(this, 1, 300, 1443, 1, 'grassSet02', false, false, 98, 600);
-    this.grassSet = new LevelsEntourage(this, 1, 680, 1443, 1, 'grassSet01', false, true, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 683, 1443, 1, 'grassSet02', false, false, 98, 1800);
-    this.grassSet = new LevelsEntourage(this, 0.96, 1522, 1393, 1, 'grassUnderWorldSet01', true, false, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 0.6, 1522, 1485, 1, 'grassSet02', false, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 0, 1444, 1, 'grassSet02', false, false, 101, 3500);
+    this.grassSet = new LevelsEntourage(this, 1, 300, 1444, 1, 'grassSet02', false, false, 98, 1600);
+    this.grassSet = new LevelsEntourage(this, 1, 680, 1444, 1, 'grassSet01', false, true, 101, 800);
+    this.grassSet = new LevelsEntourage(this, 1, 683, 1444, 1, 'grassSet02', false, false, 98, 1800);
 
-    this.tree = new LevelsEntourage(this, 1, 100, 1442, 25, 'boabab01', false, true, 100, 3000);
-    this.tree = new LevelsEntourage(this, 1, 200, 1442, 25, 'palm02', false, true, 0, 2850);
+    this.grassSet = new LevelsEntourage(this, 1, 280, 1444, 1, 'grassSet02', true, false, 101, 3500);
+    this.grassSet = new LevelsEntourage(this, 1, 360, 1444, 1, 'grassSet02', true, false, 98, 1600);
+    this.grassSet = new LevelsEntourage(this, 1, 680, 1444, 1, 'grassSet01', true, true, 101, 800);
+    this.grassSet = new LevelsEntourage(this, 1, 683, 1444, 1, 'grassSet02', true, false, 98, 1800);
+
+    this.grassSet = new LevelsEntourage(this, 1, 280, 1457, 1, 'grassUnderWorldSet02', true, false, 101, 3500);
+    this.grassSet = new LevelsEntourage(this, 1, 420, 1457, 1, 'grassUnderWorldSet02', true, false, 98, 600);
+    this.grassSet = new LevelsEntourage(this, 1, 680, 1457, 1, 'grassUnderWorldSet02', true, false, 101, 800);
+    this.grassSet = new LevelsEntourage(this, 1, 984, 1457, 1, 'grassUnderWorldSet02', true, false, 98, 2800);
+
+    this.grassSet = new LevelsEntourage(this, 1, 1199, 1380, 1, 'grassSet01', false, false, 101, 1100);
+    this.grassSet = new LevelsEntourage(this, 1, 1512, 1380, 1, 'grassSet01', true, false, 101, 1400);
+    this.grassSet = new LevelsEntourage(this, 1, 1205, 1380, 1, 'grassSet02', false, false, 101, 1500);
+    this.grassSet = new LevelsEntourage(this, 1, 1520, 1380, 1, 'grassSet02', true, false, 101, 900);
+
+    this.grassSet = new LevelsEntourage(this, 0.96, 1522, 1392, 1, 'grassUnderWorldSet01', true, false, 101, 1200);
+    this.grassSet = new LevelsEntourage(this, 0.6, 1522, 1486, 1, 'grassSet02', false, false, 101, 800);
+    this.grassSet = new LevelsEntourage(this, 0.65, 1711, 1484, 1, 'grassSet02', true, false, 101, 1800);
+
+    this.tree = new LevelsEntourage(this, 1, 100, 1442, 25, 'boabab01', false, true, 100, 2000);
+    this.tree = new LevelsEntourage(this, 1, 200, 1442, 25, 'palm02', false, true, 0, 850);
     this.tree = new LevelsEntourage(this, 1, 200, 1442, 25, 'boabab02', false, false, 0, 1850);
-    this.tree = new LevelsEntourage(this, 1, 300, 1442, 25, 'boabab03', false, false, 0, 3000);
-    this.tree = new LevelsEntourage(this, 1, 500, 1442, 25, 'boabab05', false, false, 98, 1500);
+    this.tree = new LevelsEntourage(this, 1, 300, 1442, 25, 'boabab03', false, false, 0, 1000);
+    this.tree = new LevelsEntourage(this, 1, 500, 1442, 25, 'boabab05', false, false, 96, 1500);
     this.tree = new LevelsEntourage(this, 1, 700, 1442, 25, 'boabab06', false, false, 0, 3000);
-    this.tree = new LevelsEntourage(this, 1, 930, 1442, 25, 'palm06', false, false, 0, 3000);
+    this.tree = new LevelsEntourage(this, 1, 930, 1442, 25, 'palm06', false, false, 0, 1000);
 
-    this.grassSet = new LevelsEntourage(this, 1, 1200, 1379, 1, 'grassSet01', false, false, 101, 1500);
+    this.tree = new LevelsEntourage(this, 1, 1319, 1378, 25, 'boabab01', false, false, 0, 1200);
+    this.tree = new LevelsEntourage(this, 1, 1419, 1378, 25, 'palm02', false, false, 100, 1500);
 
-    this.tree = new LevelsEntourage(this, 1, 1319, 1378, 25, 'boabab01', false, false, 0, 3000);
-    this.tree = new LevelsEntourage(this, 1, 1419, 1378, 25, 'palm02', false, false, 98, 3000);
+    this.grassSet = new LevelsEntourage(this, 1, 1711, 1638, 1, 'grassSet02', false, false, 98, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 2031, 1638, 1, 'grassSet01', false, false, 98, 800);
+    this.grassSet = new LevelsEntourage(this, 1, 2361, 1638, 1, 'grassSet02', false, true, 98, 600);
+    this.grassSet = new LevelsEntourage(this, 1, 2361, 1638, 1, 'grassSet02', false, false, 101, 1200);
+    this.grassSet = new LevelsEntourage(this, 1, 2031, 1638, 1, 'grassSet02', true, false, 98, 300);
+    this.grassSet = new LevelsEntourage(this, 1, 2331, 1638, 1, 'grassSet01', true, false, 98, 500);
+    this.grassSet = new LevelsEntourage(this, 1, 2661, 1638, 1, 'grassSet02', true, false, 101, 1400);
+    this.grassSet = new LevelsEntourage(this, 1, 2568, 1638, 1, 'grassSet02', true, true, 98, 800);
+    this.grassSet = new LevelsEntourage(this, 1, 2361, 1638, 1, 'flowersSet01', false, false, 101, 1100);
+    this.grassSet = new LevelsEntourage(this, 1, 2888, 1638, 1, 'grassSet01', false, true, 101, 500);
+    this.grassSet = new LevelsEntourage(this, 0.27, 2988, 1638, 1, 'grassSet02', false, false, 101, 1800);
 
-    this.grassSet = new LevelsEntourage(this, 1, 1711, 1637, 1, 'grassSet02', false, false, 98, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 2031, 1637, 1, 'grassSet01', false, false, 98, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 2361, 1637, 1, 'grassSet02', false, true, 98, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 2361, 1637, 1, 'grassSet02', false, false, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 2361, 1637, 1, 'flowersSet01', false, false, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 2888, 1637, 1, 'grassSet01', false, true, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 0.27, 2988, 1637, 1, 'grassSet02', false, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 2017, 1650, 1, 'grassUnderWorldSet01', true, false, 98, 1100);
+    this.grassSet = new LevelsEntourage(this, 1, 2331, 1650, 1, 'grassUnderWorldSet02', true, true, 98, 500);
+    this.grassSet = new LevelsEntourage(this, 1, 2331, 1650, 1, 'grassUnderWorldSet02', true, false, 101, 300);
+    this.grassSet = new LevelsEntourage(this, 1, 2566, 1650, 1, 'grassUnderWorldSet02', true, true, 101, 1250);
+    this.grassSet = new LevelsEntourage(this, 1, 2566, 1650, 1, 'grassUnderWorldSet02', true, true, 101, 1800);
 
-    this.grassSet = new LevelsEntourage(this, 1, 2017, 1651, 1, 'grassUnderWorldSet01', true, false, 98, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 2331, 1651, 1, 'grassUnderWorldSet02', true, true, 98, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 2331, 1651, 1, 'grassUnderWorldSet02', true, false, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 2566, 1651, 1, 'grassUnderWorldSet02', true, true, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 2566, 1651, 1, 'grassUnderWorldSet02', true, true, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 0.31, 3087, 1761, 1, 'grassUnderWorldSet02', true, false, 101, 800);
 
-    this.grassSet = new LevelsEntourage(this, 0.31, 3087, 1762, 1, 'grassUnderWorldSet02', true, false, 101, 1800);
+    this.tree = new LevelsEntourage(this, 1, 2021, 1651, 25, 'curved01', true, false, 0, 1300);
+    this.tree = new LevelsEntourage(this, 1, 2166, 1651, 25, 'palm03', true, false, 0, 1000);
+    this.tree = new LevelsEntourage(this, 1, 2466, 1651, 25, 'curved03', true, false, 0, 1500);
+    this.tree = new LevelsEntourage(this, 1, 2566, 1651, 25, 'curved02', true, false, 0, 1200);
 
-    this.tree = new LevelsEntourage(this, 1, 2021, 1651, 25, 'curved01', true, false, 0, 3000);
-    this.tree = new LevelsEntourage(this, 1, 2166, 1651, 25, 'palm03', true, false, 0, 3000);
-    this.tree = new LevelsEntourage(this, 1, 2466, 1651, 25, 'curved03', true, false, 0, 3000);
-    this.tree = new LevelsEntourage(this, 1, 2566, 1651, 25, 'curved02', true, false, 0, 3000);
+    this.grassSet = new LevelsEntourage(this, 1, 3053, 1285, 1, 'grassSet01', false, false, 101, 1300);
+    this.grassSet = new LevelsEntourage(this, 1, 3298, 1285, 1, 'grassSet01', false, false, 101, 700);
+    this.grassSet = new LevelsEntourage(this, 1, 3353, 1285, 1, 'grassSet02', true, false, 101, 1300);
+    this.grassSet = new LevelsEntourage(this, 1, 3618, 1285, 1, 'grassSet02', true, false, 101, 1700);
+    this.grassSet = new LevelsEntourage(this, 1, 3053, 1298, 1, 'grassUnderWorldSet02', true, true, 101, 1200);
+    this.grassSet = new LevelsEntourage(this, 1, 3278, 1298, 1, 'grassUnderWorldSet01', true, true, 101, 1500);
+    this.tree = new LevelsEntourage(this, 1, 3153, 1284, 25, 'curved02', true, false, 0, 1000);
+    this.tree = new LevelsEntourage(this, 1, 3153, 1284, 25, 'curved01', false, true, 0, 2000);
+    this.tree = new LevelsEntourage(this, 1, 3253, 1284, 25, 'boabab04', false, false, 0, 1200);
+    this.tree = new LevelsEntourage(this, 1, 3353, 1284, 25, 'boabab05', false, false, 0, 1500);
 
-    this.grassSet = new LevelsEntourage(this, 1, 3053, 1284, 1, 'grassSet01', false, false, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 3298, 1284, 1, 'grassSet01', false, false, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 3053, 1299, 1, 'grassUnderWorldSet02', true, true, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 3278, 1299, 1, 'grassUnderWorldSet01', true, true, 101, 1800);
-    this.tree = new LevelsEntourage(this, 1, 3153, 1284, 25, 'curved02', true, false, 0, 3000);
-    this.tree = new LevelsEntourage(this, 1, 3153, 1284, 25, 'curved01', false, true, 0, 3000);
-    this.tree = new LevelsEntourage(this, 1, 3253, 1284, 25, 'boabab04', false, false, 0, 3000);
-    this.tree = new LevelsEntourage(this, 1, 3353, 1284, 25, 'boabab05', false, false, 0, 3000);
+    this.tree = new LevelsEntourage(this, 1, 3729, 1584, 25, 'palm03', true, false, 0, 1200);
+    this.tree = new LevelsEntourage(this, 1, 3786, 1568, 25, 'palm04', false, false, 0, 2000);
+    this.tree = new LevelsEntourage(this, 1, 3890, 1584, 25, 'palm02', true, true, 0, 1600);
 
-    this.tree = new LevelsEntourage(this, 1, 3729, 1584, 25, 'palm03', true, false, 0, 3000);
-    this.tree = new LevelsEntourage(this, 1, 3786, 1568, 25, 'palm04', false, false, 0, 3000);
-    this.tree = new LevelsEntourage(this, 1, 3890, 1584, 25, 'palm02', true, true, 0, 3000);
+    this.grassSet = new LevelsEntourage(this, 1, 3616, 1570, 1, 'grassSet02', false, false, 101, 1200);
+    this.grassSet = new LevelsEntourage(this, 1, 3758, 1570, 1, 'grassSet01', false, false, 101, 1500);
+    this.grassSet = new LevelsEntourage(this, 1, 3980, 1570, 1, 'grassSet01', true, false, 101, 900);
+    this.grassSet = new LevelsEntourage(this, 1, 4058, 1570, 1, 'grassSet01', true, false, 101, 1600);
+    this.grassSet = new LevelsEntourage(this, 1, 3600, 1582, 1, 'grassUnderWorldSet01', true, true, 101, 1600);
+    this.grassSet = new LevelsEntourage(this, 1, 3770, 1582, 1, 'grassUnderWorldSet02', true, true, 101, 1800);
 
-    this.grassSet = new LevelsEntourage(this, 1, 3616, 1568, 1, 'grassSet02', false, false, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 3758, 1568, 1, 'grassSet01', false, false, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 3600, 1583, 1, 'grassUnderWorldSet01', true, true, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 3770, 1583, 1, 'grassUnderWorldSet02', true, true, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 0.82, 4075, 1483, 1, 'grassSet02', false, false, 101, 800);
+    this.grassSet = new LevelsEntourage(this, 0.82, 4335, 1483, 1, 'grassSet01', true, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 0.82, 4072, 1483, 1, 'flowersSet01', false, false, 101, 1200);
+    this.grassSet = new LevelsEntourage(this, 0.82, 4272, 1483, 1, 'flowersSet01', false, true, 101, 900);
+    this.grassSet = new LevelsEntourage(this, 0.82, 4172, 1483, 1, 'flowersSet01', false, false, 101, 1500);
+    this.grassSet = new LevelsEntourage(this, 1, 4200, 1483, 1, 'flowersSet01', false, false, 101, 1100);
+    this.grassSet = new LevelsEntourage(this, 0.82, 4350, 1494, 1, 'grassUnderWorldSet01', true, false, 101, 1800);
 
-    this.grassSet = new LevelsEntourage(this, 0.82, 4075, 1481, 1, 'grassSet02', false, false, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 0.82, 4072, 1481, 1, 'flowersSet01', false, false, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 0.82, 4272, 1481, 1, 'flowersSet01', false, true, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 0.82, 4172, 1481, 1, 'flowersSet01', false, false, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 4200, 1481, 1, 'flowersSet01', false, false, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 0.82, 4350, 1495, 1, 'grassUnderWorldSet01', true, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 0.51, 4334, 1402, 1, 'grassSet02', false, false, 101, 1600);
+    this.grassSet = new LevelsEntourage(this, 0.51, 4498, 1402, 1, 'grassSet02', true, false, 101, 1600);
+    this.grassSet = new LevelsEntourage(this, 0.45, 4493, 1414, 1, 'grassUnderWorldSet02', true, false, 101, 1000);
+    this.grassSet = new LevelsEntourage(this, 0.36, 4681, 1402, 1, 'grassSet02', false, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 0.36, 4797, 1402, 1, 'grassSet02', true, false, 101, 800);
+    this.grassSet = new LevelsEntourage(this, 0.4, 4809, 1414, 1, 'grassUnderWorldSet02', true, false, 101, 1100);
 
-    this.grassSet = new LevelsEntourage(this, 0.51, 4334, 1400, 1, 'grassSet02', false, false, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 0.45, 4493, 1415, 1, 'grassUnderWorldSet02', true, false, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 0.36, 4681, 1400, 1, 'grassSet02', false, false, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 0.4, 4809, 1415, 1, 'grassUnderWorldSet02', true, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 1.1, 4794, 1254, 1, 'grassSet02', false, false, 101, 2000);
+    this.grassSet = new LevelsEntourage(this, 1.1, 5140, 1254, 1, 'grassSet02', true, false, 101, 2000);
+    this.grassSet = new LevelsEntourage(this, 1.04, 5141, 1266, 1, 'grassUnderWorldSet01', true, false, 101, 1100);
 
-    this.grassSet = new LevelsEntourage(this, 1.1, 4794, 1253, 1, 'grassSet02', false, false, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 1.04, 5141, 1267, 1, 'grassUnderWorldSet01', true, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 5328, 1254, 1, 'grassSet01', false, false, 101, 1100);
+    this.grassSet = new LevelsEntourage(this, 1, 5646, 1254, 1, 'grassSet02', true, false, 101, 1100);
+    this.grassSet = new LevelsEntourage(this, 1, 5648, 1266, 1, 'grassUnderWorldSet02', true, false, 101, 1500);
+    this.grassSet = new LevelsEntourage(this, 1, 5610, 1254, 1, 'grassSet02', false, false, 101, 1300);
+    this.grassSet = new LevelsEntourage(this, 1, 5930, 1254, 1, 'grassSet02', true, false, 101, 1300);
+    this.grassSet = new LevelsEntourage(this, 1, 5945, 1266, 1, 'grassUnderWorldSet01', true, false, 101, 1600);
+    this.grassSet = new LevelsEntourage(this, 1, 5770, 1254, 1, 'flowersSet01', false, false, 101, 1300);
 
-    this.grassSet = new LevelsEntourage(this, 1, 5328, 1253, 1, 'grassSet01', false, false, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 5648, 1267, 1, 'grassUnderWorldSet02', true, false, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 5610, 1253, 1, 'grassSet02', false, false, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 5945, 1267, 1, 'grassUnderWorldSet01', true, false, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 5770, 1253, 1, 'flowersSet01', false, false, 101, 1800);
-
-    this.tree = new LevelsEntourage(this, 1, 5658, 1267, 25, 'boabab01', true, false, 98, 3000);
+    this.tree = new LevelsEntourage(this, 1, 5658, 1267, 25, 'boabab01', true, false, 100, 3000);
     this.tree = new LevelsEntourage(this, 1, 5610, 1253, 25, 'palm04', false, false, 0, 3000);
     this.tree = new LevelsEntourage(this, 1, 5428, 1253, 25, 'palm02', false, true, 0, 3000);
 
-    this.grassSet = new LevelsEntourage(this, 0.95, 5928, 970, 1, 'grassSet02', false, false, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 0.85, 6218, 983, 1, 'grassUnderWorldSet02', true, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 0.19, 5928, 971, 1, 'grassSet02', false, false, 101, 700);
+    this.grassSet = new LevelsEntourage(this, 0.19, 5988, 971, 1, 'grassSet02', true, false, 101, 700);
+    this.grassSet = new LevelsEntourage(this, 0.545, 6058, 971, 1, 'grassSet02', false, false, 101, 700);
+    this.grassSet = new LevelsEntourage(this, 0.545, 6230, 971, 1, 'grassSet02', true, false, 101, 700);
+    this.grassSet = new LevelsEntourage(this, 0.85, 6218, 982, 1, 'grassUnderWorldSet02', true, false, 101, 1800);
 
-    this.grassSet = new LevelsEntourage(this, 0.47, 7730, 1314, 1, 'grassSet02', false, false, 101, 1800);
-    this.tree = new LevelsEntourage(this, 1, 7760, 1314, 1, 'boabab03', false, false, 98, 1800);
-    this.grassSet = new LevelsEntourage(this, 0.47, 7878, 1330, 1, 'grassUnderWorldSet02', true, false, 101, 1800);
+    this.grassSet = new LevelsEntourage(this, 0.47, 7730, 1316, 1, 'grassSet02', false, false, 101, 500);
+    this.grassSet = new LevelsEntourage(this, 0.47, 7877, 1316, 1, 'grassSet01', true, false, 101, 500);
+    this.grassSet = new LevelsEntourage(this, 0.47, 7878, 1329, 1, 'grassUnderWorldSet02', true, false, 101, 1200);
+    this.tree = new LevelsEntourage(this, 1, 7760, 1314, 1, 'boabab03', false, false, 100, 1820);
 
+    this.grassSet = new LevelsEntourage(this, 0.2, 7899, 1189, 1, 'grassSet02', false, false, 101, 500);
+    this.grassSet = new LevelsEntourage(this, 0.2, 7961, 1189, 1, 'grassSet02', true, false, 101, 500);
+    this.tree = new LevelsEntourage(this, 1, 7939, 1189, 1, 'palm06', false, true, 1, 500);
+
+    this.tree = new LevelsEntourage(this, 1, 9469, 632, 1, 'boabab05', false, false, 100, 1820);
+    this.grassSet = new LevelsEntourage(this, 0.22, 9478, 634, 1, 'grassSet02', false, false, 101, 500);
+    this.grassSet = new LevelsEntourage(this, 0.22, 9550, 634, 1, 'grassSet02', true, false, 101, 500);
     // level 1 finish
-    this.grassSet = new LevelsEntourage(this, 1, 10199, 165, 1, 'grassSet01', false, false, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 10299, 165, 1, 'flowersSet01', false, false, 101, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 10219, 165, 1, 'flowersSet01', false, false, 0, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 10399, 165, 1, 'flowersSet01', false, true, 98, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 10239, 165, 1, 'flowersSet01', false, false, 98, 1800);
-    this.grassSet = new LevelsEntourage(this, 1, 10389, 165, 1, 'flowersSet01', false, false, 0, 1800);
+    this.grassSet = new LevelsEntourage(this, 1, 10199, 166, 1, 'grassSet01', false, false, 101, 1100);
+    this.grassSet = new LevelsEntourage(this, 1, 10299, 166, 1, 'flowersSet01', false, false, 101, 1200);
+    this.grassSet = new LevelsEntourage(this, 1, 10219, 166, 1, 'flowersSet01', false, false, 0, 1300);
+    this.grassSet = new LevelsEntourage(this, 1, 10399, 166, 1, 'flowersSet01', false, true, 98, 1600);
+    this.grassSet = new LevelsEntourage(this, 1, 10239, 166, 1, 'flowersSet01', false, false, 98, 800);
+    this.grassSet = new LevelsEntourage(this, 1, 10389, 166, 1, 'flowersSet01', false, false, 0, 1800);
 
     // lvl 2 gate
     const color = Phaser.Display.Color.IntegerToRGB(0xddddff);
@@ -173,8 +213,9 @@ export default class Level1 extends Phaser.Scene {
     light.depth = 100;
     light.color.setTo(color.r, color.g, color.b);
 
-    this.obb = new Player(this, 'obb', 220, 1100, 'obb-move', COLLISION_CATEGORIES.obb);
-    this.ibb = new Player(this, 'ibb', 240, 1160, 'ibb-move', COLLISION_CATEGORIES.ibb);
+    // ibb & obb spawn
+    this.obb = new Player(this, 'obb', 225, 1100, 'obb-sprite', COLLISION_CATEGORIES.obb);
+    this.ibb = new Player(this, 'ibb', 240, 1160, 'ibb-sprite', COLLISION_CATEGORIES.ibb);
     this.ibb.headStandingCheck();
     this.obb.headStandingCheck();
     // enemies spawn
@@ -282,7 +323,6 @@ export default class Level1 extends Phaser.Scene {
   }
 
   addWalls() {
-    // const wallDefaultColor = 0x082228;
     const wallDefaultColor = 0x062C42;
     const portalColor = 0xffffff;
     const wallDefaultHeight = 16;
@@ -306,6 +346,7 @@ export default class Level1 extends Phaser.Scene {
       const objSettings = {
         isSensor: isPortal,
         isStatic: true,
+        slop: -1,
       };
       if (isPortal) {
         // moved portal to separate class for better detection in collision event with instanceof
