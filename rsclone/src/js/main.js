@@ -28,6 +28,7 @@ class Main {
     const savedVersion = settings.cookieVersion;
     if (savedVersion !== cookieVersion) localStorage.clear();
     this.settings = settings;
+    this.levels = ['Level1', 'Level1'];
     this.init();
   }
 
@@ -50,8 +51,8 @@ class Main {
           enableSleeping: false,
           gravity: { y: 2 },
           debug: {
-            showBody: false,
-            showStaticBody: false,
+            showBody: true,
+            showStaticBody: true,
           },
         },
       },
@@ -90,6 +91,16 @@ class Main {
     this.game.app = this; // link to main class
   }
 
+  startNextLevel(scene) {
+    const currLevelKey = scene.sys.settings.key;
+    const currLevelIndex = this.levels.indexOf(currLevelKey);
+    const nextLevelKey = this.levels[currLevelIndex + 1];
+    const preLevelScene = this.game.scene.getScene('LevelSwitch');
+    preLevelScene.nextLevelKey = nextLevelKey;
+    scene.scene.stop(currLevelKey);
+    scene.scene.switch(preLevelScene);
+  }
+  
   saveSettings() {
     localStorage.setItem('rsc-game-settings', JSON.stringify(this.settings));
   }
