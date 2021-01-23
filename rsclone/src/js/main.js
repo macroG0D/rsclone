@@ -16,16 +16,13 @@ class Main {
     const settings = JSON.parse(localStorage.getItem('rsc-game-settings')) || {
       locale: 'en',
       fullscreen: false,
-      sound: {
-        enabled: true,
-        volume: 0.2,
-      },
-      music: {
-        enabled: true,
-        volume: 0.1,
+      volume: {
+        sound: 0.2,
+        music: 0.1,
       },
       level: 1,
       score: 0,
+      time: 0,
       cookieVersion,
     };
     const savedVersion = settings.cookieVersion;
@@ -102,6 +99,10 @@ class Main {
     preLevelScene.nextLevelKey = nextLevelKey;
     scene.scene.stop(currLevelKey);
     scene.scene.switch(preLevelScene);
+  }
+  
+  saveSettings() {
+    localStorage.setItem('rsc-game-settings', JSON.stringify(this.settings));
   }
 }
 

@@ -1,5 +1,4 @@
 import Phaser from 'phaser';
-import EventsCenter from '../utils/eventsCenter';
 import Create from '../components/dom-create';
 
 import { LOCALE } from '../locale';
@@ -12,6 +11,7 @@ export default class Score extends Phaser.Scene {
   }
 
   create() {
+    this.client = this.game.client;
     this.currentTime = 0;
     this.currentScore = 0;
 
@@ -29,7 +29,7 @@ export default class Score extends Phaser.Scene {
     this.board.spawn.setScrollFactor(0, 0);
     this.board.spawn.setOrigin(0);
 
-    EventsCenter.on('update-score', this.updateScore, this);
+    this.client.on('update-score', this.updateScore, this);
 
     this.time.addEvent({
       delay: 1000,

@@ -22,9 +22,8 @@ import {
 } from '../constants';
 
 import { playMusic } from '../utils/playMusic';
-import EventsCenter from '../utils/eventsCenter';
 
-const levelWidth = 10500; // 5369
+const levelWidth = 10500;
 const levelHeight = 2890;
 
 const parallaxImages = {
@@ -54,7 +53,6 @@ export default class Level1 extends Phaser.Scene {
       this.player1Input = new Input(this, 'ibb', PLAYER_1_CONTROLS);
       this.player2Input = new Input(this, 'obb', PLAYER_2_CONTROLS);
     }
-    EventsCenter.destroy(); // destory preveousely created instance to prevent score multiply
     this.matter.world.setBounds(0, 0, levelWidth, levelHeight, BORDER_THICKNESS);
     this.cameras.main.setBounds(0, 0, levelWidth, levelHeight);
     this.cameras.main.roundPixels = true;
@@ -304,7 +302,6 @@ export default class Level1 extends Phaser.Scene {
   }
 
   addWalls() {
-    // const wallDefaultColor = 0x082228;
     const wallDefaultColor = 0x062C42;
     const portalColor = 0xffffff;
     const wallDefaultHeight = 16;
@@ -328,6 +325,7 @@ export default class Level1 extends Phaser.Scene {
       const objSettings = {
         isSensor: isPortal,
         isStatic: true,
+        slop: -1,
       };
       if (isPortal) {
         // moved portal to separate class for better detection in collision event with instanceof
