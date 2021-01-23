@@ -12,7 +12,7 @@ export function playSound(scene, key) {
     const soundKey = `${key}_${soundNumber}`;
     if (!game.sounds.cache[soundKey]) game.sounds.cache[soundKey] = game.sound.add(soundKey);
     const sound = game.sounds.cache[soundKey];
-    const volume = (game.sounds.volume[key] || 1) * game.app.settings.sound.volume;
+    const volume = (game.sounds.volume[key] || 1) * game.app.settings.volume.sound;
     sound.play({ volume });
   }
 }

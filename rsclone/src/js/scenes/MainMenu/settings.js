@@ -17,13 +17,15 @@ export default class MainMenuPlay extends Phaser.Scene {
     const locale = LOCALE[appLocale];
 
     const menuItems = {
-      fullscreen: () => {},
-      music: () => {},
-      sound: () => {},
-      language: () => {},
+      fullscreen: '',
+      music: '',
+      sound: '',
+      language: '',
     };
     const menuCallBack = () => this.back();
     this.menu = new Menu(this, menuItems, true, menuCallBack);
+    this.menu.menu.node.style.gridArea = '1 / 1 / 2 / 2';
+    this.menu.menu.node.style.alignItems = 'flex-end';
 
     const off = locale.off || 'off';
     const on = locale.on || 'on';
@@ -33,7 +35,7 @@ export default class MainMenuPlay extends Phaser.Scene {
       sound: [200, 100, this.getSettings('sound'), '', this.getSettings('sound')],
       locale: [undefined, 1, this.getSettings('locale'), 'en', 'ru'],
     };
-    this.range = new Range(this, rangeItems);
+    this.range = new Range(this, rangeItems, this.menu.container.node);
   }
 
   update() {
@@ -73,17 +75,20 @@ export default class MainMenuPlay extends Phaser.Scene {
           right.node.classList.remove('active');
           left.node.classList.add('active');
         }
+        this.game.app.saveSettings();
         break;
       case ('music'):
-        settings.music.volume = value / 100;
+        settings.volume.music = value / 100;
         if (this.game.music.current) this.game.music.current.setVolume(value / 100);
         right.node.innerHTML = value;
         if (!left.node.innerHTML) right.node.classList.add('active');
+        this.game.app.saveSettings();
         break;
       case ('sound'):
-        settings.sound.volume = value / 100;
+        settings.volume.sound = value / 100;
         right.node.innerHTML = value;
         if (!left.node.innerHTML) right.node.classList.add('active');
+        this.game.app.saveSettings();
         break;
       case ('locale'):
         settings.locale = (value) ? 'ru' : 'en';
@@ -95,6 +100,7 @@ export default class MainMenuPlay extends Phaser.Scene {
           right.node.classList.remove('active');
           left.node.classList.add('active');
         }
+        this.game.app.saveSettings();
         break;
       default:
     }
@@ -106,9 +112,9 @@ export default class MainMenuPlay extends Phaser.Scene {
       case ('fullscreen'):
         return +settings.fullscreen;
       case ('music'):
-        return +settings.music.volume * 100;
+        return +settings.volume.music * 100;
       case ('sound'):
-        return +settings.sound.volume * 100;
+        return +settings.volume.sound * 100;
       case ('locale'):
         return +(settings.locale !== 'en');
       default:

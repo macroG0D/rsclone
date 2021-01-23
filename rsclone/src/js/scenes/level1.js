@@ -21,7 +21,6 @@ import {
 } from '../constants';
 
 import { playMusic } from '../utils/playMusic';
-import EventsCenter from '../utils/eventsCenter';
 
 const levelWidth = 10500; // 5369
 const levelHeight = 2890;
@@ -53,7 +52,7 @@ export default class Level1 extends Phaser.Scene {
       this.player1Input = new Input(this, 'ibb', PLAYER_1_CONTROLS);
       this.player2Input = new Input(this, 'obb', PLAYER_2_CONTROLS);
     }
-    EventsCenter.destroy(); // destory preveousely created instance to prevent score multiply
+
     this.matter.world.setBounds(0, 0, levelWidth, levelHeight, BORDER_THICKNESS);
     this.cameras.main.setBounds(0, 0, levelWidth, levelHeight);
     this.cameras.main.roundPixels = true;

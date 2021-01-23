@@ -1,10 +1,10 @@
 import Phaser from 'phaser';
 import Death from './death';
-import EventsCenter from '../utils/eventsCenter';
 
 export default class Enemy extends Phaser.Physics.Matter.Sprite {
   constructor(scene, x, y, spriteA) {
     super(scene.matter.world, x, y, spriteA);
+    this.client = scene.game.client;
     this.isAlive = true;
     this.startX = x;
     this.startY = y;
@@ -32,7 +32,7 @@ export default class Enemy extends Phaser.Physics.Matter.Sprite {
     if (pair.gameObjectB && pair.gameObjectB.type !== 'Rectangle' && pair.gameObjectB.isAlive && this.isAlive) {
       this.isAlive = false;
       Death.deathAnimation(this.scene, this, 'enemy');
-      EventsCenter.emit('update-score', 100);
+      this.client.emitData('update-score', 100);
     }
   }
 
