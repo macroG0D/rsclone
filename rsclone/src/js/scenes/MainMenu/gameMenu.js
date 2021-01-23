@@ -18,14 +18,12 @@ export default class GameMenu extends Phaser.Scene {
       newGame: () => {
         this.scene.stop('Score');
         this.scene.stop('Level1');
-        this.scene.stop(this.key);
         this.scene.switch('MainMenuPlay');
       },
       settings: () => this.scene.switch('MainMenuSettings'),
       mainMenu: () => {
         this.scene.stop('Score');
         this.scene.stop('Level1');
-        this.scene.stop(this.key);
         this.scene.switch('MainMenu');
       },
     };

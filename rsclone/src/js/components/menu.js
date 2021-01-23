@@ -6,7 +6,6 @@ export default class Menu extends Create {
   constructor(scene, menuItems, back = false, backCallback) {
     super('div', false, 'game-menu');
     const locale = LOCALE[scene.game.app.settings.locale];
-    scene.input.keyboard.createCursorKeys();
     this.scene = scene;
     this.container = new Create('div', this.node, 'game-menu-container');
     this.menu = new Create('div', this.container.node, 'game-menu-menu');
