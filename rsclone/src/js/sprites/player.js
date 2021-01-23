@@ -21,7 +21,13 @@ function createPlayerAnimations(scene, key, sprite) {
   });
   anims.create({
     key: `move-${key}`,
-    frames: anims.generateFrameNumbers(sprite, { start: 218, end: 255 }),
+    frames: anims.generateFrameNumbers(sprite, { start: 218, end: 254 }),
+    frameRate: 60,
+    repeat: -1,
+  });
+  anims.create({
+    key: `jump-${key}`,
+    frames: anims.generateFrameNumbers(sprite, { start: 255, end: 316 }),
     frameRate: 60,
     repeat: -1,
   });
@@ -31,7 +37,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     super(scene.matter.world, x, y, sprite);
     createPlayerAnimations(scene, key, sprite);
     this.moving = false;
-    this.jumping = false;
     this.directions = {
       up: false,
       down: false,
@@ -51,7 +56,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     this.depth = this.key === 'ibb' ? 99 : 97; // z index
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
     const { width: w, height: h } = this;
-    const mainBody = Bodies.rectangle(0, 0, w * 0.75, h, { chamfer: { radius: 8 } });
+    const mainBody = Bodies.rectangle(0, 0, w * 0.75, h * 0.96, { chamfer: { radius: 8 } });
     this.sensors = {
       center: Bodies.rectangle(0, 0, 1, 1, { isSensor: true }),
       top: Bodies.rectangle(0, h - h * 1.48, w * 0.5, 5, { isSensor: true }),
@@ -168,7 +173,9 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
   isOnHead() {
     this.isHeadStanding = true;
+    this.depth = 97;
     this.getAnotherPlayer().isCarrying = true;
+    this.getAnotherPlayer().depth = 99;
   }
 
   isNotOnHead() {
@@ -322,6 +329,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     if (this.isCarrying) this.getAnotherPlayer().applyForce({ x: force, y: 0 });
     this.direction = direction;
     this.turnCharacter();
+    this.anims.play(`move-${this.key}`, true);
   }
 
   canMove(direction) {
@@ -337,13 +345,9 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       this.isGrounded = this.isTouching.bottom;
       this.movePlayer();
       this.playerGlow();
-      if (this.isGrounded) {
-        if (this.body.force.x !== 0) {
-          this.anims.play(`move-${this.key}`, true);
-        } else {
-          this.anims.play(`idle-${this.key}`, true);
-        }
-      }
+      if (this.isGrounded && this.body.force.x === 0) this.anims.play(`idle-${this.key}`, true);
+      if (!this.isGrounded && this.body.force.x === 0) this.anims.play(`jump-${this.key}`, true);
+      if (this.isHeadStanding && !this.getAnotherPlayer().isGrounded) this.anims.play(`jump-${this.key}`, true);
     }
   }
 }
