@@ -11,7 +11,6 @@ import MainMenuSettings from './MainMenu/settings';
 import MainMenuDevelopers from './MainMenu/developers';
 import Score from './score';
 import Level1 from './level1';
-import LevelSwitch from './levelSwitch';
 import GameMenu from './MainMenu/gameMenu';
 import GameOver from './MainMenu/gameOver';
 
@@ -31,7 +30,6 @@ export const SCENE_LIST = [
   GameMenu,
   Score,
   GameOver,
-  LevelSwitch,
 ];
 
 export default SCENE_LIST;
