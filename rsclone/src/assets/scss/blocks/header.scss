@@ -114,11 +114,45 @@
 .header__hidden {
   @media (max-width: 640px) {
     top: 0;
-    left: -100%;
+    //left: -100%;
+    animation: header__off;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+  }
+}
+
+.header__display {
+  @media (max-width: 640px) {
+    top: 0;
+    //left: -100%;
+    animation: header__on;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
   }
 
 }
 
 .header__burger--open {
   left: calc(150% - 25px);
+}
+
+@keyframes header__on {
+
+  from {
+    left: -100%;
+  }
+
+  to {
+    left: 0;
+  }
+}
+
+@keyframes header__off {
+  from {
+    left: 0;
+  }
+
+  to {
+    left: -100%;
+  }
 }
