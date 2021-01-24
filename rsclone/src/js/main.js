@@ -2,9 +2,9 @@ import Phaser from 'phaser';
 import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
 import Create from './components/dom-create';
 
-import Client from './utils/client';
+import Game from './components/game';
 
-import { SCENE_LIST } from './scenes/_scenesList';
+import { LOADING_SCENES } from './scenes/_scenesList';
 
 import { GAME_WIDTH, GAME_HEIGHT } from './constants';
 
@@ -33,7 +33,6 @@ class Main {
 
   init() {
     this.gameContainer = new Create('div', document.body, 'game-container').node;
-
     this.gameConfig = {
       type: Phaser.AUTO,
       parent: this.gameContainer,
@@ -68,26 +67,11 @@ class Main {
         target: 60,
         forceSetTimeOut: true,
       },
-      scene: SCENE_LIST,
+      scene: LOADING_SCENES,
       dom: { createContainer: true },
     };
 
-    this.game = new Phaser.Game(this.gameConfig);
-
-    this.game.client = new Client();
-
-    this.game.music = {
-      current: undefined,
-      cache: {},
-    };
-
-    this.game.sounds = {
-      volume: {},
-      cache: {},
-      walk: { ibb: {}, obb: {} },
-    };
-
-    this.game.app = this; // link to main class
+    this.game = new Game(this, this.gameConfig);
   }
 
   saveSettings() {

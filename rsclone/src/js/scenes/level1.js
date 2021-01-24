@@ -37,10 +37,10 @@ export default class Level1 extends Phaser.Scene {
     super('Level1');
     this.walls = [];
     this.portals = [];
-    this.score = 0;
   }
 
   create(gameData) {
+    this.input.keyboard.removeAllKeys(true);
     this.client = this.game.client;
     if (gameData && gameData.online) {
       this.online = true;
@@ -261,10 +261,22 @@ export default class Level1 extends Phaser.Scene {
     this.hedgehog16 = new JumpingHedgehog(this, 7520, 1265, 'hedgehog-jumper', 'hedgehog-fullbutt', false, -100, 100);
     this.hedgehog16.jump(80, 300);
 
-    this.cursors = this.input.keyboard.createCursorKeys();
+    // this.cursors = this.input.keyboard.createCursorKeys();
     playMusic(this);
-    this.scene.run('Score');
-    this.gameMenu();
+    // this.scene.run('Score');
+    // this.gameMenu();
+    this.events.off('GameOver');
+    this.events.on('GameOver', () => {
+      this.time.addEvent({
+        delay: 2500,
+        callback: () => {
+          this.scene.start('GameOver');
+        },
+      });
+    });
+    this.input.keyboard.addKey('ESC').on('down', () => {
+      this.scene.switch('GameMenu');
+    });
   }
 
   addParallax() {
@@ -399,7 +411,7 @@ export default class Level1 extends Phaser.Scene {
 
   gameMenu() {
     this.cursors.space.on('down', () => {
-      this.scene.pause('Score');
+      // this.scene.pause('Score');
       this.scene.switch('GameMenu');
     });
   }

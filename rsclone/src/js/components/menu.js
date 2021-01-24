@@ -6,7 +6,6 @@ export default class Menu extends Create {
   constructor(scene, menuItems, back = false, backCallback) {
     super('div', false, 'game-menu');
     const locale = LOCALE[scene.game.app.settings.locale];
-    scene.input.keyboard.createCursorKeys();
     this.scene = scene;
     this.container = new Create('div', this.node, 'game-menu-container');
     this.menu = new Create('div', this.container.node, 'game-menu-menu');
@@ -24,10 +23,14 @@ export default class Menu extends Create {
       this.items.push(item);
       if (itemLink) {
         item.link = itemLink;
-        item.node.addEventListener('click', itemLink, false);
+        item.node.addEventListener('click', () => {
+          console.log('click!');
+          itemLink();
+        }, false);
       }
       item.node.addEventListener('pointermove', () => this.highlightItem(itemIndex), false);
     });
+    scene.input.keyboard.removeAllKeys(true);
     scene.input.keyboard.addKey('UP').on('down', () => this.switchItem('up'));
     scene.input.keyboard.addKey('DOWN').on('down', () => this.switchItem('down'));
     scene.input.keyboard.addKey('ENTER').on('down', () => this.selectItem());
@@ -63,6 +66,7 @@ export default class Menu extends Create {
   }
 
   switchItem(direction) {
+    console.log('dir', direction);
     const total = this.items.length - 1;
     const current = this.activeItem;
     const change = (direction === 'up') ? -1 : 1;
@@ -71,8 +75,9 @@ export default class Menu extends Create {
     if (next !== current) this.highlightItem(next);
   }
 
-  selectItem(item = this.activeItem) {
-    const { link } = this.items[item];
-    link.call(this.scene);
+  selectItem() {
+    const { link } = this.items[this.activeItem];
+    console.log(this.scene, link);
+    link();
   }
 }
