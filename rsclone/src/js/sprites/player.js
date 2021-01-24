@@ -58,11 +58,11 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     const { width: w, height: h } = this;
     const mainBody = Bodies.rectangle(0, 0, w * 0.75, h * 0.96, { chamfer: { radius: 8 } });
     this.sensors = {
-      center: Bodies.rectangle(0, 0, 1, 1, { isSensor: true }),
-      top: Bodies.rectangle(0, h - h * 1.48, w * 0.5, 5, { isSensor: true }),
-      bottom: Bodies.rectangle(0, h * 0.48, w * 0.5, 5, { isSensor: true }),
-      left: Bodies.rectangle(-w * 0.45, 0, 5, h * 0.4, { isSensor: true }),
-      right: Bodies.rectangle(w * 0.45, 0, 5, h * 0.4, { isSensor: true }),
+      center: Bodies.rectangle(0, 0, 1, 1, { label: 'body-center', isSensor: true }),
+      top: Bodies.rectangle(0, h - h * 1.48, w * 0.5, 5, { label: 'body-top', isSensor: true }),
+      bottom: Bodies.rectangle(0, h * 0.48, w * 0.5, 5, { label: 'body-bottom', isSensor: true }),
+      left: Bodies.rectangle(-w * 0.45, 0, 5, h * 0.4, { label: 'body-left', isSensor: true }),
+      right: Bodies.rectangle(w * 0.45, 0, 5, h * 0.4, { label: 'body-right', isSensor: true }),
     };
 
     const compoundBody = Body.create({
@@ -114,7 +114,11 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       callback: this.onSensorCollide,
       context: this,
     });
-    this.portals.forEach((portal) => {
+    this.portals.forEach((currPortal) => {
+      const portal = currPortal;
+      if (!portal.sensorCache) portal.sensorCache = {};
+      const cache = portal.sensorCache;
+      if (!cache[this.key]) cache[this.key] = '';
       this.portalsListeners(scene, portal);
     });
     this.body.restitution = 0.3;
@@ -231,12 +235,37 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
   }
 
   portalsListeners(scene, portal) {
-    scene.matterCollision.addOnCollideStart({
-      objectA: [this.sensors.center],
+    scene.matterCollision.addOnCollideEnd({
+      objectA: [
+        this.sensors.left,
+        this.sensors.right,
+        this.sensors.top,
+        this.sensors.bottom,
+      ],
       objectB: portal,
-      callback: () => this.portalDive(portal),
+      callback: (eventData) => {
+        const sensor = eventData.bodyA;
+        const player = eventData.gameObjectA;
+        this.PortalCheck(sensor, player, portal);
+      },
       context: this,
     });
+  }
+
+  PortalCheck(sensor, player, portal) {
+    const cache = portal.sensorCache;
+    const { label } = sensor;
+    if (label === 'body-center') return;
+    const prevSensor = cache[player.key];
+    if (prevSensor !== label) {
+      if (portal.isVertical && (label === 'body-top' || label === 'body-bottom')) return;
+      if (!portal.isVertical && (label === 'body-left' || label === 'body-right')) return;
+      if (!prevSensor) {
+        cache[player.key] = label;
+        return;
+      }
+      this.portalDive(portal);
+    }
   }
 
   portalDive(portal) {
@@ -247,7 +276,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       this.isRotated,
     );
     this.scene.time.addEvent({
-      delay: 80,
+      delay: 10,
       callback: () => {
         playSound(this.scene, 'warp_cross');
         this.switchGravity(portal.isVertical);

@@ -216,8 +216,8 @@ export default class Level1 extends Phaser.Scene {
     light.color.setTo(color.r, color.g, color.b);
 
     // ibb & obb spawn
-    this.obb = new Player(this, 'obb', 225, 1100, 'obb-sprite', COLLISION_CATEGORIES.obb);
     this.ibb = new Player(this, 'ibb', 240, 1160, 'ibb-sprite', COLLISION_CATEGORIES.ibb);
+    this.obb = new Player(this, 'obb', 225, 1100, 'obb-sprite', COLLISION_CATEGORIES.obb);
     this.ibb.headStandingCheck();
     this.obb.headStandingCheck();
     // enemies spawn
