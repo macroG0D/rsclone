@@ -63,13 +63,12 @@ export default class Game extends Phaser.Game {
     this.scene.start(`Level${number}`, gameData);
   }
 
-  startNextLevel(scene) {
+  startNextLevel(scene, gameData) {
     const currLevelKey = scene.sys.settings.key;
     const nextLevel = this.pickNextLevel(currLevelKey);
     const betweenLevelsScene = this.scene.getScene('LevelSwitch');
     betweenLevelsScene.nextLevelIndex = nextLevel.index;
-    scene.scene.stop(currLevelKey);
-    scene.scene.switch(betweenLevelsScene);
+    scene.scene.switch(betweenLevelsScene, gameData);
   }
 
   pickNextLevel(currLevelKey) {

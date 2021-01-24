@@ -280,7 +280,9 @@ export default class Level2 extends Phaser.Scene {
       });
     });
 
-    this.score = new Score(this);
+    const score = (gameData && gameData.score) ? gameData.score : 0;
+    const time = (gameData && gameData.time) ? gameData.time : 0;
+    this.score = new Score(this, score, time);
     this.input.keyboard.addKey('ESC').on('down', () => {
       this.scene.switch('GameMenu');
     });

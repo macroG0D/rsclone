@@ -7,10 +7,11 @@ export default class LevelSwitch extends Phaser.Scene {
     super('LevelSwitch');
   }
 
-  create() {
+  create(gameData) {
     createBg(this, 0x000000);
+    const { nextLevel } = gameData;
     const { centerX, centerY } = this.cameras.main;
-    this.titleText = this.add.text(centerX, centerY, `Level ${this.nextLevelIndex + 1}`, {
+    this.titleText = this.add.text(centerX, centerY, nextLevel, {
       font: '65px Montserrat',
       fill: '#E5E5E5',
       align: 'center',
@@ -19,7 +20,7 @@ export default class LevelSwitch extends Phaser.Scene {
     this.time.addEvent({
       delay: 2500,
       callback: () => {
-        window.main.game.runLevel(this.nextLevelIndex + 1);
+        this.scene.start(nextLevel, gameData);
       },
     });
   }

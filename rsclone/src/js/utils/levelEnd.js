@@ -3,6 +3,7 @@ import Phaser from 'phaser';
 export default class LevelEnd extends Phaser.GameObjects.Rectangle {
   constructor(scene, x, y, width = 150, height = 150) {
     super(scene, x - width / 2, y + height / 2, width, height);
+    this.scene = scene;
     const { ibb, obb } = scene;
     this.scene = scene;
     const matterParams = {
@@ -29,6 +30,11 @@ export default class LevelEnd extends Phaser.GameObjects.Rectangle {
   }
 
   completeLevel() {
-    this.scene.game.startNextLevel(this.scene);
+    const score = this.scene.score.currentScore;
+    const time = this.scene.score.currentTime;
+    const nextLevelNumber = +(this.scene.scene.key.slice(-1)) + 1;
+    const nextLevel = `Level${nextLevelNumber}`;
+    const gameData = { score, time, nextLevel };
+    this.scene.scene.start('LevelSwitch', gameData);
   }
 }
