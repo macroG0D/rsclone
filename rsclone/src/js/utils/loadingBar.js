@@ -2,8 +2,8 @@ export default class LoadingBar {
   constructor(scene) {
     this.scene = scene;
     this.style = {
-      boxColor: 0xd3d3d3,
-      barColor: 0x4488ee,
+      boxColor: 0xe5e5e5,
+      barColor: 0xd22d61,
       x: this.scene.game.config.width / 2 - 450,
       y: this.scene.game.config.height / 2 + 250,
       width: 900,

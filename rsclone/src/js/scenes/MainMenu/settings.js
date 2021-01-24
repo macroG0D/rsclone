@@ -1,165 +1,134 @@
 import Phaser from 'phaser';
 
-import { createBg } from '../../utils/createBg';
+import Menu from '../../components/menu';
+import Range from '../../components/range';
 
-const menuItemStyle = {
-  font: '30px Montserrat',
-  fill: '#000000',
-  align: 'center',
-  fontStyle: 'strong',
-};
+import { localization } from '../../utils/localization';
 
-const menuItemBackStyle = {
-  font: '20px Montserrat',
-  fill: '#979797',
-  align: 'center',
-  fontStyle: 'strong',
-};
+import { LOCALE } from '../../locale';
 
-const menuItemDisableStyle = {
-  font: '30px Montserrat',
-  fill: '#cccccc',
-  align: 'center',
-  fontStyle: 'strong',
-};
-
-const menuItemOverStyle = {
-  fill: '#D22D61',
-};
-
-const menuItemSelectedStyle = {
-  font: '30px Montserrat',
-  fill: '#D22D61',
-  align: 'center',
-  fontStyle: 'strong',
-};
-
-const MENU_ITEM_HEIGHT = 60;
-
-export default class MainMenuSettings extends Phaser.Scene {
+export default class MainMenuPlay extends Phaser.Scene {
   constructor() {
     super('MainMenuSettings');
   }
 
   create() {
-    createBg(this);
-    this.isMusicOn = true;
-    this.isSoundOn = true;
-    this.isEnglishOn = true;
-    this.isRusionOn = !this.isEnglishOn;
-    this.createItems();
+    const appLocale = this.game.app.settings.locale;
+    const locale = LOCALE[appLocale];
+
+    const menuItems = {
+      fullscreen: '',
+      music: '',
+      sound: '',
+      language: '',
+    };
+    const menuCallBack = () => this.back();
+    this.menu = new Menu(this, menuItems, true, menuCallBack);
+    this.menu.menu.node.style.gridArea = '1 / 1 / 2 / 2';
+    this.menu.menu.node.style.alignItems = 'flex-end';
+
+    const off = locale.off || 'off';
+    const on = locale.on || 'on';
+    const rangeItems = {
+      fullscreen: [undefined, 1, this.getSettings('fullscreen'), off, on],
+      music: [200, 100, this.getSettings('music'), '', this.getSettings('music')],
+      sound: [200, 100, this.getSettings('sound'), '', this.getSettings('sound')],
+      locale: [undefined, 1, this.getSettings('locale'), 'en', 'ru'],
+    };
+    this.range = new Range(this, rangeItems, this.menu.container.node);
   }
 
-  createItems() {
-    // const isSelected = (menuItem, isON) => {
-    //   (isON) ? menuItem.setStyle(menuItemSelectedStyle) : menuItem.setStyle(menuItemStyle);
-    // };
+  update() {
+    localization(this);
+  }
 
-    const isSelected2 = (isON) => {
-      if (isON) {
-        return menuItemSelectedStyle;
-      }
-      return menuItemStyle;
-    };
+  back() {
+    this.scene.switch((this.game.isStarted) ? 'GameMenu' : 'MainMenu');
+  }
 
-    this.input.keyboard.createCursorKeys();
-    const menuX = this.cameras.main.centerX;
-    const menuY = this.cameras.main.centerY - MENU_ITEM_HEIGHT;
-    const fullscreenItem = this.add.text(menuX, menuY + (-1 * MENU_ITEM_HEIGHT), 'fullscreen', isSelected2(this.game.scale.isFullscreen))
-      .setOrigin(0.5)
-      .setInteractive({
-        useHandCursor: true,
-      })
-      .on('pointerover', () => fullscreenItem.setStyle(menuItemOverStyle))
-      .on('pointerout', () => {
-        fullscreenItem.setStyle(isSelected2(this.game.scale.isFullscreen));
-      })
-      .on('pointerdown', () => {
-        if (!this.game.scale.isFullscreen) {
-          this.game.scale.startFullscreen();
-        } else {
-          this.game.scale.stopFullscreen();
+  focusOut(name) {
+    const { left, right } = this.range.items[name];
+    if (!left.node.innerHTML) {
+      right.node.classList.remove('active');
+    }
+  }
+
+  changeSettings(name) {
+    const { settings } = this.game.app;
+    const item = this.range.items[name];
+    const { left, right } = item;
+    const value = +item.range.node.value;
+    switch (name) {
+      case ('fullscreen'): {
+        settings.fullscreen = !!(value);
+        if (settings.fullscreen && !document.fullscreenElement) {
+          this.game.app.gameContainer.requestFullscreen();
         }
-      });
+        if (!settings.fullscreen && document.fullscreenElement && document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+        if (value) {
+          right.node.classList.add('active');
+          left.node.classList.remove('active');
+        }
+        if (!value) {
+          right.node.classList.remove('active');
+          left.node.classList.add('active');
+        }
+        this.game.app.saveSettings();
+        break;
+      }
 
-    const musicItem = this.add.text(menuX, menuY + (0 * MENU_ITEM_HEIGHT), 'music', isSelected2(this.isMusicOn))
-      .setOrigin(0.5)
-      .setInteractive({
-        useHandCursor: true,
-      })
-      .on('pointerover', () => musicItem.setStyle(menuItemOverStyle))
-      .on('pointerout', () => {
-        musicItem.setStyle(isSelected2(this.isMusicOn));
-      })
-      .on('pointerdown', () => {
-        this.isMusicOn = !this.isMusicOn;
-      });
+      case ('music'): {
+        const newValue = parseFloat((value / 100).toFixed(2));
+        settings.volume.music = newValue;
+        if (this.game.music.current) this.game.music.current.setVolume(newValue);
+        right.node.innerHTML = value;
+        if (!left.node.innerHTML) right.node.classList.add('active');
+        this.game.app.saveSettings();
+        break;
+      }
 
-    const soundItem = this.add.text(menuX, menuY + (1 * MENU_ITEM_HEIGHT), 'sound', isSelected2(this.isSoundOn))
-      .setOrigin(0.5)
-      .setInteractive({
-        useHandCursor: true,
-      })
-      .on('pointerover', () => soundItem.setStyle(menuItemOverStyle))
-      .on('pointerout', () => {
-        soundItem.setStyle(isSelected2(this.isSoundOn));
-      })
-      .on('pointerdown', () => {
-        this.isSoundOn = !this.isSoundOn;
-      });
+      case ('sound'): {
+        const newValue = parseFloat((value / 100).toFixed(2));
+        settings.volume.sound = newValue;
+        right.node.innerHTML = value;
+        if (!left.node.innerHTML) right.node.classList.add('active');
+        this.game.app.saveSettings();
+        break;
+      }
 
-    const engItem = this.add.text(menuX - 150, menuY + (2 * MENU_ITEM_HEIGHT), 'english', isSelected2(this.isEnglishOn))
-      .setOrigin(0.5)
-      .setInteractive({
-        useHandCursor: true,
-      })
-      .on('pointerover', () => engItem.setStyle(menuItemOverStyle))
-      .on('pointerout', () => {
-        engItem.setStyle(isSelected2(this.isEnglishOn));
-      });
-    // .on('pointerdown', () => {
-    //   this.isEnglishOn = !this.isEnglishOn;
-    //   this.isRussianOn = !this.isRussianOn;
-    //   engItem.setStyle(isSelected2(this.isEnglishOn));
-    //   rusItem.setStyle(isSelected2(this.isRussianOn));
-    // });
+      case ('locale'): {
+        settings.locale = (value) ? 'ru' : 'en';
+        if (value) {
+          right.node.classList.add('active');
+          left.node.classList.remove('active');
+        }
+        if (!value) {
+          right.node.classList.remove('active');
+          left.node.classList.add('active');
+        }
+        this.game.app.saveSettings();
+        break;
+      }
 
-    this.add.text(menuX, menuY + (2 * MENU_ITEM_HEIGHT), 'language', menuItemDisableStyle)
-      .setOrigin(0.5);
+      default:
+    }
+  }
 
-    const rusItem = this.add.text(menuX + 150, menuY + (2 * MENU_ITEM_HEIGHT), 'russian', isSelected2(this.isRussianOn))
-      .setOrigin(0.5)
-      .setInteractive({
-        useHandCursor: true,
-      })
-      .on('pointerover', () => rusItem.setStyle(menuItemOverStyle))
-      .on('pointerout', () => {
-        rusItem.setStyle(isSelected2(this.isRussianOn));
-      })
-      .on('pointerdown', () => {
-        this.isEnglishOn = !this.isEnglishOn;
-        this.isRussianOn = !this.isRussianOn;
-      });
-
-    engItem.on('pointerdown', () => {
-      this.isEnglishOn = !this.isEnglishOn;
-      this.isRussianOn = !this.isRussianOn;
-    });
-
-    const applyItem = this.add.text(menuX, menuY + 250, 'apply', menuItemBackStyle)
-      .setOrigin(0.5)
-      .setInteractive({
-        useHandCursor: true,
-      })
-      .on('pointerover', () => applyItem.setStyle(menuItemOverStyle))
-      .on('pointerout', () => applyItem.setStyle(menuItemBackStyle))
-      .on('pointerdown', () => {
-        this.scene.stop('Level1');
-        this.scene.switch('MainMenu');
-      });
-
-    this.game.scale.on('leavefullscreen', () => {
-      fullscreenItem.setStyle(isSelected2(this.game.scale.isFullscreen));
-    });
+  getSettings(name) {
+    const { settings } = this.game.app;
+    switch (name) {
+      case ('fullscreen'):
+        return +settings.fullscreen;
+      case ('music'):
+        return Math.floor(+settings.volume.music * 100);
+      case ('sound'):
+        return Math.floor(+settings.volume.sound * 100);
+      case ('locale'):
+        return +(settings.locale !== 'en');
+      default:
+        return 0;
+    }
   }
 }

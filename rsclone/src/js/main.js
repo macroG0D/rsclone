@@ -2,9 +2,9 @@ import Phaser from 'phaser';
 import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
 import Create from './components/dom-create';
 
-import Client from './utils/client';
+import Game from './components/game';
 
-import { SCENE_LIST } from './scenes/_scenesList';
+import { LOADING_SCENES } from './scenes/_scenesList';
 
 import { GAME_WIDTH, GAME_HEIGHT } from './constants';
 
@@ -15,18 +15,19 @@ class Main {
     const cookieVersion = 0;
     const settings = JSON.parse(localStorage.getItem('rsc-game-settings')) || {
       locale: 'en',
-      sound: {
-        enabled: true,
-        volume: 0.01,
+      fullscreen: false,
+      volume: {
+        sound: 0.2,
+        music: 0.1,
       },
-      music: {
-        enabled: true,
-        volume: 0.005,
-      },
+      level: 1,
+      score: 0,
+      time: 0,
       cookieVersion,
     };
     const savedVersion = settings.cookieVersion;
     if (savedVersion !== cookieVersion) localStorage.clear();
+    this.settings = settings;
     this.init();
   }
 
@@ -41,14 +42,15 @@ class Main {
         width: GAME_WIDTH,
         height: GAME_HEIGHT,
       },
+      backgroundColor: '#e5e5e5',
       physics: {
         default: 'matter',
         matter: {
           enableSleeping: false,
           gravity: { y: 2 },
           debug: {
-            showBody: true,
-            showStaticBody: true,
+            showBody: false,
+            showStaticBody: false,
           },
         },
       },
@@ -65,19 +67,15 @@ class Main {
         target: 60,
         forceSetTimeOut: true,
       },
-      scene: SCENE_LIST,
+      scene: LOADING_SCENES,
+      dom: { createContainer: true },
     };
-    this.game = new Phaser.Game(this.gameConfig);
-    this.game.client = new Client();
-    this.game.music = {
-      current: undefined,
-      cache: {},
-    };
-    this.game.sounds = {
-      volume: {},
-      cache: {},
-      walk: { ibb: {}, obb: {} },
-    };
+
+    this.game = new Game(this, this.gameConfig);
+  }
+
+  saveSettings() {
+    localStorage.setItem('rsc-game-settings', JSON.stringify(this.settings));
   }
 }
 

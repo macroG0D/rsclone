@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 
-import { createMenu } from '../../utils/createMenu';
-import { createBg } from '../../utils/createBg';
+import Menu from '../../components/menu';
+import { localization } from '../../utils/localization';
 
 export default class MainMenuDevelopers extends Phaser.Scene {
   constructor() {
@@ -9,15 +9,18 @@ export default class MainMenuDevelopers extends Phaser.Scene {
   }
 
   create() {
-    this.menuItems = {
+    const menuItems = {
       macroG0D: () => window.open('https://github.com/macroG0D'),
       'i3-code': () => window.open('https://github.com/i3-code'),
       Heliken: () => window.open('https://github.com/Heliken'),
       mauta: () => window.open('https://github.com/mauta'),
     };
-    createBg(this);
-    createMenu(this, this.menuItems, true);
-    this.createGithubIcons();
+    this.menu = new Menu(this, menuItems, true);
+    // this.createGithubIcons();
+  }
+
+  update() {
+    localization(this);
   }
 
   createGithubIcons() {

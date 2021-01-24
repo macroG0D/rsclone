@@ -1,17 +1,14 @@
-import { MUSIC_VOLUME } from '../constants';
-
 const trackList = {
   MainMenu: 'menu',
   Level1: 'level1',
   Level2: 'level2',
 };
-
-const musicConfig = { volume: MUSIC_VOLUME, loop: true };
-
 export function playMusic(scene) {
   const { game } = scene;
   const { key } = scene.scene;
   const track = trackList[key];
+  const volume = scene.game.app.settings.volume.music;
+  const musicConfig = { volume, loop: true };
   if (track) {
     const musicKey = `${track}_music`;
     if (!game.music.cache[musicKey]) game.music.cache[musicKey] = game.sound.add(musicKey);

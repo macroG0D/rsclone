@@ -1,0 +1,109 @@
+@import "./components/range.scss";
+
+.game-menu {
+    user-select: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 32px;
+    color: #000000;
+    &-container {
+        width: 1280px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr auto;
+    }
+    &-menu {
+        grid-area: 1 / 1 / 2 / 3;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    &-range {
+        grid-area: 1 / 2 / 2 / 3;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+    }
+    &-back {
+        grid-area: 2 / 1 / 3 / 3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    &-item {
+        margin: 10px 0;
+        &::before, &::after {
+            content: '\2022';
+            color: #e5e5e5e5;
+            margin: 0 0.1em;
+        }
+        &-back {
+            margin: 30px auto;
+            color: #979797;
+            font-size: 24px;
+        }
+        &-active {
+            color: #d22d61;
+            cursor: pointer;
+            &::before, &::after {
+                color: #d22d61;
+            }
+        }
+    }
+}
+
+.game-input {
+    user-select: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 32px;
+    margin: 10px 0;
+    color: #000000;
+    &-container {
+        display: flex;
+    }
+    &-label {
+        margin: 0 10px;
+        &.active {
+            color: #d22d61;
+        }
+    }
+    &-range {
+        width: 50px;
+    }
+}
+
+.game-score {
+    margin: 10px;
+    user-select: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 32px;
+    color: #000000;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+        "scoreTimeLabel scoreTime"
+        "scoreScoreLabel scoreScore";
+    &-time {
+        grid-area: scoreTime;
+        &-label {
+            margin: 0 5px;
+            grid-area: scoreTimeLabel;
+            &::after {
+                content: ':';
+            }
+        }
+    }
+    &-score {
+        grid-area: scoreScore;
+        &-label {
+            margin: 0 5px;
+            grid-area: scoreScoreLabel;
+            &::after {
+                content: ':';
+            }
+        }
+    }
+
+}

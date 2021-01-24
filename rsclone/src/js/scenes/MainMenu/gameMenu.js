@@ -1,7 +1,8 @@
 import Phaser from 'phaser';
 
-import { createMenu } from '../../utils/createMenu';
-import { createBg } from '../../utils/createBg';
+import Menu from '../../components/menu';
+
+import { localization } from '../../utils/localization';
 
 export default class GameMenu extends Phaser.Scene {
   constructor() {
@@ -9,22 +10,15 @@ export default class GameMenu extends Phaser.Scene {
   }
 
   create() {
-    this.menuItems = {
-      Continue: () => {
-        this.scene.resume('Score');
-        this.scene.switch('Level1');
-      },
-      'New game': () => {
-        this.scene.stop('Level1');
-        this.scene.start('MainMenuPlay');
-      },
-      Settings: () => this.scene.switch('MainMenuSettings'),
-      'Main menu': () => {
-        this.scene.stop('Level1');
-        this.scene.start('MainMenu');
-      },
+    const menuItems = {
+      continue: () => this.scene.switch('Level1'),
+      settings: () => this.scene.switch('MainMenuSettings'),
+      mainMenu: () => this.game.runScene('MainMenu'),
     };
-    createBg(this);
-    createMenu(this, this.menuItems);
+    this.menu = new Menu(this, menuItems);
+  }
+
+  update() {
+    localization(this);
   }
 }

@@ -6,8 +6,6 @@ export const DEFAULT_FRICTION = 0.02;
 export const DEFAULT_FRICTION_AIR = 0.02;
 export const CONTROL_KEYS_SEQUENCE = ['left', 'right', 'up', 'down'];
 export const CHARACTERS_DISTANCE_MAX = GAME_WIDTH;
-export const MUSIC_VOLUME = 0.005;
-export const SOUND_VOLUME = 0.01;
 export const SOUND_WALK_DELAY = { ibb: 200, obb: 300 };
 export const PARTICLES_COLORS = {
   obb: [0xF75186, 0xF75186, 0xF8095C],

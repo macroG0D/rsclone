@@ -7,7 +7,6 @@ export default class Client extends Phaser.Events.EventEmitter {
   constructor() {
     super();
     this.sent = {};
-    this.master = false;
     this.socket = io(SERVER_HOST);
     this.socket.on('connect', () => console.log('client connected'));
     this.socket.on('disconnect', () => console.log('client disconnected'));

@@ -1,7 +1,8 @@
 import Phaser from 'phaser';
-import { createMenu } from '../utils/createMenu';
-import { createBg } from '../utils/createBg';
+import Menu from '../components/menu';
 import { playMusic } from '../utils/playMusic';
+
+import { localization } from '../utils/localization';
 
 export default class MainMenu extends Phaser.Scene {
   constructor() {
@@ -9,17 +10,22 @@ export default class MainMenu extends Phaser.Scene {
   }
 
   create() {
-    this.menuItems = {
-      Play: () => {
+    const menuItems = {
+      play: () => {
         this.scene.switch('MainMenuPlay');
       },
-      Leaderboard: () => this.scene.switch('MainMenuLeaderBoard'),
-      Settings: () => this.scene.switch('MainMenuSettings'),
-      Developers: () => this.scene.switch('MainMenuDevelopers'),
-      About: () => window.open('https://github.com/macroG0D/rsclone'),
+      leaderboard: () => this.scene.switch('MainMenuLeaderBoard'),
+      settings: () => this.scene.switch('MainMenuSettings'),
+      developers: () => this.scene.switch('MainMenuDevelopers'),
+      about: () => window.open('https://github.com/macroG0D/rsclone'),
     };
-    createBg(this);
-    createMenu(this, this.menuItems);
+    this.menu = new Menu(this, menuItems);
     playMusic(this);
+    this.game.loadMenuScenes();
+  }
+
+  update() {
+    if (this.game.isStarted) this.game.isStarted = false;
+    localization(this);
   }
 }
