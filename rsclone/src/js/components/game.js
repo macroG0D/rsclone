@@ -22,8 +22,6 @@ export default class Game extends Phaser.Game {
     };
 
     this.app = app; // link to main class
-    // this.runScene = this.runScene.bind(this.game);
-    // this.loadMenuScenes = this.loadMenuScenes.bind(this.game);
   }
 
   sceneExists(key) {
