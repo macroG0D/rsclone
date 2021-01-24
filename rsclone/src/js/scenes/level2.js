@@ -35,9 +35,9 @@ const parallaxImages = {
   bg_1: 0.2,
   bg_2: 0.3,
 };
-export default class Level1 extends Phaser.Scene {
+export default class Level2 extends Phaser.Scene {
   constructor() {
-    super('Level1');
+    super('Level2');
     this.walls = [];
     this.portals = [];
   }
@@ -280,7 +280,9 @@ export default class Level1 extends Phaser.Scene {
       });
     });
 
-    this.score = new Score(this);
+    const score = (gameData && gameData.score) ? gameData.score : 0;
+    const time = (gameData && gameData.time) ? gameData.time : 0;
+    this.score = new Score(this, score, time);
     this.input.keyboard.addKey('ESC').on('down', () => {
       this.scene.switch('GameMenu');
     });

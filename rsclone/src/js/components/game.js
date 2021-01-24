@@ -22,6 +22,8 @@ export default class Game extends Phaser.Game {
     };
 
     this.app = app; // link to main class
+
+    this.levelsSequence = ['Level1', 'Level2'];
   }
 
   sceneExists(key) {
@@ -59,5 +61,23 @@ export default class Game extends Phaser.Game {
     this.cleanScenes();
     this.loadSceneSet(GAME_SCENES);
     this.scene.start(`Level${number}`, gameData);
+  }
+
+  startNextLevel(scene, gameData) {
+    const currLevelKey = scene.sys.settings.key;
+    const nextLevel = this.pickNextLevel(currLevelKey);
+    const betweenLevelsScene = this.scene.getScene('LevelSwitch');
+    betweenLevelsScene.nextLevelIndex = nextLevel.index;
+    scene.scene.switch(betweenLevelsScene, gameData);
+  }
+
+  pickNextLevel(currLevelKey) {
+    const currLevelIndex = this.levelsSequence.indexOf(currLevelKey);
+    const nextLevelIndex = currLevelIndex + 1;
+    const nextLevelKey = this.levelsSequence[currLevelIndex + 1];
+    return {
+      key: nextLevelKey,
+      index: nextLevelIndex,
+    };
   }
 }

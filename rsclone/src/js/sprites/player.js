@@ -53,6 +53,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     this.isRotated = false;
     this.canJump = true;
     this.lockVelocity = true;
+    this.atLevelFinish = false;
     this.depth = this.key === 'ibb' ? 99 : 97; // z index
     const { Body, Bodies } = Phaser.Physics.Matter.Matter;
     const { width: w, height: h } = this;
@@ -126,6 +127,10 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
     this.landingEvent();
     this.addCollideWorldBoundsListener();
+  }
+
+  toggleFinishState() {
+    this.atLevelFinish = !this.atLevelFinish;
   }
 
   playerGlow() {

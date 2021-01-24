@@ -10,6 +10,8 @@ import MainMenuLeaderBoard from './MainMenu/leaderBoard';
 import MainMenuSettings from './MainMenu/settings';
 import MainMenuDevelopers from './MainMenu/developers';
 import Level1 from './level1';
+import Level2 from './level2';
+import LevelSwitch from './levelSwitch';
 import GameMenu from './MainMenu/gameMenu';
 import GameOver from './MainMenu/gameOver';
 
@@ -26,6 +28,8 @@ export const SCENES = {
   MainMenuSettings,
   MainMenuDevelopers,
   Level1,
+  Level2,
+  LevelSwitch,
   GameMenu,
   GameOver,
 };
@@ -51,8 +55,10 @@ export const MENU_SCENES = {
 export const GAME_SCENES = {
   GameMenu,
   MainMenuSettings,
+  LevelSwitch,
   GameOver,
   Level1,
+  Level2,
 };
 
 export default SCENES;
