@@ -86,6 +86,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     this.jumpVelocity = 14; // jump velocity moved to player class
     this.disableGravitySwitch = false; // additional flag
     this.scene.add.existing(this);
+    this.scene.events.off('update', this.update, this);
     this.scene.events.on('update', this.update, this);
 
     // Track which sensors are touching something

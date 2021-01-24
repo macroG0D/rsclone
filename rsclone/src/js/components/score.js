@@ -1,37 +1,34 @@
-import Phaser from 'phaser';
-import Create from '../components/dom-create';
+import Create from './dom-create';
 
 import { LOCALE } from '../locale';
 
 import { localization } from '../utils/localization';
 
-export default class Score extends Phaser.Scene {
-  constructor() {
-    super('Score');
-  }
-
-  create() {
-    this.client = this.game.client;
-    this.currentTime = 0;
-    this.currentScore = 0;
-
-    const locale = LOCALE[this.game.app.settings.locale];
+export default class Score extends Create {
+  constructor(scene, score = 0, time = 0) {
+    super('div');
+    this.scene = scene;
+    this.currentScore = score;
+    this.currentTime = time;
+    const locale = LOCALE[scene.game.app.settings.locale];
     const timeText = locale.time || 'time';
     const scoreText = locale.score || 'score';
-
-    this.board = new Create('div');
-    this.container = new Create('div', this.board.node, 'game-score');
+    this.container = new Create('div', this.node, 'game-score');
     this.timeLabel = new Create('div', this.container.node, 'game-score-time-label', timeText);
     this.timeValue = new Create('div', this.container.node, 'game-score-time', this.getTime());
     this.scoreLabel = new Create('div', this.container.node, 'game-score-score-label', scoreText);
     this.scoreValue = new Create('div', this.container.node, 'game-score-score', '0');
-    this.board.spawn = this.add.dom(0, 0, this.board.node);
-    this.board.spawn.setScrollFactor(0, 0);
-    this.board.spawn.setOrigin(0);
 
-    this.client.on('update-score', this.updateScore, this);
+    this.spawn = scene.add.dom(0, 0, this.node);
+    this.spawn.setScrollFactor(0, 0);
+    this.spawn.setOrigin(0);
 
-    this.time.addEvent({
+    this.scene.events.off('updateScore');
+    this.scene.events.on('updateScore', this.updateScore, this);
+    this.scene.events.off('update', this.update, this);
+    this.scene.events.on('update', this.update, this);
+
+    this.scene.time.addEvent({
       delay: 1000,
       callback: () => {
         this.currentTime += 1000;
@@ -43,7 +40,7 @@ export default class Score extends Phaser.Scene {
 
   update() {
     this.updateTime();
-    localization(this);
+    localization(this.scene);
   }
 
   getTime() {

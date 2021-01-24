@@ -15,7 +15,6 @@ export default class GameMenu extends Phaser.Scene {
       settings: () => this.scene.switch('MainMenuSettings'),
       mainMenu: () => this.game.runScene('MainMenu'),
     };
-    console.log('creating menu!');
     this.menu = new Menu(this, menuItems);
   }
 

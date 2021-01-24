@@ -5,6 +5,8 @@ import Portal from '../sprites/portal';
 import MovingPlatform from '../sprites/movingPlatform';
 import LevelsEntourage from '../levels/levelsEntourage';
 
+import Score from '../components/score';
+
 import Input from '../utils/input';
 import NetworkInput from '../utils/networkInput';
 import NetworkSync from '../utils/networkSync';
@@ -274,6 +276,8 @@ export default class Level1 extends Phaser.Scene {
         },
       });
     });
+
+    this.score = new Score(this);
     this.input.keyboard.addKey('ESC').on('down', () => {
       this.scene.switch('GameMenu');
     });

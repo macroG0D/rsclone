@@ -23,10 +23,7 @@ export default class Menu extends Create {
       this.items.push(item);
       if (itemLink) {
         item.link = itemLink;
-        item.node.addEventListener('click', () => {
-          console.log('click!');
-          itemLink();
-        }, false);
+        item.node.addEventListener('click', itemLink, false);
       }
       item.node.addEventListener('pointermove', () => this.highlightItem(itemIndex), false);
     });
@@ -66,7 +63,6 @@ export default class Menu extends Create {
   }
 
   switchItem(direction) {
-    console.log('dir', direction);
     const total = this.items.length - 1;
     const current = this.activeItem;
     const change = (direction === 'up') ? -1 : 1;
@@ -77,7 +73,6 @@ export default class Menu extends Create {
 
   selectItem() {
     const { link } = this.items[this.activeItem];
-    console.log(this.scene, link);
     link();
   }
 }
