@@ -246,13 +246,13 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       callback: (eventData) => {
         const sensor = eventData.bodyA;
         const player = eventData.gameObjectA;
-        this.PortalCheck(sensor, player, portal);
+        this.PortalDiveCheck(sensor, player, portal);
       },
       context: this,
     });
   }
 
-  PortalCheck(sensor, player, portal) {
+  PortalDiveCheck(sensor, player, portal) {
     const cache = portal.sensorCache;
     const { label } = sensor;
     if (label === 'body-center') return;
