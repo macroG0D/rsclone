@@ -439,6 +439,13 @@ const walls = [
     isPortal: false,
     isVertical: false,
   },
+  { // prevent death from jump in level 2 gate
+    width: 150,
+    y: 10,
+    x: 10350,
+    isPortal: false,
+    isVertical: false,
+  },
 
 ];
 

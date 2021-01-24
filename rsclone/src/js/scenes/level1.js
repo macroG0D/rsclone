@@ -208,8 +208,8 @@ export default class Level1 extends Phaser.Scene {
     this.grassSet = new LevelsEntourage(this, 1, 10389, 166, 1, 'flowersSet01', false, false, 0, 1800);
 
     // ibb & obb spawn
-    this.ibb = new Player(this, 'ibb', 10250, 50, 'ibb-sprite', COLLISION_CATEGORIES.ibb);
-    this.obb = new Player(this, 'obb', 10300, 50, 'obb-sprite', COLLISION_CATEGORIES.obb);
+    this.obb = new Player(this, 'obb', 225, 1100, 'obb-sprite', COLLISION_CATEGORIES.obb);
+    this.ibb = new Player(this, 'ibb', 240, 1160, 'ibb-sprite', COLLISION_CATEGORIES.ibb);
     this.ibb.headStandingCheck();
     this.obb.headStandingCheck();
 
