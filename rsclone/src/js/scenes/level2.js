@@ -35,9 +35,9 @@ const parallaxImages = {
   bg_1: 0.2,
   bg_2: 0.3,
 };
-export default class Level1 extends Phaser.Scene {
+export default class Level2 extends Phaser.Scene {
   constructor() {
-    super('Level1');
+    super('Level2');
     this.walls = [];
     this.portals = [];
   }
