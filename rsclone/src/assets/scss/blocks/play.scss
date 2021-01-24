@@ -1,11 +1,10 @@
 .play{
-  background-image: url(../../../assets/images/landing/cta-screen-image.png);
+  background-image: url(../../assets/images/landing/cta-screen-image.png);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
 
   @media (max-width: 640px) {
-
     background-position: -65px center;
   }
 }
@@ -27,7 +26,6 @@
 .play__button {
   @include btn_play
 }
-
 
 .play__title {
   font-size: 24px;
