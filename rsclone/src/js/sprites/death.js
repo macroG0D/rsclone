@@ -25,13 +25,7 @@ export default class Death {
           const emitter = new Emitter(scene, creatureObject, 'circle');
           emitter.emitParticles(50);
           playSound(scene, 'xbb_death');
-          scene.time.addEvent({
-            delay: 3500,
-            callback: () => {
-              scene.scene.stop('Level1');
-              scene.scene.switch('GameOver');
-            },
-          });
+          scene.events.emit('GameOver');
           break;
         }
         default:

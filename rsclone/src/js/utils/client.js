@@ -46,8 +46,4 @@ export default class Client extends Phaser.Events.EventEmitter {
   checkSend(key, data) {
     return (!this.sent[key] || (this.sent[key] !== JSON.stringify(data)));
   }
-
-  emitData(key, data) {
-    this.emit(key, data);
-  }
 }
