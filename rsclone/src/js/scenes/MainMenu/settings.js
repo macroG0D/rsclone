@@ -59,7 +59,7 @@ export default class MainMenuPlay extends Phaser.Scene {
     const { left, right } = item;
     const value = +item.range.node.value;
     switch (name) {
-      case ('fullscreen'):
+      case ('fullscreen'): {
         settings.fullscreen = !!(value);
         if (settings.fullscreen && !document.fullscreenElement) {
           this.game.app.gameContainer.requestFullscreen();
@@ -77,20 +77,28 @@ export default class MainMenuPlay extends Phaser.Scene {
         }
         this.game.app.saveSettings();
         break;
-      case ('music'):
-        settings.volume.music = Math.floor(value / 100);
-        if (this.game.music.current) this.game.music.current.setVolume(value / 100);
+      }
+
+      case ('music'): {
+        const newValue = parseFloat((value / 100).toFixed(2));
+        settings.volume.music = newValue;
+        if (this.game.music.current) this.game.music.current.setVolume(newValue);
         right.node.innerHTML = value;
         if (!left.node.innerHTML) right.node.classList.add('active');
         this.game.app.saveSettings();
         break;
-      case ('sound'):
-        settings.volume.sound = Math.floor(value / 100);
+      }
+
+      case ('sound'): {
+        const newValue = parseFloat((value / 100).toFixed(2));
+        settings.volume.sound = newValue;
         right.node.innerHTML = value;
         if (!left.node.innerHTML) right.node.classList.add('active');
         this.game.app.saveSettings();
         break;
-      case ('locale'):
+      }
+
+      case ('locale'): {
         settings.locale = (value) ? 'ru' : 'en';
         if (value) {
           right.node.classList.add('active');
@@ -102,6 +110,8 @@ export default class MainMenuPlay extends Phaser.Scene {
         }
         this.game.app.saveSettings();
         break;
+      }
+
       default:
     }
   }
