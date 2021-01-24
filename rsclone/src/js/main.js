@@ -83,5 +83,5 @@ WebFont.load({
   google: { families: ['Montserrat'] },
 });
 
-const main = new Main();
-window.main = main;
+// const main = new Main();
+// window.main = main;
