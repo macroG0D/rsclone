@@ -32,7 +32,16 @@ class Main {
   }
 
   init() {
-    this.gameContainer = new Create('div', document.body, 'game-container').node;
+    const homeDiv = document.getElementById('homeDiv');
+    const aboutDiv = document.getElementById('aboutDiv');
+    const gameDiv = document.getElementById('gameDiv');
+    this.pages = {
+      home: homeDiv,
+      about: aboutDiv,
+      game: gameDiv,
+    };
+
+    this.gameContainer = new Create('div', gameDiv, 'game-container').node;
     this.gameConfig = {
       type: Phaser.AUTO,
       parent: this.gameContainer,
@@ -72,10 +81,40 @@ class Main {
     };
 
     this.game = new Game(this, this.gameConfig);
+
+    const page = this.getCurrPage();
+    this.changeAddress(page);
+    this.navigate();
   }
 
   saveSettings() {
     localStorage.setItem('rsc-game-settings', JSON.stringify(this.settings));
+  }
+
+  changeAddress(link) {
+    const href = window.location.href.replace(/#(.*)/ig, '');
+    window.location = `${href}#${link}`;
+    // this.highlightMenu(link);
+  }
+
+  getCurrPage() {
+    const { hash } = window.location;
+    if (!hash || hash === '#') return 'home';
+    let page = hash.replace('#', '');
+    const { pages } = this;
+    if (!(Object.keys(pages).includes(page))) page = 'home';
+    return page;
+  }
+
+  navigate() {
+    const nextLink = this.getCurrPage();
+    const prevLink = this.prevLink || 'home';
+    // this.unHighlightMenu(prevLink);
+    const prevSection = this.pages[prevLink];
+    const nextSection = this.pages[nextLink];
+    prevSection.classList.add('hidden');
+    nextSection.classList.remove('hidden');
+    this.prevLink = nextLink;
   }
 }
 
@@ -83,5 +122,6 @@ WebFont.load({
   google: { families: ['Montserrat'] },
 });
 
-// const main = new Main();
-// window.main = main;
+const main = new Main();
+window.main = main;
+window.addEventListener('popstate', main.navigate.bind(main), false);

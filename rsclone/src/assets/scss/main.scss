@@ -1,6 +1,5 @@
 @import "utils/_reset";
 @import "utils/_normalize";
-// @import "utils/fonts";
 @import "utils/vars";
 @import "utils/mixins";
 @import "blocks/header";
@@ -41,6 +40,10 @@ img {
     width: 100%;
 }
 
+.game {
+    height: 720px;
+}
+
 canvas {
     width: 100%;
     height: auto;
@@ -65,14 +68,6 @@ a {
     color: inherit;
 }
 
-.home--hidden{
-    display: none;
-}
-
-.game--hidden{
-    display: none;
-}
-
-.about-page--hidden{
+.hidden{
     display: none;
 }

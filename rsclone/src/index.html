@@ -14,13 +14,13 @@
     </button>
     <ul class="menu">
       <li class="menu__item menu__item--active">
-        <a href="home.html" class="menu__link">главная</a>
+        <a href="#home" class="menu__link">главная</a>
       </li>
       <li class="menu__item">
-        <a href="about.html" class="menu__link">о проекте</a>
+        <a href="#about" class="menu__link">о проекте</a>
       </li>
       <li class="menu__item">
-        <a href="game.html" class="menu__link">играть</a>
+        <a href="#game" class="menu__link">играть</a>
       </li>
     </ul>
     <ul class="lang">
@@ -29,18 +29,17 @@
     </ul>
   </header>
   <main>
-    <section class="home">
+    <section class="home" id="homeDiv">
       <section class="start">
         <div class="start__wrap">
           <h1 class="visually-hidden">ibb and obb</h1>
-          <!-- <img class="start__title" src="../assets/images/landing/title.gif" alt="ibb and obb"> -->
           <picture>
             <source media="(max-width: 600px)" srcset="./static/images/landing/ibbandobb-logo.png">
             <img class="start__title" src="./static/images/landing/title.gif" alt="ibb and obb">
           </picture>
           <p class="start__text">Клон 2D игры-головоломки, в которую можно играть как в одиночку, так и в паре за одной
             клавиатурой, или по сети. Финальный проект курса front-end курса <b>RSS</b> </p>
-          <a class="start__button" href="game.html">играть</a>
+          <a class="start__button" href="#game">играть</a>
           <img class="start__obb" src="./static/images/landing/obb.png" alt="obb" width="140">
           <img class="start__ibb" src="./static/images/landing/ibb.png" alt="ibb" width="149">
         </div>
@@ -142,11 +141,11 @@
       </section>
     </section>
 
-    <section class="game game--hidden">
+    <section class="game hidden" id="gameDiv">
 
     </section>
 
-    <section class="about-page about-page--hidden">
+    <section class="about-page hidden" id="aboutDiv">
       <section class="about-start">
         <h1 class="visually-hidden">about developers</h1>
         <img class="about-start__title" src="./static/images/landing/ibbandobb-logo.png" alt="ibb and obb">
@@ -193,7 +192,7 @@
           <h2 class="play__title">
             Сыграй в нашу версию ibb & obb
           </h2>
-          <a class="play__button" href="game.html">играть</a>
+          <a class="play__button" href="#game">играть</a>
         </div>
       </section>
     </section>
@@ -205,13 +204,13 @@
       <img class="footer__love" src="./static/images/landing/love-ibb-obb.svg" alt="">
       <ul class="menu menu--footer">
         <li class="menu__item">
-          <a href="home.html" class="menu__link">главная</a>
+          <a href="#home" class="menu__link">главная</a>
         </li>
         <li class="menu__item">
-          <a href="about.html" class="menu__link">о проекте</a>
+          <a href="#about" class="menu__link">о проекте</a>
         </li>
         <li class="menu__item">
-          <a href="game.html" class="menu__link">играть</a>
+          <a href="#game" class="menu__link">играть</a>
         </li>
       </ul>
       <a class="footer__rs" href="https://rs.school/js/"><span class="visually-hidden">Rsscool</span></a>
