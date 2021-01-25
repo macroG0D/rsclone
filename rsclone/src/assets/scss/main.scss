@@ -42,7 +42,7 @@ img {
 
 .game {
     height: calc(100vh - 215px);
-    background-color: #e5e5e5;
+    width: 100%;
 }
 
 canvas {
@@ -53,7 +53,7 @@ canvas {
 .game-container {
     margin: 0 auto;
     margin-top: 10px;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 .visually-hidden {

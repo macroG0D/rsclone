@@ -11,7 +11,7 @@ export default class LevelSwitch extends Phaser.Scene {
     const currLevel = this.game.level;
     const nextLevel = currLevel + 1;
     this.game.level = nextLevel;
-    this.game.app.setting.level = nextLevel;
+    this.game.app.settings.level = nextLevel;
     const levelName = `Level${nextLevel}`;
     createBg(this, 0x000000);
     const { centerX, centerY } = this.cameras.main;
