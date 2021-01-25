@@ -11,26 +11,26 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
   }
 
   create() {
+    const { level } = this.game;
+    const levelName = `Level${level}`;
     createImg(this);
     const menuItems = {
       'Looking for a partner...': '',
     };
     const menuCallBack = () => {
       this.client.sendData('requestDropGame');
-      this.scene.switch('MainMenuOnlineGame');
+      this.scene.start('MainMenuOnlineGame');
     };
     this.menu = new Menu(this, menuItems, true, menuCallBack);
     this.client = this.game.client;
     this.client.on('hostGameSuccess', (sessionName) => {
-      this.menu[0].item.setText(`${sessionName} awaiting connection...`);
+      this.menu.items[0].node.innerHTML = `${sessionName} awaiting connection...`;
     });
     this.client.on('gameReady', (sessionName) => {
-      this.menu[0].item.setText(`${sessionName} ready!`);
-      this.menu[0].item.off('pointerdown');
-      this.menu[0].item.on('pointerdown', () => this.requestStartGame(sessionName));
+      this.menu.items[0].node.innerHTML = `${sessionName} ready!`;
+      this.menu.items[0].link = () => this.requestStartGame(sessionName);
     });
-    // this.client.on('startGame', (gameData) => this.scene.start('Level1', gameData));
-    this.client.on('startGame', (gameData) => this.game.runLevel(1, gameData));
+    this.client.on('startGame', (gameData) => this.scene.start(levelName, gameData));
     this.requestHostGame();
   }
 

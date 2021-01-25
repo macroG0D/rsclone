@@ -15,7 +15,7 @@ import LevelSwitch from './levelSwitch';
 import GameMenu from './MainMenu/gameMenu';
 import GameOver from './MainMenu/gameOver';
 
-export const SCENES = {
+export const SCENES = [
   Boot,
   Preload,
   MainMenu,
@@ -32,33 +32,6 @@ export const SCENES = {
   LevelSwitch,
   GameMenu,
   GameOver,
-};
-
-export const LOADING_SCENES = [
-  Boot,
-  Preload,
-  MainMenu,
 ];
-
-export const MENU_SCENES = {
-  MainMenu,
-  MainMenuPlay,
-  MainMenuLocalGame,
-  MainMenuOnlineGame,
-  MainMenuOnlineGameHost,
-  MainMenuOnlineGameJoin,
-  MainMenuLeaderBoard,
-  MainMenuSettings,
-  MainMenuDevelopers,
-};
-
-export const GAME_SCENES = {
-  GameMenu,
-  MainMenuSettings,
-  LevelSwitch,
-  GameOver,
-  Level1,
-  Level2,
-};
 
 export default SCENES;
