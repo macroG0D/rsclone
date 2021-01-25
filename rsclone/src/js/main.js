@@ -4,7 +4,7 @@ import Create from './components/dom-create';
 
 import Game from './components/game';
 
-import { LOADING_SCENES } from './scenes/_scenesList';
+import { SCENES } from './scenes/_scenesList';
 
 import { GAME_WIDTH, GAME_HEIGHT } from './constants';
 
@@ -67,7 +67,7 @@ class Main {
         target: 60,
         forceSetTimeOut: true,
       },
-      scene: LOADING_SCENES,
+      scene: SCENES,
       dom: { createContainer: true },
     };
 

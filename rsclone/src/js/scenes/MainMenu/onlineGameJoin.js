@@ -39,8 +39,7 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
         if (this.menu[itemIndex].item) this.menu[itemIndex].item.destroy();
       }
     });
-    // this.client.on('startGame', (gameData) => this.scene.start('Level1', gameData));
-    this.client.on('startGame', (gameData) => this.game.runLevel(1, gameData));
+    this.client.on('startGame', (gameData) => this.scene.start('Level1', gameData));
     this.requestJoinGame();
   }
 
