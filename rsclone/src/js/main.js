@@ -45,12 +45,15 @@ class Main {
       home: homeDiv,
       about: aboutDiv,
       game: gameDiv,
+    };
+
+    this.elements = {
       header: gameHeader,
       footer: gameFooter,
-      btnBurger:btnBurger,
-      menuHome:menuHome,
-      menuAbout:menuAbout,
-      menuGame:menuGame,
+      btnBurger,
+      menuHome,
+      menuAbout,
+      menuGame,
     };
 
     this.gameContainer = new Create('div', gameDiv, 'game-container').node;
@@ -100,12 +103,12 @@ class Main {
     this.clickBurger();
   }
 
-  clickBurger(){
-    this.pages.btnBurger.addEventListener('click',()=>{
-      this.pages.btnBurger.classList.toggle('header__burger--close');
-      this.pages.btnBurger.classList.toggle('header__burger--open');
-      this.pages.header.classList.toggle('header__hidden');
-      this.pages.header.classList.toggle('header__display');
+  clickBurger() {
+    this.elements.btnBurger.addEventListener('click', () => {
+      this.elements.btnBurger.classList.toggle('header__burger--close');
+      this.elements.btnBurger.classList.toggle('header__burger--open');
+      this.elements.header.classList.toggle('header__hidden');
+      this.elements.header.classList.toggle('header__display');
     });
   }
 
@@ -116,7 +119,7 @@ class Main {
   changeAddress(link) {
     const href = window.location.href.replace(/#(.*)/ig, '');
     window.location = `${href}#${link}`;
-    // this.highlightMenu(link);
+    this.highlightPage(link);
   }
 
   getCurrPage() {
@@ -128,44 +131,30 @@ class Main {
     return page;
   }
 
+  highlightPage(link) {
+    const element = `menu${link[0].toUpperCase()}${link.slice(1)}`;
+    this.elements[element].classList.add('menu__item--active');
+    this.elements.footer.classList.add(`footer--${link}`);
+    this.elements.header.classList.add(`header--${link}`);
+  }
+
+  unHighlightPage(link) {
+    const element = `menu${link[0].toUpperCase()}${link.slice(1)}`;
+    this.elements[element].classList.remove('menu__item--active');
+    this.elements.footer.classList.remove(`footer--${link}`);
+    this.elements.header.classList.remove(`header--${link}`);
+  }
+
   navigate() {
     const nextLink = this.getCurrPage();
     const prevLink = this.prevLink || 'home';
-    // this.unHighlightMenu(prevLink);
+    this.unHighlightPage(prevLink);
     const prevSection = this.pages[prevLink];
     const nextSection = this.pages[nextLink];
     prevSection.classList.add('hidden');
     nextSection.classList.remove('hidden');
-    
-    if(prevLink === "game"){
-      this.pages.footer.classList.remove('footer--game');
-      this.pages.menuGame.classList.remove('menu__item--active');
-    }
-
-    if(prevLink === "home"){
-      this.pages.menuHome.classList.remove('menu__item--active');
-    }
-
-    if(prevLink === "about"){
-      this.pages.header.classList.remove('header--about');
-      this.pages.menuAbout.classList.remove('menu__item--active');
-    }
-
-    if(nextLink === "game"){
-      this.pages.footer.classList.add('footer--game');    
-      this.pages.menuGame.classList.add('menu__item--active');      
-    }
-
-    if(nextLink === "home"){      
-      this.pages.menuHome.classList.add('menu__item--active');
-    }
-
-    if(nextLink === "about"){      
-      this.pages.header.classList.add('header--about');
-      this.pages.menuAbout.classList.add('menu__item--active');      
-    }
-
     this.prevLink = nextLink;
+    this.highlightPage(nextLink);
   }
 }
 
