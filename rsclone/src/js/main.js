@@ -124,10 +124,10 @@ class Main {
 
   getCurrPage() {
     const { hash } = window.location;
-    if (!hash || hash === '#') return 'home';
+    if (!hash || hash === '#') return 'game';
     let page = hash.replace('#', '');
     const { pages } = this;
-    if (!(Object.keys(pages).includes(page))) page = 'home';
+    if (!(Object.keys(pages).includes(page))) page = 'game';
     return page;
   }
 

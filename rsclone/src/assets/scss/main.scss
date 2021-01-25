@@ -53,7 +53,7 @@ canvas {
 .game-container {
     margin: 0 auto;
     margin-top: 10px;
-    object-fit: fill;
+    object-fit: contain;
 }
 
 .visually-hidden {
