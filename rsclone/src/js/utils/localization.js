@@ -17,12 +17,6 @@ export function localization(currScene) {
         const currValue = item.node.innerHTML;
         if (localeValue && localeValue !== currValue) item.node.innerHTML = localeValue;
       });
-
-      if (key && key !== 'MainMenuSettings') {
-        const { centerX, centerY } = scene.cameras.main;
-        scene.menu.spawn.setPosition(centerX, centerY);
-        scene.menu.spawn.setOrigin(0.5);
-      }
     }
 
     if (range) {
@@ -41,17 +35,19 @@ export function localization(currScene) {
       });
     }
 
-    if (key && key === 'Score') {
-      if (scene.timeLabel) {
+    if (key && key.includes('Level')) {
+      if (scene.score.timeLabel) {
         const localeTime = locale.time || 'time';
-        const currTime = scene.timeLabel.node.innerHTML;
-        if (localeTime && localeTime !== currTime) scene.timeLabel.node.innerHTML = localeTime;
+        const currTime = scene.score.timeLabel.node.innerHTML;
+        if (localeTime && localeTime !== currTime) {
+          scene.score.timeLabel.node.innerHTML = localeTime;
+        }
       }
-      if (scene.scoreLabel) {
+      if (scene.score.scoreLabel) {
         const localeScore = locale.score || 'score';
-        const currScore = scene.scoreLabel.node.innerHTML;
+        const currScore = scene.score.scoreLabel.node.innerHTML;
         if (localeScore && localeScore !== currScore) {
-          scene.scoreLabel.node.innerHTML = localeScore;
+          scene.score.scoreLabel.node.innerHTML = localeScore;
         }
       }
     }

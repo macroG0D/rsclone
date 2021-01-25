@@ -5,7 +5,6 @@ import { COLLISION_CATEGORIES, PARTICLES_COLORS } from '../constants';
 export default class Emitter {
   constructor(scene, gameObject, particleType, reverseGravity = false, particleLifespan = 2000) {
     this.scene = scene;
-    this.client = scene.game.client;
     this.gameObject = gameObject;
     this.particleType = particleType;
     this.particleLifespan = particleLifespan;
@@ -81,7 +80,7 @@ export default class Emitter {
           objectB: [this.scene.ibb, this.scene.obb],
           callback: (eventData) => {
             eventData.gameObjectA.destroy();
-            this.client.emitData('update-score', crystalScoreValue);
+            this.scene.events.emit('updateScore', crystalScoreValue);
             playSound(this.scene, 'diamond_collect');
           },
           context: this,

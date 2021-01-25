@@ -9,12 +9,13 @@ import MainMenuOnlineGameJoin from './MainMenu/onlineGameJoin';
 import MainMenuLeaderBoard from './MainMenu/leaderBoard';
 import MainMenuSettings from './MainMenu/settings';
 import MainMenuDevelopers from './MainMenu/developers';
-import Score from './score';
 import Level1 from './level1';
+import Level2 from './level2';
+import LevelSwitch from './levelSwitch';
 import GameMenu from './MainMenu/gameMenu';
 import GameOver from './MainMenu/gameOver';
 
-export const SCENE_LIST = [
+export const SCENES = [
   Boot,
   Preload,
   MainMenu,
@@ -27,9 +28,10 @@ export const SCENE_LIST = [
   MainMenuSettings,
   MainMenuDevelopers,
   Level1,
+  Level2,
+  LevelSwitch,
   GameMenu,
-  Score,
   GameOver,
 ];
 
-export default SCENE_LIST;
+export default SCENES;

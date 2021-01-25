@@ -10,20 +10,13 @@ export default class GameMenu extends Phaser.Scene {
   }
 
   create() {
+    const { level } = this.game;
+    const levelName = `Level${level}`;
     const menuItems = {
-      continue: () => {
-        this.scene.resume('Score');
-        this.scene.switch('Level1');
-      },
-      newGame: () => {
-        this.scene.stop('Score');
-        this.scene.stop('Level1');
-        this.scene.switch('MainMenuPlay');
-      },
+      continue: () => this.scene.switch(levelName),
       settings: () => this.scene.switch('MainMenuSettings'),
       mainMenu: () => {
-        this.scene.stop('Score');
-        this.scene.stop('Level1');
+        this.scene.stop(levelName);
         this.scene.switch('MainMenu');
       },
     };

@@ -33,7 +33,7 @@ export default class MovingPlatform extends Phaser.Physics.Matter.Sprite {
       .setPosition(x, y);
 
     this.body.isStatic = true;
-    this.scene.matterCollision.addOnCollideEnd({
+    this.scene.matterCollision.addOnCollideStart({
       objectA: [this.sensors.top],
       callback: this.direction === 'horizontal' ? this.moveHorizontally : this.moveVertically,
       context: this,

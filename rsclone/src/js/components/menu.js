@@ -27,6 +27,7 @@ export default class Menu extends Create {
       }
       item.node.addEventListener('pointermove', () => this.highlightItem(itemIndex), false);
     });
+    scene.input.keyboard.removeAllKeys(true);
     scene.input.keyboard.addKey('UP').on('down', () => this.switchItem('up'));
     scene.input.keyboard.addKey('DOWN').on('down', () => this.switchItem('down'));
     scene.input.keyboard.addKey('ENTER').on('down', () => this.selectItem());
@@ -70,8 +71,8 @@ export default class Menu extends Create {
     if (next !== current) this.highlightItem(next);
   }
 
-  selectItem(item = this.activeItem) {
-    const { link } = this.items[item];
-    link.call(this.scene);
+  selectItem() {
+    const { link } = this.items[this.activeItem];
+    link();
   }
 }

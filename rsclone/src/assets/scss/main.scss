@@ -1,25 +1,48 @@
 @import "utils/_reset";
 @import "utils/_normalize";
 @import "utils/vars";
+@import "utils/mixins";
+@import "blocks/header";
+@import "blocks/menu";
+@import "blocks/lang";
+@import "blocks/start";
+@import "blocks/promo";
+@import "blocks/description";
+@import "blocks/control";
+@import "blocks/play";
+@import "blocks/footer";
+@import "blocks/about-start";
+@import "blocks/about";
+@import "blocks/developers";
 @import "./game.scss";
 
 html {
-	font-family: $mainFont;
-	font-size: $mainFontSize;
-	overflow: hidden;
+    font-family: $mainFont;
+    font-size: $mainFontSize;
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
 }
 
 body {
-	min-width: 320px;
+    min-width: 320px;
     min-height: 320px;
     padding: 0;
     margin: 0;
-	color: $mainFontColor;
-    background: linear-gradient(to top, #ece9e6, $default-color);
+    overflow-x: hidden;
 }
 
 img {
     width: 100%;
+}
+
+.game {
+    height: calc(100vh - 215px);
+    background-color: #e5e5e5;
 }
 
 canvas {
@@ -29,4 +52,25 @@ canvas {
 
 .game-container {
     margin: 0 auto;
+    margin-top: 10px;
+    object-fit: contain;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    border: 0;
+    padding: 0;
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+}
+
+a {
+    color: inherit;
+}
+
+.hidden{
+    display: none;
 }

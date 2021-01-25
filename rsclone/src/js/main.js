@@ -2,9 +2,9 @@ import Phaser from 'phaser';
 import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
 import Create from './components/dom-create';
 
-import Client from './utils/client';
+import Game from './components/game';
 
-import { SCENE_LIST } from './scenes/_scenesList';
+import { SCENES } from './scenes/_scenesList';
 
 import { GAME_WIDTH, GAME_HEIGHT } from './constants';
 
@@ -32,8 +32,28 @@ class Main {
   }
 
   init() {
-    this.gameContainer = new Create('div', document.body, 'game-container').node;
+    const homeDiv = document.getElementById('homeDiv');
+    const aboutDiv = document.getElementById('aboutDiv');
+    const gameDiv = document.getElementById('gameDiv');
+    const gameFooter = document.getElementById('gameFooter');
+    const gameHeader = document.getElementById('gameHeader');
+    const btnBurger = document.getElementById('gameBtnBurger');
+    const menuHome = document.getElementById('menuHome');
+    const menuAbout = document.getElementById('menuAbout');
+    const menuGame = document.getElementById('menuGame');
+    this.pages = {
+      home: homeDiv,
+      about: aboutDiv,
+      game: gameDiv,
+      header: gameHeader,
+      footer: gameFooter,
+      btnBurger:btnBurger,
+      menuHome:menuHome,
+      menuAbout:menuAbout,
+      menuGame:menuGame,
+    };
 
+    this.gameContainer = new Create('div', gameDiv, 'game-container').node;
     this.gameConfig = {
       type: Phaser.AUTO,
       parent: this.gameContainer,
@@ -50,8 +70,8 @@ class Main {
           enableSleeping: false,
           gravity: { y: 2 },
           debug: {
-            showBody: false,
-            showStaticBody: false,
+            showBody: true,
+            showStaticBody: true,
           },
         },
       },
@@ -68,30 +88,84 @@ class Main {
         target: 60,
         forceSetTimeOut: true,
       },
-      scene: SCENE_LIST,
+      scene: SCENES,
       dom: { createContainer: true },
     };
 
-    this.game = new Phaser.Game(this.gameConfig);
+    this.game = new Game(this, this.gameConfig);
 
-    this.game.client = new Client();
+    const page = this.getCurrPage();
+    this.changeAddress(page);
+    this.navigate();
+    this.clickBurger();
+  }
 
-    this.game.music = {
-      current: undefined,
-      cache: {},
-    };
-
-    this.game.sounds = {
-      volume: {},
-      cache: {},
-      walk: { ibb: {}, obb: {} },
-    };
-
-    this.game.app = this; // link to main class
+  clickBurger(){
+    this.pages.btnBurger.addEventListener('click',()=>{
+      this.pages.btnBurger.classList.toggle('header__burger--close');
+      this.pages.btnBurger.classList.toggle('header__burger--open');
+      this.pages.header.classList.toggle('header__hidden');
+      this.pages.header.classList.toggle('header__display');
+    });
   }
 
   saveSettings() {
     localStorage.setItem('rsc-game-settings', JSON.stringify(this.settings));
+  }
+
+  changeAddress(link) {
+    const href = window.location.href.replace(/#(.*)/ig, '');
+    window.location = `${href}#${link}`;
+    // this.highlightMenu(link);
+  }
+
+  getCurrPage() {
+    const { hash } = window.location;
+    if (!hash || hash === '#') return 'home';
+    let page = hash.replace('#', '');
+    const { pages } = this;
+    if (!(Object.keys(pages).includes(page))) page = 'home';
+    return page;
+  }
+
+  navigate() {
+    const nextLink = this.getCurrPage();
+    const prevLink = this.prevLink || 'home';
+    // this.unHighlightMenu(prevLink);
+    const prevSection = this.pages[prevLink];
+    const nextSection = this.pages[nextLink];
+    prevSection.classList.add('hidden');
+    nextSection.classList.remove('hidden');
+    
+    if(prevLink === "game"){
+      this.pages.footer.classList.remove('footer--game');
+      this.pages.menuGame.classList.remove('menu__item--active');
+    }
+
+    if(prevLink === "home"){
+      this.pages.menuHome.classList.remove('menu__item--active');
+    }
+
+    if(prevLink === "about"){
+      this.pages.header.classList.remove('header--about');
+      this.pages.menuAbout.classList.remove('menu__item--active');
+    }
+
+    if(nextLink === "game"){
+      this.pages.footer.classList.add('footer--game');    
+      this.pages.menuGame.classList.add('menu__item--active');      
+    }
+
+    if(nextLink === "home"){      
+      this.pages.menuHome.classList.add('menu__item--active');
+    }
+
+    if(nextLink === "about"){      
+      this.pages.header.classList.add('header--about');
+      this.pages.menuAbout.classList.add('menu__item--active');      
+    }
+
+    this.prevLink = nextLink;
   }
 }
 
@@ -101,3 +175,4 @@ WebFont.load({
 
 const main = new Main();
 window.main = main;
+window.addEventListener('popstate', main.navigate.bind(main), false);

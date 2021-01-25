@@ -70,9 +70,9 @@ export default class Portal extends Phaser.GameObjects.Rectangle {
     this.emitter = this.particle.createEmitter({
       x,
       y,
-      lifespan: 4000,
+      lifespan: width * 12 + 1700,
       angle: { min: 0, max: 360 },
-      speed: { min: 20, max: 50 },
+      speed: { min: 20, max: 70 },
       scale: { min: 0.25, max: 1 },
       bounce: 0.8,
       bounds: emitterBounds,
