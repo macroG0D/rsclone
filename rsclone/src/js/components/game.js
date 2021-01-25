@@ -22,5 +22,6 @@ export default class Game extends Phaser.Game {
     };
 
     this.app = app; // link to main class
+    this.level = this.app.settings.level;
   }
 }

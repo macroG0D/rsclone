@@ -8,6 +8,8 @@ export default class GameOver extends Phaser.Scene {
   }
 
   create() {
+    const { level } = this.game;
+    const levelName = `Level${level}`;
     createBg(this, 0x000000);
     const { centerX, centerY } = this.cameras.main;
     this.add.text(centerX, centerY, 'game over', {
@@ -19,7 +21,7 @@ export default class GameOver extends Phaser.Scene {
     this.time.addEvent({
       delay: 2500,
       callback: () => {
-        this.scene.start('Level1');
+        this.scene.start(levelName);
       },
     });
   }

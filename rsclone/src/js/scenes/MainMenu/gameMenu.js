@@ -10,11 +10,13 @@ export default class GameMenu extends Phaser.Scene {
   }
 
   create() {
+    const { level } = this.game;
+    const levelName = `Level${level}`;
     const menuItems = {
-      continue: () => this.scene.switch('Level1'),
+      continue: () => this.scene.switch(levelName),
       settings: () => this.scene.switch('MainMenuSettings'),
       mainMenu: () => {
-        this.scene.stop('Level1');
+        this.scene.stop(levelName);
         this.scene.switch('MainMenu');
       },
     };
