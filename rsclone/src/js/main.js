@@ -38,6 +38,9 @@ class Main {
     const gameFooter = document.getElementById('gameFooter');
     const gameHeader = document.getElementById('gameHeader');
     const btnBurger = document.getElementById('gameBtnBurger');
+    const menuHome = document.getElementById('menuHome');
+    const menuAbout = document.getElementById('menuAbout');
+    const menuGame = document.getElementById('menuGame');
     this.pages = {
       home: homeDiv,
       about: aboutDiv,
@@ -45,6 +48,9 @@ class Main {
       header: gameHeader,
       footer: gameFooter,
       btnBurger:btnBurger,
+      menuHome:menuHome,
+      menuAbout:menuAbout,
+      menuGame:menuGame,
     };
 
     this.gameContainer = new Create('div', gameDiv, 'game-container').node;
@@ -130,20 +136,33 @@ class Main {
     const nextSection = this.pages[nextLink];
     prevSection.classList.add('hidden');
     nextSection.classList.remove('hidden');
+    
+    if(prevLink === "game"){
+      this.pages.footer.classList.remove('footer--game');
+      this.pages.menuGame.classList.remove('menu__item--active');
+    }
+
+    if(prevLink === "home"){
+      this.pages.menuHome.classList.remove('menu__item--active');
+    }
+
+    if(prevLink === "about"){
+      this.pages.header.classList.remove('header--about');
+      this.pages.menuAbout.classList.remove('menu__item--active');
+    }
 
     if(nextLink === "game"){
-      this.pages.footer.classList.add('footer--game')
-      this.pages.header.classList.remove('header--about')
+      this.pages.footer.classList.add('footer--game');    
+      this.pages.menuGame.classList.add('menu__item--active');      
     }
 
-    if(nextLink === "home"){
-      this.pages.footer.classList.remove('footer--game')
-      this.pages.header.classList.remove('header--about')
+    if(nextLink === "home"){      
+      this.pages.menuHome.classList.add('menu__item--active');
     }
 
-    if(nextLink === "about"){
-      this.pages.footer.classList.remove('footer--game')
-      this.pages.header.classList.add('header--about')   
+    if(nextLink === "about"){      
+      this.pages.header.classList.add('header--about');
+      this.pages.menuAbout.classList.add('menu__item--active');      
     }
 
     this.prevLink = nextLink;
