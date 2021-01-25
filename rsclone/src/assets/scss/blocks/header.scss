@@ -44,6 +44,7 @@
   }
 
   &:hover {
+    transition: all 0.25 ease;
     opacity: 0.8;
   }
 }
@@ -91,20 +92,20 @@
 
 .header__burger--close::before {
   width: 40px;
-  transform: rotate(-45deg) translate(-17px, 4px);
-  -webkit-transform: rotate(-45deg) translate(-17px, 4px);
-  -moz-transform: rotate(-45deg) translate(-17px, 4px);
-  -ms-transform: rotate(-45deg) translate(-17px, 4px);
-  -o-transform: rotate(-45deg) translate(-17px, 4px);
+  transform: rotate(-45deg) translate(-13px, 6px);
+  -webkit-transform: rotate(-45deg) translate(-13px, 6px);
+  -moz-transform: rotate(-45deg) translate(-13px, 6px);
+  -ms-transform: rotate(-45deg) translate(-13px, 6px);
+  -o-transform: rotate(-45deg) translate(-13px, 6px);
 }
 
 .header__burger--close::after {
   width: 40px;
-  transform: rotate(45deg) translate(-15px, -4px);
-  -webkit-transform: rotate(45deg) translate(-15px, -4px);
-  -moz-transform: rotate(45deg) translate(-15px, -4px);
-  -ms-transform: rotate(45deg) translate(-15px, -4px);
-  -o-transform: rotate(45deg) translate(-15px, -4px);
+  transform: rotate(45deg) translate(-14px, -7px);
+  -webkit-transform: rotate(45deg) translate(-14px, -7px);
+  -moz-transform: rotate(45deg) translate(-14px, -7px);
+  -ms-transform: rotate(45deg) translate(-14px, -7px);
+  -o-transform: rotate(45deg) translate(-14px, -7px);
 }
 
 .header__burger--close .header__burger-line {
@@ -118,6 +119,7 @@
     animation: header__off;
     animation-duration: 0.5s;
     animation-fill-mode: forwards;
+    animation-timing-function: ease-in;
   }
 }
 
@@ -128,6 +130,7 @@
     animation: header__on;
     animation-duration: 0.5s;
     animation-fill-mode: forwards;
+    animation-timing-function: ease-in;
   }
 
 }
@@ -154,5 +157,14 @@
 
   to {
     left: -100%;
+  }
+}
+
+
+.header--about{
+  color: $lightFontColor;
+
+  @media (max-width: 640px) {
+    color: $startFontColor;
   }
 }

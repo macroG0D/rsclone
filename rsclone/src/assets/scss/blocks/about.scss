@@ -19,6 +19,7 @@
 .about__title {
   @include title;
   margin-top: 33px;
+  margin-right: 45px;
 }
 
 .about__text {
@@ -28,12 +29,16 @@
   color: $mainFontColor;
 
   @media (max-width: 1200px) {
-    width: 700px;
+    width: calc(100% - 142px);
   }
 
-  @media (max-width: 850px) {
-    width: 445px;
-  }
+  // @media (max-width: 950px) {
+  //   width:600px;
+  // }
+
+  // @media (max-width: 850px) {
+  //   width: 445px;
+  // }
 
   @media (max-width: 640px) {
     font-size: 24px;

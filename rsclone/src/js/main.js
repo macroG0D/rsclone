@@ -35,10 +35,16 @@ class Main {
     const homeDiv = document.getElementById('homeDiv');
     const aboutDiv = document.getElementById('aboutDiv');
     const gameDiv = document.getElementById('gameDiv');
+    const gameFooter = document.getElementById('gameFooter');
+    const gameHeader = document.getElementById('gameHeader');
+    const btnBurger = document.getElementById('gameBtnBurger');
     this.pages = {
       home: homeDiv,
       about: aboutDiv,
       game: gameDiv,
+      header: gameHeader,
+      footer: gameFooter,
+      btnBurger:btnBurger,
     };
 
     this.gameContainer = new Create('div', gameDiv, 'game-container').node;
@@ -85,6 +91,16 @@ class Main {
     const page = this.getCurrPage();
     this.changeAddress(page);
     this.navigate();
+    this.clickBurger();
+  }
+
+  clickBurger(){
+    this.pages.btnBurger.addEventListener('click',()=>{
+      this.pages.btnBurger.classList.toggle('header__burger--close');
+      this.pages.btnBurger.classList.toggle('header__burger--open');
+      this.pages.header.classList.toggle('header__hidden');
+      this.pages.header.classList.toggle('header__display');
+    });
   }
 
   saveSettings() {
@@ -114,6 +130,22 @@ class Main {
     const nextSection = this.pages[nextLink];
     prevSection.classList.add('hidden');
     nextSection.classList.remove('hidden');
+
+    if(nextLink === "game"){
+      this.pages.footer.classList.add('footer--game')
+      this.pages.header.classList.remove('header--about')
+    }
+
+    if(nextLink === "home"){
+      this.pages.footer.classList.remove('footer--game')
+      this.pages.header.classList.remove('header--about')
+    }
+
+    if(nextLink === "about"){
+      this.pages.footer.classList.remove('footer--game')
+      this.pages.header.classList.add('header--about')   
+    }
+
     this.prevLink = nextLink;
   }
 }
