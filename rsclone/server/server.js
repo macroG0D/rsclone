@@ -1,4 +1,4 @@
-const PORT = '80';
+const APP_PORT = '80';
 const APP_DIST = '../dist';
 
 // Modules
@@ -22,7 +22,8 @@ const documentRoot = path.resolve(__dirname, APP_DIST);
 const staticContent = express.static(documentRoot);
 app.use(staticContent);
 
-app.set('port', PORT);
+const port = process.env.PORT || APP_PORT;
+app.set('port', port);
 
 const server = http.createServer(app);
 
@@ -35,8 +36,8 @@ function onError(error) {
   }
 
   const bind = typeof port === 'string'
-    ? `Pipe ${PORT}`
-    : `Port ${PORT}`;
+    ? `Pipe ${port}`
+    : `Port ${port}`;
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
@@ -62,6 +63,6 @@ function onListening() {
 }
 
 // Run the server
-server.listen(PORT);
+server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);

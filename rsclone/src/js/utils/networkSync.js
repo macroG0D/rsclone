@@ -1,3 +1,4 @@
+const THROTTLE_DELAY = 1000;
 export default class NetworkSync {
   constructor(scene) {
     this.scene = scene;
@@ -26,8 +27,11 @@ export default class NetworkSync {
   }
 
   sync() {
+    if (this.throttle) return;
+    this.throttle = true;
     const character = this.scene[this.scene.playerKey];
     if (character) this.sendData(this.scene.playerKey, character);
+    setTimeout(() => { this.throttle = false; }, THROTTLE_DELAY);
   }
 
   sendData(playerKey, player) {
