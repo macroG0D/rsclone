@@ -266,10 +266,7 @@ export default class Level1 extends Phaser.Scene {
     this.hedgehog16 = new JumpingHedgehog(this, 7520, 1265, 'hedgehog-jumper', 'hedgehog-fullbutt', false, -100, 100);
     this.hedgehog16.jump(80, 300);
 
-    // this.cursors = this.input.keyboard.createCursorKeys();
     playMusic(this);
-    // this.scene.run('Score');
-    // this.gameMenu();
     this.events.off('GameOver');
     this.events.on('GameOver', () => {
       this.time.addEvent({

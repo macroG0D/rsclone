@@ -5,17 +5,12 @@ import Range from '../../components/range';
 
 import { localization } from '../../utils/localization';
 
-import { LOCALE } from '../../locale';
-
 export default class MainMenuPlay extends Phaser.Scene {
   constructor() {
     super('MainMenuSettings');
   }
 
   create() {
-    const appLocale = this.game.app.settings.locale;
-    const locale = LOCALE[appLocale];
-
     const menuItems = {
       fullscreen: '',
       music: '',
@@ -27,10 +22,8 @@ export default class MainMenuPlay extends Phaser.Scene {
     this.menu.menu.node.style.gridArea = '1 / 1 / 2 / 2';
     this.menu.menu.node.style.alignItems = 'flex-end';
 
-    const off = locale.off || 'off';
-    const on = locale.on || 'on';
     const rangeItems = {
-      fullscreen: [undefined, 1, this.getSettings('fullscreen'), off, on],
+      fullscreen: [undefined, 1, this.getSettings('fullscreen'), 'off', 'on'],
       music: [200, 100, this.getSettings('music'), '', this.getSettings('music')],
       sound: [200, 100, this.getSettings('sound'), '', this.getSettings('sound')],
       locale: [undefined, 1, this.getSettings('locale'), 'en', 'ru'],

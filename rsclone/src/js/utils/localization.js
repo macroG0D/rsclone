@@ -17,12 +17,6 @@ export function localization(currScene) {
         const currValue = item.node.innerHTML;
         if (localeValue && localeValue !== currValue) item.node.innerHTML = localeValue;
       });
-
-      if (key && key !== 'MainMenuSettings') {
-        const { centerX, centerY } = scene.cameras.main;
-        scene.menu.spawn.setPosition(centerX, centerY);
-        scene.menu.spawn.setOrigin(0.5);
-      }
     }
 
     if (range) {
@@ -41,7 +35,7 @@ export function localization(currScene) {
       });
     }
 
-    if (key && key === 'Level1') {
+    if (key && key.includes('Level')) {
       if (scene.score.timeLabel) {
         const localeTime = locale.time || 'time';
         const currTime = scene.score.timeLabel.node.innerHTML;
