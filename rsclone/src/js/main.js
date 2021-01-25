@@ -32,7 +32,31 @@ class Main {
   }
 
   init() {
-    this.gameContainer = new Create('div', document.body, 'game-container').node;
+    const homeDiv = document.getElementById('homeDiv');
+    const aboutDiv = document.getElementById('aboutDiv');
+    const gameDiv = document.getElementById('gameDiv');
+    const gameFooter = document.getElementById('gameFooter');
+    const gameHeader = document.getElementById('gameHeader');
+    const btnBurger = document.getElementById('gameBtnBurger');
+    const menuHome = document.getElementById('menuHome');
+    const menuAbout = document.getElementById('menuAbout');
+    const menuGame = document.getElementById('menuGame');
+    this.pages = {
+      home: homeDiv,
+      about: aboutDiv,
+      game: gameDiv,
+    };
+
+    this.elements = {
+      header: gameHeader,
+      footer: gameFooter,
+      btnBurger,
+      menuHome,
+      menuAbout,
+      menuGame,
+    };
+
+    this.gameContainer = new Create('div', gameDiv, 'game-container').node;
     this.gameConfig = {
       type: Phaser.AUTO,
       parent: this.gameContainer,
@@ -72,10 +96,65 @@ class Main {
     };
 
     this.game = new Game(this, this.gameConfig);
+
+    const page = this.getCurrPage();
+    this.changeAddress(page);
+    this.navigate();
+    this.clickBurger();
+  }
+
+  clickBurger() {
+    this.elements.btnBurger.addEventListener('click', () => {
+      this.elements.btnBurger.classList.toggle('header__burger--close');
+      this.elements.btnBurger.classList.toggle('header__burger--open');
+      this.elements.header.classList.toggle('header__hidden');
+      this.elements.header.classList.toggle('header__display');
+    });
   }
 
   saveSettings() {
     localStorage.setItem('rsc-game-settings', JSON.stringify(this.settings));
+  }
+
+  changeAddress(link) {
+    const href = window.location.href.replace(/#(.*)/ig, '');
+    window.location = `${href}#${link}`;
+    this.highlightPage(link);
+  }
+
+  getCurrPage() {
+    const { hash } = window.location;
+    if (!hash || hash === '#') return 'home';
+    let page = hash.replace('#', '');
+    const { pages } = this;
+    if (!(Object.keys(pages).includes(page))) page = 'home';
+    return page;
+  }
+
+  highlightPage(link) {
+    const element = `menu${link[0].toUpperCase()}${link.slice(1)}`;
+    this.elements[element].classList.add('menu__item--active');
+    this.elements.footer.classList.add(`footer--${link}`);
+    this.elements.header.classList.add(`header--${link}`);
+  }
+
+  unHighlightPage(link) {
+    const element = `menu${link[0].toUpperCase()}${link.slice(1)}`;
+    this.elements[element].classList.remove('menu__item--active');
+    this.elements.footer.classList.remove(`footer--${link}`);
+    this.elements.header.classList.remove(`header--${link}`);
+  }
+
+  navigate() {
+    const nextLink = this.getCurrPage();
+    const prevLink = this.prevLink || 'home';
+    this.unHighlightPage(prevLink);
+    const prevSection = this.pages[prevLink];
+    const nextSection = this.pages[nextLink];
+    prevSection.classList.add('hidden');
+    nextSection.classList.remove('hidden');
+    this.prevLink = nextLink;
+    this.highlightPage(nextLink);
   }
 }
 
@@ -85,3 +164,4 @@ WebFont.load({
 
 const main = new Main();
 window.main = main;
+window.addEventListener('popstate', main.navigate.bind(main), false);

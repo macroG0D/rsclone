@@ -1,3 +1,44 @@
-@function toRem($px) {
-  @return ($px / $mainFontSize) + rem;
+@mixin screenSize{
+  width: 1160px;
+  margin: 0 auto;
+
+  @media (max-width: 1200px) {
+    width: 100%;
+    padding-left:30px;
+    padding-right: 30px;
+  }
+
+  @media (max-width: 640px) {
+    width: 100%;
+    padding-left:10px;
+    padding-right: 10px;
+  }
+}
+
+@mixin title {
+  color: $accentColor;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 132%;
+}
+
+@mixin btn_play {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 218px;
+  height: 55px;
+  margin: 0 auto;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 130%;
+  background-color: $accentColor;
+  border-radius: 10px;
+
+  &:hover{
+    opacity: 0.8;
+    transition: all 0.25 ease;
+  }
 }
