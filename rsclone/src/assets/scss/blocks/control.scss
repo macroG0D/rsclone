@@ -1,0 +1,247 @@
+.control {
+  @include screenSize;
+  position: relative;
+}
+
+.control__title {
+  @include title;
+  margin: 0;
+  padding-left: 75px;
+  margin-top: 60px;
+}
+
+.control__btns {
+  width: 338px;
+  height: 182px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  position: relative;
+}
+
+.control__btns-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+
+.control__img {
+  width: 104px;
+
+  @media (max-width: 900px) {
+    width: 78px;
+  }
+}
+
+.control__text {
+  width: 84px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  position: relative;
+  border: 1px solid;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+
+  &--obb {
+    border-color: $accentColor;
+  }
+
+  &--ibb{
+    border-color: $ibbColor;
+  }
+
+  &--hor {
+    margin-bottom: 5px;
+  }
+  &--up-i::after,
+  &--up::after {
+    position: absolute;
+    display: block;
+    content: '';
+    height: 14px;
+    width: 1px;
+    background-color: $accentColor;
+    bottom: -14px;
+    left: 50%;
+  }
+
+  &--up-i::after{
+    background-color: $ibbColor;
+  }
+
+  &--down-i::after,
+  &--down::after {
+    position: absolute;
+    display: block;
+    content: '';
+    height: 14px;
+    width: 1px;
+    background-color: $accentColor;
+    top: -14px;
+    left: 50%;
+  }
+
+  &--down-i::after{
+    background-color: $ibbColor;
+  }
+
+
+  &--left-i::after,
+  &--left::after {
+    position: absolute;
+    display: block;
+    content: '';
+    height: 1px;
+    width: 14px;
+    background-color: $accentColor;
+    top: 50%;
+    right: -14px;
+  }
+
+  &--left-i::after{
+    background-color: $ibbColor;
+  }
+
+  &--right-i::after,
+  &--right::after {
+    position: absolute;
+    display: block;
+    content: '';
+    height: 1px;
+    width: 14px;
+    background-color: $accentColor;
+    top: 50%;
+    left: -14px;
+  }
+
+  &--right-i::after{
+    background-color: $ibbColor;
+  }
+}
+
+
+
+.control__btns--ibb{
+  border-color: $ibbColor;
+
+  @media (max-width: 640px) {
+    order: 2;
+  }
+}
+
+.control__btns--obb {
+   border-color: $accentColor;
+
+   @media (max-width: 640px) {
+    order: 1;
+    margin-bottom: 52px;
+  }
+}
+
+
+
+.control__wrap {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 183px;
+  padding-bottom: 243px;
+  position: relative;
+  margin-top: -24px;
+
+  @media (max-width: 640px) {
+    width: 95%;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+  }
+}
+
+.control__btns--ibb::after {
+  position: absolute;
+  display: block;
+  content: url(../../assets/images/landing/ibbStand.png);
+  width: 90px;
+  left: calc(50% - 45px);
+  bottom: -147px;
+
+  @media (max-width: 640px){
+    left: calc(50% - 150px);
+  }
+}
+
+.control__btns--obb::after {
+  position: absolute;
+  display: block;
+  content: url(../../assets/images/landing/obbStand.png);
+  width: 90px;
+  right: calc(50% - 45px);
+  top: -182px;
+
+  @media (max-width: 640px){
+    right: calc(50% - 150px);
+  }
+}
+
+.control__wrap::before {
+  position: absolute;
+  display: block;
+  content: '';
+  width: 1000px;
+  height: 21px;
+  background-color: $menuActiveColor;
+  border-radius: 5px 0px 0px 5px;
+  top: 150px;
+  left: calc(50% - 10px);
+
+  @media (max-width: 640px){
+    left: -150px;
+  }
+}
+
+.control__wrap::after {
+  position: absolute;
+  display: block;
+  content: '';
+  width: 1000px;
+  height: 21px;
+  background-color: $menuActiveColor;
+  border-radius: 0px 5px 5px 0px;
+  top: 377px;
+  right: calc(50% - 10px);
+  -webkit-border-radius: 0px 5px 5px 0px;
+  -moz-border-radius: 0px 5px 5px 0px;
+  -ms-border-radius: 0px 5px 5px 0px;
+  -o-border-radius: 0px 5px 5px 0px;
+
+  @media (max-width: 640px){
+    right: -150px;
+    top: 611px;
+  }
+}
+
+.control::after {
+  position: absolute;
+  display: block;
+  content: url(../../assets/images/landing/bubbles.png);
+  width: 45px;
+  height: 208px;
+  left: calc(50% - 22px);
+  top: 170px;
+
+  @media (max-width: 640px){
+    content: url(../../assets/images/landing/bubbles-320.png);
+    width: 320px;
+    height: 71px;
+    left:  0;
+    top: 390px;
+  }
+}
+

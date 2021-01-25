@@ -1,26 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?&family=Montserrat&display=swap" rel="stylesheet">
-  <title>RS-Clone</title>
+  <link rel="stylesheet" href="../../shelter/pages/css/main.css">
+  <title>ibb and obb</title>
 </head>
-<body>
 
-  <header class="header header__hidden" id="gameHeader">
-    <button class="header__burger header__burger--open" id="gameBtnBurger" aria-label="меню открыть-закрыть">
+<body>
+  <header class="header header__hidden">
+    <button class="header__burger header__burger--open" aria-label="меню открыть-закрыть">
       <span class="header__burger-line"></span>
     </button>
     <ul class="menu">
-      <li class="menu__item"  id="menuHome">
-        <a href="#home" class="menu__link">главная</a>
+      <li class="menu__item menu__item--active">
+        <a href="home.html" class="menu__link">главная</a>
       </li>
-      <li class="menu__item" id="menuAbout">
-        <a href="#about" class="menu__link" >о проекте</a>
+      <li class="menu__item">
+        <a href="about.html" class="menu__link">о проекте</a>
       </li>
-      <li class="menu__item" id="menuGame">
-        <a href="#game" class="menu__link" >играть</a>
+      <li class="menu__item">
+        <a href="game.html" class="menu__link">играть</a>
       </li>
     </ul>
     <ul class="lang">
@@ -29,19 +30,20 @@
     </ul>
   </header>
   <main>
-    <section class="home" id="homeDiv">
+    <section class="home home--hidden">
       <section class="start">
         <div class="start__wrap">
           <h1 class="visually-hidden">ibb and obb</h1>
+          <!-- <img class="start__title" src="../assets/images/landing/title.gif" alt="ibb and obb"> -->
           <picture>
-            <source media="(max-width: 600px)" srcset="./static/images/landing/ibbandobb-logo.png">
-            <img class="start__title" src="./static/images/landing/title.gif" alt="ibb and obb">
+            <source media="(max-width: 600px)" srcset="../assets/images/landing/ibbandobb-logo.png">
+            <img class="start__title" src="../assets/images/landing/title.gif" alt="ibb and obb">
           </picture>
           <p class="start__text">Клон 2D игры-головоломки, в которую можно играть как в одиночку, так и в паре за одной
             клавиатурой, или по сети. Финальный проект курса front-end курса <b>RSS</b> </p>
-          <a class="start__button" href="#game">играть</a>
-          <img class="start__obb" src="./static/images/landing/obb.png" alt="obb" width="140">
-          <img class="start__ibb" src="./static/images/landing/ibb.png" alt="ibb" width="149">
+          <a class="start__button" href="game.html">играть</a>
+          <img class="start__obb" src="../assets/images/landing/obb.png" alt="obb" width="140">
+          <img class="start__ibb" src="../assets/images/landing/ibb.png" alt="ibb" width="149">
         </div>
       </section>
 
@@ -53,8 +55,8 @@
       <section class="discription ">
         <div class="discription__wrap">
           <picture class="discription__img-wrap">
-            <source media="(max-width: 600px)" srcset="./static/images/landing/description-320.png">
-            <img class="discription__img" src="./static/images/landing/description.png" alt="">
+            <source media="(max-width: 600px)" srcset="../assets/images/landing/description-320.png">
+            <img class="discription__img" src="../assets/images/landing/description.png" alt="">
           </picture>
           <div class="discription__content">
             <div class="discription__text-wrap">
@@ -87,7 +89,7 @@
             <div class="control__text control__text--ibb control__text--up-i">прыг</div>
             <div class="control__btns-wrap">
               <div class="control__text control__text--ibb  control__text--left-i control__text--hor">влево</div>
-              <img class="control__img" src="./static/images/landing/keysIbb.png">
+              <img class="control__img" src="../assets/images/landing/keysIbb.png">
               <div class="control__text control__text--ibb  control__text--right-i control__text--hor">вправо</div>
             </div>
             <div class="control__text control__text--ibb  control__text--down-i">прыг</div>
@@ -97,7 +99,7 @@
             <div class="control__text control__text--obb control__text--up ">прыг</div>
             <div class="control__btns-wrap">
               <div class="control__text control__text--obb control__text--left control__text--hor">влево</div>
-              <img class="control__img" src="./static/images/landing/keysObb.png">
+              <img class="control__img" src="../assets/images/landing/keysObb.png">
               <div class="control__text control__text--obb  control__text--right control__text--hor">вправо</div>
             </div>
             <div class="control__text control__text--obb control__text--down">прыг</div>
@@ -111,7 +113,7 @@
           <div class="discription__content discription__content-left">
             <div class="discription__text-wrap discription__text--enemy">
               <h3 class="discription__title">Враги и боевая система</h3>
-              <img class="discription__hedgehog" src="./static/images/landing/hedgehog.png" alt="">
+              <img class="discription__hedgehog" src="../assets/images/landing/hedgehog.png" alt="">
               <p class="discription__text">Каждый враг в игре обладает двумя сущностями — «лицевой» и «тыльной» лицевая
                 сторона чем-то напоминает ежа, столкнувшись с которой персонажи погибают, и игра завершается. А тыльная
                 сторона, является слабой точкой врагов и при столкновении персонажей с ней, враг погибает, разбрасывая
@@ -125,8 +127,8 @@
             </div>
           </div>
           <picture class="discription__img-wrap">
-            <source media="(max-width: 600px)" srcset="./static/images/landing/description2-320.png">
-            <img class="discription__img" src="./static/images/landing/description2.png" alt="">
+            <source media="(max-width: 600px)" srcset="../assets/images/landing/description2-320.png">
+            <img class="discription__img" src="../assets/images/landing/description2.png" alt="">
           </picture>
         </div>
       </section>
@@ -141,14 +143,14 @@
       </section>
     </section>
 
-    <section class="game hidden" id="gameDiv">
+    <section class="game game--hidden" id=gameDiv>
 
     </section>
 
-    <section class="about-page hidden" id="aboutDiv">
+    <section class="about-page about-page--hidden">
       <section class="about-start">
         <h1 class="visually-hidden">about developers</h1>
-        <img class="about-start__title" src="./static/images/landing/ibbandobb-logo.png" alt="ibb and obb">
+        <img class="about-start__title" src="../assets/images/landing/ibbandobb-logo.png" alt="ibb and obb">
       </section>
       <section class="about">
         <div class="about__wrap">
@@ -192,25 +194,25 @@
           <h2 class="play__title">
             Сыграй в нашу версию ibb & obb
           </h2>
-          <a class="play__button" href="#game">играть</a>
+          <a class="play__button" href="game.html">играть</a>
         </div>
       </section>
     </section>
 
   </main>
 
-  <footer class="footer" id="gameFooter">
+  <footer class="footer">
     <div class="footer__wrap footer__wrap--top">
-      <img class="footer__love" src="./static/images/landing/love-ibb-obb.svg" alt="">
+      <img class="footer__love" src="../assets/images/landing/love-ibb-obb.svg" alt="">
       <ul class="menu menu--footer">
         <li class="menu__item">
-          <a href="#home" class="menu__link">главная</a>
+          <a href="home.html" class="menu__link">главная</a>
         </li>
         <li class="menu__item">
-          <a href="#about" class="menu__link">о проекте</a>
+          <a href="about.html" class="menu__link">о проекте</a>
         </li>
         <li class="menu__item">
-          <a href="#game" class="menu__link">играть</a>
+          <a href="game.html" class="menu__link">играть</a>
         </li>
       </ul>
       <a class="footer__rs" href="https://rs.school/js/"><span class="visually-hidden">Rsscool</span></a>
@@ -225,6 +227,6 @@
       <a href="yem.digital" class="footer__design">design by</a>
     </div>
   </footer>
-
 </body>
+
 </html>
