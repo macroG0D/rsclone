@@ -10,7 +10,7 @@ module.exports = {
     this.sessions = {};
     this.io = socketIO(server, {
       cors: {
-        origin: ['http://localhost:3000', 'http://localhost', 'http://127.0.0.1'],
+        origin: ['https://rsc-server.herokuapp.com/', 'https://rsc-server.herokuapp.com'],
         methods: ['GET', 'POST'],
       },
     });
