@@ -22,15 +22,13 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
     this.menu = new Menu(this, menuItems, true, menuCallBack);
     this.client = this.game.client;
     this.client.on('hostGameSuccess', (sessionName) => {
-      this.menu[0].item.setText(`${sessionName} awaiting connection...`);
+      this.menu.items[0].node.innerHTML = `${sessionName} awaiting connection...`;
     });
     this.client.on('gameReady', (sessionName) => {
-      this.menu[0].item.setText(`${sessionName} ready!`);
-      this.menu[0].item.off('pointerdown');
-      this.menu[0].item.on('pointerdown', () => this.requestStartGame(sessionName));
+      this.menu.items[0].node.innerHTML = `${sessionName} ready!`;
+      this.menu.items[0].link = () => this.requestStartGame(sessionName);
     });
-    // this.client.on('startGame', (gameData) => this.scene.start('Level1', gameData));
-    this.client.on('startGame', (gameData) => this.game.runLevel(1, gameData));
+    this.client.on('startGame', (gameData) => this.scene.start('Level1', gameData));
     this.requestHostGame();
   }
 

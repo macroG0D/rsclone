@@ -17,7 +17,7 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
     };
     const menuCallBack = () => {
       this.client.sendData('requestDropGame');
-      this.scene.switch('MainMenuOnlineGame');
+      this.scene.start('MainMenuOnlineGame');
     };
     this.menu = new Menu(this, menuItems, true, menuCallBack);
 
@@ -28,19 +28,17 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
       sessionNames.forEach((sessionName) => {
         menuItems[sessionName] = () => this.joinGame(sessionName);
       });
-      if (!sessionNames.length) this.menuItems['No games hosted'] = menuCallBack;
+      if (!sessionNames.length) menuItems['No games hosted'] = '';
       this.menu = new Menu(this, menuItems, true, menuCallBack);
     });
     this.client.on('gameReady', (sessionName) => {
-      this.menu[0].item.setText(`${sessionName} ready!`);
-      this.menu[0].item.off('pointerdown');
-      this.menu[0].item.on('pointerdown', () => this.requestStartGame(sessionName));
+      this.menu.items[0].node.innerHTML = `${sessionName} ready!`;
+      this.menu.items[0].link = () => this.requestStartGame(sessionName);
       for (let itemIndex = 1; itemIndex < this.menu.length - 1; itemIndex += 1) {
-        if (this.menu[itemIndex].item) this.menu[itemIndex].item.destroy();
+        if (this.menu.items[itemIndex].node) this.menu.items[itemIndex].node.innerHTML = '';
       }
     });
-    // this.client.on('startGame', (gameData) => this.scene.start('Level1', gameData));
-    this.client.on('startGame', (gameData) => this.game.runLevel(1, gameData));
+    this.client.on('startGame', (gameData) => this.scene.start('Level1', gameData));
     this.requestJoinGame();
   }
 
