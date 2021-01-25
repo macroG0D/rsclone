@@ -15,6 +15,7 @@ module.exports = {
           'http://ibbobb.herokuapp.com',
           'https://localhost',
           'http://localhost',
+          'http://localhost:3000',
         ],
         methods: ['GET', 'POST'],
       },
@@ -84,6 +85,7 @@ module.exports = {
   },
 
   onJoinGame(socket, sessionName) {
+    console.log('gr!');
     Object.values(this.sessions).forEach((session) => {
       if (session && session.name && session.name === sessionName) {
         const currentSession = session;
