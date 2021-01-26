@@ -41,7 +41,7 @@ module.exports = class Db {
     const ret = method(...rest);
     ret.then(
       (result) => callBack(result),
-      (error) => console.log(error),
+      (error) => callBack(error, true),
     );
   }
 };

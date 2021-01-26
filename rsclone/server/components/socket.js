@@ -6,7 +6,8 @@ function generateSessionName() {
 }
 
 module.exports = class Socket {
-  constructor(server) {
+  constructor(server, db) {
+    this.db = db;
     this.sessions = {};
     this.io = socketIO(server, {
       cors: {
@@ -29,7 +30,17 @@ module.exports = class Socket {
       socket.on('joinGame', (sessionName) => this.onJoinGame(socket, sessionName));
       socket.on('requestStartGame', (sessionName) => this.onRequestStartGame(socket, sessionName));
       socket.on('disconnect', () => this.onDisconnect(socket));
+      socket.on('checkScore', (data) => this.onCheckScore(socket, data));
     });
+  }
+
+  onCheckScore(socket, data) {
+    const callBack = (result, error) => {
+      if (error) console.log('Error:', error);
+      console.log(result);
+    };
+
+    this.db.query('getAll', callBack);
   }
 
   onPlayerMove(socket, data) {

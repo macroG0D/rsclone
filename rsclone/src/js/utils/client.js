@@ -23,6 +23,8 @@ export default class Client extends Phaser.Events.EventEmitter {
       if (sessionName) this.emit('hostGameSuccess', sessionName);
     });
 
+    this.socket.on('connect_error', () => console.log('Connection Failed'));
+
     this.socket.on('requestGamesSuccess', (sessionNames) => {
       if (sessionNames) this.emit('requestGamesSuccess', sessionNames);
     });

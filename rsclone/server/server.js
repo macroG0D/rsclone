@@ -1,7 +1,5 @@
-// Modules
 const path = require('path');
 const http = require('http');
-
 const Socket = require('./components/socket');
 const Db = require('./components/db');
 const App = require('./components/app');
@@ -11,8 +9,8 @@ class Server {
     this.port = port;
     this.app = new App(port, documentRoot);
     this.http = http.createServer(this.app.express);
-    this.socket = new Socket(this.http);
     this.db = new Db(dbUser, dbPass);
+    this.socket = new Socket(this.http, this.db);
     this.http.on('error', this.onError.bind(this));
     this.http.on('listening', this.onListening.bind(this));
   }
@@ -26,7 +24,6 @@ class Server {
       ? `Pipe ${this.port}`
       : `Port ${this.port}`;
 
-    // handle specific listen errors with friendly messages
     switch (error.code) {
       case 'EACCES':
         console.error(`${bind} requires elevated privileges`);
@@ -50,6 +47,7 @@ class Server {
   }
 }
 
+// Server entry point
 const APP_DIST = '../dist';
 const APP_PORT = '80';
 const DB_USER = 'btfUser';
