@@ -288,9 +288,14 @@ export default class Level1 extends Phaser.Scene {
     });
 
     this.input.keyboard.addKey('E').on('up', () => {
-      const gd = { score: this.score.currentScore, time: this.time.currentTime };
-      this.scene.start('LevelSwitch', gd);
+      const score = this.score.currentScore;
+      const time = this.time.currentTime;
+      this.events.emit('gameEnd', score, time);
+      // const gd = { score: this.score.currentScore, time: this.time.currentTime };
+      // this.scene.start('LevelSwitch', gd);
     });
+
+    this.events.on('gameEnd', () => console.log('ge'));
   }
 
   addParallax() {
