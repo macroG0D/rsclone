@@ -8,6 +8,7 @@
     flex-direction: column;
     height: 123px;
     align-items: center;
+    margin-bottom: 60px;
 
     &::after {
       position: absolute;
@@ -35,10 +36,6 @@
   color: inherit;
 }
 
-// .menu__item--light {
-//   color: $lightFontColor;
-
-// }
 
 .menu__item--active {
   font-size: 16px;

@@ -41,6 +41,7 @@ class Main {
     const menuHome = document.getElementById('menuHome');
     const menuAbout = document.getElementById('menuAbout');
     const menuGame = document.getElementById('menuGame');
+    const bodyGame = document.querySelector('body');
     this.pages = {
       home: homeDiv,
       about: aboutDiv,
@@ -54,6 +55,7 @@ class Main {
       menuHome,
       menuAbout,
       menuGame,
+      bodyGame,
     };
 
     this.gameContainer = new Create('div', gameDiv, 'game-container').node;
@@ -109,6 +111,7 @@ class Main {
       this.elements.btnBurger.classList.toggle('header__burger--open');
       this.elements.header.classList.toggle('header__hidden');
       this.elements.header.classList.toggle('header__display');
+      this.elements.bodyGame.classList.toggle('body__noscroll')
     });
   }
 
