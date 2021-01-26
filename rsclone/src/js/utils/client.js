@@ -54,6 +54,7 @@ export default class Client extends Phaser.Events.EventEmitter {
   }
 
   checkSend(key, data) {
+    if (key !== 'playerMove' || key !== 'playerSync') return true;
     return (!this.sent[key] || (this.sent[key] !== JSON.stringify(data)));
   }
 }

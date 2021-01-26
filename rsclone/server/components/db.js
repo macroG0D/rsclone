@@ -25,9 +25,9 @@ module.exports = class Db {
     return db.collection(collectionName);
   }
 
-  async getAll(dbName = this.dbName, collectionName = this.collectionName) {
+  async getAll(sort = {}, dbName = this.dbName, collectionName = this.collectionName) {
     const collection = await this.getCollection(dbName, collectionName);
-    return collection.find({}).toArray();
+    return collection.find({}).sort(sort).toArray();
   }
 
   async create(item, dbName = this.dbName, collectionName = this.collectionName) {

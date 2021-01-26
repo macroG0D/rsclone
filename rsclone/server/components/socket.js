@@ -5,6 +5,19 @@ function generateSessionName() {
   return `game#${randomNum.toString().padStart(4, '0')}`;
 }
 
+function arrayCheck(array, fieldName, value, direction = 'up') {
+  let position = 0;
+  for (let index = 0; index < array.length; index += 1) {
+    const item = array[index];
+    const itemValue = item[fieldName];
+    if ((direction === 'up' && itemValue && value >= itemValue) || (direction !== 'up' && itemValue && value <= itemValue)) {
+      return index + 1;
+    }
+    position += 1;
+  }
+  return position + 1;
+}
+
 module.exports = class Socket {
   constructor(server, db) {
     this.db = db;
@@ -37,10 +50,14 @@ module.exports = class Socket {
   onCheckScore(socket, data) {
     const callBack = (result, error) => {
       if (error) console.log('Error:', error);
-      console.log(result);
+      const playerScore = data.score;
+      const playerTime = data.time;
+      let position = arrayCheck(result, 'score', playerScore, 'up');
+      if (position <= 100) position = arrayCheck(result, 'time', playerTime, 'down');
+      console.log(position);
     };
 
-    this.db.query('getAll', callBack);
+    this.db.query('getAll', callBack, { score: -1, time: 1, name: 1 });
   }
 
   onPlayerMove(socket, data) {
