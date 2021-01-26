@@ -1,5 +1,9 @@
 .header {
   @include screenSize;
+}
+
+.header__wrap{
+  width: 100%;
   display: flex;
   justify-content: space-between;
   color: $startFontColor;
@@ -39,9 +43,11 @@
   height: 18px;
   cursor: pointer;
   display: none;
+  z-index: 3;
 
   @media (max-width: 468px) {
     display: block;
+    transition: all 0.3s ease-in-out;
   }
 
   &:hover {
@@ -93,11 +99,12 @@
 
 .header__burger--close::before {
   width: 40px;
-  transform: rotate(-45deg) translate(-13px, 6px);
-  -webkit-transform: rotate(-45deg) translate(-13px, 6px);
-  -moz-transform: rotate(-45deg) translate(-13px, 6px);
-  -ms-transform: rotate(-45deg) translate(-13px, 6px);
-  -o-transform: rotate(-45deg) translate(-13px, 6px);
+  transform: rotate(-45deg) translate(-14px, 6px);
+  -webkit-transform: rotate(-45deg) translate(-14px, 6px);
+  -moz-transform: rotate(-45deg) translate(-14px, 6px);
+  -ms-transform: rotate(-45deg) translate(-14px, 6px);
+  -o-transform: rotate(-45deg) translate(-14px, 6px);
+  transition: all 0.3s ease-in-out;
 }
 
 .header__burger--close::after {
@@ -107,13 +114,14 @@
   -moz-transform: rotate(45deg) translate(-14px, -7px);
   -ms-transform: rotate(45deg) translate(-14px, -7px);
   -o-transform: rotate(45deg) translate(-14px, -7px);
+  transition: all 0.3s ease-in-out;
 }
 
 .header__burger--close .header__burger-line {
   display: none;
 }
 
-.header__hidden {
+.header__hidden .header__wrap{
   @media (max-width: 468px) {
     top: 0;
     animation: header__off;
@@ -123,7 +131,7 @@
   }
 }
 
-.header__display {
+.header__display  .header__wrap {
   @media (max-width: 468px) {
     top: 0;   
     animation: header__on;
@@ -134,9 +142,6 @@
 
 }
 
-.header__burger--open {
-  left: calc(150% - 25px);
-}
 
 @keyframes header__on {
 
