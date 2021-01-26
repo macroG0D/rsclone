@@ -1,6 +1,6 @@
 const { MongoClient } = require('mongodb');
 
-class Db {
+module.exports = class Db {
   constructor(user, pass) {
     this.uri = `mongodb+srv://${user}:${pass}@cluster0.anmdr.mongodb.net/test?retryWrites=true&w=majority`;
     this.options = {
@@ -44,11 +44,11 @@ class Db {
       (error) => console.log(error),
     );
   }
-}
-
-const db = new Db('btfUser', 'btfPass2020q3');
+};
 
 /*
+const db = new Db('btfUser', 'btfPass2020q3');
+
 const ret = db.getCollection('game', 'board');
 ret.then(
   (result) => console.log(result),
@@ -61,7 +61,6 @@ const item = {
   name: 'Max2',
 };
 const ret = db.create('game', 'board', item);
-*/
 
 function printAll(result) {
   console.log(result);
@@ -69,7 +68,6 @@ function printAll(result) {
 
 db.query('getAll', printAll);
 
-/*
 const collection = db.getAll('game', 'board');
 collection.then(
   (result) => console.log(result),

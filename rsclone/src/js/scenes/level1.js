@@ -295,7 +295,13 @@ export default class Level1 extends Phaser.Scene {
       // this.scene.start('LevelSwitch', gd);
     });
 
-    this.events.on('gameEnd', () => console.log('ge'));
+    this.events.on('gameEnd', (score, time) => {
+      const sendData = {
+        score,
+        time,
+      };
+      this.game.client.sendData('checkScore', sendData);
+    });
   }
 
   addParallax() {

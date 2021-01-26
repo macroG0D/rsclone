@@ -5,8 +5,8 @@ function generateSessionName() {
   return `game#${randomNum.toString().padStart(4, '0')}`;
 }
 
-module.exports = {
-  init(server) {
+module.exports = class Socket {
+  constructor(server) {
     this.sessions = {};
     this.io = socketIO(server, {
       cors: {
@@ -30,7 +30,7 @@ module.exports = {
       socket.on('requestStartGame', (sessionName) => this.onRequestStartGame(socket, sessionName));
       socket.on('disconnect', () => this.onDisconnect(socket));
     });
-  },
+  }
 
   onPlayerMove(socket, data) {
     Object.values(this.sessions).forEach((session) => {
@@ -41,7 +41,7 @@ module.exports = {
         }
       }
     });
-  },
+  }
 
   onPlayerSync(socket, data) {
     Object.values(this.sessions).forEach((session) => {
@@ -52,7 +52,7 @@ module.exports = {
         }
       }
     });
-  },
+  }
 
   onRequestHostGame(socket) {
     if (!this.sessions[socket.id]) this.sessions[socket.id] = { gameReady: {} };
@@ -70,7 +70,7 @@ module.exports = {
     }
 
     session.playerOneSocket.emit('hostGameSuccess', session.name);
-  },
+  }
 
   onRequestGames(socket) {
     const sessionNames = [];
@@ -78,11 +78,11 @@ module.exports = {
       if (session && session.name && !session.playerTwoSocket) sessionNames.push(session.name);
     });
     socket.emit('requestGamesSuccess', sessionNames);
-  },
+  }
 
   onDisconnect(socket) {
     if (this.sessions[socket.id]) this.sessions[socket.id] = undefined;
-  },
+  }
 
   onJoinGame(socket, sessionName) {
     console.log('gr!');
@@ -94,7 +94,7 @@ module.exports = {
         currentSession.playerTwoSocket.emit('gameReady', session.name);
       }
     });
-  },
+  }
 
   onRequestStartGame(socket, sessionName) {
     Object.values(this.sessions).forEach((session) => {
@@ -110,5 +110,5 @@ module.exports = {
         }
       }
     });
-  },
+  }
 };
