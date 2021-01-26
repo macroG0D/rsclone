@@ -10,7 +10,6 @@ export default class LevelSwitch extends Phaser.Scene {
   create(gameData) {
     const currLevel = this.game.level;
     const nextLevel = currLevel + 1;
-    console.log(this.game);
     this.game.level = nextLevel;
     this.game.app.settings.level = nextLevel;
     const levelName = `Level${nextLevel}`;
