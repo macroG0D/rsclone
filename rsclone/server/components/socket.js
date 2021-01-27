@@ -8,18 +8,7 @@ module.exports = class Socket {
   constructor(server, db) {
     this.db = db;
     this.sessions = {};
-    this.io = socketIO(server, {
-      cors: {
-        origin: [
-          'https://ibbobb.herokuapp.com',
-          'http://ibbobb.herokuapp.com',
-          'https://localhost',
-          'http://localhost',
-          'http://localhost:3000',
-        ],
-        methods: ['GET', 'POST'],
-      },
-    });
+    this.io = socketIO(server, { cors: { origin: '*' } });
     this.io.on('connection', (socket) => {
       socket.on('playerMove', (data) => this.onPlayerMove(socket, data));
       socket.on('playerSync', (data) => this.onPlayerSync(socket, data));
@@ -35,7 +24,10 @@ module.exports = class Socket {
 
   checkScore(socket, item) {
     const callBack = (result, error) => {
-      if (error) console.log('Error:', error);
+      if (error) {
+        console.log('Error:', error);
+        return;
+      }
       const filterField = '_id';
       const itemId = item[filterField].toString();
       const itemScore = +item.score.toString();
@@ -56,12 +48,16 @@ module.exports = class Socket {
       const action = (position <= 100) ? 'newRecord' : 'noRecord';
       socket.emit(action, sendData);
     };
+
     this.db.query('getAll', callBack);
   }
 
   onCheckScore(socket, data) {
     const callBack = (result, error) => {
-      if (error) console.log('Error:', error);
+      if (error) {
+        console.log('Error:', error);
+        return;
+      }
       const item = result.ops[0];
       if (item) this.checkScore(socket, item);
     };

@@ -17,33 +17,22 @@ export default class Client extends Phaser.Events.EventEmitter {
     super();
     this.sent = {};
     this.socket = io(SERVER_HOST, SOCKET_IO_OPTIONS);
-    this.socket.on('connect', () => console.log('client connected'));
-    this.socket.on('disconnect', () => console.log('client disconnected'));
+    // this.socket.on('connect', () => console.log('client connected'));
+    // this.socket.on('disconnect', () => console.log('client disconnected'));
+    // this.socket.on('connect_error', () => console.log('Connection Failed'));
+
     this.socket.on('hostGameSuccess', (sessionName) => {
       if (sessionName) this.emit('hostGameSuccess', sessionName);
     });
-
-    this.socket.on('connect_error', () => console.log('Connection Failed'));
 
     this.socket.on('requestGamesSuccess', (sessionNames) => {
       if (sessionNames) this.emit('requestGamesSuccess', sessionNames);
     });
 
-    this.socket.on('startGame', (gameData) => {
-      this.emit('startGame', gameData);
-    });
-
-    this.socket.on('gameReady', (sessionName) => {
-      this.emit('gameReady', sessionName);
-    });
-
-    this.socket.on('playerMove', (data) => {
-      this.emit('playerMove', data);
-    });
-
-    this.socket.on('playerSync', (data) => {
-      this.emit('playerSync', data);
-    });
+    this.socket.on('startGame', (gameData) => this.emit('startGame', gameData));
+    this.socket.on('gameReady', (sessionName) => this.emit('gameReady', sessionName));
+    this.socket.on('playerMove', (data) => this.emit('playerMove', data));
+    this.socket.on('playerSync', (data) => this.emit('playerSync', data));
   }
 
   sendData(key, data) {
@@ -54,7 +43,6 @@ export default class Client extends Phaser.Events.EventEmitter {
   }
 
   checkSend(key, data) {
-    // if (key !== 'playerMove' || key !== 'playerSync') return true;
     return (!this.sent[key] || (this.sent[key] !== JSON.stringify(data)));
   }
 }

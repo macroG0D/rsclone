@@ -44,6 +44,7 @@ export default class Level1 extends Phaser.Scene {
 
   create(gameData) {
     this.input.keyboard.removeAllKeys(true);
+    this.events.removeAllListeners(true);
     this.client = this.game.client;
     if (gameData && gameData.online) {
       this.online = true;
@@ -293,6 +294,10 @@ export default class Level1 extends Phaser.Scene {
       this.events.emit('gameEnd', score, time);
       // const gd = { score: this.score.currentScore, time: this.time.currentTime };
       // this.scene.start('LevelSwitch', gd);
+    });
+
+    this.input.keyboard.addKey('R').on('up', () => {
+      this.events.emit('gameTest');
     });
 
     this.events.on('gameEnd', (score, time) => {
