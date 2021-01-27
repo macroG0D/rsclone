@@ -22,3 +22,4 @@ export const COLLISION_CATEGORIES = {
 export const SERVER_HOST = 'localhost';
 export const PLAYER_1_CONTROLS = ['LEFT', 'RIGHT', 'UP', 'DOWN'];
 export const PLAYER_2_CONTROLS = ['A', 'D', 'W', 'S'];
+export const THROTTLE_DELAY = 1000;
