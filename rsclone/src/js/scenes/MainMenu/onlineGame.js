@@ -3,7 +3,7 @@ import Phaser from 'phaser';
 import Menu from '../../components/menu';
 import { createImg } from '../../utils/createImg';
 
-import { localization } from '../../utils/localization';
+import { localization } from '../../engine/localization';
 
 export default class MainMenuOnlineGame extends Phaser.Scene {
   constructor() {
@@ -13,8 +13,8 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
   create() {
     createImg(this);
     const menuItems = {
-      hostGame: () => this.scene.switch('MainMenuOnlineGameHost'),
-      joinGame: () => this.scene.switch('MainMenuOnlineGameJoin'),
+      hostGame: () => this.scene.start('MainMenuOnlineGameHost'),
+      joinGame: () => this.scene.start('MainMenuOnlineGameJoin'),
     };
     const menuCallBack = () => this.scene.switch('MainMenuPlay');
     this.menu = new Menu(this, menuItems, true, menuCallBack);

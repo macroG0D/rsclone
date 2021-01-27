@@ -1,4 +1,4 @@
-import Emitter from '../utils/emitter';
+import Emitter from '../engine/emitter';
 
 import { playSound } from '../utils/playSound';
 
@@ -22,7 +22,8 @@ export default class Death {
           break;
         }
         case 'player': {
-          const emitter = new Emitter(scene, creatureObject, 'circle');
+
+          const emitter = new Emitter(scene, creatureObject, 'circle', creatureObject.isRotated);
           emitter.emitParticles(50);
           playSound(scene, 'xbb_death');
           scene.events.emit('GameOver');

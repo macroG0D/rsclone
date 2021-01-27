@@ -113,11 +113,11 @@ class Main {
 
   clickBurger() {
     this.elements.btnBurger.addEventListener('click', () => {
-      this.toggleBurger()
+      this.toggleBurger();
     });
   }
 
-  toggleBurger(){
+  toggleBurger() {
     this.elements.btnBurger.classList.toggle('header__burger--close');
     this.elements.btnBurger.classList.toggle('header__burger--open');
     this.elements.header.classList.toggle('header__hidden');
@@ -150,10 +150,10 @@ class Main {
 
   getCurrPage() {
     const { hash } = window.location;
-    if (!hash || hash === '#') return 'home';
+    if (!hash || hash === '#') return 'game';
     let page = hash.replace('#', '');
     const { pages } = this;
-    if (!(Object.keys(pages).includes(page))) page = 'home';
+    if (!(Object.keys(pages).includes(page))) page = 'game';
     return page;
   }
 
@@ -182,8 +182,8 @@ class Main {
     this.prevLink = nextLink;
     this.highlightPage(nextLink);
 
-    if(this.elements.header.classList.contains('header__display')){
-      this.toggleBurger()
+    if (this.elements.header.classList.contains('header__display')) {
+      this.toggleBurger();
     }
   }
 }

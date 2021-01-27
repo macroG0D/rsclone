@@ -16,7 +16,7 @@ module.exports = {
   },
   entry: [`${PATHS.src}/index.js`],
   output: {
-    filename: './js/[name].[hash].js',
+    filename: './js/[name].js',
     path: PATHS.dist,
   },
   optimization: {

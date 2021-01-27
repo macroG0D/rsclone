@@ -1,11 +1,12 @@
 import Phaser from 'phaser';
 
-import Client from '../utils/client';
+import Client from '../engine/client';
 
 export default class Game extends Phaser.Game {
   constructor(app, config) {
     super(config);
     this.client = new Client();
+    this.client.socket.open();
 
     this.music = {
       current: undefined,

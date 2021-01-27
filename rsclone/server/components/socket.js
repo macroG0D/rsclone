@@ -1,19 +1,14 @@
 const socketIO = require('socket.io');
 
-function generateSessionName() {
+function generatePostfix() {
   const randomNum = Math.floor(Math.random() * 9998 + 1);
-  return `game#${randomNum.toString().padStart(4, '0')}`;
+  return randomNum.toString().padStart(4, '0');
 }
-
-module.exports = {
-  init(server) {
+module.exports = class Socket {
+  constructor(server, db) {
+    this.db = db;
     this.sessions = {};
-    this.io = socketIO(server, {
-      cors: {
-        origin: ['http://localhost:3000', 'http://localhost', 'http://127.0.0.1'],
-        methods: ['GET', 'POST'],
-      },
-    });
+    this.io = socketIO(server, { cors: { origin: '*' } });
     this.io.on('connection', (socket) => {
       socket.on('playerMove', (data) => this.onPlayerMove(socket, data));
       socket.on('playerSync', (data) => this.onPlayerSync(socket, data));
@@ -23,8 +18,54 @@ module.exports = {
       socket.on('joinGame', (sessionName) => this.onJoinGame(socket, sessionName));
       socket.on('requestStartGame', (sessionName) => this.onRequestStartGame(socket, sessionName));
       socket.on('disconnect', () => this.onDisconnect(socket));
+      socket.on('checkScore', (data) => this.onCheckScore(socket, data));
     });
-  },
+  }
+
+  checkScore(socket, item) {
+    const callBack = (result, error) => {
+      if (error) {
+        console.log('Error:', error);
+        return;
+      }
+      const filterField = '_id';
+      const itemId = item[filterField].toString();
+      const itemScore = +item.score.toString();
+      let position = -1;
+      result.filter((resItem, index) => {
+        const resItemId = resItem[filterField].toString();
+        const found = (itemId === resItemId);
+        if (found) position = index + 1;
+        return found;
+      });
+
+      const sendData = {
+        position,
+        id: itemId,
+        score: itemScore,
+      };
+
+      const action = (position <= 100) ? 'newRecord' : 'noRecord';
+      socket.emit(action, sendData);
+    };
+
+    this.db.query('getAll', callBack);
+  }
+
+  onCheckScore(socket, data) {
+    const callBack = (result, error) => {
+      if (error) {
+        console.log('Error:', error);
+        return;
+      }
+      const item = result.ops[0];
+      if (item) this.checkScore(socket, item);
+    };
+    const newItem = data;
+    const postfix = generatePostfix();
+    if (!newItem.name) newItem.name = `noName_${postfix}`;
+    this.db.query('create', callBack, newItem);
+  }
 
   onPlayerMove(socket, data) {
     Object.values(this.sessions).forEach((session) => {
@@ -35,7 +76,7 @@ module.exports = {
         }
       }
     });
-  },
+  }
 
   onPlayerSync(socket, data) {
     Object.values(this.sessions).forEach((session) => {
@@ -46,13 +87,14 @@ module.exports = {
         }
       }
     });
-  },
+  }
 
   onRequestHostGame(socket) {
     if (!this.sessions[socket.id]) this.sessions[socket.id] = { gameReady: {} };
     const session = this.sessions[socket.id];
 
-    if (!session.name) session.name = generateSessionName();
+    const postfix = generatePostfix();
+    if (!session.name) session.name = `game#${postfix}`;
 
     if (!session.playerOneSocket || session.playerOneSocket.id !== socket.id) {
       session.playerOneSocket = socket;
@@ -64,7 +106,7 @@ module.exports = {
     }
 
     session.playerOneSocket.emit('hostGameSuccess', session.name);
-  },
+  }
 
   onRequestGames(socket) {
     const sessionNames = [];
@@ -72,11 +114,11 @@ module.exports = {
       if (session && session.name && !session.playerTwoSocket) sessionNames.push(session.name);
     });
     socket.emit('requestGamesSuccess', sessionNames);
-  },
+  }
 
   onDisconnect(socket) {
     if (this.sessions[socket.id]) this.sessions[socket.id] = undefined;
-  },
+  }
 
   onJoinGame(socket, sessionName) {
     Object.values(this.sessions).forEach((session) => {
@@ -87,7 +129,7 @@ module.exports = {
         currentSession.playerTwoSocket.emit('gameReady', session.name);
       }
     });
-  },
+  }
 
   onRequestStartGame(socket, sessionName) {
     Object.values(this.sessions).forEach((session) => {
@@ -103,5 +145,5 @@ module.exports = {
         }
       }
     });
-  },
+  }
 };
