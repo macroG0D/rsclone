@@ -15,18 +15,18 @@
     <div class="header__wrap">
       <ul class="menu">
         <li class="menu__item"  id="menuHome">
-          <a href="#home" class="menu__link">главная</a>
+          <a href="#home" class="menu__link" data-loc = 'home'>главная</a>
         </li>
         <li class="menu__item" id="menuAbout">
-          <a href="#about" class="menu__link" >о проекте</a>
+          <a href="#about" class="menu__link" data-loc = 'about'>о проекте</a>
         </li>
         <li class="menu__item" id="menuGame">
-          <a href="#game" class="menu__link" >играть</a>
+          <a href="#game" class="menu__link"  data-loc = 'play'>играть</a>
         </li>
       </ul>
       <ul class="lang">
-        <li class="lang__item">EN</li>
-        <li class="lang__item lang__item--active">RUS</li>
+        <li class="lang__item" data-lang = 'en'>EN</li>
+        <li class="lang__item lang__item--active" data-lang = 'ru'>RUS</li>
       </ul>
     </div>
   </header>
@@ -39,16 +39,16 @@
             <source media="(max-width: 600px)" srcset="./static/images/landing/ibbandobb-logo.png">
             <img class="start__title" src="./static/images/landing/title.gif" alt="ibb and obb">
           </picture>
-          <p class="start__text">Клон 2D игры-головоломки, в которую можно играть как в одиночку, так и в паре за одной
+          <p class="start__text"  data-loc = 'start'>Клон 2D игры-головоломки, в которую можно играть как в одиночку, так и в паре за одной
             клавиатурой, или по сети. Финальный проект курса front-end курса <b>RSS</b> </p>
-          <a class="start__button" href="#game">играть</a>
+          <a class="start__button" href="#game" data-loc = 'play'>играть</a>
           <img class="start__obb" src="./static/images/landing/obb.png" alt="obb" width="140">
           <img class="start__ibb" src="./static/images/landing/ibb.png" alt="ibb" width="149">
         </div>
       </section>
 
       <section class="promo">
-        <p class="promo__text">В ходе прохождения игры игроки столкнутся с живописным миром, взаимодействием двух
+        <p class="promo__text" data-loc = 'promo'>В ходе прохождения игры игроки столкнутся с живописным миром, взаимодействием двух
           персонажей, с приятной физикой, включающей головоломки, врагов и даже эксперименты с гравитацией.</p>
       </section>
 
@@ -60,19 +60,19 @@
           </picture>
           <div class="discription__content">
             <div class="discription__text-wrap">
-              <h3 class="discription__title">Геймплей</h3>
-              <p class="discription__text">Игровой процесс построен на взаимодействии двух главных героев — Ibb и Obb,
+              <h3 class="discription__title"  data-loc = 'gameplayTitle'>Геймплей</h3>
+              <p class="discription__text"  data-loc = 'gameplayText'>Игровой процесс построен на взаимодействии двух главных героев — Ibb и Obb,
                 которые помогая друг другу преодолевать препятствия должны как можно быстрее добраться до конца игры и при
                 этом заработать как можно больше очков.</p>
             </div>
             <div class="discription__text-wrap">
-              <h3 class="discription__title">Рейтинговая таблица</h3>
-              <p class="discription__text">Никнеймы игроков с лучшими результатами прохождения игры попадут в глобальную
+              <h3 class="discription__title" data-loc = 'ratingTitle'>Рейтинговая таблица</h3>
+              <p class="discription__text" data-loc = 'ratingText'>Никнеймы игроков с лучшими результатами прохождения игры попадут в глобальную
                 рейтинговую таблицу.</p>
             </div>
             <div class="discription__text-wrap">
-              <h3 class="discription__title">Итоговые очки</h3>
-              <p class="discription__text">Игроки набирают очки убивая врагов и собирая кристаллики, которые из них
+              <h3 class="discription__title" data-loc = 'scoreTitle'>Итоговые очки</h3>
+              <p class="discription__text" data-loc = 'scoreText'>Игроки набирают очки убивая врагов и собирая кристаллики, которые из них
                 выпадают. Но в глобальную рейтинговую таблицу попадают лишь те, кто наберет максимальное количество очков
                 и
                 за минимальное время прохождения игры.</p>
@@ -84,27 +84,27 @@
 <div class="control__wrapper">
 
 
-        <h3 class="control__title">Управление</h3>
+        <h3 class="control__title" data-loc = 'control'>Управление</h3>
 
         <div class="control__wrap">
           <div class="control__btns control__btns--ibb">
-            <div class="control__text control__text--ibb control__text--up-i">прыг</div>
+            <div class="control__text control__text--ibb control__text--up-i" data-loc = 'jump'>прыг</div>
             <div class="control__btns-wrap">
-              <div class="control__text control__text--ibb  control__text--left-i control__text--hor">влево</div>
+              <div class="control__text control__text--ibb  control__text--left-i control__text--hor" data-loc = 'left'>влево</div>
               <img class="control__img" src="./static/images/landing/keysIbb.png">
-              <div class="control__text control__text--ibb  control__text--right-i control__text--hor">вправо</div>
+              <div class="control__text control__text--ibb  control__text--right-i control__text--hor" data-loc = 'right'>вправо</div>
             </div>
-            <div class="control__text control__text--ibb  control__text--down-i">прыг</div>
+            <div class="control__text control__text--ibb  control__text--down-i" data-loc = 'jump'>прыг</div>
           </div>
 
           <div class="control__btns control__btns--obb">
-            <div class="control__text control__text--obb control__text--up ">прыг</div>
+            <div class="control__text control__text--obb control__text--up " data-loc = 'jump'>прыг</div>
             <div class="control__btns-wrap">
-              <div class="control__text control__text--obb control__text--left control__text--hor">влево</div>
+              <div class="control__text control__text--obb control__text--left control__text--hor" data-loc = 'left'>влево</div>
               <img class="control__img" src="./static/images/landing/keysObb.png">
-              <div class="control__text control__text--obb  control__text--right control__text--hor">вправо</div>
+              <div class="control__text control__text--obb  control__text--right control__text--hor" data-loc = 'right'>вправо</div>
             </div>
-            <div class="control__text control__text--obb control__text--down">прыг</div>
+            <div class="control__text control__text--obb control__text--down" data-loc = 'jump'>прыг</div>
           </div>
         </div>
       </div>
@@ -114,16 +114,16 @@
         <div class="discription__wrap discription__wrap--second">
           <div class="discription__content discription__content-left">
             <div class="discription__text-wrap discription__text--enemy">
-              <h3 class="discription__title">Враги и боевая система</h3>
+              <h3 class="discription__title" data-loc = 'enemyTitle'>Враги и боевая система</h3>
               <img class="discription__hedgehog" src="./static/images/landing/hedgehog.png" alt="">
-              <p class="discription__text">Каждый враг в игре обладает двумя сущностями — «лицевой» и «тыльной» лицевая
+              <p class="discription__text" data-loc = 'enemyText'>Каждый враг в игре обладает двумя сущностями — «лицевой» и «тыльной» лицевая
                 сторона чем-то напоминает ежа, столкнувшись с которой персонажи погибают, и игра завершается. А тыльная
                 сторона, является слабой точкой врагов и при столкновении персонажей с ней, враг погибает, разбрасывая
                 ценные кристаллы.</p>
             </div>
             <div class="discription__text-wrap">
-              <h3 class="discription__title">Мультиплеер</h3>
-              <p class="discription__text">Пройти игру можно в одиночку, играя сразу за обоих игроков со своей клавиатуры.
+              <h3 class="discription__title" data-loc = 'multyTitle'>Мультиплеер</h3>
+              <p class="discription__text" data-loc = 'multyText'>Пройти игру можно в одиночку, играя сразу за обоих игроков со своей клавиатуры.
                 Можно проходить игру с напарником, также с одной клавиатуры. Но можно и создать онлайн сессию, к которой
                 сможет подключиться любой желающий по сети для совместного онлайн прохождения.</p>
             </div>
@@ -137,10 +137,10 @@
 
       <section class="play">
         <div class="play__wrap">
-          <h2 class="play__title">
+          <h2 class="play__title" data-loc = 'slogan'>
             Сыграй в нашу версию ibb & obb
           </h2>
-          <a class="play__button" href="#game">играть</a>
+          <a class="play__button" href="#game" data-loc='play'>играть</a>
         </div>
       </section>
     </section>
@@ -156,8 +156,8 @@
       </section>
       <section class="about">
         <div class="about__wrap">
-          <h3 class="about__title">О проекте</h3>
-          <p class="about__text">
+          <h3 class="about__title" data-loc = 'aboutTitle'>О проекте</h3>
+          <p class="about__text" data-loc = 'aboutText'>
             Финальный проект фронтэнд курса RSSchool выполненный в начале 2021. Это командное задание, целью которого
             является разработка игры, работающей в веб браузере. Выбор самой игры был на усмотрение команды, и мы решили
             выбрать игру “Ibb & Obb”
@@ -166,26 +166,26 @@
       </section>
 
       <section class="developers">
-        <h3 class="developers__title">Команда</h3>
+        <h3 class="developers__title" data-loc = 'team'>Команда</h3>
         <ul class="developers__list">
           <li class="developers__item">
             <p class="developers__role">Teamlead, Frontend, Design</p>
-            <p class="developers__name">Тони Емельянов</p>
+            <p class="developers__name" data-loc = 'tony'>Тони Емельянов</p>
             <a href='https://github.com/macroG0D' target="_blank"  class="developers__git">macroG0D</a>
           </li>
           <li class="developers__item">
             <p class="developers__role">CTO, Frontend, Backend</p>
-            <p class="developers__name">Игорь Захаров</p>
+            <p class="developers__name" data-loc = 'i3'>Игорь Захаров</p>
             <a href='https://github.com/i3-code' target="_blank"  class="developers__git">i3-code</a>
           </li>
           <li class="developers__item">
             <p class="developers__role">Frontend</p>
-            <p class="developers__name">Анна Опарева</p>
+            <p class="developers__name" data-loc = 'mauta'>Анна Опарева</p>
             <a href='https://github.com/mauta' target="_blank"  class="developers__git">mauta</a>
           </li>
           <li class="developers__item">
             <p class="developers__role">Frontend</p>
-            <p class="developers__name">Филипп Бурш</p>
+            <p class="developers__name" data-loc = 'heliken'>Филипп Бурш</p>
             <a href='https://github.com/Heliken' target="_blank" class="developers__git">heliken</a>
           </li>
         </ul>
@@ -193,10 +193,10 @@
 
       <section class="play">
         <div class="play__wrap">
-          <h2 class="play__title">
+          <h2 class="play__title" data-loc = 'slogan'>
             Сыграй в нашу версию ibb & obb
           </h2>
-          <a class="play__button" href="#game">играть</a>
+          <a class="play__button" href="#game"  data-loc = 'play'>играть</a>
         </div>
       </section>
     </section>
@@ -208,23 +208,23 @@
       <img class="footer__love" src="./static/images/landing/love-ibb-obb.svg" alt="">
       <ul class="menu menu--footer">
         <li class="menu__item">
-          <a href="#home" class="menu__link">главная</a>
+          <a href="#home" class="menu__link" data-loc = 'home'>главная</a>
         </li>
         <li class="menu__item">
-          <a href="#about" class="menu__link">о проекте</a>
+          <a href="#about" class="menu__link" data-loc = 'about'>о проекте</a>
         </li>
         <li class="menu__item">
-          <a href="#game" class="menu__link">играть</a>
+          <a href="#game" class="menu__link" data-loc = 'play'>играть</a>
         </li>
       </ul>
       <a class="footer__rs" target="_blank" href="https://rs.school/js/"><span class="visually-hidden">Rsscool</span></a>
       <ul class="lang lang--footer">
-        <li class="lang__item">EN</li>
-        <li class="lang__item lang__item--active">RUS</li>
+        <li class="lang__item" data-lang="en">EN</li>
+        <li class="lang__item lang__item--active" data-lang="ru">RUS</li>
       </ul>
     </div>
     <div class="footer__wrap footer__wrap--bottom">
-      <p class="footer__copyright">Авторские права на большую часть материалов и саму концепцию принадлежат создателям
+      <p class="footer__copyright" data-loc = 'copyright'>Авторские права на большую часть материалов и саму концепцию принадлежат создателям
         оригинальной игры Ibb & Obb (издатель: Sparpweed, разработчики: Sparpweed, Codeglue)</p>
       <a href="yem.digital"  target="_blank"  class="footer__design">design by</a>
     </div>
