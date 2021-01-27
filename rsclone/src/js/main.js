@@ -107,11 +107,11 @@ class Main {
 
   clickBurger() {
     this.elements.btnBurger.addEventListener('click', () => {
-      this.toggleBurger()
+      this.toggleBurger();
     });
   }
 
-  toggleBurger(){
+  toggleBurger() {
     this.elements.btnBurger.classList.toggle('header__burger--close');
     this.elements.btnBurger.classList.toggle('header__burger--open');
     this.elements.header.classList.toggle('header__hidden');
@@ -163,8 +163,8 @@ class Main {
     this.prevLink = nextLink;
     this.highlightPage(nextLink);
 
-    if(this.elements.header.classList.contains('header__display')){
-      this.toggleBurger()
+    if (this.elements.header.classList.contains('header__display')) {
+      this.toggleBurger();
     }
   }
 }
