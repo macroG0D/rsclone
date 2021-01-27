@@ -3,7 +3,7 @@
   color: $startFontColor;
 }
 
-.header__wrap{
+.header__wrap {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -34,7 +34,6 @@
   }
 }
 
-
 .header__burger {
   position: absolute;
   background-color: transparent;
@@ -57,7 +56,6 @@
   }
 }
 
-
 .header__burger-line {
   display: block;
   width: 50px;
@@ -73,7 +71,7 @@
 .header__burger::after {
   position: absolute;
   display: block;
-  content: '';
+  content: "";
   border-radius: 1px;
   background-color: $accentColor;
   width: 50px;
@@ -85,7 +83,7 @@
 .header__burger::before {
   position: absolute;
   display: block;
-  content: '';
+  content: "";
   border-radius: 1px;
   background-color: $accentColor;
   width: 50px;
@@ -110,30 +108,27 @@
   display: none;
 }
 
-.header__hidden .header__wrap{
+.header__hidden .header__wrap {
   @media (max-width: 468px) {
     top: 0;
     animation: header__off;
     animation-duration: 0.5s;
     animation-fill-mode: forwards;
-    animation-timing-function: ease-in;    
+    animation-timing-function: ease-in;
   }
 }
 
-.header__display  .header__wrap {
+.header__display .header__wrap {
   @media (max-width: 468px) {
-    top: 0;   
+    top: 0;
     animation: header__on;
     animation-duration: 0.5s;
     animation-fill-mode: forwards;
     animation-timing-function: ease-in;
   }
-
 }
 
-
 @keyframes header__on {
-
   from {
     left: -100%;
   }
@@ -153,8 +148,7 @@
   }
 }
 
-
-.header--about{
+.header--about {
   color: $lightFontColor;
 
   @media (max-width: 468px) {
