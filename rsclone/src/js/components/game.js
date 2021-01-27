@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-import Client from '../utils/client';
+import Client from '../engine/client';
 
 export default class Game extends Phaser.Game {
   constructor(app, config) {

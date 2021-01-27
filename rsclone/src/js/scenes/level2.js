@@ -7,10 +7,10 @@ import LevelsEntourage from '../levels/levelsEntourage';
 
 import Score from '../components/score';
 
-import Input from '../utils/input';
-import NetworkInput from '../utils/networkInput';
-import NetworkSync from '../utils/networkSync';
-import LevelEnd from '../utils/levelEnd';
+import Input from '../engine/input';
+import NetworkInput from '../engine/networkInput';
+import NetworkSync from '../engine/networkSync';
+import LevelEnd from '../engine/levelEnd';
 
 import StandartHedgehog from '../sprites/enemies/standartHedgehog';
 import JumpingHedgehog from '../sprites/enemies/jumpingHedgehog';

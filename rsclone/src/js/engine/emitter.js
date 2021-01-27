@@ -1,4 +1,4 @@
-import { playSound } from './playSound';
+import { playSound } from '../utils/playSound';
 
 import { COLLISION_CATEGORIES, PARTICLES_COLORS } from '../constants';
 
