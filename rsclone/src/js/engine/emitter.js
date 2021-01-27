@@ -38,6 +38,7 @@ export default class Emitter {
             particleRadius,
             randomColor,
           );
+          matterParams.shape = 'circle';
           break;
         }
         case 'triangle': {
@@ -63,16 +64,23 @@ export default class Emitter {
         }
         case 'crystal': {
           particleGameObject = this.scene.add.image(this.gameObject.x, this.gameObject.y, 'crystal');
+          matterParams.shape = 'circle';
           break;
         }
         default:
           break;
       }
-      if (this.particleType !== 'crystal') particleGameObject.setScale(randomScale);
+
       const particle = this.scene.matter.add.gameObject(
         particleGameObject,
         matterParams,
       );
+
+      if (this.particleType === 'triangle') {
+        particle.setBody({ type: 'trapezoid', slope: 1 }, { render: { sprite: { yOffset: -0.5, xOffset: -0.5 } } });
+        particle.setAngularVelocity(1);
+      }
+      if (this.particleType !== 'crystal') particle.setScale(randomScale);
       if (this.particleType === 'crystal') {
         const crystalScoreValue = 10;
         this.scene.matterCollision.addOnCollideStart({
