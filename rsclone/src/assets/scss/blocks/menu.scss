@@ -33,7 +33,8 @@
 
 .menu__item {
   cursor: pointer;
-  color: inherit;
+  color: inherit;  
+  transition: all 0.25 ease;
 }
 
 
@@ -47,6 +48,7 @@
 
 .menu__item:hover {
   color: $accentColor;
-  transition: all 0.25 ease;
 }
+
+
 

@@ -20,6 +20,10 @@
 .discription__img-wrap {
   width: 570px;
 
+  @media (max-width: 570px) {
+    width: 100%;
+  }
+
 }
 
 .discription__content {
@@ -56,10 +60,16 @@
   @media (max-width: 1000px) {
     margin-bottom: 60px;
   }
+
+  @media (max-width: 426px) {
+   width: 100%;
+  }
 }
 
 .discription__img--2{
-  width: 423px;
+  @media (max-width: 426px) {
+    width: 100%;
+   }
 }
 
 .discription__title {

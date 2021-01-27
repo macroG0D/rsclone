@@ -36,9 +36,10 @@
   line-height: 130%;
   background-color: $accentColor;
   border-radius: 10px;
+  transition: all 0.25 ease; 
 
   &:hover{
-    opacity: 0.8;
-    transition: all 0.25 ease;
+    background-color: $accentBtnColor;
+      
   }
 }
