@@ -54,7 +54,7 @@
     border-color: $accentColor;
   }
 
-  &--ibb{
+  &--ibb {
     border-color: $ibbColor;
   }
 
@@ -65,7 +65,7 @@
   &--up::after {
     position: absolute;
     display: block;
-    content: '';
+    content: "";
     height: 14px;
     width: 1px;
     background-color: $accentColor;
@@ -73,7 +73,7 @@
     left: 50%;
   }
 
-  &--up-i::after{
+  &--up-i::after {
     background-color: $ibbColor;
   }
 
@@ -81,7 +81,7 @@
   &--down::after {
     position: absolute;
     display: block;
-    content: '';
+    content: "";
     height: 14px;
     width: 1px;
     background-color: $accentColor;
@@ -89,16 +89,15 @@
     left: 50%;
   }
 
-  &--down-i::after{
+  &--down-i::after {
     background-color: $ibbColor;
   }
-
 
   &--left-i::after,
   &--left::after {
     position: absolute;
     display: block;
-    content: '';
+    content: "";
     height: 1px;
     width: 14px;
     background-color: $accentColor;
@@ -106,7 +105,7 @@
     right: -14px;
   }
 
-  &--left-i::after{
+  &--left-i::after {
     background-color: $ibbColor;
   }
 
@@ -114,7 +113,7 @@
   &--right::after {
     position: absolute;
     display: block;
-    content: '';
+    content: "";
     height: 1px;
     width: 14px;
     background-color: $accentColor;
@@ -122,14 +121,12 @@
     left: -14px;
   }
 
-  &--right-i::after{
+  &--right-i::after {
     background-color: $ibbColor;
   }
 }
 
-
-
-.control__btns--ibb{
+.control__btns--ibb {
   border-color: $ibbColor;
 
   @media (max-width: 640px) {
@@ -138,15 +135,13 @@
 }
 
 .control__btns--obb {
-   border-color: $accentColor;
+  border-color: $accentColor;
 
-   @media (max-width: 640px) {
+  @media (max-width: 640px) {
     order: 1;
     margin-bottom: 52px;
   }
 }
-
-
 
 .control__wrap {
   display: flex;
@@ -172,7 +167,7 @@
   left: calc(50% - 45px);
   bottom: -147px;
 
-  @media (max-width: 640px){
+  @media (max-width: 640px) {
     left: calc(50% - 150px);
   }
 }
@@ -185,7 +180,7 @@
   right: calc(50% - 45px);
   top: -182px;
 
-  @media (max-width: 640px){
+  @media (max-width: 640px) {
     right: calc(50% - 150px);
   }
 }
@@ -193,7 +188,7 @@
 .control__wrap::before {
   position: absolute;
   display: block;
-  content: '';
+  content: "";
   width: 1000px;
   height: 21px;
   background-color: $menuActiveColor;
@@ -201,7 +196,7 @@
   top: 150px;
   left: calc(50% - 10px);
 
-  @media (max-width: 640px){
+  @media (max-width: 640px) {
     left: -150px;
   }
 }
@@ -209,7 +204,7 @@
 .control__wrap::after {
   position: absolute;
   display: block;
-  content: '';
+  content: "";
   width: 1000px;
   height: 21px;
   background-color: $menuActiveColor;
@@ -221,7 +216,7 @@
   -ms-border-radius: 0px 5px 5px 0px;
   -o-border-radius: 0px 5px 5px 0px;
 
-  @media (max-width: 640px){
+  @media (max-width: 640px) {
     right: -150px;
     top: 611px;
   }
@@ -236,12 +231,11 @@
   left: calc(50% - 22px);
   top: 170px;
 
-  @media (max-width: 640px){
+  @media (max-width: 640px) {
     content: url(../../assets/images/landing/bubbles-320.png);
     width: 320px;
     height: 71px;
-    left:  0;
+    left: 0;
     top: 390px;
   }
 }
-

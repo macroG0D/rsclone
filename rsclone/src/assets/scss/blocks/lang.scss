@@ -1,4 +1,4 @@
-.lang{
+.lang {
   display: flex;
 
   @media (max-width: 640px) {
@@ -7,34 +7,34 @@
   }
 }
 
-.lang__item{
+.lang__item {
   margin-left: 20px;
   font-size: 18px;
   cursor: pointer;
 
   @media (max-width: 640px) {
-   margin: 0;
+    margin: 0;
   }
 
-  &:hover{
+  &:hover {
     color: $accentColor;
     transition: all 0.25 ease;
   }
 }
 
-.lang__item--light{
+.lang__item--light {
   color: $lightFontColor;
   @media (max-width: 640px) {
     color: $startFontColor;
   }
 }
 
-.lang__item--active{
+.lang__item--active {
   font-weight: 600;
-  color: $accentColor;  
+  color: $accentColor;
 }
 
-.lang--footer{
+.lang--footer {
   margin-left: auto;
 
   @media (max-width: 640px) {
