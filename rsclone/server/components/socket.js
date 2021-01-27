@@ -121,7 +121,6 @@ module.exports = class Socket {
   }
 
   onJoinGame(socket, sessionName) {
-    console.log('gr!');
     Object.values(this.sessions).forEach((session) => {
       if (session && session.name && session.name === sessionName) {
         const currentSession = session;

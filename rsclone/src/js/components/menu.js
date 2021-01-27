@@ -35,7 +35,7 @@ export default class Menu extends Create {
     if (back) {
       const bcc = backCallback || function bcc() { scene.scene.switch('MainMenu'); };
       const index = this.items.length;
-      const localBackName = locale.back;
+      const localBackName = locale.back || 'back';
       this.back = new Create('div', this.node, 'game-menu-item', localBackName);
       this.back.node.classList.add('game-menu-back');
       this.back.name = 'back';
