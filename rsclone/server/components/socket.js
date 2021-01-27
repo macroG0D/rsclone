@@ -1,23 +1,9 @@
 const socketIO = require('socket.io');
 
-function generateSessionName() {
+function generatePostfix() {
   const randomNum = Math.floor(Math.random() * 9998 + 1);
-  return `game#${randomNum.toString().padStart(4, '0')}`;
+  return randomNum.toString().padStart(4, '0');
 }
-
-function arrayCheck(array, fieldName, value, direction = 'up') {
-  let position = 0;
-  for (let index = 0; index < array.length; index += 1) {
-    const item = array[index];
-    const itemValue = item[fieldName];
-    if ((direction === 'up' && itemValue && value >= itemValue) || (direction !== 'up' && itemValue && value <= itemValue)) {
-      return index + 1;
-    }
-    position += 1;
-  }
-  return position + 1;
-}
-
 module.exports = class Socket {
   constructor(server, db) {
     this.db = db;
@@ -47,17 +33,42 @@ module.exports = class Socket {
     });
   }
 
+  checkScore(socket, item) {
+    const callBack = (result, error) => {
+      if (error) console.log('Error:', error);
+      const filterField = '_id';
+      const itemId = item[filterField].toString();
+      const itemScore = +item.score.toString();
+      let position = -1;
+      result.filter((resItem, index) => {
+        const resItemId = resItem[filterField].toString();
+        const found = (itemId === resItemId);
+        if (found) position = index + 1;
+        return found;
+      });
+
+      const sendData = {
+        position,
+        id: itemId,
+        score: itemScore,
+      };
+
+      const action = (position <= 100) ? 'newRecord' : 'noRecord';
+      socket.emit(action, sendData);
+    };
+    this.db.query('getAll', callBack);
+  }
+
   onCheckScore(socket, data) {
     const callBack = (result, error) => {
       if (error) console.log('Error:', error);
-      const playerScore = data.score;
-      const playerTime = data.time;
-      let position = arrayCheck(result, 'score', playerScore, 'up');
-      if (position <= 100) position = arrayCheck(result, 'time', playerTime, 'down');
-      console.log(position);
+      const item = result.ops[0];
+      if (item) this.checkScore(socket, item);
     };
-
-    this.db.query('getAll', callBack, { score: -1, time: 1, name: 1 });
+    const newItem = data;
+    const postfix = generatePostfix();
+    if (!newItem.name) newItem.name = `noName_${postfix}`;
+    this.db.query('create', callBack, newItem);
   }
 
   onPlayerMove(socket, data) {
@@ -86,7 +97,8 @@ module.exports = class Socket {
     if (!this.sessions[socket.id]) this.sessions[socket.id] = { gameReady: {} };
     const session = this.sessions[socket.id];
 
-    if (!session.name) session.name = generateSessionName();
+    const postfix = generatePostfix();
+    if (!session.name) session.name = `game#${postfix}`;
 
     if (!session.playerOneSocket || session.playerOneSocket.id !== socket.id) {
       session.playerOneSocket = socket;

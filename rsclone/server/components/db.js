@@ -1,4 +1,5 @@
 const { MongoClient } = require('mongodb');
+const { DEFAULT_DB_SORT, DEFAULT_DB_LIMIT } = require('../constants');
 
 module.exports = class Db {
   constructor(user, pass) {
@@ -25,15 +26,20 @@ module.exports = class Db {
     return db.collection(collectionName);
   }
 
-  async getAll(sort = {}, dbName = this.dbName, collectionName = this.collectionName) {
+  async getAll(
+    sort = DEFAULT_DB_SORT,
+    limit = DEFAULT_DB_LIMIT,
+    dbName = this.dbName,
+    collectionName = this.collectionName,
+  ) {
     const collection = await this.getCollection(dbName, collectionName);
-    return collection.find({}).sort(sort).toArray();
+    return collection.find({}).sort(sort).limit(limit).toArray();
   }
 
   async create(item, dbName = this.dbName, collectionName = this.collectionName) {
     const collection = await this.getCollection(dbName, collectionName);
     const response = await collection.insertOne(item);
-    return response.ops[0];
+    return response;
   }
 
   async query(query, callBack, ...rest) {
