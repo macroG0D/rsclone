@@ -36,6 +36,30 @@ export default class Network extends Phaser.Events.EventEmitter {
       this.scene.events.off('update', this.sync, this);
       this.scene.events.on('update', this.sync, this);
     }
+
+    if (this.client) {
+      this.scene.input.keyboard.addKey('Q').on('up', () => {
+        this.scene.events.emit('updateScore', 100);
+      });
+
+      this.scene.input.keyboard.addKey('E').on('up', () => {
+        const score = this.scene.score.currentScore;
+        const time = this.scene.score.currentTime;
+        this.scene.events.emit('gameEnd', score, time);
+      });
+
+      this.scene.input.keyboard.addKey('R').on('up', () => {
+        this.scene.events.emit('gameTest');
+      });
+
+      this.scene.events.on('gameEnd', (score, time) => {
+        const sendData = {
+          score,
+          time,
+        };
+        this.client.sendData('checkScore', sendData);
+      });
+    }
   }
 
   sync() {
