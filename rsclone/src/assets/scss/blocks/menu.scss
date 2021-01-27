@@ -12,7 +12,7 @@
 
     &::after {
       position: absolute;
-      content: '';
+      content: "";
       width: 180px;
       height: 1px;
       background-color: $accentColor;
@@ -34,19 +34,16 @@
 .menu__item {
   cursor: pointer;
   color: inherit;
+  transition: all 0.25s ease;
 }
-
 
 .menu__item--active {
   font-size: 16px;
   font-weight: 600;
   opacity: 0.3;
-  pointer-events:none;
+  pointer-events: none;
 }
-
 
 .menu__item:hover {
   color: $accentColor;
-  transition: all 0.25 ease;
 }
-

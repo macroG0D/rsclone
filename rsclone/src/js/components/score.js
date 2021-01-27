@@ -2,7 +2,7 @@ import Create from './dom-create';
 
 import { LOCALE } from '../locale';
 
-import { localization } from '../utils/localization';
+import { localization } from '../engine/localization';
 
 export default class Score extends Create {
   constructor(scene, score = 0, time = 0) {

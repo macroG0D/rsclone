@@ -3,7 +3,6 @@
   padding-top: 100px;
   padding-bottom: 160px;
   color: $lightColor;
-
 }
 
 .developers__list {
@@ -13,7 +12,7 @@
 
   @media (max-width: 840px) {
     flex-direction: column;
- }
+  }
 }
 
 .developers__item {
@@ -34,29 +33,31 @@
   @media (max-width: 840px) {
     width: 100%;
     margin: 0 auto;
- }
+  }
+
+  @media (max-width: 840px) {
+    padding-left: 20px;
+  }
 }
 
 .developers__title {
   @include title;
   margin: 0;
   margin-bottom: 60px;
-
-
 }
 
-.developers__name{
+.developers__name {
   margin: 0;
   font-size: 36px;
   margin-bottom: 52px;
   font-weight: 600;
 
   @media (max-width: 640px) {
-     font-size: 28px;
+    font-size: 28px;
   }
 }
 
-.developers__role{
+.developers__role {
   color: $accentColor;
   margin: 0;
   margin-bottom: 8px;
@@ -65,17 +66,18 @@
 
   @media (max-width: 640px) {
     font-size: 16px;
- }
+  }
 }
 
-.developers__git{
+.developers__git {
   font-size: 18px;
   font-weight: 600;
   align-self: flex-end;
   text-align: right;
   position: relative;
+  transition: all 0.25s ease;
 
-  &::before{
+  &::before {
     display: block;
     position: absolute;
     content: url(../../assets/images/landing/git.svg);
@@ -84,12 +86,11 @@
     width: 20px;
   }
 
-  &:hover{
+  &:hover {
     color: $accentColor;
   }
 
   @media (max-width: 640px) {
     font-size: 16px;
- }
+  }
 }
-
