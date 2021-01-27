@@ -20,6 +20,10 @@
   @include title;
   margin-top: 33px;
   margin-right: 45px;
+
+  @media (max-width: 640px) {
+    margin-right: 0;
+  }
 }
 
 .about__text {

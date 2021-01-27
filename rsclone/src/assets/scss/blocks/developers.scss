@@ -35,6 +35,10 @@
     width: 100%;
     margin: 0 auto;
  }
+
+ @media (max-width: 840px) {
+    padding-left: 20px;
+  }
 }
 
 .developers__title {
@@ -74,6 +78,7 @@
   align-self: flex-end;
   text-align: right;
   position: relative;
+  transition: all 0.25s ease;
 
   &::before{
     display: block;
