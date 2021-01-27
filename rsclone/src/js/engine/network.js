@@ -7,7 +7,7 @@ export default class Network extends Phaser.Events.EventEmitter {
     super();
     this.scene = scene;
     this.client = scene.client;
-    if (scene.client) {
+    if (scene.online) {
       scene.client.on('playerMove', (data) => {
         const { playerKey, direction, movementFlag } = data;
         scene.setDirection(playerKey, direction, movementFlag);
@@ -32,24 +32,27 @@ export default class Network extends Phaser.Events.EventEmitter {
           }
         }
       });
+
+      this.scene.events.off('update', this.sync, this);
+      this.scene.events.on('update', this.sync, this);
     }
   }
 
   sync() {
     if (this.throttle) return;
     this.throttle = true;
-    const character = this.scene[this.scene.playerKey];
-    if (character) this.sendData(this.scene.playerKey, character);
+    const { playerKey } = this.scene;
+    const player = this.scene[this.scene.playerKey];
+    if (player) {
+      const playerData = {
+        playerKey,
+        x: player.x,
+        y: player.y,
+        angle: player.angle,
+        disableGravitySwitch: player.disableGravitySwitch,
+      };
+      this.client.sendData('playerSync', playerData);
+    }
     setTimeout(() => { this.throttle = false; }, THROTTLE_DELAY);
-  }
-
-  sendData(playerKey, player) {
-    this.client.sendData('playerSync', {
-      playerKey,
-      x: player.x,
-      y: player.y,
-      angle: player.angle,
-      disableGravitySwitch: player.disableGravitySwitch,
-    });
   }
 }

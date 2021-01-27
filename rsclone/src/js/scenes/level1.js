@@ -438,7 +438,6 @@ export default class Level1 extends Phaser.Scene {
       this.centerCamera();
       this.scrollParallax();
     }
-    if (this.online) this.network.sync();
     this.checkIfPlayersAreAtFinish();
   }
 
