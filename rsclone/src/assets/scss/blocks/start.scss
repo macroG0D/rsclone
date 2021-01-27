@@ -26,6 +26,7 @@
   @media (max-width: 1200px) {
     padding-bottom: 543px;
   }
+
 }
 
 .start__title {
@@ -83,10 +84,11 @@
 
   @media (max-width: 640px) {
     top: 0px;
-    right: -50px;
+    right: -50px
+  
   }
 }
 
 .start__button {
-  @include btn_play;
+  @include btn_play
 }

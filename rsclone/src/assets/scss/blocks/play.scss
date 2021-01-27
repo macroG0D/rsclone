@@ -1,4 +1,4 @@
-.play {
+.play{
   background-image: url(../../assets/images/landing/cta-screen-image.png);
   background-repeat: no-repeat;
   background-size: cover;
@@ -16,6 +16,7 @@
   padding-top: 14.1%;
   padding-bottom: 16%;
 
+  
   @media (max-width: 640px) {
     padding-top: 106px;
     padding-bottom: 122px;
@@ -23,7 +24,7 @@
 }
 
 .play__button {
-  @include btn_play;
+  @include btn_play
 }
 
 .play__title {
@@ -38,4 +39,4 @@
     width: 300px;
     margin: 0 auto 30px;
   }
-}
+ }
