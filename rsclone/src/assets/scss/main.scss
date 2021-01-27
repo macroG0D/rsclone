@@ -36,6 +36,10 @@ body {
     overflow-x: hidden;
 }
 
+.body__noscroll{
+    overflow-y: hidden;
+}
+
 img {
     width: 100%;
 }
