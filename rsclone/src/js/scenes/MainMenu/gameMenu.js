@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 
 import Menu from '../../components/menu';
 
-import { localization } from '../../utils/localization';
+import { localization } from '../../engine/localization';
 
 export default class GameMenu extends Phaser.Scene {
   constructor() {

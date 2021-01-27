@@ -3,7 +3,7 @@ import Phaser from 'phaser';
 import Menu from '../../components/menu';
 import { createImg } from '../../utils/createImg';
 
-import { localization } from '../../utils/localization';
+import { localization } from '../../engine/localization';
 
 export default class MainMenuLocalGame extends Phaser.Scene {
   constructor() {

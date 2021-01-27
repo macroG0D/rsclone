@@ -7,10 +7,9 @@ import LevelsEntourage from '../levels/levelsEntourage';
 
 import Score from '../components/score';
 
-import Input from '../utils/input';
-import NetworkInput from '../utils/networkInput';
-import NetworkSync from '../utils/networkSync';
-import LevelEnd from '../utils/levelEnd';
+import Input from '../engine/input';
+import Network from '../engine/network';
+import LevelEnd from '../engine/levelEnd';
 
 import StandartHedgehog from '../sprites/enemies/standartHedgehog';
 import JumpingHedgehog from '../sprites/enemies/jumpingHedgehog';
@@ -49,12 +48,11 @@ export default class Level2 extends Phaser.Scene {
       this.online = true;
       this.playerKey = (gameData.master) ? 'ibb' : 'obb';
       this.player1Input = new Input(this, this.playerKey, PLAYER_1_CONTROLS);
-      this.networkInput = new NetworkInput(this);
-      this.networkSync = new NetworkSync(this, this.playerKey);
     } else {
       this.player1Input = new Input(this, 'ibb', PLAYER_1_CONTROLS);
       this.player2Input = new Input(this, 'obb', PLAYER_2_CONTROLS);
     }
+    this.network = new Network(this);
 
     this.matter.world.setBounds(0, 0, levelWidth, levelHeight, BORDER_THICKNESS);
     this.cameras.main.setBounds(0, 0, levelWidth, levelHeight);
@@ -419,7 +417,7 @@ export default class Level2 extends Phaser.Scene {
       this.centerCamera();
       this.scrollParallax();
     }
-    if (this.online) this.networkSync.sync();
+    if (this.online) this.network.sync();
     this.checkIfPlayersAreAtFinish();
   }
 

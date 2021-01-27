@@ -3,7 +3,7 @@ import Phaser from 'phaser';
 import Menu from '../../components/menu';
 import { createImg } from '../../utils/createImg';
 
-import { localization } from '../../utils/localization';
+import { localization } from '../../engine/localization';
 
 export default class MainMenuOnlineGame extends Phaser.Scene {
   constructor() {
@@ -14,7 +14,7 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
     const { level } = this.game;
     const levelName = `Level${level}`;
     createImg(this);
-    const menuItems = {
+    let menuItems = {
       'Looking for a partner...': '',
     };
     const menuCallBack = () => {
@@ -27,8 +27,10 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
       this.menu.items[0].node.innerHTML = `${sessionName} awaiting connection...`;
     });
     this.client.on('gameReady', (sessionName) => {
-      this.menu.items[0].node.innerHTML = `${sessionName} ready!`;
-      this.menu.items[0].link = () => this.requestStartGame(sessionName);
+      this.menu.spawn.destroy();
+      menuItems = {};
+      menuItems[`${sessionName} ready!`] = () => this.requestStartGame(sessionName);
+      this.menu = new Menu(this, menuItems, true, menuCallBack);
     });
     this.client.on('startGame', (gameData) => this.scene.start(levelName, gameData));
     this.requestHostGame();

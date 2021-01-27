@@ -1,4 +1,4 @@
-import Emitter from '../utils/emitter';
+import Emitter from '../engine/emitter';
 
 import { playSound } from '../utils/playSound';
 

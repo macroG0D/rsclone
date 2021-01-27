@@ -1,16 +1,16 @@
-@mixin screenSize{
+@mixin screenSize {
   width: 1160px;
   margin: 0 auto;
 
   @media (max-width: 1200px) {
     width: 100%;
-    padding-left:30px;
+    padding-left: 30px;
     padding-right: 30px;
   }
 
   @media (max-width: 640px) {
     width: 100%;
-    padding-left:10px;
+    padding-left: 10px;
     padding-right: 10px;
   }
 }
@@ -36,10 +36,9 @@
   line-height: 130%;
   background-color: $accentColor;
   border-radius: 10px;
-  transition: all 0.25s ease; 
+  transition: all 0.25s ease;
 
-  &:hover{
+  &:hover {
     background-color: $accentBtnColor;
-      
   }
 }
