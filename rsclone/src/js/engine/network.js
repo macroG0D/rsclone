@@ -43,6 +43,7 @@ export default class Network {
         this.scene.game.spawnPopup(this.scene, 'noRecord', data);
       });
 
+      /* Debug stuff
       this.scene.input.keyboard.addKey('Q').on('up', () => {
         this.scene.events.emit('updateScore', 100);
       });
@@ -56,6 +57,7 @@ export default class Network {
       this.scene.events.on('gameEnd', (data) => {
         this.client.sendData('checkScore', data);
       });
+      */
     }
   }
 
