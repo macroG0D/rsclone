@@ -1,10 +1,7 @@
-import Phaser from 'phaser';
-
 import { THROTTLE_DELAY } from '../constants';
 
-export default class Network extends Phaser.Events.EventEmitter {
+export default class Network {
   constructor(scene) {
-    super();
     this.scene = scene;
     this.client = scene.client;
     if (scene.online) {
@@ -38,6 +35,14 @@ export default class Network extends Phaser.Events.EventEmitter {
     }
 
     if (this.client) {
+      this.client.on('newRecord', (data) => {
+        this.scene.game.spawnPopup(this.scene, 'newRecord', data);
+      });
+
+      this.client.on('noRecord', (data) => {
+        this.scene.game.spawnPopup(this.scene, 'noRecord', data);
+      });
+
       this.scene.input.keyboard.addKey('Q').on('up', () => {
         this.scene.events.emit('updateScore', 100);
       });
@@ -49,7 +54,8 @@ export default class Network extends Phaser.Events.EventEmitter {
       });
 
       this.scene.input.keyboard.addKey('R').on('up', () => {
-        this.scene.events.emit('gameTest');
+        const data = { position: 12, id: 12345, score: 1002, time: 129800 };
+        this.client.emit('newRecord', data);
       });
 
       this.scene.events.on('gameEnd', (score, time) => {

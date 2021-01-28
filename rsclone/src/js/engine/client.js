@@ -33,6 +33,10 @@ export default class Client extends Phaser.Events.EventEmitter {
     this.socket.on('gameReady', (sessionName) => this.emit('gameReady', sessionName));
     this.socket.on('playerMove', (data) => this.emit('playerMove', data));
     this.socket.on('playerSync', (data) => this.emit('playerSync', data));
+    this.socket.on('newRecord', (data) => {
+      console.log('new record!');
+      this.emit('newRecord', data);
+    });
   }
 
   sendData(key, data) {
