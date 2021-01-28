@@ -54,8 +54,8 @@
     height: 100%;
     line-height: 42px;
     border-bottom: 1px solid #BDBDBD;
-    &-active {
-      background: linear-gradient(189.7deg, #F95488 5.4%, #DE2E6B 87.31%);
+    &.active {
+      background-color: #DE2E6B;
     }
   }
   &-position {

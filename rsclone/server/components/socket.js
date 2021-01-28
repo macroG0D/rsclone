@@ -24,8 +24,12 @@ module.exports = class Socket {
     });
   }
 
-  onUpdateName() {
-    this.tem = '';
+  onUpdateName(data) {
+    const { id, name } = data;
+    const callBack = (result, error) => {
+      if (error) console.log('Error:', error);
+    };
+    this.db.query('update', callBack, id, { $set: { name } });
   }
 
   onGetScores(socket) {

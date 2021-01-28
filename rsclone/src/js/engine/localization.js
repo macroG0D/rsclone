@@ -7,7 +7,7 @@ export function localization(currScene) {
   if (appLocale !== sceneLocale) {
     scene.locale = appLocale;
     const locale = LOCALE[appLocale];
-    const { menu, range } = scene;
+    const { menu, range, board } = scene;
     const { key } = scene.scene;
 
     if (menu) {
@@ -31,6 +31,17 @@ export function localization(currScene) {
           const localeValue = locale[item.right.name] || item.right.name;
           const currValue = item.right.node.innerHTML;
           if (localeValue && localeValue !== currValue) item.right.node.innerHTML = localeValue;
+        }
+      });
+    }
+
+    if (board) {
+      Object.values(board.caption).forEach((captionItem) => {
+        const item = captionItem;
+        if (item.name) {
+          const localeValue = locale[item.name] || item.name;
+          const currValue = item.node.innerHTML;
+          if (localeValue && localeValue !== currValue) item.node.innerHTML = localeValue;
         }
       });
     }

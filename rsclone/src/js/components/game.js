@@ -63,7 +63,7 @@ export default class Game extends Phaser.Game {
       `;
     }
     template.content += (newRecord) ? template.textOnRecord : template.textNoRecord;
-    template.confirm = (newRecord) ? `main.game.confirmName(${id})` : 'main.game.closePopup()';
+    template.confirm = (newRecord) ? `main.game.confirmName("${id}")` : 'main.game.closePopup()';
     template.cancel = 'main.game.closePopup()';
     this.showPopup(template, newRecord);
   }
@@ -77,6 +77,15 @@ export default class Game extends Phaser.Game {
       name,
     };
     this.client.sendData('updateName', data);
+    setTimeout(() => {
+      const popup = document.getElementById('popup');
+      popup.classList.add('hidden');
+      popup.setAttribute('hidden', true);
+      this.popupShown = false;
+      this.currentScene.input.keyboard.enableGlobalCapture();
+      this.currentScene.scene.stop();
+      this.currentScene.scene.start('MainMenuLeaderBoard', { id });
+    }, 2500);
   }
 
   showPopup(template, newRecord = false) {

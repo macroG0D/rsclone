@@ -34,6 +34,8 @@ export const LOCALE = {
     // online game menu
     hostGame: 'создать игру',
     joinGame: 'присоединиться к игре',
+    // leaderboard
+    name: 'имя',
     // settings menu
     fullscreen: 'на весь экран',
     music: 'музыка',
