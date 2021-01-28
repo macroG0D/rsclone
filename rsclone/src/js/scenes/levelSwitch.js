@@ -8,6 +8,7 @@ export default class LevelSwitch extends Phaser.Scene {
   }
 
   create(gameData) {
+    this.client = this.game.client;
     const currLevel = this.game.level;
     const nextLevel = currLevel + 1;
     this.game.level = nextLevel;
@@ -21,11 +22,12 @@ export default class LevelSwitch extends Phaser.Scene {
       align: 'center',
     }).setOrigin(0.5);
 
+    let callback = () => this.scene.start(levelName, gameData);
+    if (nextLevel >= 3) callback = () => this.client.sendData('checkScore', gameData);
+
     this.time.addEvent({
       delay: 2500,
-      callback: () => {
-        this.scene.start(levelName, gameData);
-      },
+      callback,
     });
   }
 }

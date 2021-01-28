@@ -50,35 +50,11 @@ export default class Network {
       this.scene.input.keyboard.addKey('E').on('up', () => {
         const score = this.scene.score.currentScore;
         const time = this.scene.score.currentTime;
-        this.scene.events.emit('gameEnd', score, time);
+        this.scene.events.emit('gameEnd', { score, time });
       });
 
-      this.scene.input.keyboard.addKey('R').on('up', () => {
-        const data = {
-          position: 12,
-          id: 12345,
-          score: 1002,
-          time: 129800,
-        };
-        this.client.emit('newRecord', data);
-      });
-
-      this.scene.input.keyboard.addKey('T').on('up', () => {
-        const data = {
-          position: 122,
-          id: 777,
-          score: 762,
-          time: 129800,
-        };
-        this.client.emit('noRecord', data);
-      });
-
-      this.scene.events.on('gameEnd', (score, time) => {
-        const sendData = {
-          score,
-          time,
-        };
-        this.client.sendData('checkScore', sendData);
+      this.scene.events.on('gameEnd', (data) => {
+        this.client.sendData('checkScore', data);
       });
     }
   }
