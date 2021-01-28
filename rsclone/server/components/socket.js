@@ -19,7 +19,24 @@ module.exports = class Socket {
       socket.on('requestStartGame', (sessionName) => this.onRequestStartGame(socket, sessionName));
       socket.on('disconnect', () => this.onDisconnect(socket));
       socket.on('checkScore', (data) => this.onCheckScore(socket, data));
+      socket.on('getScore', () => this.onGetScores(socket));
+      socket.on('updateName', (data) => this.onUpdateName(data));
     });
+  }
+
+  onUpdateName() {
+    this.tem = '';
+  }
+
+  onGetScores(socket) {
+    const callBack = (result, error) => {
+      if (error) {
+        console.log('Error:', error);
+        return;
+      }
+      socket.emit('getScore', result);
+    };
+    this.db.query('getAll', callBack);
   }
 
   checkScore(socket, item) {
