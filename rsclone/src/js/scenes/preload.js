@@ -10,6 +10,7 @@ import ibbKeys from '../../assets/images/ibbKeys.svg';
 import obbKeys from '../../assets/images/obbKeys.svg';
 import bubble from '../../assets/images/bubble.png';
 import crystal from '../../assets/images/crystal.png';
+import spikes from '../../assets/images/spikes.svg';
 import hedgehogHead from '../../assets/sprites/enemies/hedgehogs/hedgehog_head.svg';
 import hedgehogJumper from '../../assets/sprites/enemies/hedgehogs/hedgehog_jumper.svg';
 import hedgehogHalfButt from '../../assets/sprites/enemies/hedgehogs/hedgehog_halfButt.svg';
@@ -72,6 +73,7 @@ export default class Preload extends Phaser.Scene {
     this.load.image('ibbKeys', ibbKeys);
     this.load.image('bubble', bubble);
     this.load.image('crystal', crystal);
+    this.load.image('spikes', spikes);
     this.load.image('hedgehog-head', hedgehogHead);
     this.load.image('hedgehog-halfbutt', hedgehogHalfButt);
     this.load.image('hedgehog-jumper', hedgehogJumper);
