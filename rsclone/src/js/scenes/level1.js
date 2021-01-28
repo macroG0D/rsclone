@@ -206,6 +206,7 @@ export default class Level1 extends Phaser.Scene {
     this.grassSet = new LevelsEntourage(this, 1, 10239, 166, 1, 'flowersSet01', false, false, 98, 800);
     this.grassSet = new LevelsEntourage(this, 1, 10389, 166, 1, 'flowersSet01', false, false, 0, 1800);
 
+    this.addWorldBounds();
     // ibb & obb spawn
     this.obb = new Player(this, 'obb', 10300, 100, 'obb-sprite', COLLISION_CATEGORIES.obb);
     this.ibb = new Player(this, 'ibb', 10350, 100, 'ibb-sprite', COLLISION_CATEGORIES.ibb);
@@ -281,24 +282,25 @@ export default class Level1 extends Phaser.Scene {
     this.input.keyboard.addKey('ESC').on('down', () => {
       this.scene.switch('GameMenu');
     });
-
-    this.addWorldBounds();
   }
 
   addWorldBounds() {
     this.spikes = [];
     const spikeWidth = 88;
     let spikeCount = 0;
-    const spikeUnshownPart = 10;
+    const spikeYCorrection = 24;
+    const spikeXCorrection = 22;
     const radianValue = 6.28319;
+    let spikeX = 0;
     const matterParams = {
       isSensor: true,
       isStatic: true,
       shape: 'circle',
     };
     do {
-      const topSpike = this.matter.add.image(spikeWidth * spikeCount, 0 - spikeUnshownPart, 'spikes', null, matterParams);
-      const bottomSpike = this.matter.add.image(spikeWidth * spikeCount, levelHeight + spikeUnshownPart, 'spikes', null, matterParams);
+      spikeX = (spikeWidth - spikeXCorrection) * spikeCount;
+      const topSpike = this.matter.add.image(spikeX, 0 - spikeYCorrection, 'spikes', null, matterParams);
+      const bottomSpike = this.matter.add.image(spikeX, levelHeight + spikeYCorrection, 'spikes', null, matterParams);
       this.spikes.push(topSpike, bottomSpike);
       this.tweens.add({
         targets: [topSpike, bottomSpike],
@@ -308,7 +310,7 @@ export default class Level1 extends Phaser.Scene {
         repeat: -1,
       });
       spikeCount += 1;
-    } while (spikeWidth * spikeCount < levelWidth);
+    } while (spikeX < levelWidth);
   }
 
   addParallax() {
