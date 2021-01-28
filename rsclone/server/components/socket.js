@@ -30,7 +30,8 @@ module.exports = class Socket {
       }
       const filterField = '_id';
       const itemId = item[filterField].toString();
-      const itemScore = +item.score.toString();
+      const score = +item.score.toString();
+      const time = +item.time.toString();
       let position = -1;
       result.filter((resItem, index) => {
         const resItemId = resItem[filterField].toString();
@@ -42,7 +43,8 @@ module.exports = class Socket {
       const sendData = {
         position,
         id: itemId,
-        score: itemScore,
+        score,
+        time,
       };
 
       const action = (position <= 100) ? 'newRecord' : 'noRecord';

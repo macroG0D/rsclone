@@ -54,8 +54,23 @@ export default class Network {
       });
 
       this.scene.input.keyboard.addKey('R').on('up', () => {
-        const data = { position: 12, id: 12345, score: 1002, time: 129800 };
+        const data = {
+          position: 12,
+          id: 12345,
+          score: 1002,
+          time: 129800,
+        };
         this.client.emit('newRecord', data);
+      });
+
+      this.scene.input.keyboard.addKey('T').on('up', () => {
+        const data = {
+          position: 122,
+          id: 777,
+          score: 762,
+          time: 129800,
+        };
+        this.client.emit('noRecord', data);
       });
 
       this.scene.events.on('gameEnd', (score, time) => {
