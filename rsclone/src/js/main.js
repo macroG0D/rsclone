@@ -8,13 +8,16 @@ import { SCENES } from './scenes/_scenesList';
 
 import { GAME_WIDTH, GAME_HEIGHT } from './constants';
 
+import LOCALE_HTML from './localehtml';
+
 const WebFont = require('webfontloader');
 
 class Main {
   constructor() {
     const cookieVersion = 0;
     const settings = JSON.parse(localStorage.getItem('rsc-game-settings')) || {
-      locale: 'en',
+      // locale: 'en',
+      locale: 'ru',
       fullscreen: false,
       volume: {
         sound: 0.2,
@@ -40,8 +43,10 @@ class Main {
     const btnBurger = document.getElementById('gameBtnBurger');
     const menuHome = document.getElementById('menuHome');
     const menuAbout = document.getElementById('menuAbout');
-    const menuGame = document.getElementById('menuGame');
+    const menuGame = document.getElementById('menuGame');    
     const bodyGame = document.querySelector('body');
+    this.btnLang = document.querySelectorAll('.lang__item');
+    this.textItems = document.querySelectorAll('[data-loc]');
     this.pages = {
       home: homeDiv,
       about: aboutDiv,
@@ -103,6 +108,7 @@ class Main {
     this.changeAddress(page);
     this.navigate();
     this.clickBurger();
+    this.clickLang();
   }
 
   clickBurger() {
@@ -121,6 +127,19 @@ class Main {
 
   saveSettings() {
     localStorage.setItem('rsc-game-settings', JSON.stringify(this.settings));
+  }
+
+ clickLang(){
+   this.btnLang.forEach((el) => el.addEventListener('click',(e)=>{
+     this.settings.locale = e.target.dataset.lang;
+     this.changeLang()
+     this.btnLang.forEach((item)=>item.classList.toggle('lang__item--active'))
+   }))
+ }
+
+  changeLang(){
+   const curLang = LOCALE_HTML[this.settings.locale]
+   this.textItems.forEach(el => el.innerHTML = curLang[el.dataset.loc]);
   }
 
   changeAddress(link) {
