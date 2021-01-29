@@ -43,7 +43,7 @@ class Main {
     const btnBurger = document.getElementById('gameBtnBurger');
     const menuHome = document.getElementById('menuHome');
     const menuAbout = document.getElementById('menuAbout');
-    const menuGame = document.getElementById('menuGame');    
+    const menuGame = document.getElementById('menuGame');
     const bodyGame = document.querySelector('body');
     this.btnLang = document.querySelectorAll('.lang__item');
     this.textItems = document.querySelectorAll('[data-loc]');
@@ -63,6 +63,14 @@ class Main {
       bodyGame,
     };
 
+    const page = this.getCurrPage();
+    this.changeAddress(page);
+    this.navigate();
+    this.clickBurger();
+    this.clickLang();
+  }
+
+  spawnGame() {
     this.gameContainer = new Create('div', gameDiv, 'game-container').node;
     this.gameConfig = {
       type: Phaser.AUTO,
@@ -72,6 +80,7 @@ class Main {
         autoCenter: Phaser.Scale.CENTER_BOTH,
         width: GAME_WIDTH,
         height: GAME_HEIGHT,
+        autoRound: true,
       },
       backgroundColor: '#e5e5e5',
       physics: {
@@ -107,12 +116,6 @@ class Main {
     };
 
     this.game = new Game(this, this.gameConfig);
-
-    const page = this.getCurrPage();
-    this.changeAddress(page);
-    this.navigate();
-    this.clickBurger();
-    this.clickLang();
   }
 
   clickBurger() {
@@ -154,10 +157,10 @@ class Main {
 
   getCurrPage() {
     const { hash } = window.location;
-    if (!hash || hash === '#') return 'game';
+    if (!hash || hash === '#') return 'home';
     let page = hash.replace('#', '');
     const { pages } = this;
-    if (!(Object.keys(pages).includes(page))) page = 'game';
+    if (!(Object.keys(pages).includes(page))) page = 'home';
     return page;
   }
 
@@ -188,9 +191,9 @@ class Main {
     this.prevLink = nextLink;
     this.highlightPage(nextLink);
 
-    if (this.elements.header.classList.contains('header__display')) {
-      this.toggleBurger();
-    }
+    if (this.elements.header.classList.contains('header__display')) this.toggleBurger();
+
+    if (nextLink === 'game' && !this.game) this.spawnGame();
   }
 }
 

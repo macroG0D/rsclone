@@ -48,7 +48,7 @@ export default class Menu extends Create {
       scene.input.keyboard.addKey('ESC').on('down', bcc);
     }
 
-    const { centerX, centerY } = scene.cameras.main;
+    const { centerX, centerY } = this.scene.cameras.main;
     this.spawn = scene.add.dom(centerX, centerY, this.node);
     this.spawn.setOrigin(0.5);
   }
