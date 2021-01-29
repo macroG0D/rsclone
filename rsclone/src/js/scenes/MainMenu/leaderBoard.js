@@ -14,6 +14,7 @@ export default class MainMenuLeaderBoard extends Phaser.Scene {
     this.board = new LeaderBoard(this, id);
     this.client = this.game.client;
     if (this.client) {
+      this.client.off('getScore');
       this.client.on('getScore', (data) => {
         this.board.updateTable(data);
       });

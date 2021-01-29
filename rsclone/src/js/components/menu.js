@@ -27,7 +27,7 @@ export default class Menu extends Create {
       }
       item.node.addEventListener('pointermove', () => this.highlightItem(itemIndex), false);
     });
-    scene.input.keyboard.removeAllKeys(true);
+    scene.input.keyboard.removeAllKeys();
     scene.input.keyboard.addKey('UP').on('down', () => this.switchItem('up'));
     scene.input.keyboard.addKey('DOWN').on('down', () => this.switchItem('down'));
     scene.input.keyboard.addKey('ENTER').on('down', () => this.selectItem());
