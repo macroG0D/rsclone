@@ -30,8 +30,8 @@ export default class LevelEnd extends Phaser.GameObjects.Rectangle {
   }
 
   completeLevel() {
-    const score = this.game.score.currentScore;
-    const time = this.game.score.currentTime;
+    const score = this.scene.game.score.currentScore;
+    const time = this.scene.game.score.currentTime;
     const gameData = { score, time };
     this.scene.scene.start('LevelSwitch', gameData);
   }
