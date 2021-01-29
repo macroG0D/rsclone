@@ -49,8 +49,8 @@ export default class Network {
       });
 
       this.scene.input.keyboard.addKey('E').on('up', () => {
-        const score = this.scene.score.currentScore;
-        const time = this.scene.score.currentTime;
+        const score = this.game.score.currentScore;
+        const time = this.game.score.currentTime;
         this.scene.events.emit('gameEnd', { score, time });
       });
 

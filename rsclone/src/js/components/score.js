@@ -23,10 +23,10 @@ export default class Score extends Create {
     this.spawn.setScrollFactor(0, 0);
     this.spawn.setOrigin(0);
 
-    this.scene.events.off('updateScore');
-    this.scene.events.on('updateScore', this.updateScore, this);
-    this.scene.events.off('update', this.update, this);
-    this.scene.events.on('update', this.update, this);
+    this.scene.parent.events.off('updateScore', this.updateScore, this);
+    this.scene.parent.events.on('updateScore', this.updateScore, this);
+    this.scene.parent.events.off('update', this.update, this);
+    this.scene.parent.events.on('update', this.update, this);
 
     this.scene.time.addEvent({
       delay: 1000,
