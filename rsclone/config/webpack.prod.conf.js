@@ -10,23 +10,16 @@ module.exports = merge(baseWebpackConfig, {
       test: /\.(scss|css)$/,
       use: [
         MiniCssExtractPlugin.loader,
-        {
-          loader: 'css-loader',
-          options: { sourceMap: false, importLoaders: 2 },
-        }, {
-          loader: 'sass-loader',
-          options: { sourceMap: false },
-        }, {
-          loader: 'postcss-loader',
-          options: { sourceMap: false, config: { path: './postcss.config.js' } },
-        },
+        { loader: 'css-loader', options: { sourceMap: false, importLoaders: 2 } },
+        { loader: 'postcss-loader', options: { sourceMap: false, config: { path: './postcss.config.js' } } },
+        { loader: 'sass-loader', options: { sourceMap: false } },
       ],
     }],
   },
 
   plugins: [
     new MiniCssExtractPlugin({
-      filename: `${baseWebpackConfig.externals.paths.assets}/[name].[hash].css`,
+      filename: '[name].css',
     }),
   ],
 });
