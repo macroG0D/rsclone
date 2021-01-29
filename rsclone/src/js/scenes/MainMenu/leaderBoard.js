@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-import Menu from '../../components/menu';
+import LeaderBoard from '../../components/leaderBoard';
 
 import { localization } from '../../engine/localization';
 
@@ -9,11 +9,16 @@ export default class MainMenuLeaderBoard extends Phaser.Scene {
     super('MainMenuLeaderBoard');
   }
 
-  create() {
-    const menuItems = {
-      leaderboard: '',
-    };
-    this.menu = new Menu(this, menuItems, true);
+  create(gameData) {
+    const { id } = gameData;
+    this.board = new LeaderBoard(this, id);
+    this.client = this.game.client;
+    if (this.client) {
+      this.client.on('getScore', (data) => {
+        this.board.updateTable(data);
+      });
+      this.client.sendData('getScore');
+    }
   }
 
   update() {

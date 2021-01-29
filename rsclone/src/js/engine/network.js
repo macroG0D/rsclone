@@ -1,10 +1,7 @@
-import Phaser from 'phaser';
-
 import { THROTTLE_DELAY } from '../constants';
 
-export default class Network extends Phaser.Events.EventEmitter {
+export default class Network {
   constructor(scene) {
-    super();
     this.scene = scene;
     this.client = scene.client;
     if (scene.online) {
@@ -38,6 +35,15 @@ export default class Network extends Phaser.Events.EventEmitter {
     }
 
     if (this.client) {
+      this.client.on('newRecord', (data) => {
+        this.scene.game.spawnPopup(this.scene, 'newRecord', data);
+      });
+
+      this.client.on('noRecord', (data) => {
+        this.scene.game.spawnPopup(this.scene, 'noRecord', data);
+      });
+
+      /* Debug stuff
       this.scene.input.keyboard.addKey('Q').on('up', () => {
         this.scene.events.emit('updateScore', 100);
       });
@@ -45,20 +51,13 @@ export default class Network extends Phaser.Events.EventEmitter {
       this.scene.input.keyboard.addKey('E').on('up', () => {
         const score = this.scene.score.currentScore;
         const time = this.scene.score.currentTime;
-        this.scene.events.emit('gameEnd', score, time);
+        this.scene.events.emit('gameEnd', { score, time });
       });
 
-      this.scene.input.keyboard.addKey('R').on('up', () => {
-        this.scene.events.emit('gameTest');
+      this.scene.events.on('gameEnd', (data) => {
+        this.client.sendData('checkScore', data);
       });
-
-      this.scene.events.on('gameEnd', (score, time) => {
-        const sendData = {
-          score,
-          time,
-        };
-        this.client.sendData('checkScore', sendData);
-      });
+      */
     }
   }
 

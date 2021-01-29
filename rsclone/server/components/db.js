@@ -1,4 +1,4 @@
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectID } = require('mongodb');
 const { DEFAULT_DB_SORT, DEFAULT_DB_LIMIT } = require('../constants');
 
 module.exports = class Db {
@@ -11,6 +11,8 @@ module.exports = class Db {
     this.methods = {
       getAll: this.getAll.bind(this),
       create: this.create.bind(this),
+      update: this.update.bind(this),
+      getOne: this.getOne.bind(this),
     };
     this.dbName = 'game';
     this.collectionName = 'board';
@@ -42,6 +44,20 @@ module.exports = class Db {
     return response;
   }
 
+  async getOne(id, dbName = this.dbName, collectionName = this.collectionName) {
+    const collection = await this.getCollection(dbName, collectionName);
+    const idObj = new ObjectID(id);
+    const response = await collection.findOne({ _id: idObj });
+    return response;
+  }
+
+  async update(id, newValue, dbName = this.dbName, collectionName = this.collectionName) {
+    const collection = await this.getCollection(dbName, collectionName);
+    const idObj = new ObjectID(id);
+    const response = await collection.findOneAndUpdate({ _id: idObj }, newValue);
+    return response;
+  }
+
   async query(query, callBack, ...rest) {
     const method = this.methods[query];
     const ret = method(...rest);
@@ -51,32 +67,3 @@ module.exports = class Db {
     );
   }
 };
-
-/*
-const db = new Db('btfUser', 'btfPass2020q3');
-
-const ret = db.getCollection('game', 'board');
-ret.then(
-  (result) => console.log(result),
-  (error) => console.log(error),
-);
-
-const item = {
-  score: 10,
-  time: 0,
-  name: 'Max2',
-};
-const ret = db.create('game', 'board', item);
-
-function printAll(result) {
-  console.log(result);
-}
-
-db.query('getAll', printAll);
-
-const collection = db.getAll('game', 'board');
-collection.then(
-  (result) => console.log(result),
-  (error) => console.log(error),
-);
-*/

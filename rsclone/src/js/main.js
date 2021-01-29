@@ -99,7 +99,11 @@ class Main {
         forceSetTimeOut: true,
       },
       scene: SCENES,
-      dom: { createContainer: true },
+      dom: { createContainer: true, behindCanvas: true },
+      input: {
+        keyboard: { target: window },
+        windowEvents: true,
+      },
     };
 
     this.game = new Game(this, this.gameConfig);
@@ -178,7 +182,9 @@ class Main {
     const prevSection = this.pages[prevLink];
     const nextSection = this.pages[nextLink];
     prevSection.classList.add('hidden');
+    prevSection.classList.remove('active');
     nextSection.classList.remove('hidden');
+    nextSection.classList.add('active');
     this.prevLink = nextLink;
     this.highlightPage(nextLink);
 
