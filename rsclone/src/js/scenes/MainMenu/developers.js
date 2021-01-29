@@ -16,7 +16,7 @@ export default class MainMenuDevelopers extends Phaser.Scene {
       mauta: () => window.open('https://github.com/mauta'),
     };
     this.menu = new Menu(this, menuItems, true);
-    // this.createGithubIcons();
+    this.createGithubIcons();
   }
 
   update() {
@@ -24,10 +24,10 @@ export default class MainMenuDevelopers extends Phaser.Scene {
   }
 
   createGithubIcons() {
-    const menuItemsCount = Object.keys(this.menuItems).length;
+    const menuItemsCount = Object.keys(this.menu.items).length - 1;
     for (let menuIndex = 0; menuIndex < menuItemsCount; menuIndex += 1) {
       this.add.image(this.cameras.main.centerX - 140,
-        (this.game.config.height / 2 + (menuItemsCount * 30)) - (60 * menuIndex),
+        (this.game.config.height / 2 + (menuItemsCount * 30) - 72) - (58 * menuIndex),
         'githubIcon');
     }
   }

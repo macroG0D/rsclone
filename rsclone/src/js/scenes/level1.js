@@ -5,8 +5,6 @@ import Portal from '../sprites/portal';
 import MovingPlatform from '../sprites/movingPlatform';
 import LevelsEntourage from '../levels/levelsEntourage';
 
-import Score from '../components/score';
-
 import Input from '../engine/input';
 import Network from '../engine/network';
 import LevelEnd from '../engine/levelEnd';
@@ -42,8 +40,7 @@ export default class Level1 extends Phaser.Scene {
   }
 
   create(gameData) {
-    this.input.keyboard.removeAllKeys(true);
-    this.events.removeAllListeners(true);
+    this.input.keyboard.removeAllKeys();
     this.client = this.game.client;
     if (gameData && gameData.online) {
       this.online = true;
@@ -276,11 +273,13 @@ export default class Level1 extends Phaser.Scene {
       });
     });
 
-    this.score = new Score(this);
-
     this.input.keyboard.addKey('ESC').on('down', () => {
       this.scene.switch('GameMenu');
     });
+
+    const score = (gameData && gameData.score) ? gameData.score : 0;
+    const time = (gameData && gameData.time) ? gameData.time : 0;
+    this.scene.run('Score', { parent: this, score, time });
   }
 
   addParallax() {

@@ -22,7 +22,8 @@ export default class LeaderBoard extends Create {
     this.caption.time = new Create('span', this.caption.node, 'board-caption-time', timeText);
     this.caption.time.name = 'score';
 
-    this.table = new Create('div', this.container.node, 'board-table');
+    const loadingText = '<span></span><span></span><span>loading data...</span>';
+    this.table = new Create('div', this.container.node, 'board-table', loadingText);
 
     const bcc = function bcc() {
       scene.scene.stop();
@@ -43,6 +44,7 @@ export default class LeaderBoard extends Create {
   }
 
   updateTable(data) {
+    this.table.node.innerHTML = '';
     this.table.lines = [];
     data.forEach((item, index) => {
       const {

@@ -46,7 +46,7 @@ export function localization(currScene) {
       });
     }
 
-    if (key && key.includes('Level')) {
+    if (key && key === 'Score') {
       if (scene.score.timeLabel) {
         const localeTime = locale.time || 'time';
         const currTime = scene.score.timeLabel.node.innerHTML;
