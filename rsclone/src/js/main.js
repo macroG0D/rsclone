@@ -8,7 +8,7 @@ import { SCENES } from './scenes/_scenesList';
 
 import { GAME_WIDTH, GAME_HEIGHT } from './constants';
 
-import LOCALE_HTML from './localehtml';
+import { LOCALE_HTML } from './localehtml';
 
 const WebFont = require('webfontloader');
 
@@ -71,6 +71,7 @@ class Main {
   }
 
   spawnGame() {
+    const gameDiv = document.getElementById('gameDiv');
     this.gameContainer = new Create('div', gameDiv, 'game-container').node;
     this.gameConfig = {
       type: Phaser.AUTO,
@@ -136,17 +137,20 @@ class Main {
     localStorage.setItem('rsc-game-settings', JSON.stringify(this.settings));
   }
 
- clickLang(){
-   this.btnLang.forEach((el) => el.addEventListener('click',(e)=>{
-     this.settings.locale = e.target.dataset.lang;
-     this.changeLang()
-     this.btnLang.forEach((item)=>item.classList.toggle('lang__item--active'))
-   }))
- }
+  clickLang() {
+    this.btnLang.forEach((el) => el.addEventListener('click', (e) => {
+      this.settings.locale = e.target.dataset.lang;
+      this.changeLang();
+      this.btnLang.forEach((item) => item.classList.toggle('lang__item--active'));
+    }));
+  }
 
-  changeLang(){
-   const curLang = LOCALE_HTML[this.settings.locale]
-   this.textItems.forEach(el => el.innerHTML = curLang[el.dataset.loc]);
+  changeLang() {
+    const curLang = LOCALE_HTML[this.settings.locale];
+    this.textItems.forEach((el) => {
+      const currEl = el;
+      currEl.innerHTML = curLang[el.dataset.loc];
+    });
   }
 
   changeAddress(link) {
@@ -157,10 +161,10 @@ class Main {
 
   getCurrPage() {
     const { hash } = window.location;
-    if (!hash || hash === '#') return 'home';
+    if (!hash || hash === '#') return 'game';
     let page = hash.replace('#', '');
     const { pages } = this;
-    if (!(Object.keys(pages).includes(page))) page = 'home';
+    if (!(Object.keys(pages).includes(page))) page = 'game';
     return page;
   }
 
