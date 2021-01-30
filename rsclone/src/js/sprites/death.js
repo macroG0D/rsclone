@@ -13,8 +13,9 @@ export default class Death {
       });
       switch (creatureType) {
         case 'enemy': {
-          const topEmitter = new Emitter(scene, creatureObject, 'triangle', creatureObject.isUpsideDown);
-          const bottomEmitter = new Emitter(scene, creatureObject, 'crystal', creatureObject.isUpsideDown, 4000);
+          console.log(creatureObject.reverseGravity);
+          const topEmitter = new Emitter(scene, creatureObject, 'triangle', creatureObject.reverseGravity);
+          const bottomEmitter = new Emitter(scene, creatureObject, 'crystal', creatureObject.reverseGravity, 4000);
           topEmitter.emitParticles(50);
           playSound(scene, 'glass_drop');
           bottomEmitter.emitParticles(10);

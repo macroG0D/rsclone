@@ -205,8 +205,8 @@ export default class Level1 extends Phaser.Scene {
 
     this.addWorldBounds();
     // ibb & obb spawn
-    this.obb = new Player(this, 'obb', 10300, 100, 'obb-sprite', COLLISION_CATEGORIES.obb);
-    this.ibb = new Player(this, 'ibb', 10350, 100, 'ibb-sprite', COLLISION_CATEGORIES.ibb);
+    this.obb = new Player(this, 'obb', 3400, 100, 'obb-sprite', COLLISION_CATEGORIES.obb);
+    this.ibb = new Player(this, 'ibb', 3400, 100, 'ibb-sprite', COLLISION_CATEGORIES.ibb);
     this.ibb.headStandingCheck();
     this.obb.headStandingCheck();
 
@@ -248,11 +248,11 @@ export default class Level1 extends Phaser.Scene {
     // enemies set 4
     this.hedgehog11 = new StandartHedgehog(this, 4290, 1457, 'hedgehog-head', 'hedgehog-halfbutt');
     this.hedgehog11.moveHorizontally(150, 'left', 1000);
-    this.hedgehog12 = new JumpingHedgehog(this, 4950, 1120, 'hedgehog-jumper', 'hedgehog-fullbutt', true, 85);
+    this.hedgehog12 = new JumpingHedgehog(this, 4950, 1120, 'hedgehog-jumper', 'hedgehog-fullbutt', true, 85, 0, false);
     this.hedgehog12.moveHorizontally(100, 'left', 300);
     this.hedgehog12.jump(50, 1500);
     // enemies set 5
-    this.hedgehog13 = new JumpingHedgehog(this, 5860, 860, 'hedgehog-jumper', 'hedgehog-fullbutt', true, 85);
+    this.hedgehog13 = new JumpingHedgehog(this, 5860, 860, 'hedgehog-jumper', 'hedgehog-fullbutt', true, 85, 0, false);
     this.hedgehog13.moveHorizontally(10, 'left', 300);
     this.hedgehog13.jump(150, 1500);
     this.hedgehog14 = new StandartHedgehog(this, 6030, 945, 'hedgehog-head', 'hedgehog-halfbutt');
