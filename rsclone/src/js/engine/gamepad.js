@@ -3,9 +3,10 @@ import Phaser from 'phaser';
 import { CONTROL_KEYS_SEQUENCE } from '../constants';
 
 export default class Gamepad extends Phaser.Events.EventEmitter {
-  constructor(scene, playerKey, position, config) {
+  constructor(scene, controlScene, playerKey, position, config) {
     super();
     this.scene = scene;
+    this.controlScene = controlScene;
     this.playerKey = playerKey;
     this.state = {};
     this.createGamepad(position, config);
@@ -50,11 +51,11 @@ export default class Gamepad extends Phaser.Events.EventEmitter {
 
   setDirection(direction, flag) {
     const { playerKey } = this;
-    if (!this.scene.online) {
-      this.scene.setDirection(playerKey, direction, flag);
+    if (!this.controlScene.online) {
+      this.controlScene.setDirection(playerKey, direction, flag);
       return;
     }
-    this.scene.client.sendData('playerMove', {
+    this.controlScene.client.sendData('playerMove', {
       playerKey,
       direction,
       movementFlag: flag,
