@@ -13,7 +13,6 @@ export default class Death {
       });
       switch (creatureType) {
         case 'enemy': {
-          console.log(creatureObject.reverseGravity);
           const topEmitter = new Emitter(scene, creatureObject, 'triangle', creatureObject.reverseGravity);
           const bottomEmitter = new Emitter(scene, creatureObject, 'crystal', creatureObject.reverseGravity, 4000);
           topEmitter.emitParticles(50);
