@@ -73,6 +73,6 @@ export default class Menu extends Create {
 
   selectItem() {
     const { link } = this.items[this.activeItem];
-    link();
+    if (link) link();
   }
 }
