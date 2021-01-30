@@ -6,6 +6,7 @@ import MovingPlatform from '../sprites/movingPlatform';
 import LevelsEntourage from '../levels/levelsEntourage';
 
 import Input from '../engine/input';
+import Gamepad from '../engine/gamepad';
 import Network from '../engine/network';
 import LevelEnd from '../engine/levelEnd';
 
@@ -42,15 +43,6 @@ export default class Level1 extends Phaser.Scene {
   create(gameData) {
     this.input.keyboard.removeAllKeys();
     this.client = this.game.client;
-    if (gameData && gameData.online) {
-      this.online = true;
-      this.playerKey = (gameData.master) ? 'ibb' : 'obb';
-      this.player1Input = new Input(this, this.playerKey, PLAYER_1_CONTROLS);
-    } else {
-      this.player1Input = new Input(this, 'ibb', PLAYER_1_CONTROLS);
-      this.player2Input = new Input(this, 'obb', PLAYER_2_CONTROLS);
-    }
-    this.network = new Network(this);
 
     this.matter.world.setBounds(0, 0, levelWidth, levelHeight, BORDER_THICKNESS);
     this.cameras.main.setBounds(0, 0, levelWidth, levelHeight);
@@ -58,6 +50,18 @@ export default class Level1 extends Phaser.Scene {
     // this.addBackgrounds();
     this.addParallax();
     this.addWalls();
+
+    if (gameData && gameData.online) {
+      this.online = true;
+      this.playerKey = (gameData.master) ? 'ibb' : 'obb';
+      this.player1Input = new Input(this, this.playerKey, PLAYER_1_CONTROLS);
+    } else {
+      this.player1Input = new Input(this, 'ibb', PLAYER_1_CONTROLS);
+      this.player2Input = new Input(this, 'obb', PLAYER_2_CONTROLS);
+      this.player1Gamepad = new Gamepad(this, 'ibb', 1);
+      this.player2Gamepad = new Gamepad(this, 'obb', 2);
+    }
+    this.network = new Network(this);
 
     // interactive level objects
     this.movingPlatform1 = new MovingPlatform(this, 6500, 1330, 'platform-long', 1100, 'horizontal');
