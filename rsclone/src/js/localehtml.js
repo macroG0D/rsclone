@@ -30,7 +30,7 @@ export const LOCALE_HTML = {
     left: 'left',
     right: 'right',
 
-    slogan: 'Try our ibb & obb version',
+    slogan: 'Try our JavaScript ibb & obb version',
 
     aboutTitle: 'About',
     aboutText: 'The final project of the Rolling Scopes School frontend course completed in the beginning of 2021. This is a team assignment whose goal is to develop a JavaScript game that runs in a web browser. The choice of the game itself is the team discretion, and we decided to choose the game "Ibb & Obb"',
