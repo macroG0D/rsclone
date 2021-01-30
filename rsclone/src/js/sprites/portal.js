@@ -5,7 +5,6 @@ export default class Portal extends Phaser.GameObjects.Rectangle {
   constructor(scene, x, y, width, height, color, isVertical, objSettings, collisionGroup) {
     super(scene, x, y, width, height, color); // new Rectangle()
     this.depth = 200;
-    // console.log(this.depth);
     scene.matter.add.gameObject(this, objSettings);
     if (collisionGroup) {
       this.collisionGroup = collisionGroup;

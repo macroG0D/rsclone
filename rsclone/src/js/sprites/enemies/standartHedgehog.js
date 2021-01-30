@@ -2,9 +2,11 @@ import Phaser from 'phaser';
 import Enemy from '../enemy';
 
 export default class StandartHedgehog extends Enemy {
-  constructor(scene, x, y, spriteA, spriteB, isUpsideDown = false, offsetBetweenHeadAndButt = 58) {
+  constructor(scene, x, y, spriteA, spriteB, isUpsideDown = false,
+    offsetBetweenHeadAndButt = 58, reverseGravity = isUpsideDown) {
     super(scene, x, y, spriteA);
     this.name = 'StandartHedgehog';
+    this.reverseGravity = reverseGravity;
     this.isUpsideDown = isUpsideDown;
     this.offsetBetweenHeadAndButt = this.isUpsideDown
       ? offsetBetweenHeadAndButt * -1 : offsetBetweenHeadAndButt;

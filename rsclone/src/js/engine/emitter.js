@@ -77,7 +77,16 @@ export default class Emitter {
       );
 
       if (this.particleType === 'triangle') {
-        particle.setBody({ type: 'trapezoid', slope: 1 }, { render: { sprite: { yOffset: -0.5, xOffset: -0.5 } } });
+        const newMatterParams = {
+          ...matterParams,
+          render: {
+            sprite: {
+              yOffset: -0.5,
+              xOffset: -0.5,
+            },
+          },
+        };
+        particle.setBody({ type: 'trapezoid', slope: 1 }, newMatterParams);
         particle.setAngularVelocity(1);
       }
       if (this.particleType !== 'crystal') particle.setScale(randomScale);
