@@ -205,8 +205,8 @@ export default class Level1 extends Phaser.Scene {
 
     this.addWorldBounds();
     // ibb & obb spawn
-    this.obb = new Player(this, 'obb', 5860, 100, 'obb-sprite', COLLISION_CATEGORIES.obb);
-    this.ibb = new Player(this, 'ibb', 5860, 100, 'ibb-sprite', COLLISION_CATEGORIES.ibb);
+    this.obb = new Player(this, 'obb', 10400, 100, 'obb-sprite', COLLISION_CATEGORIES.obb);
+    this.ibb = new Player(this, 'ibb', 10300, 100, 'ibb-sprite', COLLISION_CATEGORIES.ibb);
     this.ibb.headStandingCheck();
     this.obb.headStandingCheck();
 
@@ -284,24 +284,48 @@ export default class Level1 extends Phaser.Scene {
   }
 
   addWorldBounds() {
+    this.addSpikes();
+    this.addSpikesSensors();
+  }
+
+  addSpikes() {
     this.spikes = [];
     const spikeWidth = 88;
     let spikeCount = 0;
     const spikeYCorrection = 24;
     const spikeXCorrection = 22;
+    const radianValue = 6.28319;
     let spikeX = 0;
-    const matterParams = {
-      isSensor: true,
-      isStatic: true,
-      shape: 'circle',
-    };
+    const matterParams = { isSensor: true, isStatic: true };
     do {
       spikeX = (spikeWidth - spikeXCorrection) * spikeCount;
-      const topSpike = this.matter.add.image(spikeX, 0 - spikeYCorrection, 'spikes', null, matterParams);
-      const bottomSpike = this.matter.add.image(spikeX, levelHeight + spikeYCorrection, 'spikes', null, matterParams);
+      const topSpike = this.add.image(spikeX, 0 - spikeYCorrection, 'spikes', null, matterParams);
+      const bottomSpike = this.add.image(spikeX, levelHeight + spikeYCorrection, 'spikes', null, matterParams);
       this.spikes.push(topSpike, bottomSpike);
+      this.tweens.add({
+        targets: [topSpike, bottomSpike],
+        paused: false,
+        rotation: spikeCount % 2 === 0 ? -radianValue : radianValue,
+        duration: 1000,
+        repeat: -1,
+      });
       spikeCount += 1;
     } while (spikeX < levelWidth);
+  }
+
+  addSpikesSensors() {
+    const sensorHeight = 20;
+    this.spikesSensors = [];
+    const matterParams = { isSensor: true, isStatic: true };
+    const topSensor = this.matter.add.rectangle(
+      levelWidth / 2, sensorHeight / 2, levelWidth,
+      sensorHeight, matterParams,
+    );
+    const bottomSensor = this.matter.add.rectangle(
+      levelWidth / 2, levelHeight - sensorHeight / 2, levelWidth,
+      sensorHeight, matterParams,
+    );
+    this.spikesSensors.push(topSensor, bottomSensor);
   }
 
   addParallax() {
