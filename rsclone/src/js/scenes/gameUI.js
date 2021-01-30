@@ -1,5 +1,7 @@
 import Phaser from 'phaser';
 
+import Create from '../components/dom-create';
+
 import Input from '../engine/input';
 import Gamepad from '../engine/gamepad';
 
@@ -40,6 +42,29 @@ export default class gameUI extends Phaser.Scene {
     this.score = new Score(this, score, time);
     this.game.score = this.score;
 
+    // Inputs & controls
+    this.toggleGameMenu = this.toggleGameMenu.bind(this);
+    this.toggleFullScreen = this.toggleFullScreen.bind(this);
+    parent.input.keyboard.removeAllKeys();
+    const escKey = parent.input.keyboard.addKey('ESC');
+    escKey.on('down', this.toggleGameMenu, this);
+
+    this.burger = new Create('div');
+    this.burger.content = new Create('div', this.burger.node, 'game-burger');
+    this.burger.x = this.game.config.width - 52;
+    this.burger.y = 30;
+    this.burger.spawn = this.add.dom(this.burger.x, this.burger.y, this.burger.node);
+    this.burger.node.removeEventListener('click', this.toggleGameMenu, false);
+    this.burger.node.addEventListener('click', this.toggleGameMenu, false);
+
+    this.fsToggler = new Create('div');
+    this.fsToggler.content = new Create('div', this.fsToggler.node, 'game-fs-toggler');
+    this.fsToggler.x = this.game.config.width - 112;
+    this.fsToggler.y = 30;
+    this.fsToggler.spawn = this.add.dom(this.fsToggler.x, this.fsToggler.y, this.fsToggler.node);
+    this.fsToggler.node.removeEventListener('click', this.toggleFullScreen, false);
+    this.fsToggler.node.addEventListener('click', this.toggleFullScreen, false);
+
     const { desktop } = this.sys.game.device.os;
     if (online) {
       const playerKey = (master) ? 'ibb' : 'obb';
@@ -79,5 +104,18 @@ export default class gameUI extends Phaser.Scene {
 
   onShutdown() {
     this.scene.stop();
+  }
+
+  toggleGameMenu() {
+    this.parent.scene.switch('GameMenu');
+  }
+
+  toggleFullScreen() {
+    const element = this.game.app.gameContainer;
+    if (!document.fullscreenElement) {
+      element.requestFullscreen();
+    } else if (document.exitFullscreen) {
+      document.exitFullscreen();
+    }
   }
 }

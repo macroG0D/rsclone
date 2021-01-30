@@ -1,4 +1,5 @@
 import Create from './dom-create';
+
 export default class Score extends Create {
   constructor(scene, score = 0, time = 0) {
     super('div');
@@ -6,9 +7,9 @@ export default class Score extends Create {
     this.currentScore = score;
     this.currentTime = time;
     this.container = new Create('div', this.node, 'game-score');
-    this.timeLabel = new Create('div', this.container.node, 'game-score-time-icon');
+    this.timeIcon = new Create('div', this.container.node, 'game-score-time-icon');
     this.timeValue = new Create('div', this.container.node, 'game-score-time', this.getTime());
-    this.scoreLabel = new Create('div', this.container.node, 'game-score-score-icon');
+    this.scoreIcon = new Create('div', this.container.node, 'game-score-score-icon');
     this.scoreValue = new Create('div', this.container.node, 'game-score-score', score);
 
     this.spawn = scene.add.dom(0, 0, this.node);

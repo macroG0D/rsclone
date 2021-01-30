@@ -78,7 +78,7 @@
 }
 
 .game-score {
-  margin: 10px 20px;
+  margin: 20px 30px;
   user-select: none;
   font-family: "Montserrat", sans-serif;
   font-size: 32px;
@@ -108,3 +108,24 @@
   }
 }
 
+.game-burger, .game-fs-toggler {
+  width: 32px;
+  height: 20px;
+  opacity: 0.5;
+  transition: $short-transition;
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.25);
+    opacity: 1;
+  }
+}
+
+.game-burger {
+  background-image: url('../icons/ingame_burger.svg');
+  background-size: cover;
+}
+
+.game-fs-toggler {
+  background-image: url('../icons/fullscreen.svg');
+  background-size: cover;
+}

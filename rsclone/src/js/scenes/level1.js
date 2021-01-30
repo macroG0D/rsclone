@@ -255,11 +255,6 @@ export default class Level1 extends Phaser.Scene {
       });
     });
 
-    this.input.keyboard.removeAllKeys();
-    this.input.keyboard.addKey('ESC').on('down', () => {
-      this.scene.switch('GameMenu');
-    });
-
     this.client = this.game.client;
     this.network = new Network(this);
 
