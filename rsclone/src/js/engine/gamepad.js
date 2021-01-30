@@ -7,10 +7,11 @@ export default class Gamepad extends Phaser.Events.EventEmitter {
     super();
     this.scene = scene;
     this.playerKey = playerKey;
+    this.state = {};
     this.createGamepad(position, config);
   }
 
-  createGamepad(position, config = '4dir') {
+  createGamepad(position, config = '8dir') {
     const { scene } = this;
     const radius = 100;
     const padding = 50;
@@ -32,55 +33,31 @@ export default class Gamepad extends Phaser.Events.EventEmitter {
     joystick.base.alpha = 0.75;
     joystick.base.setDepth(1);
     joystick.thumb.setDepth(2);
-    joystick.on('update', this.joystickOnUpdate, this);
     this.joystick = joystick;
+    joystick.on('update', this.onUpdate, this);
   }
 
-  joystickOnUpdate() {
-    let empty = true;
+  onUpdate() {
     CONTROL_KEYS_SEQUENCE.forEach((direction) => {
-      const joyDirection = this.joystick[direction];
-      if (joyDirection && (joyDirection || this.prevDirection)) {
-        this.changeDirection(direction);
-        empty = false;
+      const state = this.state[direction];
+      const keyState = this.joystick[direction];
+      if (keyState !== state) {
+        this.setDirection(direction, keyState);
+        this.state[direction] = keyState;
       }
     });
-
-    const { playerKey, prevDirection } = this;
-    if (empty && prevDirection) {
-      this.stopDirection(playerKey, prevDirection);
-      this.prevDirection = false;
-    }
   }
 
-  changeDirection(direction) {
-    const { playerKey, prevDirection } = this;
-    if (prevDirection) this.stopDirection(playerKey, prevDirection);
-    this.startDirection(playerKey, direction);
-    this.prevDirection = direction;
-  }
-
-  startDirection(playerKey, direction) {
+  setDirection(direction, flag) {
+    const { playerKey } = this;
     if (!this.scene.online) {
-      this.scene.setDirection(playerKey, direction, true);
+      this.scene.setDirection(playerKey, direction, flag);
       return;
     }
     this.scene.client.sendData('playerMove', {
       playerKey,
       direction,
-      movementFlag: true,
-    });
-  }
-
-  stopDirection(playerKey, direction) {
-    if (!this.scene.online) {
-      this.scene.setDirection(playerKey, direction, false);
-      return;
-    }
-    this.scene.client.sendData('playerMove', {
-      playerKey,
-      direction,
-      movementFlag: false,
+      movementFlag: flag,
     });
   }
 }
