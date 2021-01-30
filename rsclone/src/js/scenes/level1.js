@@ -261,10 +261,11 @@ export default class Level1 extends Phaser.Scene {
     });
 
     this.client = this.game.client;
-    const data = gameData || {};
-    data.parent = this;
-    this.scene.run('Score', data);
     this.network = new Network(this);
+
+    const sendData = gameData || {};
+    sendData.parent = this;
+    this.scene.run('gameUI', sendData);
   }
 
   addParallax() {

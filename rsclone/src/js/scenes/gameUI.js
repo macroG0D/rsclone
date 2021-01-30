@@ -7,9 +7,9 @@ import Score from '../components/score';
 
 import { PLAYER_1_CONTROLS, PLAYER_2_CONTROLS } from '../constants';
 
-export default class Boot extends Phaser.Scene {
+export default class gameUI extends Phaser.Scene {
   constructor() {
-    super('Score');
+    super('gameUI');
   }
 
   create(gameData) {
@@ -45,8 +45,8 @@ export default class Boot extends Phaser.Scene {
       parent.online = true;
       parent.playerKey = playerKey;
       this.player1Input = new Input(parent, playerKey, PLAYER_1_CONTROLS);
+      parent.network.initSync();
     } else {
-      console.log(this.sys.game.device.os.desktop);
       this.player1Input = new Input(parent, 'ibb', PLAYER_1_CONTROLS);
       this.player2Input = new Input(parent, 'obb', PLAYER_2_CONTROLS);
       this.player1Gamepad = new Gamepad(this, parent, 'ibb', 1);

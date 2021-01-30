@@ -4,36 +4,7 @@ export default class Network {
   constructor(scene) {
     this.scene = scene;
     this.client = scene.client;
-    if (scene.online) {
-      scene.client.on('playerMove', (data) => {
-        const { playerKey, direction, movementFlag } = data;
-        scene.setDirection(playerKey, direction, movementFlag);
-      });
-
-      scene.client.on('playerSync', (data) => {
-        const {
-          playerKey,
-          x,
-          y,
-          angle,
-          disableGravitySwitch,
-        } = data;
-        const character = this.scene[playerKey];
-        if (character) {
-          if (character.x && character.x !== x) character.x = x;
-          if (character.y && character.y !== y) character.y = y;
-          if (character.angle && character.angle !== angle) character.angle = angle;
-          if (character.disableGravitySwitch
-                && character.disableGravitySwitch !== disableGravitySwitch) {
-            character.disableGravitySwitch = disableGravitySwitch;
-          }
-        }
-      });
-
-      this.scene.events.off('update', this.sync, this);
-      this.scene.events.on('update', this.sync, this);
-    }
-
+    this.initSync = this.initSync.bind(this);
     if (this.client) {
       this.client.on('newRecord', (data) => {
         this.scene.game.spawnPopup(this.scene, 'newRecord', data);
@@ -58,6 +29,42 @@ export default class Network {
         this.client.sendData('checkScore', data);
       });
       */
+    }
+  }
+
+  initSync() {
+    this.client.off('playerMove', this.onPlayerMove, this);
+    this.client.on('playerMove', this.onPlayerMove, this);
+
+    this.client.off('playerSync', this.onPlayerSync, this);
+    this.client.on('playerSync', this.onPlayerSync, this);
+
+    this.scene.events.off('update', this.sync, this);
+    this.scene.events.on('update', this.sync, this);
+  }
+
+  onPlayerMove(data) {
+    const { playerKey, direction, movementFlag } = data;
+    this.scene.setDirection(playerKey, direction, movementFlag);
+  }
+
+  onPlayerSync(data) {
+    const {
+      playerKey,
+      x,
+      y,
+      angle,
+      disableGravitySwitch,
+    } = data;
+    const character = this.scene[playerKey];
+    if (character) {
+      if (character.x && character.x !== x) character.x = x;
+      if (character.y && character.y !== y) character.y = y;
+      if (character.angle && character.angle !== angle) character.angle = angle;
+      if (character.disableGravitySwitch
+            && character.disableGravitySwitch !== disableGravitySwitch) {
+        character.disableGravitySwitch = disableGravitySwitch;
+      }
     }
   }
 
