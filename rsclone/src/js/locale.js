@@ -12,6 +12,7 @@ export const LOCALE = {
     // online game menu
     hostGame: 'host a game',
     joinGame: 'join a game',
+    about: 'source code',
   },
 
   ru: {
@@ -20,7 +21,7 @@ export const LOCALE = {
     leaderboard: 'рекорды',
     settings: 'настройки',
     developers: 'разработчики',
-    about: 'о нас',
+    about: 'исходный код',
     back: 'назад',
     // play menu
     localGame: 'локальная игра',
