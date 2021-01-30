@@ -5,7 +5,6 @@ import Portal from '../sprites/portal';
 import MovingPlatform from '../sprites/movingPlatform';
 import LevelsEntourage from '../levels/levelsEntourage';
 
-import Input from '../engine/input';
 import Network from '../engine/network';
 import LevelEnd from '../engine/levelEnd';
 
@@ -13,12 +12,7 @@ import StandartHedgehog from '../sprites/enemies/standartHedgehog';
 import JumpingHedgehog from '../sprites/enemies/jumpingHedgehog';
 import { gradientSquares, gradientColors, walls } from '../levels/level1/backgroundStructure';
 
-import {
-  BORDER_THICKNESS,
-  PLAYER_1_CONTROLS,
-  PLAYER_2_CONTROLS,
-  COLLISION_CATEGORIES,
-} from '../constants';
+import { BORDER_THICKNESS, COLLISION_CATEGORIES } from '../constants';
 
 import { playMusic } from '../utils/playMusic';
 
@@ -40,18 +34,6 @@ export default class Level1 extends Phaser.Scene {
   }
 
   create(gameData) {
-    this.input.keyboard.removeAllKeys();
-    this.client = this.game.client;
-    if (gameData && gameData.online) {
-      this.online = true;
-      this.playerKey = (gameData.master) ? 'ibb' : 'obb';
-      this.player1Input = new Input(this, this.playerKey, PLAYER_1_CONTROLS);
-    } else {
-      this.player1Input = new Input(this, 'ibb', PLAYER_1_CONTROLS);
-      this.player2Input = new Input(this, 'obb', PLAYER_2_CONTROLS);
-    }
-    this.network = new Network(this);
-
     this.matter.world.setBounds(0, 0, levelWidth, levelHeight, BORDER_THICKNESS);
     this.cameras.main.setBounds(0, 0, levelWidth, levelHeight);
     this.cameras.main.roundPixels = true;
@@ -273,13 +255,12 @@ export default class Level1 extends Phaser.Scene {
       });
     });
 
-    this.input.keyboard.addKey('ESC').on('down', () => {
-      this.scene.switch('GameMenu');
-    });
+    this.client = this.game.client;
+    this.network = new Network(this);
 
-    const score = (gameData && gameData.score) ? gameData.score : 0;
-    const time = (gameData && gameData.time) ? gameData.time : 0;
-    this.scene.run('Score', { parent: this, score, time });
+    const sendData = gameData || {};
+    sendData.parent = this;
+    this.scene.run('gameUI', sendData);
   }
 
   addParallax() {

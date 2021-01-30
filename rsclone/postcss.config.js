@@ -9,11 +9,7 @@ module.exports = {
     autoprefixerPlugin,
     cssnanoPlugin({
       preset: [
-        'advanced', {
-          discardComments: {
-            removeAll: true,
-          },
-        },
+        'advanced', { discardComments: { removeAll: true } },
       ],
     }),
   ],

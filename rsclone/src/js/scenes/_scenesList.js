@@ -14,7 +14,7 @@ import Level2 from './level2';
 import LevelSwitch from './levelSwitch';
 import GameMenu from './MainMenu/gameMenu';
 import GameOver from './MainMenu/gameOver';
-import Score from './score';
+import gameUI from './gameUI';
 
 export const SCENES = [
   Boot,
@@ -33,7 +33,7 @@ export const SCENES = [
   LevelSwitch,
   GameMenu,
   GameOver,
-  Score,
+  gameUI,
 ];
 
 export default SCENES;

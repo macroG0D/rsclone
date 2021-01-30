@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
+import VirtualJoystickPlugin from 'phaser3-rex-plugins/plugins/virtualjoystick-plugin';
 import Create from './components/dom-create';
 
 import Game from './components/game';
@@ -96,13 +97,16 @@ class Main {
         },
       },
       plugins: {
-        scene: [
-          {
-            plugin: PhaserMatterCollisionPlugin, // The plugin class
-            key: 'matterCollision', // Where to store in Scene.Systems, e.g. scene.sys.matterCollision
-            mapping: 'matterCollision', // Where to store in the Scene, e.g. scene.matterCollision
-          },
-        ],
+        global: [{
+          key: 'rexVirtualJoystick',
+          plugin: VirtualJoystickPlugin,
+          start: true,
+        }],
+        scene: [{
+          plugin: PhaserMatterCollisionPlugin,
+          key: 'matterCollision',
+          mapping: 'matterCollision',
+        }],
       },
       fps: {
         target: 60,

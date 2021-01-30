@@ -132,7 +132,8 @@ export default class Preload extends Phaser.Scene {
   }
 
   create() {
-    this.scene.start('MainMenu');
+    // this.scene.start('MainMenu');
+    this.scene.start('Level1');
   }
 
   showBootBg() {
