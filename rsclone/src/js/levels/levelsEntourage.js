@@ -29,7 +29,7 @@ export default class LevelsEntourage {
 
   entourageObjectAnimation(colorA, colorB, animationSpeed) {
     const primaryColor = Phaser.Display.Color.ValueToColor(colorA);
-    const secondatyColor = Phaser.Display.Color.ValueToColor(colorB);
+    const secondaryColor = Phaser.Display.Color.ValueToColor(colorB);
 
     this.scene.tweens.addCounter({
       from: 0,
@@ -42,7 +42,7 @@ export default class LevelsEntourage {
         const value = tween.getValue();
         const colorObject = Phaser.Display.Color.Interpolate.ColorWithColor(
           primaryColor,
-          secondatyColor,
+          secondaryColor,
           500,
           value,
         );
