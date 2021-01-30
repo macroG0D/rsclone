@@ -7,7 +7,7 @@ export function localization(currScene) {
   if (appLocale !== sceneLocale) {
     scene.locale = appLocale;
     const locale = LOCALE[appLocale];
-    const { menu, range } = scene;
+    const { menu, range, board } = scene;
     const { key } = scene.scene;
 
     if (menu) {
@@ -35,7 +35,18 @@ export function localization(currScene) {
       });
     }
 
-    if (key && key.includes('Level')) {
+    if (board) {
+      Object.values(board.caption).forEach((captionItem) => {
+        const item = captionItem;
+        if (item.name) {
+          const localeValue = locale[item.name] || item.name;
+          const currValue = item.node.innerHTML;
+          if (localeValue && localeValue !== currValue) item.node.innerHTML = localeValue;
+        }
+      });
+    }
+
+    if (key && key === 'Score') {
       if (scene.score.timeLabel) {
         const localeTime = locale.time || 'time';
         const currTime = scene.score.timeLabel.node.innerHTML;

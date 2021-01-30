@@ -16,9 +16,7 @@ class Server {
   }
 
   onError(error) {
-    if (error.syscall !== 'listen') {
-      throw error;
-    }
+    if (error.syscall !== 'listen') throw error;
 
     const bind = typeof this.port === 'string'
       ? `Pipe ${this.port}`

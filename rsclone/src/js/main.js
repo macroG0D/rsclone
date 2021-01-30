@@ -8,7 +8,7 @@ import { SCENES } from './scenes/_scenesList';
 
 import { GAME_WIDTH, GAME_HEIGHT } from './constants';
 
-import LOCALE_HTML from './localehtml';
+import { LOCALE_HTML } from './localehtml';
 
 const WebFont = require('webfontloader');
 
@@ -43,7 +43,7 @@ class Main {
     const btnBurger = document.getElementById('gameBtnBurger');
     const menuHome = document.getElementById('menuHome');
     const menuAbout = document.getElementById('menuAbout');
-    const menuGame = document.getElementById('menuGame');    
+    const menuGame = document.getElementById('menuGame');
     const bodyGame = document.querySelector('body');
     this.btnLang = document.querySelectorAll('.lang__item');
     this.textItems = document.querySelectorAll('[data-loc]');
@@ -63,6 +63,15 @@ class Main {
       bodyGame,
     };
 
+    const page = this.getCurrPage();
+    this.changeAddress(page);
+    this.navigate();
+    this.clickBurger();
+    this.clickLang();
+  }
+
+  spawnGame() {
+    const gameDiv = document.getElementById('gameDiv');
     this.gameContainer = new Create('div', gameDiv, 'game-container').node;
     this.gameConfig = {
       type: Phaser.AUTO,
@@ -72,6 +81,7 @@ class Main {
         autoCenter: Phaser.Scale.CENTER_BOTH,
         width: GAME_WIDTH,
         height: GAME_HEIGHT,
+        autoRound: true,
       },
       backgroundColor: '#e5e5e5',
       physics: {
@@ -99,16 +109,14 @@ class Main {
         forceSetTimeOut: true,
       },
       scene: SCENES,
-      dom: { createContainer: true },
+      dom: { createContainer: true, behindCanvas: true },
+      input: {
+        keyboard: { target: window },
+        windowEvents: true,
+      },
     };
 
     this.game = new Game(this, this.gameConfig);
-
-    const page = this.getCurrPage();
-    this.changeAddress(page);
-    this.navigate();
-    this.clickBurger();
-    this.clickLang();
   }
 
   clickBurger() {
@@ -129,17 +137,20 @@ class Main {
     localStorage.setItem('rsc-game-settings', JSON.stringify(this.settings));
   }
 
- clickLang(){
-   this.btnLang.forEach((el) => el.addEventListener('click',(e)=>{
-     this.settings.locale = e.target.dataset.lang;
-     this.changeLang()
-     this.btnLang.forEach((item)=>item.classList.toggle('lang__item--active'))
-   }))
- }
+  clickLang() {
+    this.btnLang.forEach((el) => el.addEventListener('click', (e) => {
+      this.settings.locale = e.target.dataset.lang;
+      this.changeLang();
+      this.btnLang.forEach((item) => item.classList.toggle('lang__item--active'));
+    }));
+  }
 
-  changeLang(){
-   const curLang = LOCALE_HTML[this.settings.locale]
-   this.textItems.forEach(el => el.innerHTML = curLang[el.dataset.loc]);
+  changeLang() {
+    const curLang = LOCALE_HTML[this.settings.locale];
+    this.textItems.forEach((el) => {
+      const currEl = el;
+      currEl.innerHTML = curLang[el.dataset.loc];
+    });
   }
 
   changeAddress(link) {
@@ -178,13 +189,15 @@ class Main {
     const prevSection = this.pages[prevLink];
     const nextSection = this.pages[nextLink];
     prevSection.classList.add('hidden');
+    prevSection.classList.remove('active');
     nextSection.classList.remove('hidden');
+    nextSection.classList.add('active');
     this.prevLink = nextLink;
     this.highlightPage(nextLink);
 
-    if (this.elements.header.classList.contains('header__display')) {
-      this.toggleBurger();
-    }
+    if (this.elements.header.classList.contains('header__display')) this.toggleBurger();
+
+    if (nextLink === 'game' && !this.game) this.spawnGame();
   }
 }
 

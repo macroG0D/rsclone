@@ -5,8 +5,6 @@ import Portal from '../sprites/portal';
 import MovingPlatform from '../sprites/movingPlatform';
 import LevelsEntourage from '../levels/levelsEntourage';
 
-import Score from '../components/score';
-
 import Input from '../engine/input';
 import Network from '../engine/network';
 import LevelEnd from '../engine/levelEnd';
@@ -34,7 +32,7 @@ const parallaxImages = {
   bg_1: 0.2,
   bg_2: 0.3,
 };
-export default class Level2 extends Phaser.Scene {
+export default class Level1 extends Phaser.Scene {
   constructor() {
     super('Level2');
     this.walls = [];
@@ -42,7 +40,7 @@ export default class Level2 extends Phaser.Scene {
   }
 
   create(gameData) {
-    this.input.keyboard.removeAllKeys(true);
+    this.input.keyboard.removeAllKeys();
     this.client = this.game.client;
     if (gameData && gameData.online) {
       this.online = true;
@@ -206,8 +204,8 @@ export default class Level2 extends Phaser.Scene {
     this.grassSet = new LevelsEntourage(this, 1, 10389, 166, 1, 'flowersSet01', false, false, 0, 1800);
 
     // ibb & obb spawn
-    this.ibb = new Player(this, 'ibb', 10250, 50, 'ibb-sprite', COLLISION_CATEGORIES.ibb);
-    this.obb = new Player(this, 'obb', 10300, 50, 'obb-sprite', COLLISION_CATEGORIES.obb);
+    this.obb = new Player(this, 'obb', 225, 1100, 'obb-sprite', COLLISION_CATEGORIES.obb);
+    this.ibb = new Player(this, 'ibb', 240, 1160, 'ibb-sprite', COLLISION_CATEGORIES.ibb);
     this.ibb.headStandingCheck();
     this.obb.headStandingCheck();
 
@@ -264,10 +262,7 @@ export default class Level2 extends Phaser.Scene {
     this.hedgehog16 = new JumpingHedgehog(this, 7520, 1265, 'hedgehog-jumper', 'hedgehog-fullbutt', false, -100, 100);
     this.hedgehog16.jump(80, 300);
 
-    // this.cursors = this.input.keyboard.createCursorKeys();
     playMusic(this);
-    // this.scene.run('Score');
-    // this.gameMenu();
     this.events.off('GameOver');
     this.events.on('GameOver', () => {
       this.time.addEvent({
@@ -278,12 +273,13 @@ export default class Level2 extends Phaser.Scene {
       });
     });
 
-    const score = (gameData && gameData.score) ? gameData.score : 0;
-    const time = (gameData && gameData.time) ? gameData.time : 0;
-    this.score = new Score(this, score, time);
     this.input.keyboard.addKey('ESC').on('down', () => {
       this.scene.switch('GameMenu');
     });
+
+    const score = (gameData && gameData.score) ? gameData.score : 0;
+    const time = (gameData && gameData.time) ? gameData.time : 0;
+    this.scene.run('Score', { parent: this, score, time });
   }
 
   addParallax() {
@@ -417,7 +413,6 @@ export default class Level2 extends Phaser.Scene {
       this.centerCamera();
       this.scrollParallax();
     }
-    if (this.online) this.network.sync();
     this.checkIfPlayersAreAtFinish();
   }
 

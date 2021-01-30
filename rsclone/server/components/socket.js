@@ -19,7 +19,28 @@ module.exports = class Socket {
       socket.on('requestStartGame', (sessionName) => this.onRequestStartGame(socket, sessionName));
       socket.on('disconnect', () => this.onDisconnect(socket));
       socket.on('checkScore', (data) => this.onCheckScore(socket, data));
+      socket.on('getScore', () => this.onGetScores(socket));
+      socket.on('updateName', (data) => this.onUpdateName(data));
     });
+  }
+
+  onUpdateName(data) {
+    const { id, name } = data;
+    const callBack = (result, error) => {
+      if (error) console.log('Error:', error);
+    };
+    this.db.query('update', callBack, id, { $set: { name } });
+  }
+
+  onGetScores(socket) {
+    const callBack = (result, error) => {
+      if (error) {
+        console.log('Error:', error);
+        return;
+      }
+      socket.emit('getScore', result);
+    };
+    this.db.query('getAll', callBack);
   }
 
   checkScore(socket, item) {
@@ -30,7 +51,8 @@ module.exports = class Socket {
       }
       const filterField = '_id';
       const itemId = item[filterField].toString();
-      const itemScore = +item.score.toString();
+      const score = +item.score.toString();
+      const time = +item.time.toString();
       let position = -1;
       result.filter((resItem, index) => {
         const resItemId = resItem[filterField].toString();
@@ -42,7 +64,8 @@ module.exports = class Socket {
       const sendData = {
         position,
         id: itemId,
-        score: itemScore,
+        score,
+        time,
       };
 
       const action = (position <= 100) ? 'newRecord' : 'noRecord';
