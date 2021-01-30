@@ -1,23 +1,15 @@
 import Create from './dom-create';
-
-import { LOCALE } from '../locale';
-
-import { localization } from '../engine/localization';
-
 export default class Score extends Create {
   constructor(scene, score = 0, time = 0) {
     super('div');
     this.scene = scene;
     this.currentScore = score;
     this.currentTime = time;
-    const locale = LOCALE[scene.game.app.settings.locale];
-    const timeText = locale.time || 'time';
-    const scoreText = locale.score || 'score';
     this.container = new Create('div', this.node, 'game-score');
-    this.timeLabel = new Create('div', this.container.node, 'game-score-time-label', timeText);
+    this.timeLabel = new Create('div', this.container.node, 'game-score-time-icon');
     this.timeValue = new Create('div', this.container.node, 'game-score-time', this.getTime());
-    this.scoreLabel = new Create('div', this.container.node, 'game-score-score-label', scoreText);
-    this.scoreValue = new Create('div', this.container.node, 'game-score-score', '0');
+    this.scoreLabel = new Create('div', this.container.node, 'game-score-score-icon');
+    this.scoreValue = new Create('div', this.container.node, 'game-score-score', score);
 
     this.spawn = scene.add.dom(0, 0, this.node);
     this.spawn.setScrollFactor(0, 0);
@@ -25,22 +17,13 @@ export default class Score extends Create {
 
     this.scene.parent.events.off('updateScore', this.updateScore, this);
     this.scene.parent.events.on('updateScore', this.updateScore, this);
-    this.scene.parent.events.off('update', this.update, this);
-    this.scene.parent.events.on('update', this.update, this);
 
     this.scene.time.addEvent({
       delay: 1000,
-      callback: () => {
-        this.currentTime += 1000;
-      },
+      callback: () => this.updateTime(),
       callbackScope: this,
       loop: true,
     });
-  }
-
-  update() {
-    this.updateTime();
-    localization(this.scene);
   }
 
   getTime() {
@@ -48,7 +31,9 @@ export default class Score extends Create {
   }
 
   updateTime() {
-    this.timeValue.node.innerHTML = this.getTime();
+    this.currentTime += 1000;
+    const newTime = this.getTime();
+    this.timeValue.node.innerHTML = newTime;
   }
 
   updateScore(score) {

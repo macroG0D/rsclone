@@ -1,14 +1,16 @@
 import { LOCALE } from '../locale';
+import { THROTTLE_DELAY } from '../constants';
 
 export function localization(currScene) {
   const scene = currScene;
+  if (scene.locThrottle) return;
+  scene.locThrottle = true;
   const appLocale = scene.game.app.settings.locale;
   const sceneLocale = scene.locale;
   if (appLocale !== sceneLocale) {
     scene.locale = appLocale;
     const locale = LOCALE[appLocale];
     const { menu, range, board } = scene;
-    const { key } = scene.scene;
 
     if (menu) {
       menu.items.forEach((menuItem) => {
@@ -45,24 +47,12 @@ export function localization(currScene) {
         }
       });
     }
-
-    if (key && key === 'Score') {
-      if (scene.score.timeLabel) {
-        const localeTime = locale.time || 'time';
-        const currTime = scene.score.timeLabel.node.innerHTML;
-        if (localeTime && localeTime !== currTime) {
-          scene.score.timeLabel.node.innerHTML = localeTime;
-        }
-      }
-      if (scene.score.scoreLabel) {
-        const localeScore = locale.score || 'score';
-        const currScore = scene.score.scoreLabel.node.innerHTML;
-        if (localeScore && localeScore !== currScore) {
-          scene.score.scoreLabel.node.innerHTML = localeScore;
-        }
-      }
-    }
   }
+
+  scene.time.addEvent({
+    delay: THROTTLE_DELAY / 4,
+    callback: () => { scene.locThrottle = false; },
+  });
 }
 
 export default localization;

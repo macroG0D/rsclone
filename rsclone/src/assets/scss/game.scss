@@ -78,35 +78,32 @@
 }
 
 .game-score {
-  margin: 10px;
+  margin: 10px 20px;
   user-select: none;
   font-family: "Montserrat", sans-serif;
   font-size: 32px;
   color: #000000;
   display: grid;
-  grid-template-columns: 1fr 2fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 36px 1fr;
+  grid-auto-rows: 36px;
+  grid-gap: 15px;
   grid-template-areas:
-    "scoreTimeLabel scoreTime"
-    "scoreScoreLabel scoreScore";
+    "timeIcon time"
+    "scoreIcon score";
   &-time {
-    grid-area: scoreTime;
-    &-label {
-      margin: 0 5px;
-      grid-area: scoreTimeLabel;
-      &::after {
-        content: ":";
-      }
+    grid-area: time;
+    &-icon {
+      grid-area: timeIcon;
+      background-image: url('../icons/time.svg');
+      background-size: cover;
     }
   }
   &-score {
-    grid-area: scoreScore;
-    &-label {
-      margin: 0 5px;
-      grid-area: scoreScoreLabel;
-      &::after {
-        content: ":";
-      }
+    grid-area: score;
+    &-icon {
+      grid-area: scoreIcon;
+      background-image: url('../icons/score.svg');
+      background-size: cover;
     }
   }
 }
