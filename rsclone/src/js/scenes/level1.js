@@ -205,8 +205,8 @@ export default class Level1 extends Phaser.Scene {
 
     this.addWorldBounds();
     // ibb & obb spawn
-    this.obb = new Player(this, 'obb', 10400, 100, 'obb-sprite', COLLISION_CATEGORIES.obb);
-    this.ibb = new Player(this, 'ibb', 10300, 100, 'ibb-sprite', COLLISION_CATEGORIES.ibb);
+    this.obb = new Player(this, 'obb', 220, 1100, 'obb-sprite', COLLISION_CATEGORIES.obb);
+    this.ibb = new Player(this, 'ibb', 240, 1160, 'ibb-sprite', COLLISION_CATEGORIES.ibb);
     this.ibb.headStandingCheck();
     this.obb.headStandingCheck();
 
