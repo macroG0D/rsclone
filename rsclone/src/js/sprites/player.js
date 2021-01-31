@@ -154,10 +154,10 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
   }
 
   addCollideWorldBoundsListener() {
-    const worldBounds = this.scene.matter.world.walls;
+    const worldBounds = this.scene.spikesSensors;
     this.scene.matterCollision.addOnCollideStart({
-      objectA: [worldBounds.top, worldBounds.bottom],
-      objectB: [this, this.getAnotherPlayer()],
+      objectA: worldBounds,
+      objectB: this,
       callback: this.kill,
       context: this,
     });

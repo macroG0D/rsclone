@@ -3,6 +3,9 @@
   padding-top: 100px;
   padding-bottom: 160px;
   color: $lightColor;
+  @media (max-width: 640px) {
+    text-align: center;
+  }
 }
 
 .developers__list {
@@ -76,7 +79,6 @@
   text-align: right;
   position: relative;
   transition: all 0.25s ease;
-
   &::before {
     display: block;
     position: absolute;
@@ -84,6 +86,9 @@
     top: 0;
     left: -25px;
     width: 20px;
+    @media (max-width: 640px) {
+      top: -2px;
+    }
   }
 
   &:hover {
@@ -92,5 +97,7 @@
 
   @media (max-width: 640px) {
     font-size: 16px;
+    align-self: center;
+    transform: translate(10px);
   }
 }

@@ -3,10 +3,12 @@ import Enemy from '../enemy';
 
 export default class JumpingHedgehog extends Enemy {
   constructor(scene, x, y, spriteA, spriteB,
-    isUpsideDown = false, offsetBetweenHeadAndButt = 100, buttX = 0) {
+    isUpsideDown = false, offsetBetweenHeadAndButt = 100,
+    buttX = 0, reverseGravity = isUpsideDown) {
     super(scene, x, y, spriteA);
     this.name = 'JumpingHedgehog';
     this.isUpsideDown = isUpsideDown;
+    this.reverseGravity = reverseGravity;
     this.offsetBetweenHeadAndButt = this.isUpsideDown
       ? offsetBetweenHeadAndButt * -1 : offsetBetweenHeadAndButt;
     this.butt = scene.add.sprite(x + buttX, y + this.offsetBetweenHeadAndButt, spriteB);

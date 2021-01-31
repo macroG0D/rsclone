@@ -1,6 +1,7 @@
 .header {
   @include screenSize;
   color: $startFontColor;
+  user-select: none;
 }
 
 .header__wrap {

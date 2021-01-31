@@ -185,8 +185,9 @@ export default class Level1 extends Phaser.Scene {
     this.grassSet = new LevelsEntourage(this, 1, 10239, 166, 1, 'flowersSet01', false, false, 98, 800);
     this.grassSet = new LevelsEntourage(this, 1, 10389, 166, 1, 'flowersSet01', false, false, 0, 1800);
 
+    this.addWorldBounds();
     // ibb & obb spawn
-    this.obb = new Player(this, 'obb', 225, 1100, 'obb-sprite', COLLISION_CATEGORIES.obb);
+    this.obb = new Player(this, 'obb', 220, 1100, 'obb-sprite', COLLISION_CATEGORIES.obb);
     this.ibb = new Player(this, 'ibb', 240, 1160, 'ibb-sprite', COLLISION_CATEGORIES.ibb);
     this.ibb.headStandingCheck();
     this.obb.headStandingCheck();
@@ -229,11 +230,11 @@ export default class Level1 extends Phaser.Scene {
     // enemies set 4
     this.hedgehog11 = new StandartHedgehog(this, 4290, 1457, 'hedgehog-head', 'hedgehog-halfbutt');
     this.hedgehog11.moveHorizontally(150, 'left', 1000);
-    this.hedgehog12 = new JumpingHedgehog(this, 4950, 1120, 'hedgehog-jumper', 'hedgehog-fullbutt', true, 85);
+    this.hedgehog12 = new JumpingHedgehog(this, 4950, 1120, 'hedgehog-jumper', 'hedgehog-fullbutt', true, 85, 0, false);
     this.hedgehog12.moveHorizontally(100, 'left', 300);
     this.hedgehog12.jump(50, 1500);
     // enemies set 5
-    this.hedgehog13 = new JumpingHedgehog(this, 5860, 860, 'hedgehog-jumper', 'hedgehog-fullbutt', true, 85);
+    this.hedgehog13 = new JumpingHedgehog(this, 5860, 860, 'hedgehog-jumper', 'hedgehog-fullbutt', true, 85, 0, false);
     this.hedgehog13.moveHorizontally(10, 'left', 300);
     this.hedgehog13.jump(150, 1500);
     this.hedgehog14 = new StandartHedgehog(this, 6030, 945, 'hedgehog-head', 'hedgehog-halfbutt');
@@ -261,6 +262,51 @@ export default class Level1 extends Phaser.Scene {
     const sendData = gameData || {};
     sendData.parent = this;
     this.scene.run('gameUI', sendData);
+  }
+
+  addWorldBounds() {
+    this.addSpikes();
+    this.addSpikesSensors();
+  }
+
+  addSpikes() {
+    this.spikes = [];
+    const spikeWidth = 88;
+    let spikeCount = 0;
+    const spikeYCorrection = 24;
+    const spikeXCorrection = 22;
+    const radianValue = 6.28319;
+    let spikeX = 0;
+    const matterParams = { isSensor: true, isStatic: true };
+    do {
+      spikeX = (spikeWidth - spikeXCorrection) * spikeCount;
+      const topSpike = this.add.image(spikeX, 0 - spikeYCorrection, 'spikes', null, matterParams);
+      const bottomSpike = this.add.image(spikeX, levelHeight + spikeYCorrection, 'spikes', null, matterParams);
+      this.spikes.push(topSpike, bottomSpike);
+      this.tweens.add({
+        targets: [topSpike, bottomSpike],
+        paused: false,
+        rotation: spikeCount % 2 === 0 ? -radianValue : radianValue,
+        duration: 1000,
+        repeat: -1,
+      });
+      spikeCount += 1;
+    } while (spikeX < levelWidth);
+  }
+
+  addSpikesSensors() {
+    const sensorHeight = 20;
+    this.spikesSensors = [];
+    const matterParams = { isSensor: true, isStatic: true };
+    const topSensor = this.matter.add.rectangle(
+      levelWidth / 2, sensorHeight / 2, levelWidth,
+      sensorHeight, matterParams,
+    );
+    const bottomSensor = this.matter.add.rectangle(
+      levelWidth / 2, levelHeight - sensorHeight / 2, levelWidth,
+      sensorHeight, matterParams,
+    );
+    this.spikesSensors.push(topSensor, bottomSensor);
   }
 
   addParallax() {

@@ -91,8 +91,8 @@ class Main {
           enableSleeping: false,
           gravity: { y: 2 },
           debug: {
-            showBody: true,
-            showStaticBody: true,
+            showBody: false,
+            showStaticBody: false,
           },
         },
       },
@@ -142,10 +142,12 @@ class Main {
   }
 
   clickLang() {
-    this.btnLang.forEach((el) => el.addEventListener('click', (e) => {
-      this.settings.locale = e.target.dataset.lang;
-      this.changeLang();
-      this.btnLang.forEach((item) => item.classList.toggle('lang__item--active'));
+    this.btnLang.forEach((btn) => btn.addEventListener('click', (e) => {
+      if (!btn.classList.contains('lang__item--active')) {
+        this.settings.locale = e.target.dataset.lang;
+        this.changeLang();
+        this.btnLang.forEach((item) => item.classList.toggle('lang__item--active'));
+      }
     }));
   }
 
