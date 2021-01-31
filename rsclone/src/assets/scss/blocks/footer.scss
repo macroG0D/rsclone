@@ -27,6 +27,7 @@
   padding-top: 38px;
   position: relative;
   margin-bottom: 52px;
+  user-select: none;
   @media (max-width: 1920px) {
     margin-bottom: 26px;
   }
@@ -62,13 +63,17 @@
 
 .footer__copyright {
   font-size: 10px;
+  width: 60%;
+  opacity: 0.8;
+  line-height: 130%;
 
   @media (max-width: 1200px) {
     width: 459px;
+    width: 80%;
   }
 
   @media (max-width: 640px) {
-    width: 150px;
+    width: 60%;
   }
 }
 
