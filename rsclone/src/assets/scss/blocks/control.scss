@@ -171,7 +171,7 @@
 .control__btns--ibb::after {
   position: absolute;
   display: block;
-  content: url(../../assets/images/landing/ibbStand.png);
+  content: url('../../assets/images/landing/ibbStand.png');
   width: 90px;
   left: calc(50% - 45px);
   bottom: -147px;
@@ -184,7 +184,7 @@
 .control__btns--obb::after {
   position: absolute;
   display: block;
-  content: url(../../assets/images/landing/obbStand.png);
+  content: url('../../assets/images/landing/obbStand.png');
   width: 90px;
   right: calc(50% - 45px);
   top: -181px;
@@ -239,7 +239,7 @@
 .control__wrap::after {
   position: absolute;
   display: block;
-  content: url(../../assets/images/landing/bubbles.png);
+  content: url('../../assets/images/landing/bubbles.png');
   width: 45px;
   height: 208px;
   left: calc(50% - 22px);
@@ -247,7 +247,7 @@
 
   @media (max-width: 640px) {
     content: "";
-    background-image: url(../../assets/images/landing/bubbles-320.png);
+    background-image: url('../../assets/images/landing/bubbles-320.png');
     background-position: center;
     background-repeat: no-repeat;
     width: 100%;
