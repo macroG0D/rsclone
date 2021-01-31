@@ -36,32 +36,22 @@ class Main {
   }
 
   init() {
-    const homeDiv = document.getElementById('homeDiv');
-    const aboutDiv = document.getElementById('aboutDiv');
-    const gameDiv = document.getElementById('gameDiv');
-    const gameFooter = document.getElementById('gameFooter');
-    const gameHeader = document.getElementById('gameHeader');
-    const btnBurger = document.getElementById('gameBtnBurger');
-    const menuHome = document.getElementById('menuHome');
-    const menuAbout = document.getElementById('menuAbout');
-    const menuGame = document.getElementById('menuGame');
-    const bodyGame = document.querySelector('body');
     this.btnLang = document.querySelectorAll('.lang__item');
     this.textItems = document.querySelectorAll('[data-loc]');
+
     this.pages = {
-      home: homeDiv,
-      about: aboutDiv,
-      game: gameDiv,
+      home: document.getElementById('homeDiv'),
+      about: document.getElementById('aboutDiv'),
+      game: document.getElementById('gameDiv'),
     };
 
     this.elements = {
-      header: gameHeader,
-      footer: gameFooter,
-      btnBurger,
-      menuHome,
-      menuAbout,
-      menuGame,
-      bodyGame,
+      header: document.getElementById('gameHeader'),
+      footer: document.getElementById('gameFooter'),
+      btnBurger: document.getElementById('gameBtnBurger'),
+      menuHome: document.getElementById('menuHome'),
+      menuAbout: document.getElementById('menuAbout'),
+      menuGame: document.getElementById('menuGame'),
     };
 
     const page = this.getCurrPage();
@@ -134,7 +124,7 @@ class Main {
     this.elements.btnBurger.classList.toggle('header__burger--open');
     this.elements.header.classList.toggle('header__hidden');
     this.elements.header.classList.toggle('header__display');
-    this.elements.bodyGame.classList.toggle('body__noscroll');
+    document.body.classList.toggle('body__noscroll');
   }
 
   saveSettings() {
