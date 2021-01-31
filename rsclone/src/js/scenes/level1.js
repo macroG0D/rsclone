@@ -9,7 +9,6 @@ export default class Level1 extends Phaser.Scene {
   }
 
   create(data) {
-    console.log('create!');
     this.level = new Level(this);
     this.level.postInit();
 
