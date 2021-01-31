@@ -18,6 +18,7 @@ export default class Level {
     this.config.shared = LEVELS.shared;
     this.walls = [];
     this.portals = [];
+    this.camPoints = {};
     this.init();
   }
 
@@ -39,7 +40,7 @@ export default class Level {
     this.spawnEnemies();
     this.spawnPlayers();
     this.levelEnd = new LevelEnd(scene, end.x, end.y);
-    scene.events.off('GameOver', this.gameOver, this);
+    scene.events.off('GameOver');
     scene.events.on('GameOver', this.gameOver, this);
     scene.events.off('update', this.onUpdate, this);
     scene.events.on('update', this.onUpdate, this);
@@ -201,26 +202,38 @@ export default class Level {
 
   centerCamera() {
     const { scene } = this;
-    if (this.ibb.isAlive && this.obb.isAlive) {
-      const cam = scene.cameras.main;
-      const ibbCoords = {
+    if (this.ibb.isAlive) {
+      this.camPoints.ibb = {
         x: this.ibb.sensors.bottom.position.x,
         y: this.ibb.sensors.bottom.position.y,
       };
-      const obbCoords = {
+    }
+
+    if (this.obb.isAlive) {
+      this.camPoints.obb = {
         x: this.obb.sensors.bottom.position.x,
         y: this.obb.sensors.bottom.position.y,
       };
-      const charactersXDiff = Math.abs(obbCoords.x - ibbCoords.x);
-      const charactersYDiff = Math.abs(obbCoords.y - ibbCoords.y);
-      const camZoom = 1 - 0.05 * (charactersXDiff / cam.width);
-      const closestToLeftCharacterX = ibbCoords.x > obbCoords.x ? obbCoords.x : ibbCoords.x;
-      const closestToTopCharacterY = ibbCoords.y > obbCoords.y ? obbCoords.y : ibbCoords.y;
-      const cameraX = parseInt(charactersXDiff / 2 + closestToLeftCharacterX, 10);
-      const cameraY = parseInt(charactersYDiff / 2 + closestToTopCharacterY, 10);
-      if (camZoom !== cam.zoom) cam.setZoom(camZoom);
-      cam.pan(cameraX, cameraY, 100);
     }
+
+    const cam = scene.cameras.main;
+    const ibbCoords = {
+      x: this.camPoints.ibb.x,
+      y: this.camPoints.ibb.y,
+    };
+    const obbCoords = {
+      x: this.camPoints.obb.x,
+      y: this.camPoints.obb.y,
+    };
+    const charactersXDiff = Math.abs(obbCoords.x - ibbCoords.x);
+    const charactersYDiff = Math.abs(obbCoords.y - ibbCoords.y);
+    const camZoom = 1 - 0.05 * (charactersXDiff / cam.width);
+    const closestToLeftCharacterX = ibbCoords.x > obbCoords.x ? obbCoords.x : ibbCoords.x;
+    const closestToTopCharacterY = ibbCoords.y > obbCoords.y ? obbCoords.y : ibbCoords.y;
+    const cameraX = parseInt(charactersXDiff / 2 + closestToLeftCharacterX, 10);
+    const cameraY = parseInt(charactersYDiff / 2 + closestToTopCharacterY, 10);
+    if (camZoom !== cam.zoom) cam.setZoom(camZoom);
+    cam.pan(cameraX, cameraY, 100);
   }
 
   setDirection(key, direction, state) {

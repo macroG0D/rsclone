@@ -16,8 +16,8 @@ export default class Level1 extends Phaser.Scene {
 
     playMusic(this);
 
-    this.client = this.game.client;
-    this.network = new Network(this);
+    // this.client = this.game.client;
+    // this.network = new Network(this);
     const gameData = data || {};
     gameData.parent = this;
     this.scene.run('gameUI', gameData);
