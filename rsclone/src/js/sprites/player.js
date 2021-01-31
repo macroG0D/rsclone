@@ -35,6 +35,7 @@ function createPlayerAnimations(scene, key, sprite) {
 export default class Player extends Phaser.Physics.Matter.Sprite {
   constructor(scene, key, x, y, sprite, collisionCategory) {
     super(scene.matter.world, x, y, sprite);
+    this.scene = scene;
     createPlayerAnimations(scene, key, sprite);
     this.moving = false;
     this.directions = {
@@ -43,9 +44,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
       left: false,
       right: false,
     };
-    this.portals = this.scene.portals;
+    this.portals = scene.level.portals;
     this.isAlive = true;
-    this.scene = scene;
     this.key = key;
     this.isGrounded = false;
     this.isCarrying = false;
@@ -150,11 +150,11 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
   getAnotherPlayer() {
     const anotherPlayerKey = this.key === 'ibb' ? 'obb' : 'ibb';
-    return this.scene[anotherPlayerKey];
+    return this.scene.level[anotherPlayerKey];
   }
 
   addCollideWorldBoundsListener() {
-    const worldBounds = this.scene.spikesSensors;
+    const worldBounds = this.scene.level.spikesSensors;
     this.scene.matterCollision.addOnCollideStart({
       objectA: worldBounds,
       objectB: this,
@@ -172,9 +172,9 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         delay: 500,
         callback: () => {
           const anotherPlayerKey = player.key === 'ibb' ? 'obb' : 'ibb';
-          if (this.scene[anotherPlayerKey].isAlive) {
-            this.scene[anotherPlayerKey].isAlive = false;
-            Death.deathAnimation(this.scene, this.scene[anotherPlayerKey], 'player');
+          if (this.scene.level[anotherPlayerKey].isAlive) {
+            this.scene.level[anotherPlayerKey].isAlive = false;
+            Death.deathAnimation(this.scene, this.scene.level[anotherPlayerKey], 'player');
           }
         },
       });

@@ -94,7 +94,7 @@ export default class Emitter {
         const crystalScoreValue = 10;
         this.scene.matterCollision.addOnCollideStart({
           objectA: particle,
-          objectB: [this.scene.ibb, this.scene.obb],
+          objectB: [this.scene.level.ibb, this.scene.level.obb],
           callback: (eventData) => {
             eventData.gameObjectA.destroy();
             this.scene.events.emit('updateScore', crystalScoreValue);
