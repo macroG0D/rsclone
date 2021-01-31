@@ -26,6 +26,11 @@ export default class Game extends Phaser.Game {
 
   pause() {
     this.music.pause();
+    const scenes = this.scene.getScenes();
+    scenes.forEach((scene) => {
+      const { key } = scene.scene;
+      if (key && key === 'gameUI') scene.toggleGameMenu();
+    });
   }
 
   continue() {
