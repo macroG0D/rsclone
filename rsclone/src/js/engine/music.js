@@ -11,6 +11,10 @@ export default class Music {
   }
 
   play(scene) {
+    if (!scene) {
+      if (this.current && this.current.isPaused) this.current.resume();
+      return;
+    }
     const { game, current } = this;
     const { key } = scene.scene;
     const track = trackList[key];
@@ -25,5 +29,9 @@ export default class Music {
       if (!music.isPlaying) music.play(musicConfig);
       this.current = music;
     }
+  }
+
+  pause() {
+    if (this.current && this.current.isPlaying) this.current.pause();
   }
 }

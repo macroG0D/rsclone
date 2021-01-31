@@ -24,6 +24,14 @@ export default class Game extends Phaser.Game {
     this.level = this.app.settings.level;
   }
 
+  pause() {
+    this.music.pause();
+  }
+
+  continue() {
+    this.music.play();
+  }
+
   spawnPopup(scene, event, data) {
     scene.input.keyboard.disableGlobalCapture();
     scene.scene.pause();

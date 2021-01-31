@@ -187,6 +187,8 @@ class Main {
     if (this.elements.header.classList.contains('header__display')) this.toggleBurger();
 
     if (nextLink === 'game' && !this.game) this.spawnGame();
+    if (nextLink !== 'game' && this.game) this.game.pause();
+    if (nextLink === 'game' && this.game) this.game.continue();
   }
 }
 
