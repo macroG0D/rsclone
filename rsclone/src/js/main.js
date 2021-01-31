@@ -17,9 +17,7 @@ class Main {
   constructor() {
     const cookieVersion = 0;
     const settings = JSON.parse(localStorage.getItem('rsc-game-settings')) || {
-      // locale: 'en',
       locale: 'ru',
-      fullscreen: false,
       volume: {
         sound: 0.2,
         music: 0.1,
@@ -57,8 +55,9 @@ class Main {
     const page = this.getCurrPage();
     this.changeAddress(page);
     this.navigate();
-    this.clickBurger();
-    this.clickLang();
+
+    this.addLangClick();
+    this.elements.btnBurger.addEventListener('click', () => this.toggleBurger(), false);
   }
 
   spawnGame() {
@@ -113,12 +112,6 @@ class Main {
     this.game = new Game(this, this.gameConfig);
   }
 
-  clickBurger() {
-    this.elements.btnBurger.addEventListener('click', () => {
-      this.toggleBurger();
-    });
-  }
-
   toggleBurger() {
     this.elements.btnBurger.classList.toggle('header__burger--close');
     this.elements.btnBurger.classList.toggle('header__burger--open');
@@ -131,7 +124,7 @@ class Main {
     localStorage.setItem('rsc-game-settings', JSON.stringify(this.settings));
   }
 
-  clickLang() {
+  addLangClick() {
     this.btnLang.forEach((btn) => btn.addEventListener('click', (e) => {
       if (!btn.classList.contains('lang__item--active')) {
         this.settings.locale = e.target.dataset.lang;

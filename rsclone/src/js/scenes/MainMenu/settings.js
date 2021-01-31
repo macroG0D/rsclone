@@ -12,7 +12,6 @@ export default class MainMenuPlay extends Phaser.Scene {
 
   create() {
     const menuItems = {
-      fullscreen: '',
       music: '',
       sound: '',
       language: '',
@@ -23,7 +22,6 @@ export default class MainMenuPlay extends Phaser.Scene {
     this.menu.menu.node.style.alignItems = 'flex-end';
 
     const rangeItems = {
-      fullscreen: [undefined, 1, this.getSettings('fullscreen'), 'off', 'on'],
       music: [200, 100, this.getSettings('music'), '', this.getSettings('music')],
       sound: [200, 100, this.getSettings('sound'), '', this.getSettings('sound')],
       locale: [undefined, 1, this.getSettings('locale'), 'en', 'ru'],
@@ -52,26 +50,6 @@ export default class MainMenuPlay extends Phaser.Scene {
     const { left, right } = item;
     const value = +item.range.node.value;
     switch (name) {
-      case ('fullscreen'): {
-        settings.fullscreen = !!(value);
-        if (settings.fullscreen && !document.fullscreenElement) {
-          this.game.app.gameContainer.requestFullscreen();
-        }
-        if (!settings.fullscreen && document.fullscreenElement && document.exitFullscreen) {
-          document.exitFullscreen();
-        }
-        if (value) {
-          right.node.classList.add('active');
-          left.node.classList.remove('active');
-        }
-        if (!value) {
-          right.node.classList.remove('active');
-          left.node.classList.add('active');
-        }
-        this.game.app.saveSettings();
-        break;
-      }
-
       case ('music'): {
         const newValue = parseFloat((value / 100).toFixed(2));
         settings.volume.music = newValue;
@@ -112,8 +90,6 @@ export default class MainMenuPlay extends Phaser.Scene {
   getSettings(name) {
     const { settings } = this.game.app;
     switch (name) {
-      case ('fullscreen'):
-        return +settings.fullscreen;
       case ('music'):
         return Math.floor(+settings.volume.music * 100);
       case ('sound'):
