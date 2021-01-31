@@ -56,9 +56,10 @@ class Main {
     const page = this.getCurrPage();
     this.changeAddress(page);
     this.navigate();
-
+    this.checkLang();
+    this.changeLang();  
     this.addLangClick();
-    this.elements.btnBurger.addEventListener('click', () => this.toggleBurger(), false);
+    this.elements.btnBurger.addEventListener('click', () => this.toggleBurger(), false);      
   }
 
   spawnGame() {
@@ -138,8 +139,14 @@ class Main {
   changeLang() {
     const curLang = LOCALE_HTML[this.settings.localeHtml];
     this.textItems.forEach((el) => {
-      const currEl = el;
+      const currEl = el;     
       currEl.innerHTML = curLang[el.dataset.loc];
+    });
+  }
+
+  checkLang(){
+    this.btnLang.forEach((el) =>{
+      if (el.dataset.lang === this.settings.localeHtml) el.classList.add('lang__item--active');
     });
   }
 
