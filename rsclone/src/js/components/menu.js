@@ -48,8 +48,9 @@ export default class Menu extends Create {
       scene.input.keyboard.addKey('ESC').on('down', bcc);
     }
 
-    const { centerX, centerY } = this.scene.cameras.main;
-    this.spawn = scene.add.dom(centerX, centerY, this.node);
+    const x = this.scene.game.config.width / 2;
+    const y = this.scene.game.config.height / 2;
+    this.spawn = scene.add.dom(x, y, this.node);
     this.spawn.setOrigin(0.5);
   }
 
