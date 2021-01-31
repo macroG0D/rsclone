@@ -17,9 +17,7 @@ class Main {
   constructor() {
     const cookieVersion = 0;
     const settings = JSON.parse(localStorage.getItem('rsc-game-settings')) || {
-      // locale: 'en',
       locale: 'ru',
-      fullscreen: false,
       volume: {
         sound: 0.2,
         music: 0.1,
@@ -36,39 +34,30 @@ class Main {
   }
 
   init() {
-    const homeDiv = document.getElementById('homeDiv');
-    const aboutDiv = document.getElementById('aboutDiv');
-    const gameDiv = document.getElementById('gameDiv');
-    const gameFooter = document.getElementById('gameFooter');
-    const gameHeader = document.getElementById('gameHeader');
-    const btnBurger = document.getElementById('gameBtnBurger');
-    const menuHome = document.getElementById('menuHome');
-    const menuAbout = document.getElementById('menuAbout');
-    const menuGame = document.getElementById('menuGame');
-    const bodyGame = document.querySelector('body');
     this.btnLang = document.querySelectorAll('.lang__item');
     this.textItems = document.querySelectorAll('[data-loc]');
+
     this.pages = {
-      home: homeDiv,
-      about: aboutDiv,
-      game: gameDiv,
+      home: document.getElementById('homeDiv'),
+      about: document.getElementById('aboutDiv'),
+      game: document.getElementById('gameDiv'),
     };
 
     this.elements = {
-      header: gameHeader,
-      footer: gameFooter,
-      btnBurger,
-      menuHome,
-      menuAbout,
-      menuGame,
-      bodyGame,
+      header: document.getElementById('gameHeader'),
+      footer: document.getElementById('gameFooter'),
+      btnBurger: document.getElementById('gameBtnBurger'),
+      menuHome: document.getElementById('menuHome'),
+      menuAbout: document.getElementById('menuAbout'),
+      menuGame: document.getElementById('menuGame'),
     };
 
     const page = this.getCurrPage();
     this.changeAddress(page);
     this.navigate();
-    this.clickBurger();
-    this.clickLang();
+
+    this.addLangClick();
+    this.elements.btnBurger.addEventListener('click', () => this.toggleBurger(), false);
   }
 
   spawnGame() {
@@ -123,25 +112,19 @@ class Main {
     this.game = new Game(this, this.gameConfig);
   }
 
-  clickBurger() {
-    this.elements.btnBurger.addEventListener('click', () => {
-      this.toggleBurger();
-    });
-  }
-
   toggleBurger() {
     this.elements.btnBurger.classList.toggle('header__burger--close');
     this.elements.btnBurger.classList.toggle('header__burger--open');
     this.elements.header.classList.toggle('header__hidden');
     this.elements.header.classList.toggle('header__display');
-    this.elements.bodyGame.classList.toggle('body__noscroll');
+    document.body.classList.toggle('body__noscroll');
   }
 
   saveSettings() {
     localStorage.setItem('rsc-game-settings', JSON.stringify(this.settings));
   }
 
-  clickLang() {
+  addLangClick() {
     this.btnLang.forEach((btn) => btn.addEventListener('click', (e) => {
       if (!btn.classList.contains('lang__item--active')) {
         this.settings.locale = e.target.dataset.lang;

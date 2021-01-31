@@ -38,7 +38,6 @@ export const LOCALE = {
     // leaderboard
     name: 'имя',
     // settings menu
-    fullscreen: 'на весь экран',
     music: 'музыка',
     sound: 'звук',
     language: 'язык',
