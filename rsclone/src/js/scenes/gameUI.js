@@ -51,7 +51,7 @@ export default class gameUI extends Phaser.Scene {
 
     this.burger = new Create('div');
     this.burger.content = new Create('div', this.burger.node, 'game-burger');
-    this.burger.x = this.game.config.width - 52;
+    this.burger.x = this.game.config.width - 50;
     this.burger.y = 30;
     this.burger.spawn = this.add.dom(this.burger.x, this.burger.y, this.burger.node);
     this.burger.node.removeEventListener('click', this.toggleGameMenu, false);
@@ -59,7 +59,7 @@ export default class gameUI extends Phaser.Scene {
 
     this.fsToggler = new Create('div');
     this.fsToggler.content = new Create('div', this.fsToggler.node, 'game-fs-toggler');
-    this.fsToggler.x = this.game.config.width - 112;
+    this.fsToggler.x = this.game.config.width - 110;
     this.fsToggler.y = 30;
     this.fsToggler.spawn = this.add.dom(this.fsToggler.x, this.fsToggler.y, this.fsToggler.node);
     this.fsToggler.node.removeEventListener('click', this.toggleFullScreen, false);

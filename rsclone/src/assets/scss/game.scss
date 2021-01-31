@@ -113,10 +113,13 @@
   height: 20px;
   opacity: 0.5;
   transition: $short-transition;
+  cursor: pointer;
   &:hover {
-    cursor: pointer;
     transform: scale(1.25);
     opacity: 1;
+  }
+  &:active {
+    transform: scale(1);
   }
 }
 
