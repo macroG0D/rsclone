@@ -10,6 +10,12 @@
 .footer__wrap {
   box-sizing: border-box;
   @include screenSize;
+
+  @media (min-width: 1600px) {
+    width: 100%;
+    padding-left: 200px;
+    padding-right: 200px;
+  }
 }
 
 .footer__love {

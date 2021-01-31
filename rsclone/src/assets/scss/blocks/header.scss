@@ -2,6 +2,12 @@
   @include screenSize;
   color: $startFontColor;
   user-select: none;
+
+  @media (min-width: 1600px) {
+    width: 100%;
+    padding-left: 200px;
+    padding-right: 200px;
+  }
 }
 
 .header__wrap {
