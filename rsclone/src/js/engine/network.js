@@ -45,7 +45,7 @@ export default class Network {
 
   onPlayerMove(data) {
     const { playerKey, direction, movementFlag } = data;
-    this.scene.setDirection(playerKey, direction, movementFlag);
+    this.scene.level.setDirection(playerKey, direction, movementFlag);
   }
 
   onPlayerSync(data) {
