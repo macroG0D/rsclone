@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 
 import Client from '../engine/client';
+import Music from '../engine/music';
 
 export default class Game extends Phaser.Game {
   constructor(app, config) {
@@ -8,10 +9,7 @@ export default class Game extends Phaser.Game {
     this.client = new Client();
     this.client.socket.open();
 
-    this.music = {
-      current: undefined,
-      cache: {},
-    };
+    this.music = new Music(this);
 
     this.sounds = {
       volume: {},
