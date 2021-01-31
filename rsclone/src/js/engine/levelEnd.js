@@ -10,7 +10,7 @@ export default class LevelEnd extends Phaser.GameObjects.Rectangle {
       isStatic: true,
     };
     scene.matter.add.gameObject(this, matterParams);
-    this.addPointlight(scene, x, y, width);
+    this.addPointlight(x, y, width, height);
     this.initPlayersFinishCollide([ibb, obb]);
   }
 
