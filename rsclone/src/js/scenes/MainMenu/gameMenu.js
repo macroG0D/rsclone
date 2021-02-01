@@ -20,6 +20,13 @@ export default class GameMenu extends Phaser.Scene {
 
   update() {
     localization(this);
+    if (this.menu) {
+      const x = this.game.config.width / 2;
+      const y = this.game.config.height / 2;
+      this.menu.spawn.x = x;
+      this.menu.spawn.y = y;
+      this.menu.spawn.setOrigin(0.5);
+    }
   }
 
   continue() {

@@ -35,6 +35,11 @@ export default class Game extends Phaser.Game {
 
   continue() {
     this.music.play();
+    const scenes = this.scene.getScenes();
+    scenes.forEach((scene) => {
+      const { key, isActive } = scene.scene;
+      if (key && isActive) scene.scene.restart();
+    });
   }
 
   spawnPopup(scene, event, data) {
