@@ -21,10 +21,17 @@ export const LEVELS = {
       ibb: { x: 240, y: 1160 },
       obb: { x: 220, y: 1100 },
     },
+    parallaxImages: {
+      lvl1_sky: 0.2,
+      lvl1_clouds: 0.1,
+      lvl1_bg0: 0.1,
+      lvl1_bg1: 0.2,
+      lvl1_bg2: 0.3,
+    },
   },
   Level2: {
     order: 2,
-    width: 10500,
+    width: 3000,
     height: 2890,
     end: {
       x: 10500,
@@ -37,16 +44,15 @@ export const LEVELS = {
       ibb: { x: 240, y: 1160 },
       obb: { x: 220, y: 1100 },
     },
-  },
-  shared: {
     parallaxImages: {
-      sky: 0.2,
-      clouds_0: 0.1,
-      bg_0: 0.1,
-      bg_1: 0.2,
-      bg_2: 0.3,
+      lvl2_sky: 0.2,
+      lvl2_clouds: 0.1,
+      lvl2_bg0: 0.1,
+      lvl2_bg1: 0.2,
+      lvl2_bg2: 0.3,
     },
   },
+
 };
 
 export default LEVELS;

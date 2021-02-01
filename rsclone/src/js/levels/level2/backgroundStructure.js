@@ -1,6 +1,6 @@
 import { COLLISION_CATEGORIES } from '../../constants';
 
-const portalWidth = 186;
+// const portalWidth = 186;
 
 export const walls = [
   {

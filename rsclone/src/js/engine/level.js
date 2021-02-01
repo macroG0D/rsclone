@@ -15,7 +15,7 @@ export default class Level {
     this.key = key;
     this.scene = scene;
     this.config = LEVELS[key];
-    this.config.shared = LEVELS.shared;
+    this.config.parallax = LEVELS[key];
     this.walls = [];
     this.portals = [];
     this.camPoints = {};
@@ -83,7 +83,7 @@ export default class Level {
 
   addParallax() {
     const { scene } = this;
-    const { parallaxImages } = this.config.shared;
+    const { parallaxImages } = this.config.parallax;
     scene.parallax = {};
     Object.entries(parallaxImages).forEach(([key, speed]) => {
       const sprite = scene.add.tileSprite(

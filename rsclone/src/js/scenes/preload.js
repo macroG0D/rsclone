@@ -19,11 +19,17 @@ import menuMusic from '../../assets/music/main_menu.mp3';
 import level1Music from '../../assets/music/level1.mp3';
 import level2Music from '../../assets/music/level2.mp3';
 
-import sky from '../../assets/images/background/sky.png';
-import clouds0 from '../../assets/images/background/clouds_0.png';
-import bg0 from '../../assets/images/background/bg_0.png';
-import bg1 from '../../assets/images/background/bg_1.png';
-import bg2 from '../../assets/images/background/bg_2.png';
+import skyLvl1 from '../../assets/sprites/environment/level1_bg/sky.png';
+import cloudsLvl1 from '../../assets/sprites/environment/level1_bg/clouds_0.png';
+import bg0Lvl1 from '../../assets/sprites/environment/level1_bg/bg_0.png';
+import bg1Lvl1 from '../../assets/sprites/environment/level1_bg/bg_1.png';
+import bg2Lvl1 from '../../assets/sprites/environment/level1_bg/bg_2.png';
+
+import skyLvl2 from '../../assets/sprites/environment/level2_bg/lvl2_sky.png';
+import cloudsLvl2 from '../../assets/sprites/environment/level2_bg/lvl2_clouds.png';
+import bg0Lvl2 from '../../assets/sprites/environment/level2_bg/lvl2_bg_0.png';
+import bg1Lvl2 from '../../assets/sprites/environment/level2_bg/lvl2_bg_1.png';
+import bg2Lvl2 from '../../assets/sprites/environment/level2_bg/lvl2_bg_2.png';
 
 // world interactive environment
 import platformLong from '../../assets/sprites/environment/platform-long.png';
@@ -79,12 +85,19 @@ export default class Preload extends Phaser.Scene {
     this.load.image('hedgehog-jumper', hedgehogJumper);
     this.load.image('hedgehog-fullbutt', hedgehogFullButt);
 
-    // Loading parallax's images
-    this.load.image('sky', sky);
-    this.load.image('clouds_0', clouds0);
-    this.load.image('bg_0', bg0);
-    this.load.image('bg_1', bg1);
-    this.load.image('bg_2', bg2);
+    // Loading LEVEL 1 parallax's images
+    this.load.image('lvl1_sky', skyLvl1);
+    this.load.image('lvl1_clouds', cloudsLvl1);
+    this.load.image('lvl1_bg0', bg0Lvl1);
+    this.load.image('lvl1_bg1', bg1Lvl1);
+    this.load.image('lvl1_bg2', bg2Lvl1);
+
+    // Loading LEVEL 2 parallax's images
+    this.load.image('lvl2_sky', skyLvl2);
+    this.load.image('lvl2_clouds', cloudsLvl2);
+    this.load.image('lvl2_bg0', bg0Lvl2);
+    this.load.image('lvl2_bg1', bg1Lvl2);
+    this.load.image('lvl2_bg2', bg2Lvl2);
 
     // Loading world interactive environment sprites
     this.load.image('platform-long', platformLong);
@@ -134,8 +147,8 @@ export default class Preload extends Phaser.Scene {
   }
 
   create() {
-    this.scene.start('MainMenu');
-    // this.scene.start('Level1');
+    // this.scene.start('MainMenu');
+    this.scene.start('Level2');
   }
 
   showBootBg() {

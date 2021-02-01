@@ -6,7 +6,7 @@ import Network from '../engine/network';
 export default class Level1 extends Phaser.Scene {
   constructor() {
     super('Level2');
-    this.wallsColor = 0x062C42;
+    this.wallsColor = 0x00CBEB;
   }
 
   create(data) {
