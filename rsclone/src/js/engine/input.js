@@ -33,7 +33,7 @@ export default class Input extends Phaser.Events.EventEmitter {
   setDirection(direction, flag) {
     const { playerKey } = this;
     if (!this.scene.online) {
-      this.scene.setDirection(playerKey, direction, flag);
+      this.scene.level.setDirection(playerKey, direction, flag);
       return;
     }
     this.scene.client.sendData('playerMove', {

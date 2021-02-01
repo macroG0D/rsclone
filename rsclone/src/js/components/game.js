@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 
 import Client from '../engine/client';
+import Music from '../engine/music';
 
 export default class Game extends Phaser.Game {
   constructor(app, config) {
@@ -8,10 +9,7 @@ export default class Game extends Phaser.Game {
     this.client = new Client();
     this.client.socket.open();
 
-    this.music = {
-      current: undefined,
-      cache: {},
-    };
+    this.music = new Music(this);
 
     this.sounds = {
       volume: {},
@@ -24,6 +22,24 @@ export default class Game extends Phaser.Game {
 
     this.app = app; // link to main class
     this.level = this.app.settings.level;
+  }
+
+  pause() {
+    this.music.pause();
+    const scenes = this.scene.getScenes();
+    scenes.forEach((scene) => {
+      const { key } = scene.scene;
+      if (key && key === 'gameUI') scene.toggleGameMenu();
+    });
+  }
+
+  continue() {
+    this.music.play();
+    const scenes = this.scene.getScenes();
+    scenes.forEach((scene) => {
+      const { key, isActive } = scene.scene;
+      if (key && isActive) scene.scene.restart();
+    });
   }
 
   spawnPopup(scene, event, data) {

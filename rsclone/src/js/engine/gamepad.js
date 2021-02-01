@@ -52,7 +52,7 @@ export default class Gamepad extends Phaser.Events.EventEmitter {
   setDirection(direction, flag) {
     const { playerKey } = this;
     if (!this.controlScene.online) {
-      this.controlScene.setDirection(playerKey, direction, flag);
+      this.controlScene.level.setDirection(playerKey, direction, flag);
       return;
     }
     this.controlScene.client.sendData('playerMove', {
