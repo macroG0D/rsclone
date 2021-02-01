@@ -30,8 +30,7 @@ export default class Game extends Phaser.Game {
   }
 
   spawnPopup(scene, event, data) {
-    /* ↓ to test popup particles on level start - uncommit after PR is approved */
-    // scene.input.keyboard.disableGlobalCapture();
+    scene.input.keyboard.disableGlobalCapture();
     scene.scene.pause();
     this.currentScene = scene;
     const {
