@@ -13,56 +13,44 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
   create() {
     this.colyseus = this.game.colyseus;
     createImg(this);
-    let menuItems = {
+    const menuItems = {
       'Retrieving game name...': '',
     };
     const menuCallBack = () => {
-      // this.client.sendData('requestDropGame');
+      this.colyseus.leaveGameRoom();
       this.scene.start('MainMenuOnlineGame');
     };
     this.menu = new Menu(this, menuItems, true, menuCallBack);
 
-    if (this.colyseus) {
-      this.colyseus = this.game.colyseus;
-      this.colyseus.off('getRoom');
-      this.colyseus.on('getRoom', this.onGetRoom, this);
-      this.colyseus.on('joinRoom', this.onJoinRoom, this);
-      this.colyseus.sendData('getRoom');
-    }
-
-    /*
-    this.client = this.game.client;
-    this.client.on('hostGameSuccess', (sessionName) => {
-      this.menu.items[0].node.innerHTML = `${sessionName} awaiting connection...`;
-    });
-    this.client.on('gameReady', (sessionName) => {
-      this.menu.spawn.destroy();
-      menuItems = {};
-      menuItems[`${sessionName} ready!`] = () => this.requestStartGame(sessionName);
-      this.menu = new Menu(this, menuItems, true, menuCallBack);
-    });
-    this.client.on('startGame', (gameData) => this.scene.start(levelName, gameData));
-    this.requestHostGame();
-    */
+    this.colyseus.once('getRoom', this.onGetRoom, this);
+    this.colyseus.once('joinRoom', this.onJoinRoom, this);
+    this.colyseus.once('startGame', this.onStartGame, this);
+    this.colyseus.relaySend('getRoom');
   }
 
   onGetRoom(name) {
     if (this.menu) {
-      this.menu.items[0].node.innerHTML = `Connecting to ${name} room...`;
-      this.colyseus.joinRoom(name);
+      if (name !== 'no rooms') {
+        this.menu.items[0].node.innerHTML = `Joining #${name} room...`;
+        this.colyseus.joinGameRoom(name);
+        return;
+      }
+      this.menu.items[0].node.innerHTML = 'No free rooms...';
     }
   }
 
   onJoinRoom(name) {
-
+    if (this.menu) {
+      if (name) {
+        this.menu.items[0].node.innerHTML = `Room #${name} ready!`;
+        return;
+      }
+      this.menu.items[0].node.innerHTML = 'No free rooms...';
+    }
   }
 
-  requestHostGame() {
-    this.client.sendData('requestHostGame');
-  }
-
-  requestStartGame(sessionName) {
-    this.client.sendData('requestStartGame', sessionName);
+  onStartGame() {
+    this.scene.start('Level1', { online: true, master: true });
   }
 
   update() {

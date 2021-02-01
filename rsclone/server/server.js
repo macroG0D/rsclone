@@ -12,7 +12,7 @@ class Server {
     this.http = http.createServer(this.app.express);
     this.db = new Db(dbUser, dbPass);
     this.socket = new Socket(this.http, this.db);
-    this.colyseus = new Colyseus(this.socket);
+    this.colyseus = new Colyseus();
     this.http.on('error', this.onError.bind(this));
     this.http.on('listening', this.onListening.bind(this));
   }

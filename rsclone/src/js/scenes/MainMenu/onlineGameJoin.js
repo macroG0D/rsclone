@@ -11,48 +11,50 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
   }
 
   create() {
-    const { level } = this.game;
-    const levelName = `Level${level}`;
+    this.colyseus = this.game.colyseus;
     createImg(this);
-    let menuItems = {
+    const menuItems = {
       'Looking for a partner...': '',
     };
     const menuCallBack = () => {
-      this.client.sendData('requestDropGame');
+      this.colyseus.leaveGameRoom();
       this.scene.start('MainMenuOnlineGame');
     };
+    this.menuCallBack = menuCallBack;
     this.menu = new Menu(this, menuItems, true, menuCallBack);
+    this.colyseus.once('getRooms', this.onGetRooms, this);
+    this.colyseus.once('joinRoom', this.onJoinRoom, this);
+    this.colyseus.once('startGame', this.onStartGame, this);
+    this.colyseus.relaySend('getRooms');
+  }
 
-    this.client = this.game.client;
-    this.client.on('requestGamesSuccess', (sessionNames) => {
+  onGetRooms(rooms) {
+    if (this.menu) {
+      if (rooms && rooms.length) {
+        this.menu.spawn.destroy();
+        const menuItems = {};
+        rooms.forEach((room) => {
+          menuItems[room] = () => this.colyseus.joinGameRoom(room);
+        });
+        this.menu = new Menu(this, menuItems, true, this.menuCallBack);
+        return;
+      }
+      if (!rooms || !rooms.length) this.menu.items[0].node.innerHTML = 'No rooms found...';
+    }
+  }
+
+  onJoinRoom(name) {
+    if (this.menu) {
       this.menu.spawn.destroy();
-      menuItems = {};
-      sessionNames.forEach((sessionName) => {
-        menuItems[sessionName] = () => this.joinGame(sessionName);
-      });
-      if (!sessionNames.length) menuItems['No games hosted'] = '';
-      this.menu = new Menu(this, menuItems, true, menuCallBack);
-    });
-    this.client.on('gameReady', (sessionName) => {
-      this.menu.spawn.destroy();
-      menuItems = {};
-      menuItems[`${sessionName} ready!`] = () => this.requestStartGame(sessionName);
-      this.menu = new Menu(this, menuItems, true, menuCallBack);
-    });
-    this.client.on('startGame', (gameData) => this.scene.start(levelName, gameData));
-    this.requestJoinGame();
+      const menuText = (name) ? `Room #${name} ready!` : 'No free rooms...';
+      const menuItems = {};
+      menuItems[menuText] = '';
+      this.menu = new Menu(this, menuItems, true, this.menuCallBack);
+    }
   }
 
-  requestJoinGame() {
-    this.client.sendData('requestGames');
-  }
-
-  joinGame(sessionName) {
-    this.client.sendData('joinGame', sessionName);
-  }
-
-  requestStartGame(sessionName) {
-    this.client.sendData('requestStartGame', sessionName);
+  onStartGame() {
+    this.scene.start('Level1', { online: true, master: false });
   }
 
   update() {
