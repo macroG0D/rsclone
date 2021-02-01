@@ -16,6 +16,7 @@ module.exports = class Db {
     };
     this.dbName = 'game';
     this.collectionName = 'board';
+    this.query = this.query.bind(this);
   }
 
   async getDb(dbName = this.dbName) {

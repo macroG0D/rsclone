@@ -1,6 +1,7 @@
 const path = require('path');
 const http = require('http');
 const Socket = require('./components/socket');
+const Colyseus = require('./components/colyseus');
 const Db = require('./components/db');
 const App = require('./components/app');
 
@@ -11,6 +12,7 @@ class Server {
     this.http = http.createServer(this.app.express);
     this.db = new Db(dbUser, dbPass);
     this.socket = new Socket(this.http, this.db);
+    this.colyseus = new Colyseus(this.socket);
     this.http.on('error', this.onError.bind(this));
     this.http.on('listening', this.onListening.bind(this));
   }

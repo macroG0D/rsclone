@@ -10,9 +10,7 @@ export default class MainMenu extends Phaser.Scene {
 
   create() {
     const menuItems = {
-      play: () => {
-        this.scene.switch('MainMenuPlay');
-      },
+      play: () => this.scene.switch('MainMenuPlay'),
       leaderboard: () => this.scene.start('MainMenuLeaderBoard'),
       settings: () => this.scene.switch('MainMenuSettings'),
       developers: () => this.scene.switch('MainMenuDevelopers'),

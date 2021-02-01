@@ -11,17 +11,26 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
   }
 
   create() {
-    const { level } = this.game;
-    const levelName = `Level${level}`;
+    this.colyseus = this.game.colyseus;
     createImg(this);
     let menuItems = {
-      'Looking for a partner...': '',
+      'Retrieving game name...': '',
     };
     const menuCallBack = () => {
-      this.client.sendData('requestDropGame');
+      // this.client.sendData('requestDropGame');
       this.scene.start('MainMenuOnlineGame');
     };
     this.menu = new Menu(this, menuItems, true, menuCallBack);
+
+    if (this.colyseus) {
+      this.colyseus = this.game.colyseus;
+      this.colyseus.off('getRoom');
+      this.colyseus.on('getRoom', this.onGetRoom, this);
+      this.colyseus.on('joinRoom', this.onJoinRoom, this);
+      this.colyseus.sendData('getRoom');
+    }
+
+    /*
     this.client = this.game.client;
     this.client.on('hostGameSuccess', (sessionName) => {
       this.menu.items[0].node.innerHTML = `${sessionName} awaiting connection...`;
@@ -34,6 +43,18 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
     });
     this.client.on('startGame', (gameData) => this.scene.start(levelName, gameData));
     this.requestHostGame();
+    */
+  }
+
+  onGetRoom(name) {
+    if (this.menu) {
+      this.menu.items[0].node.innerHTML = `Connecting to ${name} room...`;
+      this.colyseus.joinRoom(name);
+    }
+  }
+
+  onJoinRoom(name) {
+
   }
 
   requestHostGame() {

@@ -40,7 +40,7 @@ export default class GameMenu extends Phaser.Scene {
     const { level } = this.game;
     const levelName = `Level${level}`;
     this.scene.stop(levelName);
-    this.scene.wake('MainMenu');
+    this.scene.run('MainMenu');
     this.scene.stop();
   }
 }

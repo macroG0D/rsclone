@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 
 import Client from '../engine/client';
+import Colyseus from '../engine/colyseus';
 import Music from '../engine/music';
 
 export default class Game extends Phaser.Game {
@@ -8,6 +9,8 @@ export default class Game extends Phaser.Game {
     super(config);
     this.client = new Client();
     this.client.socket.open();
+
+    this.colyseus = new Colyseus();
 
     this.music = new Music(this);
 
