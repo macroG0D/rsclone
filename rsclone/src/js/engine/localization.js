@@ -1,10 +1,7 @@
 import { LOCALE } from '../locale';
-import { THROTTLE_DELAY } from '../constants';
 
 export function localization(currScene) {
   const scene = currScene;
-  if (scene.locThrottle) return;
-  scene.locThrottle = true;
   const appLocale = scene.game.app.settings.locale;
   const sceneLocale = scene.locale;
   if (appLocale !== sceneLocale) {
@@ -48,11 +45,6 @@ export function localization(currScene) {
       });
     }
   }
-
-  scene.time.addEvent({
-    delay: THROTTLE_DELAY / 4,
-    callback: () => { scene.locThrottle = false; },
-  });
 }
 
 export default localization;

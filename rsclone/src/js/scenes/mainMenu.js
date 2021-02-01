@@ -1,6 +1,5 @@
 import Phaser from 'phaser';
 import Menu from '../components/menu';
-import { playMusic } from '../utils/playMusic';
 
 import { localization } from '../engine/localization';
 
@@ -20,11 +19,11 @@ export default class MainMenu extends Phaser.Scene {
       about: () => window.open('https://github.com/macroG0D/rsclone'),
     };
     this.menu = new Menu(this, menuItems);
-    playMusic(this);
   }
 
   update() {
     if (this.game.isStarted) this.game.isStarted = false;
+    if (this.scene.key !== this.game.music.key) this.game.music.play(this);
     localization(this);
   }
 }
