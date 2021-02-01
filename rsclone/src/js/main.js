@@ -57,9 +57,9 @@ class Main {
     this.changeAddress(page);
     this.navigate();
     this.checkLang();
-    this.changeLang();  
+    this.changeLang();
     this.addLangClick();
-    this.elements.btnBurger.addEventListener('click', () => this.toggleBurger(), false);      
+    this.elements.btnBurger.addEventListener('click', () => this.toggleBurger(), false);
   }
 
   spawnGame() {
@@ -139,13 +139,13 @@ class Main {
   changeLang() {
     const curLang = LOCALE_HTML[this.settings.localeHtml];
     this.textItems.forEach((el) => {
-      const currEl = el;     
+      const currEl = el;
       currEl.innerHTML = curLang[el.dataset.loc];
     });
   }
 
-  checkLang(){
-    this.btnLang.forEach((el) =>{
+  checkLang() {
+    this.btnLang.forEach((el) => {
       if (el.dataset.lang === this.settings.localeHtml) el.classList.add('lang__item--active');
     });
   }
@@ -191,7 +191,7 @@ class Main {
     nextSection.classList.add('active');
     this.prevLink = nextLink;
     this.highlightPage(nextLink);
-    window.scroll(0,0);
+    window.scroll(0, 0);
     if (this.elements.header.classList.contains('header__display')) this.toggleBurger();
 
     if (nextLink === 'game' && !this.game) this.spawnGame();
