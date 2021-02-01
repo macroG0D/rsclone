@@ -3,6 +3,8 @@ import Phaser from 'phaser';
 import Client from '../engine/client';
 import Music from '../engine/music';
 
+import addConfetti from './confetti';
+
 export default class Game extends Phaser.Game {
   constructor(app, config) {
     super(config);
@@ -22,6 +24,7 @@ export default class Game extends Phaser.Game {
 
     this.app = app; // link to main class
     this.level = this.app.settings.level;
+    this.addConfetti = addConfetti;
   }
 
   pause() {
@@ -132,6 +135,7 @@ export default class Game extends Phaser.Game {
     }
     popup.classList.remove('hidden');
     popup.removeAttribute('hidden');
+    this.addConfetti();
   }
 
   closePopup() {
