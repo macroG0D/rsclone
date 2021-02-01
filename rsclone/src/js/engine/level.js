@@ -10,7 +10,7 @@ import { LEVELS } from '../levels/levels';
 import { BORDER_THICKNESS, COLLISION_CATEGORIES } from '../constants';
 
 export default class Level {
-  constructor(scene) {
+  constructor(scene, wallsColor) {
     const { key } = scene.scene;
     this.key = key;
     this.scene = scene;
@@ -19,6 +19,7 @@ export default class Level {
     this.walls = [];
     this.portals = [];
     this.camPoints = {};
+    this.wallsColor = wallsColor;
     this.init();
   }
 
@@ -102,7 +103,7 @@ export default class Level {
   addWalls() {
     const { scene } = this;
     const { walls } = this.config;
-    const wallDefaultColor = 0x062C42;
+    const wallDefaultColor = this.wallsColor;
     const portalColor = 0xffffff;
     const wallDefaultHeight = 16;
 
