@@ -2,15 +2,15 @@ import Phaser from 'phaser';
 import ibbSprite from '../../assets/sprites/ibb/ibb.png';
 import obbSprite from '../../assets/sprites/obb/obb.png';
 import githubIcon from '../../assets/images/github-logo-face.svg';
-import ibbImg from '../../assets/images/ibb_stay.png';
-import obbImg from '../../assets/images/obb_stay.png';
+import ibbImg from '../../assets/images/ibb_stay.svg';
+import obbImg from '../../assets/images/obb_stay.svg';
 import ibbBg from '../../assets/images/ibb_bg.png';
 import obbBg from '../../assets/images/obb_bg.png';
 import ibbKeys from '../../assets/images/ibbKeys.svg';
 import obbKeys from '../../assets/images/obbKeys.svg';
-import bubble from '../../assets/images/bubble.png';
-import crystal from '../../assets/images/crystal.png';
-import spikes from '../../assets/images/spikes.svg';
+import bubble from '../../assets/sprites/environment/bubble.png';
+import crystal from '../../assets/sprites/environment/crystal.png';
+import spikes from '../../assets/sprites/environment/spikes.svg';
 import hedgehogHead from '../../assets/sprites/enemies/hedgehogs/hedgehog_head.svg';
 import hedgehogJumper from '../../assets/sprites/enemies/hedgehogs/hedgehog_jumper.svg';
 import hedgehogHalfButt from '../../assets/sprites/enemies/hedgehogs/hedgehog_halfButt.svg';
@@ -147,8 +147,8 @@ export default class Preload extends Phaser.Scene {
   }
 
   create() {
-    // this.scene.start('MainMenu');
-    this.scene.start('Level2');
+    this.scene.start('MainMenu');
+    // this.scene.start('Level2');
   }
 
   showBootBg() {
