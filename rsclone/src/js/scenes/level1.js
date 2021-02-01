@@ -262,6 +262,8 @@ export default class Level1 extends Phaser.Scene {
     const sendData = gameData || {};
     sendData.parent = this;
     this.scene.run('gameUI', sendData);
+    /* ↓ to test popup particles on level start - delete after PR approved */
+    this.game.spawnPopup(this, 'noRecord', sendData);
   }
 
   addWorldBounds() {
@@ -449,4 +451,5 @@ export default class Level1 extends Phaser.Scene {
       this.scene.switch('GameMenu');
     });
   }
+
 }

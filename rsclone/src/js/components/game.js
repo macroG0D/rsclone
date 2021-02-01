@@ -2,6 +2,8 @@ import Phaser from 'phaser';
 
 import Client from '../engine/client';
 
+import addConfetti from './confetti';
+
 export default class Game extends Phaser.Game {
   constructor(app, config) {
     super(config);
@@ -24,10 +26,12 @@ export default class Game extends Phaser.Game {
 
     this.app = app; // link to main class
     this.level = this.app.settings.level;
+    this.addConfetti = addConfetti;
   }
 
   spawnPopup(scene, event, data) {
-    scene.input.keyboard.disableGlobalCapture();
+    /* ↓ to test popup particles on level start - uncommit after PR is approved */
+    // scene.input.keyboard.disableGlobalCapture();
     scene.scene.pause();
     this.currentScene = scene;
     const {
@@ -116,6 +120,7 @@ export default class Game extends Phaser.Game {
     }
     popup.classList.remove('hidden');
     popup.removeAttribute('hidden');
+    this.addConfetti();
   }
 
   closePopup() {
