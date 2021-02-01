@@ -1,5 +1,11 @@
 const socketIO = require('socket.io');
 
+const { NAMES } = require('./names');
+
+function generateName() {
+  return NAMES[Math.floor(Math.random() * NAMES.length)];
+}
+
 function generatePostfix() {
   const randomNum = Math.floor(Math.random() * 9998 + 1);
   return randomNum.toString().padStart(4, '0');
@@ -85,8 +91,9 @@ module.exports = class Socket {
       if (item) this.checkScore(socket, item);
     };
     const newItem = data;
+    const name = generateName();
     const postfix = generatePostfix();
-    if (!newItem.name) newItem.name = `noName_${postfix}`;
+    if (!newItem.name) newItem.name = `${name}_${postfix}`;
     this.db.query('create', callBack, newItem);
   }
 
