@@ -392,7 +392,7 @@ export const walls = [
     isPortal: false,
     isVertical: false,
   },
-  { // prevent death from jump in level 2 gate
+  {
     width: 150,
     y: 36,
     x: 10350,

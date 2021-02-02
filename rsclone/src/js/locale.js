@@ -45,6 +45,8 @@ export const LOCALE = {
     // score
     time: 'время',
     score: 'очки',
+    // game
+    level: 'уровень',
   },
 };
 

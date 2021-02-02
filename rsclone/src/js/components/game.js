@@ -7,6 +7,13 @@ import { playSound } from '../utils/playSound';
 
 import addConfetti from './confetti';
 
+function disableButtons() {
+  const popupConfirm = document.getElementById('popup-confirm');
+  const popupCancel = document.getElementById('popup-cancel');
+  popupConfirm.onclick = undefined;
+  popupCancel.onclick = undefined;
+}
+
 export default class Game extends Phaser.Game {
   constructor(app, config) {
     super(config);
@@ -24,7 +31,7 @@ export default class Game extends Phaser.Game {
       },
     };
 
-    this.app = app; // link to main class
+    this.app = app;
     this.level = this.app.settings.level;
     this.addConfetti = addConfetti;
   }
@@ -106,6 +113,7 @@ export default class Game extends Phaser.Game {
   confirmName(id) {
     const nameInput = document.getElementById('popup-name');
     if (!nameInput.checkValidity()) return;
+    disableButtons();
     const name = nameInput.value;
     const data = {
       id,
@@ -120,7 +128,7 @@ export default class Game extends Phaser.Game {
       this.currentScene.input.keyboard.enableGlobalCapture();
       this.currentScene.scene.stop();
       this.currentScene.scene.start('MainMenuLeaderBoard', { id });
-    }, 2500);
+    }, 1000);
   }
 
   showPopup(template, newRecord = false) {
@@ -155,6 +163,7 @@ export default class Game extends Phaser.Game {
   }
 
   closePopup() {
+    disableButtons();
     const popup = document.getElementById('popup');
     popup.classList.add('hidden');
     popup.setAttribute('hidden', true);
