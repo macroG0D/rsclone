@@ -11,11 +11,9 @@ export default class MainMenuLocalGame extends Phaser.Scene {
   }
 
   create() {
-    const { level } = this.game;
-    const levelName = `Level${level}`;
     createImg(this, true);
     const menuItems = {
-      startGame: () => this.scene.start(levelName),
+      startGame: () => this.startGame(),
     };
     const menuCallBack = () => this.scene.switch('MainMenuPlay');
     this.menu = new Menu(this, menuItems, true, menuCallBack);
@@ -23,5 +21,12 @@ export default class MainMenuLocalGame extends Phaser.Scene {
 
   update() {
     localization(this);
+  }
+
+  startGame() {
+    this.game.app.settings.level = 1;
+    this.game.app.settings.score = 0;
+    this.game.app.settings.time = 0;
+    this.scene.start('Level1');
   }
 }
