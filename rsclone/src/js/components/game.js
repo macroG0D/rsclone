@@ -128,7 +128,7 @@ export default class Game extends Phaser.Game {
       this.currentScene.input.keyboard.enableGlobalCapture();
       this.currentScene.scene.stop();
       this.currentScene.scene.start('MainMenuLeaderBoard', { id });
-    }, 2500);
+    }, 1000);
   }
 
   showPopup(template, newRecord = false) {

@@ -6,13 +6,12 @@ export default class Network {
     this.client = scene.client;
     this.initSync = this.initSync.bind(this);
     if (this.client) {
-      // this.client.off('newRecord');
-      this.client.on('newRecord', (data) => {
-        console.log('test');
+      this.client.off('newRecord');
+      this.client.once('newRecord', (data) => {
         this.scene.game.spawnPopup(this.scene, 'newRecord', data);
       });
-      // this.client.off('noRecord');
-      this.client.on('noRecord', (data) => {
+      this.client.off('noRecord');
+      this.client.once('noRecord', (data) => {
         this.scene.game.spawnPopup(this.scene, 'noRecord', data);
       });
     }
