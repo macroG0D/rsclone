@@ -251,7 +251,22 @@ export default class Level {
   }
 
   checkLevelEnd() {
-    if (this.ibb.atLevelFinish && this.obb.atLevelFinish) this.levelEnd.completeLevel();
+    if (this.ibb.atLevelFinish && this.obb.atLevelFinish && !this.isFinished) {
+      this.isFinished = true;
+      if (this.scene.game.level === 1) {
+        this.levelEnd.completeLevel();
+        return;
+      }
+      const score = this.scene.game.score.currentScore;
+      const time = this.scene.game.score.currentTime;
+      const gameData = { score, time };
+      this.scene.game.level = 1;
+      this.scene.game.app.settings.level = 1;
+      this.scene.game.app.settings.score = 0;
+      this.scene.game.app.settings.time = 0;
+      this.scene.game.app.saveSettings();
+      this.scene.client.sendData('checkScore', gameData);
+    }
   }
 
   onUpdate() {

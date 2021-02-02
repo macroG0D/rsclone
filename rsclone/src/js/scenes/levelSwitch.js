@@ -21,23 +21,13 @@ export default class LevelSwitch extends Phaser.Scene {
       align: 'center',
     }).setOrigin(0.5);
 
-    let callback = () => {
+    const callback = () => {
       this.game.app.settings.level = nextLevel;
       this.game.app.settings.score = gameData.score || 0;
       this.game.app.settings.time = gameData.time || 0;
       this.game.app.saveSettings();
       this.scene.start(`Level${nextLevel}`, gameData);
     };
-    if (nextLevel >= 3) {
-      callback = () => {
-        this.game.level = 1;
-        this.game.app.settings.level = 1;
-        this.game.app.settings.score = 0;
-        this.game.app.settings.time = 0;
-        this.game.app.saveSettings();
-        this.client.sendData('checkScore', gameData);
-      };
-    }
 
     this.time.addEvent({
       delay: 2500,
