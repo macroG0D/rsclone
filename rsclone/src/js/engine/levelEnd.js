@@ -41,7 +41,7 @@ export default class LevelEnd extends Phaser.GameObjects.Rectangle {
       this.scene.game.app.settings.score = 0;
       this.scene.game.app.settings.time = 0;
       this.scene.game.app.saveSettings();
-      this.client.sendData('checkScore', gameData);
+      this.scene.client.sendData('checkScore', gameData);
     }
   }
 
