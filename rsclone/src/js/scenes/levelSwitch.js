@@ -12,10 +12,10 @@ export default class LevelSwitch extends Phaser.Scene {
     const currLevel = this.game.level;
     const nextLevel = currLevel + 1;
     this.game.level = nextLevel;
-    const levelName = (nextLevel < 3) ? `Level ${nextLevel}` : 'THE END';
+    const levelName = (nextLevel < 3) ? `Level${nextLevel}` : 'THE END';
     createBg(this, 0xE5E5E5);
     const { centerX, centerY } = this.cameras.main;
-    this.titleText = this.add.text(centerX, centerY, levelName, {
+    this.titleText = this.add.text(centerX, centerY, `lvl ${nextLevel}`, {
       font: '45px Montserrat',
       fill: '#000000',
       align: 'center',
