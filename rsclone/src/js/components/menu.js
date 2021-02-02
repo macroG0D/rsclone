@@ -35,7 +35,7 @@ export default class Menu extends Create {
     scene.input.keyboard.addKey('ENTER').on('down', () => this.selectItem());
 
     if (back) {
-      const bcc = backCallback || function bcc() { scene.scene.switch('MainMenu'); };
+      const bcc = backCallback || function bcc() { scene.scene.start('MainMenu'); };
       this.bcc = bcc;
       const index = this.items.length;
       const localBackName = locale.back || 'back';

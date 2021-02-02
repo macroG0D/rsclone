@@ -36,7 +36,12 @@ export default class MainMenuPlay extends Phaser.Scene {
   }
 
   back() {
-    this.scene.switch((this.game.isStarted) ? 'GameMenu' : 'MainMenu');
+    if (this.game.isStarted) {
+      this.scene.wake('GameMenu');
+      this.scene.stop();
+      return;
+    }
+    this.scene.start('GameMenu');
   }
 
   focusOut(name) {

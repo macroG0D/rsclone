@@ -15,7 +15,7 @@ export default class MainMenuLocalGame extends Phaser.Scene {
     const menuItems = {
       startGame: () => this.startGame(),
     };
-    const menuCallBack = () => this.scene.switch('MainMenuPlay');
+    const menuCallBack = () => this.scene.start('MainMenuPlay');
     this.menu = new Menu(this, menuItems, true, menuCallBack);
   }
 

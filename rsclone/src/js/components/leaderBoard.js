@@ -43,8 +43,7 @@ export default class LeaderBoard extends Create {
 
   clickBack() {
     playSound(this.scene, 'switchclick');
-    this.scene.scene.stop();
-    this.scene.scene.switch('MainMenu');
+    this.scene.scene.start('MainMenu');
   }
 
   updateTable(data) {
