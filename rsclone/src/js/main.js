@@ -15,7 +15,7 @@ const WebFont = require('webfontloader');
 
 class Main {
   constructor() {
-    const cookieVersion = 0;
+    const cookieVersion = 1;
     const settings = JSON.parse(localStorage.getItem('rsc-game-settings')) || {
       locale: 'ru',
       localeHtml: 'ru',
