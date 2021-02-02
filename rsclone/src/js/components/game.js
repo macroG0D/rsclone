@@ -51,6 +51,7 @@ export default class Game extends Phaser.Game {
     scene.input.keyboard.disableGlobalCapture();
     playSound(scene, 'win');
     scene.scene.pause();
+    if (document.exitFullscreen) document.exitFullscreen();
     this.currentScene = scene;
     const {
       position,
