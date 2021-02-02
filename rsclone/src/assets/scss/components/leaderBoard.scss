@@ -18,7 +18,7 @@
   padding: 0 10px;
   width: 100%;
   display: grid;
-  grid-template-columns: 0.5fr 1.5fr 1fr 1.5fr;
+  grid-template-columns: 0.3fr 1.5fr 1fr 1.5fr;
   &-position {
     text-align: center;
   }
@@ -32,7 +32,7 @@
   width: 100%;
   padding: 0 10px;
   display: grid;
-  grid-template-columns: 0.5fr 1.5fr 1fr 1.5fr;
+  grid-template-columns: 0.3fr 1.5fr 1fr 1.5fr;
   grid-auto-rows: 1fr;
   overflow-y: scroll;
   align-items: center;
@@ -63,5 +63,8 @@
   }
   &-time {
     text-align: right;
+  }
+  &-item {
+    padding: 0 5px;
   }
 }
