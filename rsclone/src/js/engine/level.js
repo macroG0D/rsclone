@@ -10,15 +10,16 @@ import { LEVELS } from '../levels/levels';
 import { BORDER_THICKNESS, COLLISION_CATEGORIES } from '../constants';
 
 export default class Level {
-  constructor(scene) {
+  constructor(scene, wallsColor) {
     const { key } = scene.scene;
     this.key = key;
     this.scene = scene;
     this.config = LEVELS[key];
-    this.config.shared = LEVELS.shared;
+    this.config.parallax = LEVELS[key];
     this.walls = [];
     this.portals = [];
     this.camPoints = {};
+    this.wallsColor = wallsColor;
     this.init();
   }
 
@@ -82,7 +83,7 @@ export default class Level {
 
   addParallax() {
     const { scene } = this;
-    const { parallaxImages } = this.config.shared;
+    const { parallaxImages } = this.config.parallax;
     scene.parallax = {};
     Object.entries(parallaxImages).forEach(([key, speed]) => {
       const sprite = scene.add.tileSprite(
@@ -102,7 +103,7 @@ export default class Level {
   addWalls() {
     const { scene } = this;
     const { walls } = this.config;
-    const wallDefaultColor = 0x062C42;
+    const wallDefaultColor = this.wallsColor;
     const portalColor = 0xffffff;
     const wallDefaultHeight = 16;
 

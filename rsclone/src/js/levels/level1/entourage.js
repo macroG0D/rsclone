@@ -133,7 +133,7 @@ export const LEVEL_ENTOURAGE = {
     [0.2, 7961, 1189, 1, 'grassSet02', true, false, 101, 500],
     [1, 7939, 1189, 1, 'palm06', false, true, 1, 500],
 
-    [1, 9469, 632, 1, 'boabab05', false, false, 100, 1820],
+    [1, 9499, 633, 1, 'pointer', false, false, 100, 150],
     [0.22, 9478, 634, 1, 'grassSet02', false, false, 101, 500],
     [0.22, 9550, 634, 1, 'grassSet02', true, false, 101, 500],
     // level 1 finish
