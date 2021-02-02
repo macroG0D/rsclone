@@ -27,6 +27,7 @@ export default class MainMenuLocalGame extends Phaser.Scene {
     this.game.app.settings.level = 1;
     this.game.app.settings.score = 0;
     this.game.app.settings.time = 0;
+    this.game.app.saveSettings();
     this.scene.start('Level1');
   }
 }

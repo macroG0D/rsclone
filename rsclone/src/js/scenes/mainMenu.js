@@ -9,14 +9,23 @@ export default class MainMenu extends Phaser.Scene {
   }
 
   create() {
-    const menuItems = {
+    const { level, time, score } = this.game.app.settings;
+    let menuItems = {
       newGame: () => this.scene.switch('MainMenuPlay'),
       leaderboard: () => this.scene.start('MainMenuLeaderBoard'),
       settings: () => this.scene.switch('MainMenuSettings'),
       developers: () => this.scene.switch('MainMenuDevelopers'),
       about: () => window.open('https://github.com/macroG0D/rsclone'),
     };
+    if (level > 1) menuItems = {
+      continue: () => this.continueGame({ level, time, score }), ...menuItems,
+    };
     this.menu = new Menu(this, menuItems);
+  }
+
+  continueGame(data) {
+    const { level } = data;
+    this.scene.start(`Level${level}`, data);
   }
 
   update() {
