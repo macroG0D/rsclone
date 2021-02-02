@@ -49,6 +49,7 @@ export default class gameUI extends Phaser.Scene {
     const escKey = parent.input.keyboard.addKey('ESC');
     escKey.on('down', this.toggleGameMenu, this);
 
+    /* Debug stuff
     parent.input.keyboard.addKey('Q').on('up', () => {
       parent.events.emit('updateScore', 100);
     });
@@ -64,6 +65,7 @@ export default class gameUI extends Phaser.Scene {
       console.log('data');
       parent.client.sendData('checkScore', data);
     });
+    */
 
     this.burger = new Create('div');
     this.burger.content = new Create('div', this.burger.node, 'game-burger');

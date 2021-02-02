@@ -37,7 +37,7 @@ export default class Level {
   postInit() {
     const { end } = this.config;
     const { scene } = this;
-    // this.spawnEnemies();
+    this.spawnEnemies();
     this.spawnPlayers();
     this.levelEnd = new LevelEnd(scene, end.x, end.y);
     scene.events.off('GameOver');
