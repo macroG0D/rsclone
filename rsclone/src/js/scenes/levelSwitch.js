@@ -18,7 +18,7 @@ export default class LevelSwitch extends Phaser.Scene {
     const levelText = locale.level || 'level';
     createBg(this, 0xE5E5E5);
     const { centerX, centerY } = this.cameras.main;
-    this.titleText = this.add.text(centerX, centerY, levelText, {
+    this.titleText = this.add.text(centerX, centerY, `${levelText} ${nextLevel}`, {
       font: '45px Montserrat',
       fill: '#000000',
       align: 'center',
