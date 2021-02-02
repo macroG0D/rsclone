@@ -20,8 +20,8 @@ export const LEVELS = {
     spawn: {
       // ibb: { x: 240, y: 1160 },
       // obb: { x: 220, y: 1100 },
-      ibb: { x: 10040, y: 1160 },
-      obb: { x: 10020, y: 1100 },
+      ibb: { x: 10400, y: 80 },
+      obb: { x: 10420, y: 80 },
 
     },
     parallaxImages: {
