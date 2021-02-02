@@ -17,9 +17,11 @@ export default class MainMenu extends Phaser.Scene {
       developers: () => this.scene.switch('MainMenuDevelopers'),
       about: () => window.open('https://github.com/macroG0D/rsclone'),
     };
-    if (level > 1) menuItems = {
-      continue: () => this.continueGame({ level, time, score }), ...menuItems,
-    };
+    if (level > 1) {
+      menuItems = {
+        continue: () => this.continueGame({ level, time, score }), ...menuItems,
+      };
+    }
     this.menu = new Menu(this, menuItems);
   }
 

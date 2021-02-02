@@ -1,4 +1,9 @@
 export const LEVEL_ENTOURAGE = {
+  MovingPlatform: [
+    [6500, 1330, 'platform-long', 1100, 'horizontal'],
+    [10000, 1800, 'platform-long', -1580, 'vertical'],
+  ],
+
   LevelsEntourage: [
     [1, 0, 1444, 1, 'grassSet02', false, false, 101, 3500],
     [1, 300, 1444, 1, 'grassSet02', false, false, 98, 1600],
