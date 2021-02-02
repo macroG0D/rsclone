@@ -1,48 +1,8 @@
 import { COLLISION_CATEGORIES } from '../../constants';
 
 const portalWidth = 186;
-const gradientSquares = [
-  {
-    width: 1506,
-    height: 432,
-  },
-  {
-    width: 191,
-    height: 355,
-  },
-  {
-    width: 1292,
-    height: 254,
-  },
-  {
-    width: 1086,
-    height: 310,
-  },
-  {
-    width: 260,
-    height: 410,
-  },
-  {
-    width: 458,
-    height: 490,
-  },
-  {
-    width: 576,
-    height: 638,
-  },
-];
-const gradientColors = [
-  0x0D2E3B,
-  0x243E51,
-  0x254052,
-  0x57707C,
-  0x6B838D,
-  0x708692,
-  0x788E99,
-  0x8296A2,
-];
 
-const walls = [
+export const walls = [
   {
     width: 1000,
     y: 1458,
@@ -390,13 +350,6 @@ const walls = [
     isPortal: true,
     isVertical: false,
   },
-  // {
-  //   width: 568,
-  //   y: 650,
-  //   x: 8875,
-  //   isPortal: false,
-  //   isVertical: true,
-  // },
   {
     width: 592,
     y: 650,
@@ -449,4 +402,4 @@ const walls = [
 
 ];
 
-export { gradientSquares, gradientColors, walls };
+export default walls;

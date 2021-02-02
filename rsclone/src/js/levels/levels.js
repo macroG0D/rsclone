@@ -32,17 +32,17 @@ export const LEVELS = {
   Level2: {
     order: 2,
     width: 3000,
-    height: 2890,
+    height: 1090,
     end: {
-      x: 10500,
-      y: 0,
+      x: 3000,
+      y: 60,
     },
     walls: level2Walls,
     entourage: level2Entourage,
     enemies: level2Enemies,
     spawn: {
-      ibb: { x: 240, y: 1160 },
-      obb: { x: 220, y: 1100 },
+      ibb: { x: 240, y: 660 },
+      obb: { x: 220, y: 600 },
     },
     parallaxImages: {
       lvl2_sky: 0.2,
