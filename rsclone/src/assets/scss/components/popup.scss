@@ -80,6 +80,9 @@
   &:hover {
     background-color: #ff0a81;
   }
+  &__active {
+    background-color: #ff0a81;
+  }
   display: flex;
   justify-content: center;
   align-items: center;
