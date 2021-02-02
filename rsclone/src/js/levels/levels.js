@@ -41,8 +41,8 @@ export const LEVELS = {
     entourage: level2Entourage,
     enemies: level2Enemies,
     spawn: {
-      ibb: { x: 2940, y: 660 },
-      obb: { x: 2920, y: 600 },
+      ibb: { x: 240, y: 660 },
+      obb: { x: 220, y: 600 },
     },
     parallaxImages: {
       lvl2_sky: 0.2,
