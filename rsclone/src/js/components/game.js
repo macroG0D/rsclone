@@ -88,7 +88,19 @@ export default class Game extends Phaser.Game {
     template.content += (newRecord) ? template.textOnRecord : template.textNoRecord;
     template.confirm = (newRecord) ? `main.game.confirmName("${id}")` : 'main.game.closePopup()';
     template.cancel = 'main.game.closePopup()';
-    this.showPopup(template, newRecord);
+
+    if (!this.popupShown) {
+      this.showPopup(template, newRecord);
+      const nameInput = document.getElementById('popup-name');
+      const buttonConfirm = document.getElementById('popup-confirm');
+      nameInput.addEventListener('input', () => {
+        if (nameInput.checkValidity()) {
+          buttonConfirm.classList.add('popup-button__active');
+        } else {
+          buttonConfirm.classList.remove('popup-button__active');
+        }
+      });
+    }
   }
 
   confirmName(id) {
