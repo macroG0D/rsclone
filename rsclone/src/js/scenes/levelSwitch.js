@@ -34,7 +34,6 @@ export default class LevelSwitch extends Phaser.Scene {
         this.game.app.settings.score = 0;
         this.game.app.settings.time = 0;
         this.game.app.saveSettings();
-        this.scene.stop();
         this.client.sendData('checkScore', gameData);
       };
     }

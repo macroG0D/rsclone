@@ -32,15 +32,16 @@ export default class GameMenu extends Phaser.Scene {
   continue() {
     const { level } = this.game;
     const levelName = `Level${level}`;
-    this.scene.wake(levelName);
     this.scene.stop();
+    this.scene.wake(levelName);
   }
 
   mainMenu() {
     const { level } = this.game;
     const levelName = `Level${level}`;
     this.scene.stop(levelName);
-    this.scene.wake('MainMenu');
+    if (this.scene.isSleeping('MainMenu')) this.scene.stop('MainMenu');
     this.scene.stop();
+    this.scene.start('MainMenu');
   }
 }
