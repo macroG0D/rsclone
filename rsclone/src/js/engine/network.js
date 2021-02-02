@@ -13,22 +13,6 @@ export default class Network {
       this.client.on('noRecord', (data) => {
         this.scene.game.spawnPopup(this.scene, 'noRecord', data);
       });
-
-      /* Debug stuff
-      this.scene.input.keyboard.addKey('Q').on('up', () => {
-        this.scene.events.emit('updateScore', 100);
-      });
-
-      this.scene.input.keyboard.addKey('E').on('up', () => {
-        const score = this.game.score.currentScore;
-        const time = this.game.score.currentTime;
-        this.scene.events.emit('gameEnd', { score, time });
-      });
-
-      this.scene.events.on('gameEnd', (data) => {
-        this.client.sendData('checkScore', data);
-      });
-      */
     }
   }
 

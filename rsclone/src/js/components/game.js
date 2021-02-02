@@ -3,6 +3,8 @@ import Phaser from 'phaser';
 import Client from '../engine/client';
 import Music from '../engine/music';
 
+import { playSound } from '../utils/playSound';
+
 import addConfetti from './confetti';
 
 export default class Game extends Phaser.Game {
@@ -47,6 +49,7 @@ export default class Game extends Phaser.Game {
 
   spawnPopup(scene, event, data) {
     scene.input.keyboard.disableGlobalCapture();
+    playSound(scene, 'win');
     scene.scene.pause();
     this.currentScene = scene;
     const {
