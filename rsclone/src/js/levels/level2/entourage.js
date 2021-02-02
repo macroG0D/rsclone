@@ -3,8 +3,8 @@ export const LEVEL_ENTOURAGE = {
     [700, 850, 'platform-purple', 1850, 'horizontal', 20000],
     [500, 1020, 'platform-green', 500, 'horizontal', 5000],
     [2900, 400, 'platform-long', -290, 'vertical'],
-
   ],
+
   LevelsEntourage: [
     // floor entourage
     [1, -20, 944, 1, 'rocksSet01', false, false, 101, 3500],

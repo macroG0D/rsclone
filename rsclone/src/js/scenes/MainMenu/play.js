@@ -11,8 +11,8 @@ export default class MainMenuPlay extends Phaser.Scene {
 
   create() {
     const menuItems = {
-      localGame: () => this.scene.switch('MainMenuLocalGame'),
-      onlineGame: () => this.scene.switch('MainMenuOnlineGame'),
+      localGame: () => this.scene.start('MainMenuLocalGame'),
+      onlineGame: () => this.scene.start('MainMenuOnlineGame'),
     };
     this.menu = new Menu(this, menuItems, true);
   }

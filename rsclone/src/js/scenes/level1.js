@@ -23,5 +23,4 @@ export default class Level1 extends Phaser.Scene {
   update() {
     if (this.scene.key !== this.game.music.key) this.game.music.play(this);
   }
-
 }

@@ -1,6 +1,8 @@
 import Create from './dom-create';
 import InputRange from './input-range';
 
+import { playSound } from '../utils/playSound';
+
 export default class Range extends Create {
   constructor(scene, rangeItems, parent) {
     super('div', parent, 'game-menu-range');
@@ -17,8 +19,8 @@ export default class Range extends Create {
       item.node.addEventListener('pointermove', () => scene.menu.highlightItem(itemIndex), false);
     });
 
-    scene.input.keyboard.addKey('LEFT').on('down', () => this.switchItem('left'));
-    scene.input.keyboard.addKey('RIGHT').on('down', () => this.switchItem('right'));
+    scene.input.keyboard.addKey('LEFT', true, true).on('down', () => this.switchItem('left'));
+    scene.input.keyboard.addKey('RIGHT', true, true).on('down', () => this.switchItem('right'));
   }
 
   switchItem(direction) {
@@ -36,6 +38,7 @@ export default class Range extends Create {
           item.range.node.value = next;
           this.scene.changeSettings(item.name);
         }
+        playSound(this.scene, 'machine_switch');
       }
     });
   }

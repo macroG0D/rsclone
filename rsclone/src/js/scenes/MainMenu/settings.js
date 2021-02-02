@@ -3,6 +3,8 @@ import Phaser from 'phaser';
 import Menu from '../../components/menu';
 import Range from '../../components/range';
 
+import { playSound } from '../../utils/playSound';
+
 import { localization } from '../../engine/localization';
 
 export default class MainMenuPlay extends Phaser.Scene {
@@ -34,7 +36,12 @@ export default class MainMenuPlay extends Phaser.Scene {
   }
 
   back() {
-    this.scene.switch((this.game.isStarted) ? 'GameMenu' : 'MainMenu');
+    if (this.game.isStarted) {
+      this.scene.wake('GameMenu');
+      this.scene.stop();
+      return;
+    }
+    this.scene.start('GameMenu');
   }
 
   focusOut(name) {
@@ -49,6 +56,7 @@ export default class MainMenuPlay extends Phaser.Scene {
     const item = this.range.items[name];
     const { left, right } = item;
     const value = +item.range.node.value;
+    playSound(this, 'machine_switch');
     switch (name) {
       case ('music'): {
         const newValue = parseFloat((value / 100).toFixed(2));

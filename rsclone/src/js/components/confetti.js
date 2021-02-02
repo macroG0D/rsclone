@@ -1,12 +1,12 @@
 // source https://codepen.io/linrock/pen/Amdhr
 function range(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
 
-const drawCircle = function(context, x, y, r, style) {
+function drawCircle(context, x, y, r, style) {
   context.beginPath();
   context.arc(x, y, r, 0, 2 * Math.PI, false);
   context.fillStyle = style;
   context.fill();
-};
+}
 
 class Confetti {
   constructor(context) {
@@ -45,6 +45,7 @@ class Confetti {
     drawCircle(this.context, this.x, this.y, this.r, `${this.rgb},${this.opacity})`);
   }
 }
+
 export default function addConfetti() {
   const NUM_CONFETTI = 350;
   const canvas = document.getElementById('confetti');
@@ -52,7 +53,7 @@ export default function addConfetti() {
   window.w = 0;
   window.h = 0;
 
-  const resizeWindow = function() {
+  const resizeWindow = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     window.w = canvas.width;
@@ -79,7 +80,7 @@ export default function addConfetti() {
     confetti.push(new Confetti(context));
   }
 
-  window.step = function() {
+  window.step = () => {
     requestAnimationFrame(window.step);
     context.clearRect(0, 0, window.w, window.h);
     return Array.from(confetti).map((c) => c.draw());

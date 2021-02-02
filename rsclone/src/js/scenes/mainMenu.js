@@ -10,12 +10,10 @@ export default class MainMenu extends Phaser.Scene {
 
   create() {
     const menuItems = {
-      play: () => {
-        this.scene.switch('MainMenuPlay');
-      },
+      newGame: () => this.scene.start('MainMenuPlay'),
       leaderboard: () => this.scene.start('MainMenuLeaderBoard'),
-      settings: () => this.scene.switch('MainMenuSettings'),
-      developers: () => this.scene.switch('MainMenuDevelopers'),
+      settings: () => this.scene.start('MainMenuSettings'),
+      developers: () => this.scene.start('MainMenuDevelopers'),
       about: () => window.open('https://github.com/macroG0D/rsclone'),
     };
     this.menu = new Menu(this, menuItems);

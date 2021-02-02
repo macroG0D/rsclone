@@ -1,5 +1,7 @@
 import Create from './dom-create';
 
+import { playSound } from '../utils/playSound';
+
 import { LOCALE } from '../locale';
 
 export default class LeaderBoard extends Create {
@@ -25,22 +27,23 @@ export default class LeaderBoard extends Create {
     const loadingText = '<span></span><span></span><span>loading data...</span>';
     this.table = new Create('div', this.container.node, 'board-table', loadingText);
 
-    const bcc = function bcc() {
-      scene.scene.stop();
-      scene.scene.switch('MainMenu');
-    };
     this.back = new Create('div', this.container.node, 'game-menu-item', backText);
     this.back.node.classList.add('game-menu-back');
     this.back.node.classList.add('game-menu-item-back');
     this.back.node.classList.add('game-menu-item-active');
-    this.back.node.addEventListener('click', bcc, false);
+    this.back.node.addEventListener('click', () => { this.clickBack(); }, false);
     scene.input.keyboard.removeAllKeys(true);
-    scene.input.keyboard.addKey('ESC').on('down', bcc);
-    scene.input.keyboard.addKey('ENTER').on('down', bcc);
+    scene.input.keyboard.addKey('ESC').on('down', () => { this.clickBack(); });
+    scene.input.keyboard.addKey('ENTER').on('down', () => { this.clickBack(); });
 
     const { centerX, centerY } = scene.cameras.main;
     this.spawn = scene.add.dom(centerX, centerY, this.node);
     this.spawn.setOrigin(0.5);
+  }
+
+  clickBack() {
+    playSound(this.scene, 'switchclick');
+    this.scene.scene.start('MainMenu');
   }
 
   updateTable(data) {

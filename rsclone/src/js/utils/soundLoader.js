@@ -22,6 +22,10 @@ export function soundLoader(scene) {
   load(scene, 'diamond_collect', 'diamond_collect', 3, 2);
   load(scene, 'xbb_run_left', 'xbb_left_footfall', 14, 0.6);
   load(scene, 'xbb_run_right', 'xbb_right_footfall', 14, 0.6);
+  load(scene, 'machine_switch', 'machine_switch', 4, 1);
+  load(scene, 'switchclick', 'switchclick', 3, 0.6);
+  load(scene, 'switch', 'switch', 1, 0.6);
+  load(scene, 'win', 'win', 1, 2);
 }
 
 export default soundLoader;

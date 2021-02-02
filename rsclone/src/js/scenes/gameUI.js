@@ -49,6 +49,24 @@ export default class gameUI extends Phaser.Scene {
     const escKey = parent.input.keyboard.addKey('ESC');
     escKey.on('down', this.toggleGameMenu, this);
 
+    /* Debug stuff
+    parent.input.keyboard.addKey('Q').on('up', () => {
+      parent.events.emit('updateScore', 100);
+    });
+
+    parent.input.keyboard.addKey('E').on('up', () => {
+      parent.events.emit('gameEnd', {
+        score: this.score.currentScore,
+        time: this.score.currentTime,
+      });
+    });
+
+    parent.events.on('gameEnd', (data) => {
+      console.log('data');
+      parent.client.sendData('checkScore', data);
+    });
+    */
+
     this.burger = new Create('div');
     this.burger.content = new Create('div', this.burger.node, 'game-burger');
     this.burger.x = this.game.config.width - 50;

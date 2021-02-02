@@ -1,5 +1,7 @@
 import Create from './dom-create';
 
+import { playSound } from '../utils/playSound';
+
 import { LOCALE } from '../locale';
 
 export default class Menu extends Create {
@@ -23,7 +25,7 @@ export default class Menu extends Create {
       this.items.push(item);
       if (itemLink) {
         item.link = itemLink;
-        item.node.addEventListener('click', itemLink, false);
+        item.node.addEventListener('click', () => this.selectItem(), false);
       }
       item.node.addEventListener('pointermove', () => this.highlightItem(itemIndex), false);
     });
@@ -33,7 +35,8 @@ export default class Menu extends Create {
     scene.input.keyboard.addKey('ENTER').on('down', () => this.selectItem());
 
     if (back) {
-      const bcc = backCallback || function bcc() { scene.scene.switch('MainMenu'); };
+      const bcc = backCallback || function bcc() { scene.scene.start('MainMenu'); };
+      this.bcc = bcc;
       const index = this.items.length;
       const localBackName = locale.back || 'back';
       this.back = new Create('div', this.node, 'game-menu-item', localBackName);
@@ -43,9 +46,9 @@ export default class Menu extends Create {
       this.back.index = index;
       this.items.push(this.back);
       this.back.node.classList.add('game-menu-item-back');
-      this.back.node.addEventListener('click', bcc, false);
+      this.back.node.addEventListener('click', () => this.selectItem(), false);
       this.back.node.addEventListener('pointermove', () => this.highlightItem(index), false);
-      scene.input.keyboard.addKey('ESC').on('down', bcc);
+      scene.input.keyboard.addKey('ESC').on('down', () => this.menuBack());
     }
 
     const x = this.scene.game.config.width / 2;
@@ -60,6 +63,7 @@ export default class Menu extends Create {
       this.items[current].node.classList.remove('game-menu-item-active');
       this.items[next].node.classList.add('game-menu-item-active');
       this.activeItem = next;
+      playSound(this.scene, 'switch');
     }
   }
 
@@ -75,5 +79,11 @@ export default class Menu extends Create {
   selectItem() {
     const { link } = this.items[this.activeItem];
     if (link) link();
+    playSound(this.scene, 'switchclick');
+  }
+
+  menuBack() {
+    if (this.bcc) this.bcc();
+    playSound(this.scene, 'switchclick');
   }
 }

@@ -1,11 +1,11 @@
 export const LOCALE = {
   en: {
     // play menu
+    newGame: 'new game',
     localGame: 'local game',
     onlineGame: 'online game',
     // game menu
     continue: 'continue',
-    newGame: 'new game',
     mainMenu: 'main menu',
     // local game menu
     startGame: 'start game',
@@ -17,7 +17,8 @@ export const LOCALE = {
 
   ru: {
     // main menu
-    play: 'играть',
+    continue: 'продолжить',
+    newGame: 'новая игра',
     leaderboard: 'рекорды',
     settings: 'настройки',
     developers: 'разработчики',
@@ -27,8 +28,6 @@ export const LOCALE = {
     localGame: 'локальная игра',
     onlineGame: 'сетевая игра',
     // game menu
-    continue: 'продолжить',
-    newGame: 'новая игра',
     mainMenu: 'главное меню',
     // local game menu
     startGame: 'начать игру',

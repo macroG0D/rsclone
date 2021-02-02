@@ -11,8 +11,6 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
   }
 
   create() {
-    const { level } = this.game;
-    const levelName = `Level${level}`;
     createImg(this);
     let menuItems = {
       'Looking for a partner...': '',
@@ -39,8 +37,16 @@ export default class MainMenuOnlineGame extends Phaser.Scene {
       menuItems[`${sessionName} ready!`] = () => this.requestStartGame(sessionName);
       this.menu = new Menu(this, menuItems, true, menuCallBack);
     });
-    this.client.on('startGame', (gameData) => this.scene.start(levelName, gameData));
+    this.client.on('startGame', (gameData) => this.startGame(gameData));
     this.requestJoinGame();
+  }
+
+  startGame(gameData) {
+    this.game.app.settings.level = 1;
+    this.game.app.settings.score = 0;
+    this.game.app.settings.time = 0;
+    this.game.app.saveSettings();
+    this.scene.start('Level1', gameData);
   }
 
   requestJoinGame() {
