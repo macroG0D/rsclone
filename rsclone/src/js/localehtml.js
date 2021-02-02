@@ -37,7 +37,7 @@ export const LOCALE_HTML = {
     heliken: 'Filip Bursh',
     mauta: 'Anna Opareva',
 
-    copyright: 'This is just a small study project, the copyright for most of the content and the game concept itself belongs to the creators of the original Ibb & Obb game (publisher: Sparpweed, developers: Sparpweed, Codeglue)',
+    copyright: 'This is just a small study project. Еhe copyright for most of the content and the game concept itself belongs to the creators of the original Ibb & Obb game (publisher: Sparpweed, developers: Sparpweed, Codeglue). 2021.',
 
   },
 
@@ -79,7 +79,7 @@ export const LOCALE_HTML = {
     heliken: 'Филипп Бурш',
     mauta: 'Анна Опарева',
 
-    copyright: 'Это учебный проект. Авторские права на большую часть использованных материалов и на саму концепцию принадлежат создателям оригинальной игры Ibb & Obb (издатель: Sparpweed, разработчики: Sparpweed, Codeglue)',
+    copyright: 'Это учебный проект. Авторские права на большую часть использованных материалов и на саму концепцию принадлежат создателям оригинальной игры Ibb & Obb (издатель: Sparpweed, разработчики: Sparpweed, Codeglue). 2021.',
   },
 };
 
