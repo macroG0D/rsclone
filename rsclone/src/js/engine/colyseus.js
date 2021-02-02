@@ -64,6 +64,14 @@ export default class Colyseus extends Phaser.Events.EventEmitter {
     }
   }
 
+  roomSend(key, data) {
+    if (!this.room) return;
+    if (this.checkSend('room', key, data)) {
+      this.sent.room[key] = JSON.stringify(data);
+      this.room.send(key, data);
+    }
+  }
+
   checkSend(room, key, data) {
     if (!this.sent[room]) this.sent[room] = {};
     return (!this.sent[room][key] || (this.sent[room][key] !== JSON.stringify(data)));

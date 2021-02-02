@@ -1,9 +1,17 @@
 const schema = require('@colyseus/schema');
+const { Player } = require('./player');
 
-class State extends schema.Schema {}
+const { Schema } = schema;
+const { MapSchema } = schema;
 
+class State extends Schema {
+  constructor() {
+    super();
+    this.players = new MapSchema();
+  }
+}
 schema.defineTypes(State, {
-  mySynchronizedProperty: 'string',
+  players: { map: Player },
 });
 
 exports.State = State;

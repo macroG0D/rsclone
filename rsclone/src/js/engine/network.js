@@ -4,6 +4,7 @@ export default class Network {
   constructor(scene) {
     this.scene = scene;
     this.client = scene.client;
+    this.colyseus = scene.game.colyseus;
     this.initSync = this.initSync.bind(this);
     if (this.client) {
       this.client.on('newRecord', (data) => {
@@ -33,6 +34,11 @@ export default class Network {
   }
 
   initSync() {
+    if (this.colyseus && this.colyseus.room) {
+      const { room } = this.colyseus;
+      console.log(room);
+    }
+    /*
     this.client.off('playerMove', this.onPlayerMove, this);
     this.client.on('playerMove', this.onPlayerMove, this);
 
@@ -41,6 +47,8 @@ export default class Network {
 
     this.scene.events.off('update', this.sync, this);
     this.scene.events.on('update', this.sync, this);
+    console.log('network sync');
+    */
   }
 
   onPlayerMove(data) {

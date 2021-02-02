@@ -76,7 +76,7 @@ export default class gameUI extends Phaser.Scene {
         this.player1Input = new Gamepad(this, parent, playerKey, 1, 'left&right');
         this.player2Input = new Gamepad(this, parent, playerKey, 2, 'up&down');
       }
-      parent.network.initSync();
+      parent.network.initSync(this.player1Input);
     } else if (desktop) {
       this.player1Input = new Input(parent, 'ibb', PLAYER_1_CONTROLS);
       this.player2Input = new Input(parent, 'obb', PLAYER_2_CONTROLS);

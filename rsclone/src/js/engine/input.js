@@ -36,10 +36,6 @@ export default class Input extends Phaser.Events.EventEmitter {
       this.scene.level.setDirection(playerKey, direction, flag);
       return;
     }
-    this.scene.client.sendData('playerMove', {
-      playerKey,
-      direction,
-      movementFlag: flag,
-    });
+    this.scene.game.colyseus.roomSend('playerMove', this.state);
   }
 }
