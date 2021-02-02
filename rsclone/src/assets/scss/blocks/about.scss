@@ -1,5 +1,4 @@
 .about {
-  // background-color: $bgLightColor;
   padding-top: 67px;
   padding-bottom: 69px;
 }
@@ -35,14 +34,6 @@
   @media (max-width: 1200px) {
     width: calc(100% - 142px);
   }
-
-  // @media (max-width: 950px) {
-  //   width:600px;
-  // }
-
-  // @media (max-width: 850px) {
-  //   width: 445px;
-  // }
 
   @media (max-width: 640px) {
     font-size: 24px;

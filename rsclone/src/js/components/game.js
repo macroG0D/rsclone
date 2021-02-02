@@ -31,7 +31,7 @@ export default class Game extends Phaser.Game {
       },
     };
 
-    this.app = app; // link to main class
+    this.app = app;
     this.level = this.app.settings.level;
     this.addConfetti = addConfetti;
   }

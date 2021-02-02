@@ -73,11 +73,9 @@
   position: absolute;
   width: 149px;
   top: 65px;
-  // top: 45px;
   right: 0;
 
   @media (max-width: 768px) {
-    // top: 65px;
     right: calc(50% - 380px);
   }
 

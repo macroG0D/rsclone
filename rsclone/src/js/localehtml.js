@@ -1,13 +1,9 @@
 export const LOCALE_HTML = {
   en: {
-    //  меню основное
     home: 'home',
     about: 'about',
-    // стартовый текст
     start: 'A JavaScript clone of 2D puzzle game that can be played solo or co-op with a friend at the same keyboard, or even online. Final project of front-end course of <b>Rolling Scopes School</b>',
-    // кнопка играть
     play: 'play now',
-    // промо текст
     promo: 'During the game walkthrough, players will encounter a picturesque world, interaction between two cute characters, enjoyable physics, puzzles, enemies, and even experiments with a gravity.',
 
     gameplayTitle: 'Gameplay',
@@ -46,14 +42,10 @@ export const LOCALE_HTML = {
   },
 
   ru: {
-    //  меню основное
     home: 'главная',
     about: 'о проекте',
-    // стартовый текст
     start: 'JavaScript клон 2D игры-головоломки, в которую можно играть как в одиночку, так и в паре за одной клавиатурой, или по сети. Финальный проект front-end курса <b>Rolling Scopes School</b>',
-    // кнопка играть
     play: 'играть',
-    // промо текст
     promo: 'В ходе прохождения игры игроки столкнутся с живописным миром, взаимодействием двух персонажей, с приятной физикой, включающей головоломки, врагов и даже эксперименты с гравитацией.',
 
     gameplayTitle: 'Геймплей',
