@@ -36,11 +36,11 @@ export default class LevelEnd extends Phaser.GameObjects.Rectangle {
     if (this.scene.game.level < 2) {
       this.scene.scene.start('LevelSwitch', gameData);
     } else {
-      this.game.level = 1;
-      this.game.app.settings.level = 1;
-      this.game.app.settings.score = 0;
-      this.game.app.settings.time = 0;
-      this.game.app.saveSettings();
+      this.scene.game.level = 1;
+      this.scene.game.app.settings.level = 1;
+      this.scene.game.app.settings.score = 0;
+      this.scene.game.app.settings.time = 0;
+      this.scene.game.app.saveSettings();
       this.client.sendData('checkScore', gameData);
     }
   }
