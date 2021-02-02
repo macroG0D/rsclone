@@ -2,15 +2,15 @@ import Phaser from 'phaser';
 import ibbSprite from '../../assets/sprites/ibb/ibb.png';
 import obbSprite from '../../assets/sprites/obb/obb.png';
 import githubIcon from '../../assets/images/github-logo-face.svg';
-import ibbImg from '../../assets/images/ibb_stay.png';
-import obbImg from '../../assets/images/obb_stay.png';
+import ibbImg from '../../assets/images/ibb_stay.svg';
+import obbImg from '../../assets/images/obb_stay.svg';
 import ibbBg from '../../assets/images/ibb_bg.png';
 import obbBg from '../../assets/images/obb_bg.png';
 import ibbKeys from '../../assets/images/ibbKeys.svg';
 import obbKeys from '../../assets/images/obbKeys.svg';
-import bubble from '../../assets/images/bubble.png';
-import crystal from '../../assets/images/crystal.png';
-import spikes from '../../assets/images/spikes.svg';
+import bubble from '../../assets/sprites/environment/bubble.png';
+import crystal from '../../assets/sprites/environment/crystal.png';
+import spikes from '../../assets/sprites/environment/spikes.svg';
 import hedgehogHead from '../../assets/sprites/enemies/hedgehogs/hedgehog_head.svg';
 import hedgehogJumper from '../../assets/sprites/enemies/hedgehogs/hedgehog_jumper.svg';
 import hedgehogHalfButt from '../../assets/sprites/enemies/hedgehogs/hedgehog_halfButt.svg';
@@ -19,14 +19,22 @@ import menuMusic from '../../assets/music/main_menu.mp3';
 import level1Music from '../../assets/music/level1.mp3';
 import level2Music from '../../assets/music/level2.mp3';
 
-import sky from '../../assets/images/background/sky.png';
-import clouds0 from '../../assets/images/background/clouds_0.png';
-import bg0 from '../../assets/images/background/bg_0.png';
-import bg1 from '../../assets/images/background/bg_1.png';
-import bg2 from '../../assets/images/background/bg_2.png';
+import skyLvl1 from '../../assets/sprites/environment/level1_bg/sky.png';
+import cloudsLvl1 from '../../assets/sprites/environment/level1_bg/clouds_0.png';
+import bg0Lvl1 from '../../assets/sprites/environment/level1_bg/bg_0.png';
+import bg1Lvl1 from '../../assets/sprites/environment/level1_bg/bg_1.png';
+import bg2Lvl1 from '../../assets/sprites/environment/level1_bg/bg_2.png';
+
+import skyLvl2 from '../../assets/sprites/environment/level2_bg/lvl2_sky.png';
+import cloudsLvl2 from '../../assets/sprites/environment/level2_bg/lvl2_clouds.png';
+import bg0Lvl2 from '../../assets/sprites/environment/level2_bg/lvl2_bg_0.png';
+import bg1Lvl2 from '../../assets/sprites/environment/level2_bg/lvl2_bg_1.png';
+import bg2Lvl2 from '../../assets/sprites/environment/level2_bg/lvl2_bg_2.png';
 
 // world interactive environment
 import platformLong from '../../assets/sprites/environment/platform-long.png';
+import platformPurple from '../../assets/sprites/environment/platform-purple.png';
+import platformGreen from '../../assets/sprites/environment/platform-green.png';
 
 // world static environment
 import boabab01 from '../../assets/sprites/environment/trees/boabab01.png';
@@ -43,14 +51,20 @@ import palm04 from '../../assets/sprites/environment/trees/palm04.png';
 import palm05 from '../../assets/sprites/environment/trees/palm05.png';
 import palm06 from '../../assets/sprites/environment/trees/palm06.png';
 
+import pointer from '../../assets/sprites/environment/pointer.png';
+
 import curved01 from '../../assets/sprites/environment/trees/curved01.png';
 import curved02 from '../../assets/sprites/environment/trees/curved02.png';
 import curved03 from '../../assets/sprites/environment/trees/curved03.png';
 
 import grassSet01 from '../../assets/sprites/environment/onFloor/grass_set01.png';
 import grassSet02 from '../../assets/sprites/environment/onFloor/grass_set02.png';
+import rocksSet01 from '../../assets/sprites/environment/onFloor/rocks_set01.png';
+import rocksSet02 from '../../assets/sprites/environment/onFloor/rocks_set02.png';
 import grassUnderWorldSet01 from '../../assets/sprites/environment/onFloor/grass_underWorld_set01.png';
 import grassUnderWorldSet02 from '../../assets/sprites/environment/onFloor/grass_underWorld_set02.png';
+import grassUnderWorldSet03 from '../../assets/sprites/environment/onFloor/grass_underWorld_set03.png';
+import grassUnderWorldSet04 from '../../assets/sprites/environment/onFloor/grass_underWorld_set04.png';
 import flowersSet01 from '../../assets/sprites/environment/onFloor/flowers_set01.png';
 
 import LoadingBar from '../utils/loadingBar';
@@ -79,15 +93,24 @@ export default class Preload extends Phaser.Scene {
     this.load.image('hedgehog-jumper', hedgehogJumper);
     this.load.image('hedgehog-fullbutt', hedgehogFullButt);
 
-    // Loading parallax's images
-    this.load.image('sky', sky);
-    this.load.image('clouds_0', clouds0);
-    this.load.image('bg_0', bg0);
-    this.load.image('bg_1', bg1);
-    this.load.image('bg_2', bg2);
+    // Loading LEVEL 1 parallax's images
+    this.load.image('lvl1_sky', skyLvl1);
+    this.load.image('lvl1_clouds', cloudsLvl1);
+    this.load.image('lvl1_bg0', bg0Lvl1);
+    this.load.image('lvl1_bg1', bg1Lvl1);
+    this.load.image('lvl1_bg2', bg2Lvl1);
+
+    // Loading LEVEL 2 parallax's images
+    this.load.image('lvl2_sky', skyLvl2);
+    this.load.image('lvl2_clouds', cloudsLvl2);
+    this.load.image('lvl2_bg0', bg0Lvl2);
+    this.load.image('lvl2_bg1', bg1Lvl2);
+    this.load.image('lvl2_bg2', bg2Lvl2);
 
     // Loading world interactive environment sprites
     this.load.image('platform-long', platformLong);
+    this.load.image('platform-purple', platformPurple);
+    this.load.image('platform-green', platformGreen);
 
     // Loading world static environment sprites
     this.load.image('boabab01', boabab01);
@@ -104,14 +127,20 @@ export default class Preload extends Phaser.Scene {
     this.load.image('palm05', palm05);
     this.load.image('palm06', palm06);
 
+    this.load.image('pointer', pointer);
+
     this.load.image('curved01', curved01);
     this.load.image('curved02', curved02);
     this.load.image('curved03', curved03);
 
     this.load.image('grassSet01', grassSet01);
     this.load.image('grassSet02', grassSet02);
+    this.load.image('rocksSet01', rocksSet01);
+    this.load.image('rocksSet02', rocksSet02);
     this.load.image('grassUnderWorldSet01', grassUnderWorldSet01);
     this.load.image('grassUnderWorldSet02', grassUnderWorldSet02);
+    this.load.image('grassUnderWorldSet03', grassUnderWorldSet03);
+    this.load.image('grassUnderWorldSet04', grassUnderWorldSet04);
     this.load.image('flowersSet01', flowersSet01);
 
     // Loading music
@@ -136,6 +165,7 @@ export default class Preload extends Phaser.Scene {
   create() {
     this.scene.start('MainMenu');
     // this.scene.start('Level1');
+    // this.scene.start('Level2');
   }
 
   showBootBg() {

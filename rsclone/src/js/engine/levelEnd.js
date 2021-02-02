@@ -15,7 +15,7 @@ export default class LevelEnd extends Phaser.GameObjects.Rectangle {
   }
 
   initPlayersFinishCollide(players) {
-    this.scene.matterCollision.addOnCollideStart({
+    this.scene.matterCollision.addOnCollideActive({
       objectA: players,
       objectB: this,
       callback: ({ gameObjectA }) => gameObjectA.toggleFinishState(),

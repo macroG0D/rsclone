@@ -48,8 +48,8 @@ export default class MovingPlatform extends Phaser.Physics.Matter.Sprite {
         to: this.distance,
         duration: this.speed,
         ease: Phaser.Math.Easing.Sine.InOut,
-        repeat: 0,
-        yoyo: false,
+        repeat: -1,
+        yoyo: true,
         onUpdate: (tween, target) => {
           const y = this.startY + target.value;
           const dy = y - this.y;
