@@ -77,7 +77,8 @@ export default class Menu extends Create {
   }
 
   selectItem(index) {
-    const { link } = this.items[index || this.activeItem];
+    const itemIndex = (index !== undefined) ? index : this.activeItem;
+    const { link } = this.items[itemIndex];
     if (link) link();
     playSound(this.scene, 'switchclick');
   }
