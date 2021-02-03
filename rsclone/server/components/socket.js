@@ -68,7 +68,7 @@ module.exports = class Socket {
         time,
       };
 
-      const action = (position <= 100) ? 'newRecord' : 'noRecord';
+      const action = (position <= 100 && position >= 0) ? 'newRecord' : 'noRecord';
       socket.emit(action, sendData);
     };
 

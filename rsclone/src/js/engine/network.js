@@ -7,21 +7,21 @@ export default class Network {
     this.initSync = this.initSync.bind(this);
     if (this.client) {
       this.client.off('newRecord');
-      this.client.once('newRecord', (data) => {
+      this.client.on('newRecord', (data) => {
         this.scene.game.spawnPopup(this.scene, 'newRecord', data);
       });
       this.client.off('noRecord');
-      this.client.once('noRecord', (data) => {
+      this.client.on('noRecord', (data) => {
         this.scene.game.spawnPopup(this.scene, 'noRecord', data);
       });
     }
   }
 
   initSync() {
-    this.client.off('playerMove', this.onPlayerMove, this);
+    this.client.off('playerMove');
     this.client.on('playerMove', this.onPlayerMove, this);
 
-    this.client.off('playerSync', this.onPlayerSync, this);
+    this.client.off('playerSync');
     this.client.on('playerSync', this.onPlayerSync, this);
 
     this.scene.events.off('update', this.sync, this);
@@ -42,7 +42,7 @@ export default class Network {
       disableGravitySwitch,
     } = data;
     const character = this.scene.level[playerKey];
-    if (character) {
+    if (character && character.body) {
       if (character.x && character.x !== x) character.x = x;
       if (character.y && character.y !== y) character.y = y;
       if (character.angle && character.angle !== angle) character.angle = angle;
@@ -58,7 +58,7 @@ export default class Network {
     this.throttle = true;
     const { playerKey } = this.scene;
     const player = this.scene.level[this.scene.playerKey];
-    if (player) {
+    if (player && player.body) {
       const playerData = {
         playerKey,
         x: player.x,

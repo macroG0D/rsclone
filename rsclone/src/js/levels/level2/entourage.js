@@ -18,7 +18,7 @@ export const LEVEL_ENTOURAGE = {
     [1, 2520, 648, 1, 'rocksSet01', true, false, 100, 1600],
     [1, 2600, 648, 1, 'rocksSet02', true, false, 100, 1600],
     [0.67, 2386, 487, 1, 'grassUnderWorldSet03', false, false, 100, 3500],
-    [0.67, 2600, 500, 1, 'rocksSet02', true, false, 100, 1600],
+    [0.67, 2600, 498, 1, 'rocksSet02', true, false, 100, 1600],
 
     // trees
     [1, 280, 944, 1, 'boabab06', false, true, 0, 2500],

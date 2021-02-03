@@ -7,7 +7,12 @@ import Portal from '../sprites/portal';
 import LevelEnd from './levelEnd';
 
 import { LEVELS } from '../levels/levels';
-import { BORDER_THICKNESS, COLLISION_CATEGORIES } from '../constants';
+import {
+  BORDER_THICKNESS,
+  COLLISION_CATEGORIES,
+  GAME_WIDTH,
+  GAME_HEIGHT,
+} from '../constants';
 
 export default class Level {
   constructor(scene, wallsColor) {
@@ -203,17 +208,18 @@ export default class Level {
 
   centerCamera() {
     const { scene } = this;
+    if (!this.ibb.body || !this.obb.body) return;
     if (this.ibb.isAlive) {
       this.camPoints.ibb = {
-        x: this.ibb.sensors.bottom.position.x,
-        y: this.ibb.sensors.bottom.position.y,
+        x: this.ibb.x,
+        y: this.ibb.y,
       };
     }
 
     if (this.obb.isAlive) {
       this.camPoints.obb = {
-        x: this.obb.sensors.bottom.position.x,
-        y: this.obb.sensors.bottom.position.y,
+        x: this.obb.x,
+        y: this.obb.y,
       };
     }
 
@@ -233,8 +239,10 @@ export default class Level {
     const closestToTopCharacterY = ibbCoords.y > obbCoords.y ? obbCoords.y : ibbCoords.y;
     const cameraX = parseInt(charactersXDiff / 2 + closestToLeftCharacterX, 10);
     const cameraY = parseInt(charactersYDiff / 2 + closestToTopCharacterY, 10);
-    if (camZoom !== cam.zoom) cam.setZoom(camZoom);
-    cam.pan(cameraX, cameraY, 100);
+    if (charactersXDiff < GAME_WIDTH && charactersYDiff < GAME_HEIGHT) {
+      if (camZoom !== cam.zoom) cam.setZoom(camZoom);
+      cam.pan(cameraX, cameraY, 100);
+    }
   }
 
   setDirection(key, direction, state) {
