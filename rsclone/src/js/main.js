@@ -65,9 +65,11 @@ class Main {
   spawnGame() {
     const gameDiv = document.getElementById('gameDiv');
     this.gameContainer = new Create('div', gameDiv, 'game-container').node;
+    const isMobileClient = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+    const type = (isMobileClient) ? Phaser.CANVAS : Phaser.AUTO;
     this.gameConfig = {
-      type: Phaser.AUTO,
       parent: this.gameContainer,
+      type,
       scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
@@ -110,7 +112,6 @@ class Main {
         windowEvents: true,
       },
     };
-
     this.game = new Game(this, this.gameConfig);
   }
 

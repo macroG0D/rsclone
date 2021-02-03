@@ -30,6 +30,7 @@ export default class Gamepad extends Phaser.Events.EventEmitter {
       base: scene.add.circle(0, 0, radius, mainColor),
       thumb: scene.add.circle(0, 0, radius / 2, secondaryColor),
       dir: config,
+      forceMin: 50,
     });
     joystick.base.alpha = 0.75;
     joystick.base.setDepth(1);

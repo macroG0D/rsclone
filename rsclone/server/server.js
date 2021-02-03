@@ -4,6 +4,8 @@ const Socket = require('./components/socket');
 const Db = require('./components/db');
 const App = require('./components/app');
 
+const { DB_USER, DB_PASS } = require('./credentials');
+
 class Server {
   constructor(port, documentRoot, dbUser, dbPass) {
     this.port = port;
@@ -47,9 +49,7 @@ class Server {
 
 // Server entry point
 const APP_DIST = '../dist';
-const APP_PORT = '80';
-const DB_USER = 'btfUser';
-const DB_PASS = 'btfPass2020q3';
+const APP_PORT = 80;
 
 const port = process.env.PORT || APP_PORT;
 const documentRoot = path.resolve(__dirname, APP_DIST);
