@@ -122,7 +122,8 @@ export const LEVEL_ENTOURAGE = {
     [0.19, 5988, 971, 1, 'grassSet02', true, false, 101, 700],
     [0.545, 6058, 971, 1, 'grassSet02', false, false, 101, 700],
     [0.545, 6230, 971, 1, 'grassSet02', true, false, 101, 700],
-    [0.85, 6218, 982, 1, 'grassUnderWorldSet02', true, false, 101, 1800],
+    [0.14, 5989, 982, 1, 'grassUnderWorldSet02', true, false, 101, 1800],
+    [0.54, 6233, 982, 1, 'grassUnderWorldSet02', true, false, 101, 1800],
 
     [0.47, 7730, 1316, 1, 'grassSet02', false, false, 101, 500],
     [0.47, 7877, 1316, 1, 'grassSet01', true, false, 101, 500],
