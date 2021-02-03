@@ -49,7 +49,7 @@ class Server {
 
 // Server entry point
 const APP_DIST = '../dist';
-const APP_PORT = '80';
+const APP_PORT = 80;
 
 const port = process.env.PORT || APP_PORT;
 const documentRoot = path.resolve(__dirname, APP_DIST);
