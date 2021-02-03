@@ -25,7 +25,7 @@ export default class Menu extends Create {
       this.items.push(item);
       if (itemLink) {
         item.link = itemLink;
-        item.node.addEventListener('click', () => this.selectItem(), false);
+        item.node.addEventListener('click', () => this.selectItem(itemIndex), false);
       }
       item.node.addEventListener('pointermove', () => this.highlightItem(itemIndex), false);
     });
@@ -46,7 +46,7 @@ export default class Menu extends Create {
       this.back.index = index;
       this.items.push(this.back);
       this.back.node.classList.add('game-menu-item-back');
-      this.back.node.addEventListener('click', () => this.selectItem(), false);
+      this.back.node.addEventListener('click', () => this.selectItem(index), false);
       this.back.node.addEventListener('pointermove', () => this.highlightItem(index), false);
       scene.input.keyboard.addKey('ESC').on('down', () => this.menuBack());
     }
@@ -76,8 +76,8 @@ export default class Menu extends Create {
     if (next !== current) this.highlightItem(next);
   }
 
-  selectItem() {
-    const { link } = this.items[this.activeItem];
+  selectItem(index) {
+    const { link } = this.items[index || this.activeItem];
     if (link) link();
     playSound(this.scene, 'switchclick');
   }
