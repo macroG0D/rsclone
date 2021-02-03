@@ -42,7 +42,7 @@ export default class Network {
       disableGravitySwitch,
     } = data;
     const character = this.scene.level[playerKey];
-    if (character) {
+    if (character && character.body) {
       if (character.x && character.x !== x) character.x = x;
       if (character.y && character.y !== y) character.y = y;
       if (character.angle && character.angle !== angle) character.angle = angle;
@@ -58,7 +58,7 @@ export default class Network {
     this.throttle = true;
     const { playerKey } = this.scene;
     const player = this.scene.level[this.scene.playerKey];
-    if (player) {
+    if (player && player.body) {
       const playerData = {
         playerKey,
         x: player.x,
