@@ -1,0 +1,164 @@
+.header {
+  @include screenSize;
+  color: $startFontColor;
+  user-select: none;
+
+  @media (min-width: 1600px) {
+    width: 100%;
+    padding-left: 200px;
+    padding-right: 200px;
+  }
+}
+
+.header__wrap {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  color: inherit;
+  padding-top: 25px;
+  position: relative;
+  z-index: 2;
+
+  @media (max-width: 468px) {
+    position: absolute;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(60px);
+    top: 0;
+    height: 100vh;
+    padding-bottom: 175px;
+    padding-top: 120px;
+
+    &::after {
+      position: absolute;
+      content: url('../../assets/images/landing/love-ibb-obb.svg');
+      width: 70px;
+      top: 350px;
+      left: calc(50% - 35px);
+    }
+  }
+}
+
+.header__burger {
+  position: absolute;
+  background-color: transparent;
+  top: 25px;
+  left: calc(50% - 25px);
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  display: none;
+  z-index: 3;
+
+  @media (max-width: 468px) {
+    display: block;
+    transition: all 0.3s ease-in-out;
+  }
+
+  &:hover {
+    transition: all 0.25 ease;
+    opacity: 0.8;
+  }
+}
+
+.header__burger-line {
+  display: block;
+  width: 50px;
+  height: 3px;
+  background-color: $accentColor;
+  border-radius: 1px;
+  -webkit-border-radius: 1px;
+  -moz-border-radius: 1px;
+  -ms-border-radius: 1px;
+  -o-border-radius: 1px;
+}
+
+.header__burger::after {
+  position: absolute;
+  display: block;
+  content: "";
+  border-radius: 1px;
+  background-color: $accentColor;
+  width: 50px;
+  height: 3px;
+  bottom: 16px;
+  transition: all 0.3s ease-in-out;
+}
+
+.header__burger::before {
+  position: absolute;
+  display: block;
+  content: "";
+  border-radius: 1px;
+  background-color: $accentColor;
+  width: 50px;
+  height: 3px;
+  top: 16px;
+  transition: all 0.3s ease-in-out;
+}
+
+.header__burger--close::before {
+  width: 41px;
+  transform: rotate(-45deg) translate(-2px, 9px);
+  transition: all 0.3s ease-in-out;
+}
+
+.header__burger--close::after {
+  width: 41px;
+  transform: rotate(45deg) translate(-2px, -8px);
+  transition: all 0.3s ease-in-out;
+}
+
+.header__burger--close .header__burger-line {
+  display: none;
+}
+
+.header__hidden .header__wrap {
+  @media (max-width: 468px) {
+    top: 0;
+    animation: header__off;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in;
+  }
+}
+
+.header__display .header__wrap {
+  @media (max-width: 468px) {
+    top: 0;
+    animation: header__on;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in;
+  }
+}
+
+@keyframes header__on {
+  from {
+    left: -100%;
+  }
+
+  to {
+    left: 0;
+  }
+}
+
+@keyframes header__off {
+  from {
+    left: 0;
+  }
+
+  to {
+    left: -100%;
+  }
+}
+
+.header--about {
+  color: $lightFontColor;
+
+  @media (max-width: 468px) {
+    color: $startFontColor;
+  }
+}

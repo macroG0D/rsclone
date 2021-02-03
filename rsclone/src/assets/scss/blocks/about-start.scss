@@ -1,0 +1,20 @@
+.about-start {
+  background-image: url('../../assets/images/landing/start-about.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  margin-top: -45px;
+  padding-top: 144px;
+  padding-bottom: 164px;
+  overflow: hidden;
+}
+
+.about-start__title {
+  display: block;
+  width: 400px;
+  margin: 0 auto;
+
+  @media (max-width: 500px) {
+    width: 300px;
+  }
+}

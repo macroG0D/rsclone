@@ -1,0 +1,43 @@
+.lang {
+  display: flex;
+
+  @media (max-width: 640px) {
+    width: 86px;
+    justify-content: space-between;
+  }
+}
+
+.lang__item {
+  margin-left: 20px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  @media (max-width: 640px) {
+    margin: 0;
+  }
+
+  &:hover {
+    color: $accentColor;
+  }
+}
+
+.lang__item--light {
+  color: $lightFontColor;
+  @media (max-width: 640px) {
+    color: $startFontColor;
+  }
+}
+
+.lang__item--active {
+  font-weight: 600;
+  color: $accentColor;
+}
+
+.lang--footer {
+  margin-left: auto;
+
+  @media (max-width: 640px) {
+    display: none;
+  }
+}

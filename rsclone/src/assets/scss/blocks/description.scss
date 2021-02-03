@@ -1,0 +1,112 @@
+.description {
+  background-color: $bgLightColor;
+}
+
+.description__wrap {
+  @include screenSize;
+  padding: 60px 0 120px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @media (max-width: 1000px) {
+    flex-direction: column;
+  }
+  @media (max-width: 640px) {
+    padding-top: 0;
+  }
+}
+
+.description__img-wrap {
+  width: 570px;
+
+  @media (max-width: 570px) {
+    width: 100%;
+  }
+}
+
+.description__content {
+  width: 570px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 40px;
+
+  @media (max-width: 640px) {
+    width: 100%;
+  }
+}
+
+.description__content-left {
+  box-sizing: border-box;
+  padding-left: 75px;
+
+  @media (max-width: 1000px) {
+    padding-left: 0;
+    order: 2;
+  }
+}
+
+.description__img {
+  width: 426px;
+  display: block;
+  margin: 0 auto;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  @media (max-width: 1000px) {
+    margin-bottom: 60px;
+  }
+
+  @media (max-width: 426px) {
+    width: 100%;
+  }
+}
+
+.description__img--2 {
+  @media (max-width: 426px) {
+    width: 100%;
+  }
+}
+
+.description__title {
+  @include title;
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+.description__text {
+  width: 423px;
+  color: $mainFontColor;
+  font-size: 16px;
+  line-height: 132%;
+  margin: 0;
+
+  @media (max-width: 640px) {
+    width: 300px;
+    margin: 0 auto;
+  }
+}
+
+.description__text-wrap {
+  @media (max-width: 1000px) {
+    margin: 0 auto;
+  }
+}
+
+.description__wrap--second {
+  padding: 120px 0 160px;
+}
+
+.description__text--enemy {
+  position: relative;
+}
+
+.description__hedgehog {
+  width: 90px;
+  position: absolute;
+  top: -48px;
+  left: -157px;
+}
