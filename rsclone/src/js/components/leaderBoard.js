@@ -22,7 +22,7 @@ export default class LeaderBoard extends Create {
     this.caption.score = new Create('span', this.caption.node, '', scoreText);
     this.caption.score.name = 'score';
     this.caption.time = new Create('span', this.caption.node, 'board-caption-time', timeText);
-    this.caption.time.name = 'score';
+    this.caption.time.name = 'time';
 
     const loadingText = '<span></span><span></span><span>loading data...</span>';
     this.table = new Create('div', this.container.node, 'board-table', loadingText);
