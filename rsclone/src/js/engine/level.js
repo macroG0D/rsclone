@@ -203,17 +203,18 @@ export default class Level {
 
   centerCamera() {
     const { scene } = this;
+    if (!this.ibb.body || !this.obb.body) return;
     if (this.ibb.isAlive) {
       this.camPoints.ibb = {
-        x: this.ibb.sensors.bottom.position.x,
-        y: this.ibb.sensors.bottom.position.y,
+        x: this.ibb.x,
+        y: this.ibb.y,
       };
     }
 
     if (this.obb.isAlive) {
       this.camPoints.obb = {
-        x: this.obb.sensors.bottom.position.x,
-        y: this.obb.sensors.bottom.position.y,
+        x: this.obb.x,
+        y: this.obb.y,
       };
     }
 
